@@ -1,0 +1,2 @@
+[![Build Status](https://travis-ci.com/KyleFrisbie/TheFitNation-Android.svg?token=xdYzvZBf58eKa1nBA2ue&branch=master)](https://travis-ci.com/KyleFrisbie/TheFitNation-Android)
+#The Fit Nation Android Application
