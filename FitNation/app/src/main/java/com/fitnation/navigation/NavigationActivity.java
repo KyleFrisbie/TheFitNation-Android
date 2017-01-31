@@ -24,8 +24,8 @@ import butterknife.ButterKnife;
  */
 public class NavigationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    @BindView(R.id.toolbar) private Toolbar mToolbar;
-    @BindView(R.id.drawer_layout) private DrawerLayout mDrawerLayout;
+    @BindView(R.id.toolbar) public Toolbar mToolbar;
+    @BindView(R.id.drawer_layout) public DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
