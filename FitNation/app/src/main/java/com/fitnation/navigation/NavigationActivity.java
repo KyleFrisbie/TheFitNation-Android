@@ -44,7 +44,7 @@ public class NavigationActivity extends BaseActivity
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
             this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerLayout.setDrawerListener(toggle);
+        mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
 

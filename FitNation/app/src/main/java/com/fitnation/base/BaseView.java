@@ -14,5 +14,5 @@ public interface BaseView<T> {
      * Gets the activity
      * @return - activity
      */
-    BaseActivity getActivity();
+    BaseActivity getBaseActivity();
 }
