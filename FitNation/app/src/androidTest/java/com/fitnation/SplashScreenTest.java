@@ -17,13 +17,13 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class LoginFlowInstrumentedTest {
+public class SplashScreenTest {
 
     @Rule
     public ActivityTestRule<SplashScreenActivity> mActivityRule = new ActivityTestRule(SplashScreenActivity.class);
 
     @Test
-    public void listGoesOverTheFold() {
+    public void splashScreenIsDisplayed() {
         onView(withText(R.string.title_activity_splash_screen)).check(matches(isDisplayed()));
     }
 }
