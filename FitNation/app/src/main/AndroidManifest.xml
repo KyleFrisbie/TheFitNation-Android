@@ -22,8 +22,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity >
         <activity android:name=".login.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".intro.SplashScreenActivity">
         </activity>
     </application>
