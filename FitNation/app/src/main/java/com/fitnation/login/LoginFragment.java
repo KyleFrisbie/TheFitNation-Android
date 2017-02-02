@@ -32,7 +32,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         return new LoginFragment();
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,6 +40,12 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         ButterKnife.bind(this, v);
 
         return v;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPresenter.start();
     }
 
     @OnClick(R.id.login_button)
