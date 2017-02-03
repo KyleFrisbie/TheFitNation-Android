@@ -33,16 +33,13 @@ public class NavigationActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         ButterKnife.bind(this);
-
         setUpActionBar();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void setUpActionBar() {
         setSupportActionBar(mToolbar);
-
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
             this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
@@ -81,17 +78,15 @@ public class NavigationActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_start_workout) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_my_workouts) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_trends) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_workout_regimens) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_my_profile) {
 
         }
 
