@@ -24,7 +24,6 @@ script:
   - java -version
 
 script:
-  - gradle wrapper
   - ./gradlew assembleDebug --stacktrace
 
 deploy:
