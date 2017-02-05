@@ -15,7 +15,7 @@ android:
   - extra-google-m2repository
   - extra-google-google_play_services
   - extra-android-support
-  sys-img-armeabi-v7a-android-19
+  - sys-img-armeabi-v7a-android-19
   licenses:
   - '.+'
   
