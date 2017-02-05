@@ -22,7 +22,7 @@ android:
 before_script:
   # Create and start emulator
   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
-  - emulator -avd test -no-skin -no-audio -no-window &
+  - emulator -avd test -no-audio &
   - android-wait-for-emulator
   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
   - adb shell input keyevent 82 &
