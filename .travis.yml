@@ -15,13 +15,13 @@ android:
   - extra-google-m2repository
   - extra-google-google_play_services
   - extra-android-support
-  - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
+  sys-img-armeabi-v7a-android-19
   licenses:
   - '.+'
   
 before_script:
   # Create and start emulator
-  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
