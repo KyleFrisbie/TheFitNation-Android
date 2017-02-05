@@ -15,7 +15,6 @@ android:
   - extra-google-m2repository
   - extra-google-google_play_services
   - extra-android-support
-  - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
   licenses:
   - '.+'
   
@@ -31,4 +30,4 @@ script:
   - ./gradlew connectedAndroidTest
   
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) -t token
