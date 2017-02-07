@@ -33,8 +33,11 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.5'
     testCompile 'junit:junit:4.12'
     // Espresso-contrib for DatePicker, RecyclerView, Drawer actions, Accessibility checks, CountingIdlingResource
-    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2'
-    androidTestCompile 'com.android.support:recyclerview-v7:25.1.0'
+    androidTestCompile ('com.android.support.test.espresso:espresso-contrib:2.2'){
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
+    }    androidTestCompile 'com.android.support:recyclerview-v7:25.1.0'
     androidTestCompile 'com.android.support:support-v4:25.1.0'
     androidTestCompile 'com.android.support:appcompat-v7:25.1.0'
     androidTestCompile 'com.android.support:design:25.1.0'
