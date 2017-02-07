@@ -1,5 +1,6 @@
 package com.fitnation.login;
 
+import android.os.SystemClock;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -41,6 +42,7 @@ public class LoginScreenTest extends InstrumentationTest {
     @Test
     public void testMainActivityLaunchedUponLogin() {
         onView(withId(R.id.login_button)).perform(click());
+        SystemClock.sleep(2000);
         onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
         onView(withText(R.string.app_name)).check(matches(isDisplayed()));
         onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
