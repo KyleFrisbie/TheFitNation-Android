@@ -7,7 +7,9 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.fitnation.R;
 import com.fitnation.intro.SplashScreenActivity;
+import com.fitnation.utils.InstrumentationTest;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,10 +21,15 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class SplashScreenTest {
+public class SplashScreenTest extends InstrumentationTest{
 
     @Rule
     public ActivityTestRule<SplashScreenActivity> mActivityRule = new ActivityTestRule(SplashScreenActivity.class);
+
+    @Before
+    public void setUp() {
+        super.unlockScreen(mActivityRule.getActivity());
+    }
 
     @Test
     public void splashScreenIsDisplayed() {
