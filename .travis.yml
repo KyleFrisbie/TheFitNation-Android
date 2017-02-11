@@ -1,4 +1,5 @@
 language: android
+<<<<<<< HEAD
 android:
   components:
     - build-tools-25.0.2
@@ -14,6 +15,28 @@ env:
     - ANDROID_TARGET=android-22 ANDROID_ABI=armeabi-v7a
 
 # Emulator Management: Create, Start and Wait
+=======
+jdk: oraclejdk8
+env:
+  global:
+    - ANDROID_TARGET=android-21
+    - ANDROID_ABI=armeabi-v7a
+android:
+  components:
+  - tools
+  - platform-tools
+  - build-tools-25.0.2
+  - android-25
+  - android-21
+  - extra-android-m2repository
+  - extra-google-m2repository
+  - extra-google-google_play_services
+  - extra-android-support
+  - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
+  licenses:
+  - '.+'
+  
+>>>>>>> parent of 7c86a77... test
 before_script:
   - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
   - emulator -avd test -no-audio -no-window &
