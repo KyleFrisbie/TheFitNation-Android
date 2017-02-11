@@ -1,4 +1,4 @@
-package com.fitnation.utils;
+package com.fitnation.base;
 
 import android.app.Activity;
 import android.view.WindowManager;

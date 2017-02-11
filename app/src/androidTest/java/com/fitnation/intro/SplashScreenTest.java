@@ -6,8 +6,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.fitnation.R;
-import com.fitnation.intro.SplashScreenActivity;
-import com.fitnation.utils.InstrumentationTest;
+import com.fitnation.base.InstrumentationTest;
 
 import org.junit.Before;
 import org.junit.Rule;
