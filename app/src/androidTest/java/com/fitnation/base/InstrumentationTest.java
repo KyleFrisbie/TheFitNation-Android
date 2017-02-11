@@ -3,6 +3,7 @@ package com.fitnation.base;
 import android.app.Activity;
 import android.view.WindowManager;
 
+import org.junit.After;
 import org.junit.Before;
 
 /**
@@ -20,5 +21,9 @@ public class InstrumentationTest {
             }
         };
         activity.runOnUiThread(wakeUpDevice);
+    }
+
+    public void tearDown(Activity activity) {
+        activity.finish();
     }
 }

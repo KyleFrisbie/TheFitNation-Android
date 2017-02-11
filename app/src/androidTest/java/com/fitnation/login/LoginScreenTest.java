@@ -8,6 +8,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,18 +33,22 @@ public class LoginScreenTest extends InstrumentationTest {
         super.unlockScreen(mActivityRule.getActivity());
     }
 
+    @After
+    public void tearDown() {
+        super.tearDown(mActivityRule.getActivity());
+    }
+
     @Test
     public void loginScreenIsDisplayed() {
         onView(ViewMatchers.withText(R.string.login_screen)).check(matches(isDisplayed()));
         onView(withId(R.id.login_button)).check(matches(isDisplayed()));
     }
 
-//    @Test
-//    public void testMainActivityLaunchedUponLogin() {
-//        onView(withId(R.id.login_button)).perform(click());
-//        SystemClock.sleep(2000);
-//        onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
-//        onView(withText(R.string.app_name)).check(matches(isDisplayed()));
-//        onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
-//    }
+    @Test
+    public void testMainActivityLaunchedUponLogin() {
+        onView(withId(R.id.login_button)).perform(click());
+        onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
+        onView(withText(R.string.app_name)).check(matches(isDisplayed()));
+        onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
+    }
 }
