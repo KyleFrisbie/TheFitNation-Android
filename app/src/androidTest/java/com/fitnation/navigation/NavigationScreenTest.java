@@ -20,25 +20,25 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
-@RunWith(AndroidJUnit4.class)
-@LargeTest
+//@RunWith(AndroidJUnit4.class)
+//@LargeTest
 public class NavigationScreenTest extends InstrumentationTest{
 
-    @Rule
-    public ActivityTestRule<NavigationActivity> mActivityRule = new ActivityTestRule(NavigationActivity.class);
+//    @Rule
+//    public ActivityTestRule<NavigationActivity> mActivityRule = new ActivityTestRule(NavigationActivity.class);
+//
+//    @Before
+//    public void setUp() {
+//        super.unlockScreen(mActivityRule.getActivity());
+//    }
 
-    @Before
-    public void setUp() {
-        super.unlockScreen(mActivityRule.getActivity());
-    }
-
-    @Test
-    public void navigationActivityDisplayed() {
-        onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
-        onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
-        onView(withId(R.id.content_navigation)).check(matches(isDisplayed()));
-        onView(withText(R.string.main_container)).check(matches(isDisplayed()));
-    }
+//    @Test
+//    public void navigationActivityDisplayed() {
+//        onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
+//        onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
+//        onView(withId(R.id.content_navigation)).check(matches(isDisplayed()));
+//        onView(withText(R.string.main_container)).check(matches(isDisplayed()));
+//    }
 
 //    @Test
 //    public void onNavDrawerOpenedAllMenuItemsDisplayed() {
