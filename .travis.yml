@@ -28,6 +28,7 @@ before_script:
 
 script:
   - ./gradlew build jacocoTestReport
+    - adb shell input keyevent 82 &
   - ./gradlew connectedCheck --stacktrace
   
 after_success:
