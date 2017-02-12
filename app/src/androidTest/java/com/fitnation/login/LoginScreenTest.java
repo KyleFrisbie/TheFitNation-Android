@@ -38,4 +38,6 @@ public class LoginScreenTest {
         onView(withText(R.string.app_name)).check(matches(isDisplayed()));
         onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
     }
+
+
 }
