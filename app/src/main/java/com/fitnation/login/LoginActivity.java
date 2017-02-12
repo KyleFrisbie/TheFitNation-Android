@@ -7,7 +7,7 @@ import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 
 public class LoginActivity extends BaseActivity {
-    private static final int VIEW_CONTAINER = android.R.id.content;
+    private static final int VIEW_CONTAINER = R.id.activity_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
