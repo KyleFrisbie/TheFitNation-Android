@@ -71,10 +71,10 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     @Override
     public void onLoginPressed(final String userName, final String password) {
-        Stormpath.login(userName, password, new StormpathCallback() {
+        Stormpath.login(userName, password, new StormpathCallback<Void>() {
             @Override
-            public void onSuccess(Object o) {
-                Stormpath.getAccessToken();
+            public void onSuccess(Void aVoid) {
+                String token = Stormpath.getAccessToken();
                 BaseActivity baseActivity = mView.getBaseActivity();
                 Intent launchMain = new Intent(baseActivity, NavigationActivity.class);
                 launchMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -93,7 +93,6 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     @Override
     public void onRegisterButtonPressed() {
-        //back stack not working for fragment transaction
         RegisterFragment registerFragment = RegisterFragment.newInstance();
         registerFragment.setPresenter(new RegisterPresenter(registerFragment));
         mView.getBaseActivity().getSupportFragmentManager().beginTransaction()

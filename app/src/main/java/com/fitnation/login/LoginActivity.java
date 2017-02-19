@@ -2,6 +2,8 @@ package com.fitnation.login;
 import android.os.Bundle;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
+import com.stormpath.sdk.Stormpath;
+import com.stormpath.sdk.StormpathConfiguration;
 
 public class LoginActivity extends BaseActivity {
     protected static int VIEW_CONTAINER = R.id.activity_login;
@@ -9,6 +11,11 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
+                .baseUrl("https://zippy-sword.apps.stormpath.io/")
+                .build();
+        Stormpath.init(this, stormpathConfiguration);
 
         setContentView(R.layout.activity_login);
         launchLoginFragment();

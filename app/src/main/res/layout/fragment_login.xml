@@ -67,7 +67,7 @@
         android:text="Username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/Username_textView"
+        android:id="@+id/username_textView"
         android:layout_above="@+id/username_editText"
         android:layout_alignEnd="@+id/password_textView" />
 

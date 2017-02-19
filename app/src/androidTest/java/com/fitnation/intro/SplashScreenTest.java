@@ -44,14 +44,19 @@ public class SplashScreenTest extends InstrumentationTest {
 
     @Test
     public void SplashScreenAppears() {
-        onView(withId(R.id.content_splash_screen)).check(matches(isDisplayed()));
+
     }
 
     @Test
     public void TestLoginScreenLaunchedAfterDelay() {
-        final int LOGIN_LAUNCH_DELAY = 5000;
-        SystemClock.sleep(LOGIN_LAUNCH_DELAY);
-        onView(withId(R.id.login_button)).check(matches(isDisplayed()));
         onView(withId(R.id.activity_login)).check(matches(isDisplayed()));
+        onView(withId(R.id.login_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.register_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.facebook_login_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.google_login_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.password_textView)).check(matches(isDisplayed()));
+        onView(withId(R.id.username_textView)).check(matches(isDisplayed()));
+        onView(withId(R.id.username_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
     }
 }

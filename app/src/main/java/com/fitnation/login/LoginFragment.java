@@ -53,11 +53,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, v);
 
-        StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
-                .baseUrl("https://zippy-sword.apps.stormpath.io/")
-                .build();
-        Stormpath.init(getBaseActivity(), stormpathConfiguration);
-
         return v;
     }
 
@@ -84,13 +79,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
 
     @OnClick(R.id.register_button)
     public void onRegisterButtonClicked() {
-        RegisterFragment registerFragment = RegisterFragment.newInstance();
-        registerFragment.setPresenter(new RegisterPresenter(registerFragment));
-        getBaseActivity().getSupportFragmentManager().beginTransaction()
-                .addToBackStack("back")
-                .replace(VIEW_CONTAINER, registerFragment).commit();
-        //currently back stack is not working in the presenter
-        //mPresenter.onRegisterButtonPressed();
+        mPresenter.onRegisterButtonPressed();
         }
 
     @Override

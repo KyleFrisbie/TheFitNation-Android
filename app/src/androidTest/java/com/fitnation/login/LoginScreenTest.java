@@ -1,5 +1,6 @@
 package com.fitnation.login;
 
+import android.app.Activity;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -15,6 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -42,6 +44,45 @@ public class LoginScreenTest extends InstrumentationTest {
     public void loginScreenIsDisplayed() {
         onView(ViewMatchers.withText(R.string.login_screen)).check(matches(isDisplayed()));
         onView(withId(R.id.login_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.register_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.facebook_login_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.google_login_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.password_textView)).check(matches(isDisplayed()));
+        onView(withId(R.id.username_textView)).check(matches(isDisplayed()));
+        onView(withId(R.id.username_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void TestRegisterButtonPressed(){
+        onView(withId(R.id.register_button)).perform(click());
+        onView(withId(R.id.register_register_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.register_user_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.register_password_editText)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void TestBackButtonPressedFromRegisterFragment(){
+        pressBack();
+        onView(ViewMatchers.withText(R.string.login_screen)).check(matches(isDisplayed()));
+        onView(withId(R.id.login_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.register_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.facebook_login_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.google_login_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.password_textView)).check(matches(isDisplayed()));
+        onView(withId(R.id.username_textView)).check(matches(isDisplayed()));
+        onView(withId(R.id.username_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testOnGoogleLoginPressed(){
+        onView(withId(R.id.google_login_button)).perform(click());
+    }
+
+    @Test
+    public void testOnFacebookLoginPressed(){
+        onView(withId(R.id.facebook_login_button)).perform(click());
     }
 
     @Test
