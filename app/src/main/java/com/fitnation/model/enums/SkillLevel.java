@@ -1,4 +1,4 @@
-package com.fitnation.domain.enums;
+package com.fitnation.model.enums;
 
 /**
  * The SkillLevel enumeration.

@@ -1,17 +1,13 @@
-package com.fitnation.domain;
+package com.fitnation.model;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A UserExerciseSet.
+ * A single set of an Exercise that a User has/will perform
  */
-public class UserExerciseSet implements Serializable {
+public class UserExerciseSet extends BaseModel {
     private Long id;
-    private Integer order_number;
-    private Integer reps;
-    private Float weight; //TODO these values are in exercise set, why are they being duplicated
-    private Integer rest;
     private UserExercise userExercise;
     private ExerciseSet exerciseSet;
 
@@ -39,10 +35,6 @@ public class UserExerciseSet implements Serializable {
     public String toString() {
         return "UserExerciseSet{" +
             "id=" + id +
-            ", order_number='" + order_number + "'" +
-            ", reps='" + reps + "'" +
-            ", weight='" + weight + "'" +
-            ", rest='" + rest + "'" +
             '}';
     }
 

@@ -1,4 +1,4 @@
-package com.fitnation.domain;
+package com.fitnation.model;
 
 
 import java.io.Serializable;
@@ -9,24 +9,14 @@ import java.util.Set;
 import java.util.Objects;
 
 /**
- * A UserWorkoutTemplate.
+ * A workout template that a user owns
  */
-public class UserWorkoutTemplate implements Serializable {
+public class UserWorkoutTemplate extends BaseModel {
     private Long id;
-    private Date created_on;
+    private Date createdOn;
     private WorkoutLog workoutLog;
     private WorkoutTemplate workoutTemplate;
     private Set<UserWorkoutInstance> userWorkoutInstances = new HashSet<>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -51,15 +41,7 @@ public class UserWorkoutTemplate implements Serializable {
     public String toString() {
         return "UserWorkoutTemplate{" +
             "id=" + id +
-            ", created_on='" + created_on + "'" +
+            ", created_on='" + createdOn + "'" +
             '}';
-    }
-
-    public void setWorkoutLog(WorkoutLog workoutLog) {
-        this.workoutLog = workoutLog;
-    }
-
-    public void setWorkoutTemplate(WorkoutTemplate workoutTemplate) {
-        this.workoutTemplate = workoutTemplate;
     }
 }

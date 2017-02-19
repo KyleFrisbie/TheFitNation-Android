@@ -1,22 +1,19 @@
-package com.fitnation.domain;
+package com.fitnation.model;
 
 import java.io.Serializable;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
- * A UserWorkoutInstance.
+ * A workout that has/will been/be performed by a User
  */
-public class UserWorkoutInstance implements Serializable {
+public class UserWorkoutInstance extends BaseModel {
     private Long id;
-    private Date created_on;
-    private Boolean was_completed;
+    private Date createdOn;
+    private Boolean wasCompleted;
     private UserWorkoutTemplate userWorkoutTemplate;
     private WorkoutInstance workoutInstance;
-    private Set<UserExercise> userExercises = new HashSet<>(); //TODO in workout instance, redundant data?
 
     @Override
     public boolean equals(Object o) {
@@ -42,12 +39,6 @@ public class UserWorkoutInstance implements Serializable {
     public String toString() {
         return "UserWorkoutInstance{" +
             "id=" + id +
-            ", created_on='" + created_on + "'" +
-            ", was_completed='" + was_completed + "'" +
             '}';
-    }
-
-    public void setWorkoutInstance(WorkoutInstance workoutInstance) {
-        this.workoutInstance = workoutInstance;
     }
 }

@@ -1,17 +1,16 @@
-package com.fitnation.domain;
+package com.fitnation.model;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 /**
- * A UserWeight.
+ * A single User weight instance
  */
-public class UserWeight implements Serializable {
+public class UserWeight extends BaseModel {
     private Long id;
-    private Date weight_date;
+    private Date weightDate;
     private Float weight;
-    private UserDemographic userDemographic; //TODO circular ref
 
     @Override
     public boolean equals(Object o) {
@@ -37,12 +36,8 @@ public class UserWeight implements Serializable {
     public String toString() {
         return "UserWeight{" +
             "id=" + id +
-            ", weight_date='" + weight_date + "'" +
+            ", weight_date='" + weightDate + "'" +
             ", weight='" + weight + "'" +
             '}';
-    }
-
-    public void setUserDemographic(UserDemographic userDemographic) {
-        this.userDemographic = userDemographic;
     }
 }
