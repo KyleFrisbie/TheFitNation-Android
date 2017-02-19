@@ -16,7 +16,7 @@ public class UserWorkoutInstance implements Serializable {
     private Boolean was_completed;
     private UserWorkoutTemplate userWorkoutTemplate;
     private WorkoutInstance workoutInstance;
-    private Set<UserExercise> userExercises = new HashSet<>();
+    private Set<UserExercise> userExercises = new HashSet<>(); //TODO in workout instance, redundant data?
 
     @Override
     public boolean equals(Object o) {
@@ -45,5 +45,9 @@ public class UserWorkoutInstance implements Serializable {
             ", created_on='" + created_on + "'" +
             ", was_completed='" + was_completed + "'" +
             '}';
+    }
+
+    public void setWorkoutInstance(WorkoutInstance workoutInstance) {
+        this.workoutInstance = workoutInstance;
     }
 }

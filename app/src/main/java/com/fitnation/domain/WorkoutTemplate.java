@@ -22,26 +22,26 @@ public class WorkoutTemplate implements Serializable {
 
     public WorkoutTemplate addWorkoutInstance(WorkoutInstance workoutInstance) {
         workoutInstances.add(workoutInstance);
-//        workoutInstance.setWorkoutTemplate(this);
+        workoutInstance.setWorkoutTemplate(this);
         return this;
     }
 
     public WorkoutTemplate removeWorkoutInstance(WorkoutInstance workoutInstance) {
         workoutInstances.remove(workoutInstance);
-//        workoutInstance.setWorkoutTemplate(null);
+        workoutInstance.setWorkoutTemplate(null);
         return this;
     }
 
 
     public WorkoutTemplate addUserWorkoutTemplate(UserWorkoutTemplate userWorkoutTemplate) {
         userWorkoutTemplates.add(userWorkoutTemplate);
-//        userWorkoutTemplate.setWorkoutTemplate(this);
+        userWorkoutTemplate.setWorkoutTemplate(this);
         return this;
     }
 
     public WorkoutTemplate removeUserWorkoutTemplate(UserWorkoutTemplate userWorkoutTemplate) {
         userWorkoutTemplates.remove(userWorkoutTemplate);
-//        userWorkoutTemplate.setWorkoutTemplate(null);
+        userWorkoutTemplate.setWorkoutTemplate(null);
         return this;
     }
 
@@ -77,5 +77,9 @@ public class WorkoutTemplate implements Serializable {
             ", created_on='" + created_on + "'" +
             ", is_private='" + is_private + "'" +
             '}';
+    }
+
+    public void setUserDemographic(UserDemographic userDemographic) {
+        this.userDemographic = userDemographic;
     }
 }

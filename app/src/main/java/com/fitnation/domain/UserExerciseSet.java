@@ -7,12 +7,10 @@ import java.util.Objects;
  * A UserExerciseSet.
  */
 public class UserExerciseSet implements Serializable {
-
-    private static final long serialVersionUID = 1L;
     private Long id;
     private Integer order_number;
     private Integer reps;
-    private Float weight;
+    private Float weight; //TODO these values are in exercise set, why are they being duplicated
     private Integer rest;
     private UserExercise userExercise;
     private ExerciseSet exerciseSet;
@@ -46,5 +44,13 @@ public class UserExerciseSet implements Serializable {
             ", weight='" + weight + "'" +
             ", rest='" + rest + "'" +
             '}';
+    }
+
+    public void setUserExercise(UserExercise userExercise) {
+        this.userExercise = userExercise;
+    }
+
+    public void setExerciseSet(ExerciseSet exerciseSet) {
+        this.exerciseSet = exerciseSet;
     }
 }

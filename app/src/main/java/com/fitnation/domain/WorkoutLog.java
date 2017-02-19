@@ -12,8 +12,8 @@ import java.util.Objects;
  */
 public class WorkoutLog implements Serializable {
     private Long id;
-    private Date created_on;
-    private UserDemographic userDemographic;
+    private Date created_on; //TODO Seems redundant
+    private UserDemographic userDemographic; //TODO circular reference
     private Set<UserWorkoutTemplate> userWorkoutTemplates = new HashSet<>();
 
     public Long getId() {
@@ -27,13 +27,13 @@ public class WorkoutLog implements Serializable {
 
     public WorkoutLog addUserWorkoutTemplate(UserWorkoutTemplate userWorkoutTemplate) {
         userWorkoutTemplates.add(userWorkoutTemplate);
-//        userWorkoutTemplate.setWorkoutLog(this);
+        userWorkoutTemplate.setWorkoutLog(this);
         return this;
     }
 
     public WorkoutLog removeUserWorkoutTemplate(UserWorkoutTemplate userWorkoutTemplate) {
         userWorkoutTemplates.remove(userWorkoutTemplate);
-//        userWorkoutTemplate.setWorkoutLog(null);
+        userWorkoutTemplate.setWorkoutLog(null);
         return this;
     }
 

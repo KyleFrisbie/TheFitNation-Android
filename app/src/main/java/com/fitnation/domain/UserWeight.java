@@ -11,7 +11,7 @@ public class UserWeight implements Serializable {
     private Long id;
     private Date weight_date;
     private Float weight;
-    private UserDemographic userDemographic;
+    private UserDemographic userDemographic; //TODO circular ref
 
     @Override
     public boolean equals(Object o) {
@@ -40,5 +40,9 @@ public class UserWeight implements Serializable {
             ", weight_date='" + weight_date + "'" +
             ", weight='" + weight + "'" +
             '}';
+    }
+
+    public void setUserDemographic(UserDemographic userDemographic) {
+        this.userDemographic = userDemographic;
     }
 }

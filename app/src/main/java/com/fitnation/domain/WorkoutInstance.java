@@ -22,13 +22,13 @@ public class WorkoutInstance implements Serializable {
 
     public WorkoutInstance addUserWorkoutInstance(UserWorkoutInstance userWorkoutInstance) {
         userWorkoutInstances.add(userWorkoutInstance);
-//        userWorkoutInstance.setWorkoutInstance(this);
+        userWorkoutInstance.setWorkoutInstance(this);
         return this;
     }
 
     public WorkoutInstance removeUserWorkoutInstance(UserWorkoutInstance userWorkoutInstance) {
         userWorkoutInstances.remove(userWorkoutInstance);
-//        userWorkoutInstance.setWorkoutInstance(null);
+        userWorkoutInstance.setWorkoutInstance(null);
         return this;
     }
 
@@ -73,5 +73,13 @@ public class WorkoutInstance implements Serializable {
             ", rest_between_instances='" + rest_between_instances + "'" +
             ", order_number='" + order_number + "'" +
             '}';
+    }
+
+    public void setWorkoutTemplate(WorkoutTemplate workoutTemplate) {
+        this.workoutTemplate = workoutTemplate;
+    }
+
+    public Set<Exercise> getExercises() {
+        return exercises;
     }
 }

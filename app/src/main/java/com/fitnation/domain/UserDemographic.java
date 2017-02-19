@@ -1,8 +1,8 @@
 package com.fitnation.domain;
 
-import com.fitnation.domain.enumeration.Gender;
-import com.fitnation.domain.enumeration.SkillLevel;
-import com.fitnation.domain.enumeration.UnitOfMeasure;
+import com.fitnation.domain.enums.Gender;
+import com.fitnation.domain.enums.SkillLevel;
+import com.fitnation.domain.enums.UnitOfMeasure;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -14,11 +14,9 @@ import java.util.Objects;
  * A UserDemographic.
  */
 public class UserDemographic implements Serializable {
-
     private Long id;
     private String first_name;
     private String last_name;
-
     private Gender gender;
     private Date dob;
     private Integer height;
@@ -52,25 +50,25 @@ public class UserDemographic implements Serializable {
 
     public UserDemographic addUserWeight(UserWeight userWeight) {
         userWeights.add(userWeight);
-//        userWeight.setUserDemographic(this);
+        userWeight.setUserDemographic(this);
         return this;
     }
 
     public UserDemographic removeUserWeight(UserWeight userWeight) {
         userWeights.remove(userWeight);
-//        userWeight.setUserDemographic(null);
+        userWeight.setUserDemographic(null);
         return this;
     }
 
     public UserDemographic addWorkoutTemplate(WorkoutTemplate workoutTemplate) {
         workoutTemplates.add(workoutTemplate);
-//        workoutTemplate.setUserDemographic(this);
+        workoutTemplate.setUserDemographic(this);
         return this;
     }
 
     public UserDemographic removeWorkoutTemplate(WorkoutTemplate workoutTemplate) {
         workoutTemplates.remove(workoutTemplate);
-//        workoutTemplate.setUserDemographic(null);
+        workoutTemplate.setUserDemographic(null);
         return this;
     }
 
@@ -111,5 +109,9 @@ public class UserDemographic implements Serializable {
             ", unit_of_measure='" + unit_of_measure + "'" +
             ", is_active='" + is_active + "'" +
             '}';
+    }
+
+    public Set<Gym> getGyms() {
+        return gyms;
     }
 }

@@ -1,4 +1,4 @@
-package com.fitnation.domain.enumeration;
+package com.fitnation.domain.enums;
 
 /**
  * The UnitOfMeasure enumeration.

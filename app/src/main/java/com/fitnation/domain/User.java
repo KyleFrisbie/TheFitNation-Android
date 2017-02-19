@@ -7,15 +7,15 @@ import java.util.Locale;
 /**
  * A user.
  */
+//TODO if we have user demographic, what is this class for? It isn't being used
 public class User implements Serializable {
-
-    private static final long serialVersionUID = 1L;
     private Long id;
-    private String login;
-    private String password;
+    private String login; //TODO what is this field?
+    private String password; //TODO we aren't going to be using this field
     private String firstName;
     private String lastName;
     private String email;
+    private UserDemographic userDemographic;
 
     public Long getId() {
         return id;

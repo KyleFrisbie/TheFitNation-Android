@@ -9,12 +9,10 @@ import java.util.Objects;
  * A Gym.
  */
 public class Gym implements Serializable {
-
-    private static final long serialVersionUID = 1L;
     private Long id;
     private String name;
-    private String location;
-    private Set<UserDemographic> userDemographics = new HashSet<>();
+    private String location; //TODO change to LatLng
+    private Set<UserDemographic> userDemographics = new HashSet<>(); //TODO not needed
 
     public Long getId() {
         return id;
@@ -61,13 +59,13 @@ public class Gym implements Serializable {
 
     public Gym addUserDemographic(UserDemographic userDemographic) {
         userDemographics.add(userDemographic);
-//        userDemographic.getGyms().add(this);
+        userDemographic.getGyms().add(this);
         return this;
     }
 
     public Gym removeUserDemographic(UserDemographic userDemographic) {
         userDemographics.remove(userDemographic);
-//        userDemographic.getGyms().remove(this);
+        userDemographic.getGyms().remove(this);
         return this;
     }
 

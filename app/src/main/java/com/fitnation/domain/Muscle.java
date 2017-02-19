@@ -11,8 +11,7 @@ import java.util.Objects;
 public class Muscle implements Serializable {
     private Long id;
     private String name;
-
-    private Set<Exercise> exercises = new HashSet<>();
+    private Set<Exercise> exercises = new HashSet<>(); //TODO not needed
 
     public Long getId() {
         return id;

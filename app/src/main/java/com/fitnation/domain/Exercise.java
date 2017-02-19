@@ -10,14 +10,12 @@ import java.util.Objects;
  */
 
 public class Exercise implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     private Long id;
     private String name;
-    private Set<WorkoutInstance> workoutInstances = new HashSet<>();
+//    private Set<WorkoutInstance> workoutInstances = new HashSet<>();//TODO why does an exercise have this
     private Set<Muscle> muscles = new HashSet<>();
-    private Set<ExerciseSet> exerciseSets = new HashSet<>();
-    private Set<UserExercise> userExercises = new HashSet<>();
+//    private Set<ExerciseSet> exerciseSets = new HashSet<>();//TODO why
+//    private Set<UserExercise> userExercises = new HashSet<>();//TODO why
 
     public Long getId() {
         return id;
@@ -51,13 +49,13 @@ public class Exercise implements Serializable {
 
     public Exercise addWorkoutInstance(WorkoutInstance workoutInstance) {
         workoutInstances.add(workoutInstance);
-//        workoutInstance.getExercises().add(this);
+        workoutInstance.getExercises().add(this);
         return this;
     }
 
     public Exercise removeWorkoutInstance(WorkoutInstance workoutInstance) {
         workoutInstances.remove(workoutInstance);
-//        workoutInstance.getExercises().remove(this);
+        workoutInstance.getExercises().remove(this);
         return this;
     }
 
@@ -126,13 +124,13 @@ public class Exercise implements Serializable {
 
     public Exercise addUserExercise(UserExercise userExercise) {
         userExercises.add(userExercise);
-//        userExercise.setExercise(this);
+        userExercise.setExercise(this);
         return this;
     }
 
     public Exercise removeUserExercise(UserExercise userExercise) {
         userExercises.remove(userExercise);
-//        userExercise.setExercise(null);
+        userExercise.setExercise(null);
         return this;
     }
 

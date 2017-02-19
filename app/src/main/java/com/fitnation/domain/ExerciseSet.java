@@ -8,17 +8,14 @@ import java.util.Objects;
 /**
  * A ExerciseSet.
  */
-
 public class ExerciseSet implements Serializable {
-
-    private static final long serialVersionUID = 1L;
     private Long id;
-    private Integer order_number;
+    private Integer order_number; //TODO might not be needed
     private Integer reps;
     private Float weight;
     private Integer rest;
     private Exercise exercise;
-    private Set<UserExerciseSet> userExerciseSets = new HashSet<>();
+    private Set<UserExerciseSet> userExerciseSets = new HashSet<>(); //TODO why
 
     public Long getId() {
         return id;
@@ -104,13 +101,13 @@ public class ExerciseSet implements Serializable {
 
     public ExerciseSet addUserExerciseSet(UserExerciseSet userExerciseSet) {
         userExerciseSets.add(userExerciseSet);
-//        userExerciseSet.setExerciseSet(this);
+        userExerciseSet.setExerciseSet(this);
         return this;
     }
 
     public ExerciseSet removeUserExerciseSet(UserExerciseSet userExerciseSet) {
         userExerciseSets.remove(userExerciseSet);
-//        userExerciseSet.setExerciseSet(null);
+        userExerciseSet.setExerciseSet(null);
         return this;
     }
 

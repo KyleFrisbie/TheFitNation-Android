@@ -54,4 +54,12 @@ public class UserWorkoutTemplate implements Serializable {
             ", created_on='" + created_on + "'" +
             '}';
     }
+
+    public void setWorkoutLog(WorkoutLog workoutLog) {
+        this.workoutLog = workoutLog;
+    }
+
+    public void setWorkoutTemplate(WorkoutTemplate workoutTemplate) {
+        this.workoutTemplate = workoutTemplate;
+    }
 }

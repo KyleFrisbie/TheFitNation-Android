@@ -9,22 +9,20 @@ import java.util.Objects;
  * A UserExercise.
  */
 public class UserExercise implements Serializable {
-
-    private static final long serialVersionUID = 1L;
     private Long id;
-    private UserWorkoutInstance userWorkoutInstance;
+    private UserWorkoutInstance userWorkoutInstance; //TODO circular reference and not needed
     private Exercise exercise;
-    private Set<UserExerciseSet> userExerciseSets = new HashSet<>();
+    private Set<UserExerciseSet> userExerciseSets = new HashSet<>(); //TODO circular reference
 
     public UserExercise addUserExerciseSet(UserExerciseSet userExerciseSet) {
         userExerciseSets.add(userExerciseSet);
-//        userExerciseSet.setUserExercise(this);
+        userExerciseSet.setUserExercise(this);
         return this;
     }
 
     public UserExercise removeUserExerciseSet(UserExerciseSet userExerciseSet) {
         userExerciseSets.remove(userExerciseSet);
-//        userExerciseSet.setUserExercise(null);
+        userExerciseSet.setUserExercise(null);
         return this;
     }
 
@@ -54,4 +52,9 @@ public class UserExercise implements Serializable {
             "id=" + id +
             '}';
     }
+
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
 }
+
