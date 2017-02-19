@@ -1,17 +1,15 @@
 package com.fitnation.login;
-
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 
 public class LoginActivity extends BaseActivity {
-    private static final int VIEW_CONTAINER = R.id.activity_login;
+    protected static int VIEW_CONTAINER = R.id.activity_login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         launchLoginFragment();
     }

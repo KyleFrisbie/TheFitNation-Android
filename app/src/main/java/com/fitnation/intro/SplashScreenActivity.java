@@ -19,27 +19,11 @@ import com.fitnation.login.LoginActivity;
  * SplashScreen for branding
  */
 public class SplashScreenActivity extends BaseActivity {
-    private static final int SPLASH_SCREEN_DELAY = 5000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        launchLoginScreen();
-    }
-
-    private void launchLoginScreen() {
         final Intent loginIntent = new Intent(this, LoginActivity.class);
-
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(loginIntent);
-            }
-        }, SPLASH_SCREEN_DELAY);
+        startActivity(loginIntent);
+        finish();
     }
 }

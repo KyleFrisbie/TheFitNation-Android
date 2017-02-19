@@ -10,17 +10,74 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:text="Google"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="@string/login_screen" />
+        android:id="@+id/google_login_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/facebook_login_button"
+        android:layout_marginBottom="13dp" />
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/facebook_login_button"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="facebook"
+        android:theme="@style/Button"
+        android:layout_above="@+id/google_login_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:text="@string/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login"
-        android:theme="@style/Button"
-        android:layout_centerInParent="true"/>
+        android:id="@+id/login_button"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/facebook_login_button" />
+
+    <Button
+        android:text="Register"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_button"
+        android:layout_below="@+id/login_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/password_editText"
+        android:layout_above="@+id/login_button"
+        android:layout_alignStart="@+id/login_button" />
+
+    <TextView
+        android:text="Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/password_textView"
+        android:layout_above="@+id/password_editText"
+        android:layout_alignStart="@+id/password_editText" />
+
+    <TextView
+        android:text="Username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Username_textView"
+        android:layout_above="@+id/username_editText"
+        android:layout_alignEnd="@+id/password_textView" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/username_editText"
+        android:layout_above="@+id/password_textView"
+        android:layout_alignStart="@+id/password_textView" />
 
 </RelativeLayout>
