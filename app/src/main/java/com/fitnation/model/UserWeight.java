@@ -12,6 +12,10 @@ public class UserWeight extends BaseModel {
     private Date weightDate;
     private Float weight;
 
+    public UserWeight() {
+        weightDate = new Date();
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

@@ -22,6 +22,10 @@ public class UserWorkoutTemplate extends BaseModel {
         this.id = id;
     }
 
+    public UserWorkoutTemplate() {
+        createdOn = new Date();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

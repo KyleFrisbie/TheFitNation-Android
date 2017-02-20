@@ -28,6 +28,13 @@ public class UserDemographic extends BaseModel {
     private WorkoutLog workoutLog;
     private Set<WorkoutTemplate> workoutTemplates = new HashSet<>();
 
+    public UserDemographic() {
+        dob = new Date();
+        skillLevel = SkillLevel.Beginner;
+        unitOfMeasure = UnitOfMeasure.Imperial;
+        gender = Gender.Other;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

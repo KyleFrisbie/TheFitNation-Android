@@ -13,6 +13,10 @@ public class WorkoutTemplate extends BaseModel {
     private Boolean isPrivate;
     private UserDemographic userDemographic;
 
+    public WorkoutTemplate() {
+        createdOn = new Date();
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

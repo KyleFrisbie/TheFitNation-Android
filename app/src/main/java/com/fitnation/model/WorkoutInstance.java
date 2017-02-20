@@ -20,6 +20,10 @@ public class WorkoutInstance extends BaseModel {
     private Set<UserWorkoutInstance> userWorkoutInstances = new HashSet<>();
     private Set<Exercise> exercises = new HashSet<>();
 
+    public WorkoutInstance() {
+        createdOn = new Date();
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
