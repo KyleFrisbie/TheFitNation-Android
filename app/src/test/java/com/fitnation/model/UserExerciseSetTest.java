@@ -23,6 +23,10 @@ public class UserExerciseSetTest {
     @Test
     public void testEquals() throws Exception {
         assertTrue(mUserExerciseSet.equals(mUserExerciseSetClone));
+        assertTrue(mUserExerciseSet.equals(mUserExerciseSet));
+        assertFalse(mUserExerciseSet.equals(null));
+        assertFalse(new UserExerciseSet().equals(mUserExerciseSet));
+        assertFalse(mUserExerciseSet.equals(new String()));
     }
 
     @Test

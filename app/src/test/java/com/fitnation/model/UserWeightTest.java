@@ -23,6 +23,10 @@ public class UserWeightTest {
     @Test
     public void testEquals() throws Exception {
         assertTrue(mUserWeight.equals(mUserWeightClone));
+        assertTrue(mUserWeight.equals(mUserWeight));
+        assertFalse(mUserWeight.equals(null));
+        assertFalse(new UserWeight().equals(mUserWeight));
+        assertFalse(mUserWeight.equals(new String()));
     }
 
     @Test

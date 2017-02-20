@@ -23,6 +23,10 @@ public class UserWorkoutInstanceTest {
     @Test
     public void testEquals() throws Exception {
         assertTrue(mUserWorkoutInstance.equals(mUserWorkoutInstanceClone));
+        assertTrue(mUserWorkoutInstance.equals(mUserWorkoutInstance));
+        assertFalse(mUserWorkoutInstance.equals(null));
+        assertFalse(new UserWorkoutInstance().equals(mUserWorkoutInstance));
+        assertFalse(mUserWorkoutInstance.equals(new String()));
     }
 
     @Test

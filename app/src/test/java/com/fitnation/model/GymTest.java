@@ -23,6 +23,12 @@ public class GymTest {
     @Test
     public void testEquals() throws Exception {
         assertTrue(mGym.equals(mGymClone));
+        assertTrue(mGym.equals(mGym));
+        assertFalse(mGym.equals(null));
+        assertFalse(new Gym().equals(mGym));
+        assertFalse(mGym.equals(new String()));
+        assertFalse(new Gym().equals(mGym));
+        assertFalse(mGym.equals(new String()));
     }
 
     @Test

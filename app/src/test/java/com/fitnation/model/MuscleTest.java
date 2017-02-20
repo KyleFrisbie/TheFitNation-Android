@@ -23,6 +23,10 @@ public class MuscleTest {
     @Test
     public void testEquals() throws Exception {
         assertTrue(mMuscle.equals(mMuscleClone));
+        assertTrue(mMuscle.equals(mMuscle));
+        assertFalse(mMuscle.equals(null));
+        assertFalse(new Muscle().equals(mMuscle));
+        assertFalse(mMuscle.equals(new String()));
     }
 
     @Test

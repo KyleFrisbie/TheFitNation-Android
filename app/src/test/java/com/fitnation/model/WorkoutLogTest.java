@@ -23,6 +23,10 @@ public class WorkoutLogTest {
     @Test
     public void testEquals() throws Exception {
         assertTrue(mWorkoutLog.equals(mWorkoutLogClone));
+        assertTrue(mWorkoutLog.equals(mWorkoutLog));
+        assertFalse(mWorkoutLog.equals(null));
+        assertFalse(new WorkoutLog().equals(mWorkoutLog));
+        assertFalse(mWorkoutLog.equals(new String()));
     }
 
     @Test

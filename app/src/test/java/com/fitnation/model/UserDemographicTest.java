@@ -23,6 +23,10 @@ public class UserDemographicTest {
     @Test
     public void testEquals() throws Exception {
         assertTrue(mUserDemographic.equals(mUserDemographicClone));
+        assertTrue(mUserDemographic.equals(mUserDemographic));
+        assertFalse(mUserDemographic.equals(null));
+        assertFalse(new UserDemographic().equals(mUserDemographic));
+        assertFalse(mUserDemographic.equals(new String()));
     }
 
     @Test

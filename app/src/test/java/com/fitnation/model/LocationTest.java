@@ -23,6 +23,10 @@ public class LocationTest {
     @Test
     public void testEquals() throws Exception {
         assertTrue(mLocation.equals(mLocationClone));
+        assertTrue(mLocation.equals(mLocation));
+        assertFalse(mLocation.equals(null));
+        assertFalse(new Location().equals(mLocation));
+        assertFalse(mLocation.equals(new String()));
     }
 
     @Test

@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runner.notification.Failure;
 import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.*;
@@ -27,6 +28,10 @@ public class ExerciseTest {
     @Test
     public void testEquals() throws Exception {
         assertTrue(mExercise.equals(mExerciseClone));
+        assertTrue(mExercise.equals(mExercise));
+        assertFalse(mExercise.equals(null));
+        assertFalse(new Exercise().equals(mExercise));
+        assertFalse(mExercise.equals(new String()));
     }
 
     @Test

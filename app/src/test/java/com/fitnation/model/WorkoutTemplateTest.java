@@ -23,6 +23,10 @@ public class WorkoutTemplateTest {
     @Test
     public void testEquals() throws Exception {
         assertTrue(mWorkoutTemplate.equals(mWorkoutTemplateClone));
+        assertTrue(mWorkoutTemplate.equals(mWorkoutTemplate));
+        assertFalse(mWorkoutTemplate.equals(null));
+        assertFalse(new WorkoutTemplate().equals(mWorkoutTemplate));
+        assertFalse(mWorkoutTemplate.equals(new String()));
     }
 
     @Test
