@@ -2,8 +2,9 @@
 # The Fit Nation
 
 ## Installation
-* clone repository    
+* clone repository   
 * open root in Android Studio    
+* click hammer(build) or play(run) button
 * or run ./gradlew build    
 
 ## Usage
