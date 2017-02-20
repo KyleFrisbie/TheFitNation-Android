@@ -42,7 +42,7 @@ public class WorkoutTemplate extends BaseModel {
         return "WorkoutTemplate{" +
             "id=" + id +
             ", name='" + name + "'" +
-            ", createdOn='" + createdOn + "'" +
+            ", createdOn='" + createdOn.toString() + "'" +
             ", isPrivate='" + isPrivate + "'" +
             '}';
     }

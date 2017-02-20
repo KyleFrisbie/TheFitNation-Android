@@ -42,7 +42,7 @@ public class ExerciseSet extends BaseModel {
     public String toString() {
         return "ExerciseSet{" +
             "id=" + id +
-            ", order_number='" + orderNumber + "'" +
+            ", orderNumber='" + orderNumber + "'" +
             ", reps='" + reps + "'" +
             ", weight='" + weight + "'" +
             ", rest='" + rest + "'" +

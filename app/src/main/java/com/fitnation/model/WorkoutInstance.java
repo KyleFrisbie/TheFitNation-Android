@@ -49,7 +49,7 @@ public class WorkoutInstance extends BaseModel {
         return "WorkoutInstance{" +
             "id=" + id +
             ", name='" + name + "'" +
-            ", createdOn='" + createdOn + "'" +
+            ", createdOn='" + createdOn.toString() + "'" +
             ", restBetweenInstances='" + restBetweenInstances + "'" +
             ", orderNumber='" + orderNumber + "'" +
             '}';

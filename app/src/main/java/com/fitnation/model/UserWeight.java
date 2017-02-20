@@ -40,7 +40,7 @@ public class UserWeight extends BaseModel {
     public String toString() {
         return "UserWeight{" +
             "id=" + id +
-            ", weight_date='" + weightDate + "'" +
+            ", weightDate='" + weightDate.toString() + "'" +
             ", weight='" + weight + "'" +
             '}';
     }
