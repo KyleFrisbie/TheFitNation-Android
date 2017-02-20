@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.com/KyleFrisbie/TheFitNation-Android.svg?token=xdYzvZBf58eKa1nBA2ue&branch=master)](https://travis-ci.com/KyleFrisbie/TheFitNation-Android)
+.. image:: https://codecov.io/gh/RyanNewsom/TheFitNation-Android/branch/master/badge.svg
+    :target: https://codecov.io/gh/RyanNewsom/TheFitNation-Android
 # The Fit Nation
 
 ## Installation
