@@ -17,6 +17,11 @@ public class UserWorkoutTemplate extends BaseModel {
     private WorkoutLog workoutLog;
     private WorkoutTemplate workoutTemplate;
     private Set<UserWorkoutInstance> userWorkoutInstances = new HashSet<>();
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

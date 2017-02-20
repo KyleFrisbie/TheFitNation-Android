@@ -18,15 +18,6 @@ public class Gym extends BaseModel {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Gym name(String name) {
-        this.name = name;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

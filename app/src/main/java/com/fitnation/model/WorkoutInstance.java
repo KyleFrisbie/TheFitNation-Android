@@ -20,6 +20,10 @@ public class WorkoutInstance extends BaseModel {
     private Set<UserWorkoutInstance> userWorkoutInstances = new HashSet<>();
     private Set<Exercise> exercises = new HashSet<>();
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

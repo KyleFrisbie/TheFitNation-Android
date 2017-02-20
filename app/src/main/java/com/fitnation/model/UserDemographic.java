@@ -28,6 +28,10 @@ public class UserDemographic extends BaseModel {
     private WorkoutLog workoutLog;
     private Set<WorkoutTemplate> workoutTemplates = new HashSet<>();
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

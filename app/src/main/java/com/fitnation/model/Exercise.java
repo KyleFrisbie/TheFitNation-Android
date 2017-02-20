@@ -13,6 +13,14 @@ public class Exercise extends BaseModel {
     private String name;
     private Set<Muscle> muscles = new HashSet<>();
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -29,15 +37,18 @@ public class Exercise extends BaseModel {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
-
-    @Override
     public String toString() {
         return "Exercise{" +
             "id=" + id +
             ", name='" + name + "'" +
             '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (muscles != null ? muscles.hashCode() : 0);
+        return result;
     }
 }

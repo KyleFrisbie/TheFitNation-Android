@@ -10,6 +10,10 @@ public class UserExercise extends BaseModel {
     private Long id;
     private Exercise exercise;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

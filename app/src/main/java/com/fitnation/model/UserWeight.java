@@ -12,6 +12,10 @@ public class UserWeight extends BaseModel {
     private Date weightDate;
     private Float weight;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

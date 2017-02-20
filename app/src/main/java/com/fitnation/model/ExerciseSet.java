@@ -14,6 +14,10 @@ public class ExerciseSet extends BaseModel {
     private Integer rest;
     private Exercise exercise;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -11,6 +11,10 @@ public class UserExerciseSet extends BaseModel {
     private UserExercise userExercise;
     private ExerciseSet exerciseSet;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -36,13 +40,5 @@ public class UserExerciseSet extends BaseModel {
         return "UserExerciseSet{" +
             "id=" + id +
             '}';
-    }
-
-    public void setUserExercise(UserExercise userExercise) {
-        this.userExercise = userExercise;
-    }
-
-    public void setExerciseSet(ExerciseSet exerciseSet) {
-        this.exerciseSet = exerciseSet;
     }
 }

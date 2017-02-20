@@ -1,10 +1,6 @@
 package com.fitnation.model;
 
-import java.io.Serializable;
-
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -13,9 +9,13 @@ import java.util.Objects;
 public class WorkoutTemplate extends BaseModel {
     private Long id;
     private String name;
-    private Date created_on;
-    private Boolean is_private;
+    private Date createdOn;
+    private Boolean isPrivate;
     private UserDemographic userDemographic;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -42,8 +42,8 @@ public class WorkoutTemplate extends BaseModel {
         return "WorkoutTemplate{" +
             "id=" + id +
             ", name='" + name + "'" +
-            ", created_on='" + created_on + "'" +
-            ", is_private='" + is_private + "'" +
+            ", createdOn='" + createdOn + "'" +
+            ", isPrivate='" + isPrivate + "'" +
             '}';
     }
 }
