@@ -40,7 +40,7 @@ public class Gym extends BaseModel {
         return "Gym{" +
             "id=" + id +
             ", name='" + name + "'" +
-            ", location='" + location + "'" +
+            ", location='" + location.toString() + "'" +
             '}';
     }
 }
