@@ -58,11 +58,11 @@ public class UserDemographic extends BaseModel {
             "id=" + id +
             ", first_name='" + firstName + "'" +
             ", last_name='" + lastName + "'" +
-            ", gender='" + gender + "'" +
+            ", gender='" + gender.toString() + "'" +
             ", dob='" + dob + "'" +
             ", height='" + height + "'" +
-            ", skill_level='" + skillLevel+ "'" +
-            ", unit_of_measure='" +  unitOfMeasure + "'" +
+            ", skill_level='" + skillLevel.toString()+ "'" +
+            ", unit_of_measure='" +  unitOfMeasure.toString() + "'" +
             ", is_active='" + isActive + "'" +
             '}';
     }

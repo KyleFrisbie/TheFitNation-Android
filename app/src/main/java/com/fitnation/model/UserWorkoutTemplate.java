@@ -46,7 +46,7 @@ public class UserWorkoutTemplate extends BaseModel {
     public String toString() {
         return "UserWorkoutTemplate{" +
             "id=" + id +
-            ", created_on='" + createdOn + "'" +
+            ", created_on='" + createdOn.toString() + "'" +
             '}';
     }
 }
