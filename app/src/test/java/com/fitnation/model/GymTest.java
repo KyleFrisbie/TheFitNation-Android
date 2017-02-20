@@ -42,7 +42,11 @@ public class GymTest {
 
     @Test
     public void testToString() throws Exception {
-        assertNotNull(mGym.toString());
+        Gym gym = new Gym();
+        Location location = new Location();
+        location.setId(13L);
+        gym.setLocation(location);
+        assertNotNull(gym.toString());
     }
 
 }

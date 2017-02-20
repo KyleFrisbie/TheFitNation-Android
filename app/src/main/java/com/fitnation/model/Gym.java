@@ -15,6 +15,10 @@ public class Gym extends BaseModel {
         this.id = id;
     }
 
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -40,7 +44,7 @@ public class Gym extends BaseModel {
         return "Gym{" +
             "id=" + id +
             ", name='" + name + "'" +
-            ", location='" + location.toString() + "'" +
+            ", location='" + location + "'" +
             '}';
     }
 }
