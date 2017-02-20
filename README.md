@@ -16,7 +16,8 @@ Builds are deployed via Fabric
 2. Create your feature branch: `git checkout -b firstname/feature`    
 3. Commit your changes: `git commit -am 'Add some feature'`    
 4. Push to the branch: `git push origin firstname/feature`    
-5. Submit a pull request :D     
+5. Submit a pull request      
+6. Must maintain total % code coverage of master branch    
 
 ## History
 Started: Spring 2017
