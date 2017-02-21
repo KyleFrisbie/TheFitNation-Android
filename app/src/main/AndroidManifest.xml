@@ -30,6 +30,12 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".intro.SplashScreenActivity">
         </activity>
+
+        <activity android:name=".profile.ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".navigation.NavigationActivity">
+            <category android:name="android.intent.category.PROFILE" />
+        </activity>
     </application>
 
 </manifest>
