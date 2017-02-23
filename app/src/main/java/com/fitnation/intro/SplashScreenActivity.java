@@ -14,6 +14,7 @@ import android.view.animation.Interpolator;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.login.LoginActivity;
+import com.stormpath.sdk.CustomTabActivity;
 
 /**
  * SplashScreen for branding

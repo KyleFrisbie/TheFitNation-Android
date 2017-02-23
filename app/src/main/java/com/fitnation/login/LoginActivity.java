@@ -6,16 +6,19 @@ import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.StormpathConfiguration;
 
 public class LoginActivity extends BaseActivity {
-    protected static int VIEW_CONTAINER = R.id.activity_login;
+    protected static int VIEW_CONTAINER = R.id.Login_FrameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
-                .baseUrl("https://zippy-sword.apps.stormpath.io/")
-                .build();
-        Stormpath.init(this, stormpathConfiguration);
+        //initialize strompath
+        if(!Stormpath.isInitialized()) {
+            StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
+                    .baseUrl("https://zippy-sword.apps.stormpath.io/")
+                    .build();
+            Stormpath.init(this, stormpathConfiguration);
+        }
 
         setContentView(R.layout.activity_login);
         launchLoginFragment();

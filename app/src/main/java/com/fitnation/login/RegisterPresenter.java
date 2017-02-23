@@ -2,7 +2,6 @@ package com.fitnation.login;
 
 import android.content.Intent;
 import android.widget.Toast;
-
 import com.fitnation.base.BaseActivity;
 import com.fitnation.navigation.NavigationActivity;
 import com.stormpath.sdk.Stormpath;
@@ -36,7 +35,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                 Intent launchMain = new Intent(baseActivity, NavigationActivity.class);
                 launchMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-                mView.getBaseActivity().startActivity(launchMain);;
+                mView.getBaseActivity().startActivity(launchMain);
             }
 
             @Override

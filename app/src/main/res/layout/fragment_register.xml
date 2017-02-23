@@ -5,24 +5,65 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:text="@string/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/email_textView"
+        android:labelFor="@+id/email_editText"/>
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Name"
         android:ems="10"
-        android:id="@+id/register_user_editText" />
+        android:id="@+id/email_editText"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:text="@string/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/password_textView"
+        android:labelFor="@+id/password_editText"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/register_password_editText" />
+        android:id="@+id/password_editText" />
 
-    <Button
-        android:text="Register"
+    <TextView
+        android:text="@string/first_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/register_register_button" />
+        android:id="@+id/firstName_textView"
+        android:labelFor="@+id/first_name_editText"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/first_name_editText" />
+
+    <TextView
+        android:text="@string/last_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lastName_textView"
+        android:labelFor="@+id/last_name_editText"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/last_name_editText" />
+
+    <Button
+        android:text="@string/register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_button" />
 </LinearLayout>

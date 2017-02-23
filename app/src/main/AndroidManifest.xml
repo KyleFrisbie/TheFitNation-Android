@@ -26,13 +26,10 @@
             </intent-filter>
 
         </activity >
-        <activity android:name=".login.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".intro.SplashScreenActivity">
-        </activity>
 
         <activity android:name="com.stormpath.sdk.CustomTabActivity"
-            android:exported="true">
+            android:exported="true"
+            android:parentActivityName=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -40,6 +37,13 @@
                 <data android:scheme="io.stormpath.apps.zippy-sword" />
             </intent-filter>
         </activity>
+
+
+        <activity android:name=".login.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".intro.SplashScreenActivity">
+        </activity>
     </application>
+
 
 </manifest>

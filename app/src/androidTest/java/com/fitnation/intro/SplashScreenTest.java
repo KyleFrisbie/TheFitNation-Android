@@ -38,9 +38,7 @@ public class SplashScreenTest extends InstrumentationTest {
     }
 
     @After
-    public void tearDown() {
-        super.tearDown(mActivityRule.getActivity());
-    }
+    public void tearDown() { super.tearDown(mActivityRule.getActivity()); }
 
     @Test
     public void SplashScreenAppears() {

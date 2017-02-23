@@ -1,20 +1,14 @@
 package com.fitnation.login;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
-import com.stormpath.sdk.Stormpath;
-import com.stormpath.sdk.StormpathCallback;
-import com.stormpath.sdk.models.RegistrationForm;
-import com.stormpath.sdk.models.StormpathError;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,9 +17,9 @@ import butterknife.OnClick;
 public class RegisterFragment extends BaseFragment implements RegisterContract.View{
     private RegisterContract.Presenter mPresenter;
 
-    @BindView(R.id.register_register_button) public Button mRegisterButton;
-    @BindView(R.id.register_user_editText) public EditText mEmail;
-    @BindView(R.id.register_password_editText) public EditText mPassword;
+    @BindView(R.id.register_button) public Button mRegisterButton;
+    @BindView(R.id.email_editText) public EditText mEmail;
+    @BindView(R.id.password_editText) public EditText mPassword;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -51,7 +45,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
         mPresenter.start();
     }
 
-    @OnClick(R.id.register_register_button)
+    @OnClick(R.id.register_button)
     public void onRegisterButtonPressed() {
         String userEmail = mEmail.getText().toString();
         String userPassword = mPassword.getText().toString();

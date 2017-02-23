@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,40 +12,43 @@
     android:orientation="vertical">
 
     <Button
-        android:text="Google"
+        android:text="@string/google"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/google_login_button"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/facebook_login_button"
-        android:layout_marginBottom="13dp" />
+        android:layout_marginBottom="13dp"
+        style="@style/Widget.AppCompat.Button" />
 
     <Button
         android:id="@+id/facebook_login_button"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="facebook"
+        android:text="@string/facebook"
         android:theme="@style/Button"
         android:layout_above="@+id/google_login_button"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp" />
 
     <Button
-        android:text="@string/login"
+        android:text="@string/forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/login_button"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/facebook_login_button" />
+        android:id="@+id/forgot_password_button"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_below="@+id/password_editText"
+        android:layout_alignParentEnd="true" />
 
     <Button
-        android:text="Register"
-        android:layout_width="200dp"
+        android:text="@string/register"
         android:layout_height="wrap_content"
         android:id="@+id/register_button"
-        android:layout_below="@+id/login_button"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="100dp"
+        android:layout_above="@+id/facebook_login_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp" />
+        android:layout_marginBottom="13dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -53,31 +57,50 @@
         android:ems="10"
         android:id="@+id/password_editText"
         android:layout_above="@+id/login_button"
-        android:layout_alignStart="@+id/login_button" />
+        android:layout_alignStart="@+id/email_editText" />
 
     <TextView
-        android:text="Password"
+        android:text="@string/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/email_textView"
+        android:layout_above="@+id/email_editText"
+        android:layout_alignStart="@+id/password_textView"
+        android:labelFor="@+id/email_editText"/>
+
+    <TextView
+        android:text="@string/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/password_textView"
         android:layout_above="@+id/password_editText"
-        android:layout_alignStart="@+id/password_editText" />
+        android:layout_alignStart="@+id/login_button"
+        android:labelFor="@+id/password_editText"/>
 
-    <TextView
-        android:text="Username"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/username_textView"
-        android:layout_above="@+id/username_editText"
-        android:layout_alignEnd="@+id/password_textView" />
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/logo_imageView"
+        android:contentDescription="@string/fit_nation_logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/username_editText"
+        android:id="@+id/email_editText"
+        android:inputType="textEmailAddress"
         android:layout_above="@+id/password_textView"
         android:layout_alignStart="@+id/password_textView" />
+
+    <Button
+        android:text="@string/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_button"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/register_button" />
 
 </RelativeLayout>

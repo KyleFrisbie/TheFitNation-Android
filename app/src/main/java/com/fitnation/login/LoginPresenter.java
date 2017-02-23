@@ -1,20 +1,12 @@
 package com.fitnation.login;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.widget.Toast;
-
 import com.fitnation.base.BaseActivity;
 import com.fitnation.navigation.NavigationActivity;
-import com.stormpath.sdk.Provider;
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.StormpathCallback;
-import com.stormpath.sdk.models.RegistrationForm;
 import com.stormpath.sdk.models.StormpathError;
-
-import butterknife.OnClick;
 
 import static com.fitnation.login.LoginActivity.VIEW_CONTAINER;
 
@@ -30,7 +22,8 @@ public class LoginPresenter implements LoginContract.Presenter{
     @Override
     public void onFacebookLoginPressed() {
         //unworking code section...has something to do with not being able to use startActivity
-        /*Stormpath.loginWithProvider(Provider.FACEBOOK, this, new StormpathCallback<Void>() {
+        /*
+        Stormpath.loginWithProvider(Provider.FACEBOOK, this, new StormpathCallback<Void>() {
 
             @Override
             public void onSuccess(Void aVoid) {
@@ -78,6 +71,7 @@ public class LoginPresenter implements LoginContract.Presenter{
                 BaseActivity baseActivity = mView.getBaseActivity();
                 Intent launchMain = new Intent(baseActivity, NavigationActivity.class);
                 launchMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                launchMain.putExtra("Token", token);
 
                 mView.getBaseActivity().startActivity(launchMain);
             }
