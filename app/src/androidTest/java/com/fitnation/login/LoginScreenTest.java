@@ -50,16 +50,16 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.facebook_login_button)).check(matches(isDisplayed()));
         onView(withId(R.id.google_login_button)).check(matches(isDisplayed()));
         onView(withId(R.id.password_textView)).check(matches(isDisplayed()));
-        onView(withId(R.id.username_textView)).check(matches(isDisplayed()));
-        onView(withId(R.id.username_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.email_textView)).check(matches(isDisplayed()));
+        onView(withId(R.id.email_editText)).check(matches(isDisplayed()));
         onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
     }
     @Test
     public void TestRegisterButtonPressed(){
         onView(withId(R.id.register_button)).perform(click());
-        onView(withId(R.id.register_register_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.register_user_editText)).check(matches(isDisplayed()));
-        onView(withId(R.id.register_password_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.register_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.email_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
     }
 
     @Test
