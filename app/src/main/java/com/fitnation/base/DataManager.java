@@ -9,9 +9,10 @@ import io.realm.Realm;
 import io.realm.RealmObject;
 
 /**
- * Created by Ryan on 2/25/2017.
+ * Controls access to Data
+ * Do not create an instance directly unless for a test.
+ * extend this class
  */
-
 public class DataManager {
     private static final String TAG = "DataManager";
 
@@ -23,6 +24,9 @@ public class DataManager {
 
     /**
      * Saves/Updates data to the local data store
+     * @param data - data to be saved
+     * @param resultCallback - notified upon result of save
+     * @param <T> - generic data type
      */
     public <T extends RealmObject> void saveData(final T data, final DataResult resultCallback) {
 
@@ -47,7 +51,10 @@ public class DataManager {
     }
 
     /**
-     * Saves/Updates collection to the local data store
+     * Saves/Updates a collection of data to the local data store
+     * @param data  - collection to be saved
+     * @param resultCallback - notified upon result of save
+     * @param <T> - generic data type
      */
     public <T extends RealmObject> void saveData(final Collection<T> data, final DataResult resultCallback) {
 
