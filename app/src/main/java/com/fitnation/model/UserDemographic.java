@@ -21,11 +21,11 @@ public class UserDemographic extends RealmObject {
     private Long id;
     private String firstName;
     private String lastName;
-//    private GenderString genderFactory;
+    private String gender;
     private Date dob;
     private Integer height;
-//    private SkillLevel skillLevel;
-//    private UnitOfMeasure unitOfMeasure;
+    private String skillLevel;
+    private String unitOfMeasure;
     private Boolean isActive;
     private RealmList<Gym> gyms;
     private RealmList<UserWeight> userWeights;
@@ -34,8 +34,8 @@ public class UserDemographic extends RealmObject {
 
     public UserDemographic() {
         dob = new Date();
-//        skillLevel = SkillLevel.Beginner;
-//        unitOfMeasure = UnitOfMeasure.Imperial;
+        skillLevel = SkillLevel.BEGINNER;
+        unitOfMeasure = UnitOfMeasure.IMPERIAL;
     }
 
     public void setId(Long id) {
@@ -68,11 +68,11 @@ public class UserDemographic extends RealmObject {
             "id=" + id +
             ", first_name='" + firstName + "'" +
             ", last_name='" + lastName + "'" +
-//            ", genderFactory='" + genderFactory.toString() + "'" +
+            ", gender='" + gender + "'" +
             ", dob='" + dob + "'" +
             ", height='" + height + "'" +
-//            ", skill_level='" + skillLevel.toString()+ "'" +
-//            ", unit_of_measure='" +  unitOfMeasure.toString() + "'" +
+            ", skill_level='" + skillLevel + "'" +
+            ", unit_of_measure='" +  unitOfMeasure + "'" +
             ", is_active='" + isActive + "'" +
             '}';
     }

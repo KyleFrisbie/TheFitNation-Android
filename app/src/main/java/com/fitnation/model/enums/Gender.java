@@ -3,8 +3,10 @@ package com.fitnation.model.enums;
 /**
  * The GenderString enumeration.
  */
-public enum Gender {
-    Male, Female, Other
+public class Gender {
+    public static final String MALE = "Male";
+    public static final String FEMALE = "Female";
+    public static final String OTHER = "Other";
 }
 
 

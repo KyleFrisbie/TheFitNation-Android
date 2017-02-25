@@ -9,8 +9,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * A single User weight instance
  */
-public class
-UserWeight extends RealmObject {
+public class UserWeight extends RealmObject {
     @PrimaryKey
     private Long androidId;
     private Long id;
