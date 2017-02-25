@@ -1,12 +1,16 @@
 package com.fitnation.model;
 
-import java.io.Serializable;
 import java.util.Objects;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * A single set of some Exercise
  */
-public class ExerciseSet extends BaseModel {
+public class ExerciseSet extends RealmObject {
+    @PrimaryKey
+    private Long androidId;
     private Long id;
     private Integer orderNumber;
     private Integer reps;

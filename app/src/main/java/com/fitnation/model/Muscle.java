@@ -1,13 +1,17 @@
 package com.fitnation.model;
 
-import java.io.Serializable;
 import java.util.Objects;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * A Muscle.
  */
-public class Muscle extends BaseModel {
-    private Long id;
+public class Muscle extends RealmObject {
+    @PrimaryKey
+    private Long androidId;
+    private long id;
     private String name;
 
     public void setId(Long id) {
@@ -23,9 +27,7 @@ public class Muscle extends BaseModel {
             return false;
         }
         Muscle muscle = (Muscle) o;
-        if (muscle.id == null || id == null) {
-            return false;
-        }
+
         return Objects.equals(id, muscle.id);
     }
 

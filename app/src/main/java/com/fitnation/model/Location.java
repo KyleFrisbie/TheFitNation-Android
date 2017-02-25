@@ -1,11 +1,14 @@
 package com.fitnation.model;
 
-import java.io.Serializable;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Represents a Location somewhere in the World
  */
-public class Location extends BaseModel {
+public class Location extends RealmObject {
+    @PrimaryKey
+    private Long androidId;
     private Long id;
     private Double longitude;
     private Double latitude;

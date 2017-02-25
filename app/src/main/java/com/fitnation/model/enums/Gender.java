@@ -1,7 +1,7 @@
 package com.fitnation.model.enums;
 
 /**
- * The Gender enumeration.
+ * The GenderString enumeration.
  */
 public enum Gender {
     Male, Female, Other

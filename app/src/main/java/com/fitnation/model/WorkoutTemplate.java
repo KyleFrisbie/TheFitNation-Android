@@ -3,10 +3,15 @@ package com.fitnation.model;
 import java.util.Date;
 import java.util.Objects;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * A WorkoutTemplate.
  */
-public class WorkoutTemplate extends BaseModel {
+public class WorkoutTemplate extends RealmObject {
+    @PrimaryKey
+    private Long androidId;
     private Long id;
     private String name;
     private Date createdOn;

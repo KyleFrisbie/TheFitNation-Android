@@ -1,42 +1,45 @@
 package com.fitnation.model;
 
-import com.fitnation.model.enums.Gender;
 import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.model.enums.UnitOfMeasure;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Information about a user and their data
  */
-public class UserDemographic extends BaseModel {
+public class UserDemographic extends RealmObject {
+    @PrimaryKey
+    private Long androidId;
     private Long id;
     private String firstName;
     private String lastName;
-    private Gender gender;
+//    private GenderString genderFactory;
     private Date dob;
     private Integer height;
-    private SkillLevel skillLevel;
-    private UnitOfMeasure unitOfMeasure;
+//    private SkillLevel skillLevel;
+//    private UnitOfMeasure unitOfMeasure;
     private Boolean isActive;
-    private Set<Gym> gyms = new HashSet<>();
-    private Set<UserWeight> userWeights = new HashSet<>();
+    private RealmList<Gym> gyms;
+    private RealmList<UserWeight> userWeights;
     private WorkoutLog workoutLog;
-    private Set<WorkoutTemplate> workoutTemplates = new HashSet<>();
+    private RealmList<WorkoutTemplate> workoutTemplates;
 
     public UserDemographic() {
         dob = new Date();
-        skillLevel = SkillLevel.Beginner;
-        unitOfMeasure = UnitOfMeasure.Imperial;
-        gender = Gender.Other;
+//        skillLevel = SkillLevel.Beginner;
+//        unitOfMeasure = UnitOfMeasure.Imperial;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        androidId = id;
     }
 
     @Override
@@ -65,11 +68,11 @@ public class UserDemographic extends BaseModel {
             "id=" + id +
             ", first_name='" + firstName + "'" +
             ", last_name='" + lastName + "'" +
-            ", gender='" + gender.toString() + "'" +
+//            ", genderFactory='" + genderFactory.toString() + "'" +
             ", dob='" + dob + "'" +
             ", height='" + height + "'" +
-            ", skill_level='" + skillLevel.toString()+ "'" +
-            ", unit_of_measure='" +  unitOfMeasure.toString() + "'" +
+//            ", skill_level='" + skillLevel.toString()+ "'" +
+//            ", unit_of_measure='" +  unitOfMeasure.toString() + "'" +
             ", is_active='" + isActive + "'" +
             '}';
     }

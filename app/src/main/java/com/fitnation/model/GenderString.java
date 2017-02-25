@@ -1,10 +1,13 @@
 package com.fitnation.model;
 
-import com.fitnation.model.enums.Gender;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Ryan on 2/25/2017.
  */
 public class GenderString {
+    @PrimaryKey
+    private Long androidId;
+
     public String description;
 }
