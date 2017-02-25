@@ -44,22 +44,22 @@ public class UserDemographic extends RealmObject {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserDemographic that = (UserDemographic) o;
+
+        if (androidId != null ? !androidId.equals(that.androidId) : that.androidId != null)
             return false;
-        }
-        UserDemographic userDemographic = (UserDemographic) o;
-        if (userDemographic.id == null || id == null) {
-            return false;
-        }
-        return Objects.equals(id, userDemographic.id);
+        return id != null ? id.equals(that.id) : that.id == null;
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        int result = androidId != null ? androidId.hashCode() : 0;
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        return result;
     }
 
     @Override

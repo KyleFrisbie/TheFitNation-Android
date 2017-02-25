@@ -80,6 +80,6 @@ public class TestRealmSaving extends InstrumentationTest {
         // Execute the query:
         RealmResults<UserDemographic> result1 = query.findAll();
 
-        Assert.assertTrue(result1.size() >= 1);
+        Assert.assertTrue(result1.size() == 1);
     }
 }
