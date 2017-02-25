@@ -9,11 +9,9 @@ import io.realm.Realm;
 import io.realm.RealmObject;
 
 /**
- * Controls access to Data
- * Do not create an instance directly unless for a test.
- * extend this class
+ * All DataManagers control access to data for their presenter
  */
-public class DataManager {
+public abstract class DataManager {
     private static final String TAG = "DataManager";
 
     /**

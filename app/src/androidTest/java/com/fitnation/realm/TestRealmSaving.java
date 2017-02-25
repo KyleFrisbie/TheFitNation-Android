@@ -44,7 +44,7 @@ public class TestRealmSaving extends InstrumentationTest {
     @Test
     public void testDataIsPersisted() throws Exception {
         final Object syncObject = new Object();
-        final DataManager dataManager = new DataManager();
+        final DataManager dataManager = new TestDataManager();
         final UserDemographic userDemographic = new UserDemographic();
         userDemographic.setId(USER_ID);
         dataManager.saveData(userDemographic, new DataResult() {
