@@ -1,14 +1,14 @@
 package com.fitnation.model;
 
-import java.io.Serializable;
-
 import java.util.Date;
 import java.util.Objects;
+
+import io.realm.RealmObject;
 
 /**
  * A workout that has/will been/be performed by a User
  */
-public class UserWorkoutInstance extends BaseModel {
+public class UserWorkoutInstance extends RealmObject {
     private Long id;
     private Date createdOn;
     private Boolean wasCompleted;

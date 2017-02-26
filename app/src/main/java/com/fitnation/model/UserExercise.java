@@ -1,12 +1,16 @@
 package com.fitnation.model;
 
-import java.io.Serializable;
 import java.util.Objects;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * A Exercise a User has taken ownership of
  */
-public class UserExercise extends BaseModel {
+public class UserExercise extends RealmObject {
+    @PrimaryKey
+    private Long androidId;
     private Long id;
     private Exercise exercise;
 

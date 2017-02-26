@@ -1,12 +1,16 @@
 package com.fitnation.model;
 
-import java.io.Serializable;
 import java.util.Objects;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * A Gym.
  */
-public class Gym extends BaseModel {
+public class Gym extends RealmObject {
+    @PrimaryKey
+    private Long androidId;
     private Long id;
     private String name;
     private Location location;

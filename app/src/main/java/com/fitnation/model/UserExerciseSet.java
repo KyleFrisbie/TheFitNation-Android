@@ -1,12 +1,16 @@
 package com.fitnation.model;
 
-import java.io.Serializable;
 import java.util.Objects;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * A single set of an Exercise that a User has/will perform
  */
-public class UserExerciseSet extends BaseModel {
+public class UserExerciseSet extends RealmObject {
+    @PrimaryKey
+    private Long androidId;
     private Long id;
     private UserExercise userExercise;
     private ExerciseSet exerciseSet;
