@@ -16,8 +16,10 @@ android {
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
 
-        debug {
-            testCoverageEnabled true
+            debug {
+                testCoverageEnabled true
+                testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+            }
         }
     }
 }
