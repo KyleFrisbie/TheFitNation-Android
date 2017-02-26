@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
+import com.stormpath.sdk.Stormpath;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,6 +89,8 @@ public class NavigationActivity extends BaseActivity
 
         } else if (id == R.id.nav_my_profile) {
 
+        } else if (id == R.id.nav_logout){
+            Stormpath.logout();
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
