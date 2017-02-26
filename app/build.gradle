@@ -41,6 +41,10 @@ dependencies {
     androidTestCompile 'com.android.support:support-v4:25.1.0'
     androidTestCompile 'com.android.support:appcompat-v7:25.1.0'
     androidTestCompile 'com.android.support:design:25.1.0'
+    
+    //Realm dataAdapters
+    compile 'io.realm:android-adapters:1.4.0'
+    
     //Design
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
