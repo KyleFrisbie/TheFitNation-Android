@@ -4,8 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
@@ -14,41 +15,40 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RegisterFragment extends BaseFragment implements RegisterContract.View{
-    private RegisterContract.Presenter mPresenter;
+public class ForgotLoginFragment extends BaseFragment implements ForgotLoginContract.View{
+    private ForgotLoginContract.Presenter mPresenter;
 
-    @BindView(R.id.registerEmail_editText) public EditText mEmail;
-    @BindView(R.id.registerPassword_editText) public EditText mPassword;
-    @BindView(R.id.first_name_editText) public EditText mFirstName;
-    @BindView(R.id.last_name_editText) public EditText mLastName;
+    String email;
+    @BindView(R.id.resetPassword_editText) public EditText mResetPasswordEditText;
 
-    public RegisterFragment() {
+    public ForgotLoginFragment() {
         // Required empty public constructor
     }
 
-    public static RegisterFragment newInstance() {
-        return new RegisterFragment();
+    public static ForgotLoginFragment newInstance() {
+        return new ForgotLoginFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_register, container, false);
+        View v = inflater.inflate(R.layout.fragment_forgot_login, container, false);
         ButterKnife.bind(this, v);
 
         return v;
+    }
+
+    @OnClick(R.id.resetPassword_button)
+    public void onResetPasswordButtonPressed() {
+        email = mResetPasswordEditText.getText().toString();
+        mPresenter.onResetPasswordButtonPressed(email);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         mPresenter.start();
-    }
-
-    @OnClick(R.id.register_button)
-    public void onRegisterButtonPressed() {
-        mPresenter.onRegisterCreatePressed(mEmail.getText().toString(), mPassword.getText().toString());
     }
 
     @Override
@@ -62,7 +62,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     }
 
     @Override
-    public void setPresenter(RegisterContract.Presenter presenter) { mPresenter = presenter; }
+    public void setPresenter(ForgotLoginContract.Presenter presenter) { mPresenter = presenter; }
 
     @Override
     public BaseActivity getBaseActivity() {

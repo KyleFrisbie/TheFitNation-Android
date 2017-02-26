@@ -15,8 +15,9 @@ public interface LoginContract {
 
     interface Presenter extends BasePresenter {
         void onFacebookLoginPressed();
-        void onGoogleSignInPressed();
-        void onRegisterButtonPressed();
+        void onGoogleLoginPressed();
+        void onForgotLoginButtonPressed();
         void onLoginPressed(String userName, String password);
+        void onSignUpButtonPressed();
     }
 }

@@ -11,96 +11,94 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical">
 
-    <Button
-        android:text="@string/google"
-        android:layout_width="200dp"
+    <ImageView
+        android:id="@+id/logo_imageView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/google_login_button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/facebook_login_button"
-        android:layout_marginBottom="13dp"
-        style="@style/Widget.AppCompat.Button" />
+        app:srcCompat="@mipmap/ic_launcher"
+        android:contentDescription="@string/fit_nation_logo"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
-    <Button
-        android:id="@+id/facebook_login_button"
-        android:layout_width="200dp"
+    <EditText
+        android:id="@+id/email_editText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/facebook"
-        android:theme="@style/Button"
-        android:layout_above="@+id/google_login_button"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:background="@color/loginEditText"
+        android:hint="@string/email"
+        android:padding="6dp"
+        android:layout_above="@+id/password_editText"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="6dp" />
 
     <Button
+        android:id="@+id/forgot_password_button"
         android:text="@string/forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/forgot_password_button"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_below="@+id/password_editText"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/login_button"
+        android:layout_centerHorizontal="true" />
 
     <Button
-        android:text="@string/register"
+        android:id="@+id/login_button"
+        android:text="@string/login"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/register_button"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_width="100dp"
-        android:layout_above="@+id/facebook_login_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="13dp" />
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/password_editText"
+        android:layout_alignEnd="@+id/password_editText"
+        android:padding="6dp" />
 
     <EditText
+        android:id="@+id/password_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/password_editText"
+        android:background="@color/loginEditText"
+        android:hint="@string/password"
+        android:padding="6dp"
         android:layout_above="@+id/login_button"
-        android:layout_alignStart="@+id/email_editText" />
-
-    <TextView
-        android:text="@string/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/email_textView"
-        android:layout_above="@+id/email_editText"
-        android:layout_alignStart="@+id/password_textView"
-        android:labelFor="@+id/email_editText"/>
-
-    <TextView
-        android:text="@string/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/password_textView"
-        android:layout_above="@+id/password_editText"
-        android:layout_alignStart="@+id/login_button"
-        android:labelFor="@+id/password_editText"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
-        android:id="@+id/logo_imageView"
-        android:contentDescription="@string/fit_nation_logo"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <EditText
+    <TextView
+        android:id="@+id/signUp_textView"
+        android:text="@string/no_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/email_editText"
-        android:inputType="textEmailAddress"
-        android:layout_above="@+id/password_textView"
-        android:layout_alignStart="@+id/password_textView" />
+        android:layout_alignBaseline="@+id/signUp_button"
+        android:layout_alignBottom="@+id/signUp_button"
+        android:layout_alignStart="@+id/login_button" />
 
     <Button
-        android:text="@string/login"
+        android:id="@+id/signUp_button"
+        android:text="@string/sign_up"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/logo_imageView" />
+
+    <Button
+        android:id="@+id/google_login_button"
+        android:text="@string/google"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/login_button"
-        android:layout_centerVertical="true"
-        android:layout_toStartOf="@+id/register_button" />
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_above="@+id/signUp_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="6dp" />
+
+    <Button
+        android:id="@+id/facebook_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/facebook"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_above="@+id/google_login_button"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

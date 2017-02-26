@@ -32,7 +32,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class LoginScreenTest extends InstrumentationTest {
 
     @Rule
-    public ActivityTestRule<LoginActivity> mActivityRule = new ActivityTestRule(LoginActivity.class);
+    public ActivityTestRule<LoginActivity> mActivityRule = new ActivityTestRule<>(LoginActivity.class);
 
     @Before
     public void setUp() {
@@ -45,49 +45,60 @@ public class LoginScreenTest extends InstrumentationTest {
     }
 
     @Test
+    public void testLoginScreen() {
+        testLoginScreenIsDisplayed();
+        onView(withId(R.id.signUp_button)).perform(click());
+        testRegisterScreenIsDisplayed();
+        pressBack();
+        onView(withId(R.id.forgot_password_button)).perform(click());
+        testForgotLoginScreenIsDisplayed();
+        pressBack();
+        testOnGoogleLoginPressed();
+        testOnFacebookLoginPressed();
+        testMainActivityLaunchedUponLogin();
+    }
+
+
     public void testOnGoogleLoginPressed(){
         onView(withId(R.id.google_login_button)).perform(click());
     }
 
-    @Test
     public void testOnFacebookLoginPressed(){
-        //onView(withId(R.id.facebook_login_button)).perform(click());
+        onView(withId(R.id.facebook_login_button)).perform(click());
     }
 
-    @Test
     public void testMainActivityLaunchedUponLogin() {
         onView(withId(R.id.email_editText)).perform(typeText("user@example.com"));
         onView(withId(R.id.password_editText)).perform(typeText("Pa55w0rd"));
         onView(withId(R.id.login_button)).perform(click());
+
         //onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
         //onView(withText(R.string.app_name)).check(matches(isDisplayed()));
         //onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
     }
 
-    @Test
-    public void loginScreenIsDisplayed() {
+    public void testLoginScreenIsDisplayed() {
+        onView(withId(R.id.activity_login)).check(matches(isDisplayed()));
         onView(withId(R.id.login_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.register_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.signUp_button)).check(matches(isDisplayed()));
         onView(withId(R.id.facebook_login_button)).check(matches(isDisplayed()));
         onView(withId(R.id.google_login_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.password_textView)).check(matches(isDisplayed()));
-        onView(withId(R.id.email_textView)).check(matches(isDisplayed()));
         onView(withId(R.id.email_editText)).check(matches(isDisplayed()));
         onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.signUp_textView)).check(matches(isDisplayed()));
+        onView(withId(R.id.logo_imageView)).check(matches(isDisplayed()));
     }
 
-    @Test
-    public void registerScreenIsDisplayed(){
+    public void testRegisterScreenIsDisplayed(){
         onView(withId(R.id.register_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.email_editText)).check(matches(isDisplayed()));
-        onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.registerEmail_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.registerPassword_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.first_name_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.last_name_editText)).check(matches(isDisplayed()));
     }
 
-    @Test
-    public void TestRegisterButtonPressed() {
-        onView(withId(R.id.register_button)).perform(click());
-        onView(withId(R.id.email_editText)).perform(typeText("user@example.com"));
-        onView(withId(R.id.password_editText)).perform(typeText("Pa55w0rd"));
-        registerScreenIsDisplayed();
+    public void testForgotLoginScreenIsDisplayed(){
+        onView(withId(R.id.resetPassword_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.resetPassword_editText)).check(matches(isDisplayed()));
     }
 }

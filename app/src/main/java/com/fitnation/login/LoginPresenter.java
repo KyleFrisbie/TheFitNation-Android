@@ -1,9 +1,11 @@
 package com.fitnation.login;
 
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.navigation.NavigationActivity;
+import com.stormpath.sdk.Provider;
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.StormpathCallback;
 import com.stormpath.sdk.models.StormpathError;
@@ -43,7 +45,7 @@ public class LoginPresenter implements LoginContract.Presenter{
     }
 
     @Override
-    public void onGoogleSignInPressed() {
+    public void onGoogleLoginPressed() {
         //unworking code section...has something to do with not being able to use startActivity
         /*
         Stormpath.loginWithProvider(Provider.GOOGLE, mView.getBaseActivity(), new StormpathCallback<Void>() {
@@ -86,12 +88,21 @@ public class LoginPresenter implements LoginContract.Presenter{
     }
 
     @Override
-    public void onRegisterButtonPressed() {
+    public void onSignUpButtonPressed() {
         RegisterFragment registerFragment = RegisterFragment.newInstance();
         registerFragment.setPresenter(new RegisterPresenter(registerFragment));
         mView.getBaseActivity().getSupportFragmentManager().beginTransaction()
-                .addToBackStack("back")
+                .addToBackStack("login")
                 .replace(VIEW_CONTAINER, registerFragment).commit();
+    }
+
+    @Override
+    public void onForgotLoginButtonPressed() {
+        ForgotLoginFragment forgotLoginFragment = ForgotLoginFragment.newInstance();
+        forgotLoginFragment.setPresenter(new ForgotLoginPresenter(forgotLoginFragment));
+        mView.getBaseActivity().getSupportFragmentManager().beginTransaction()
+                .addToBackStack("login")
+                .replace(VIEW_CONTAINER, forgotLoginFragment).commit();
     }
 
     @Override

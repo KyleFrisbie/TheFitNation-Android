@@ -11,12 +11,19 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
-    <string name="forgot_password">Forgot Passowrd</string>
-    <string name="facebook">Facebook</string>
-    <string name="google">Google</string>
+    <string name="sign_up">Sign up!</string>
+    <string name="no_account">Dont have and account?</string>
+    <string name="forgot_password">Forgot login details</string>
+    <string name="facebook">Login with Facebook</string>
+    <string name="google">Login with Google</string>
+    <string name="fit_nation_logo">Fit Nation Logo</string>
+
+    <string name="reset_password">Reset Password</string>
+    <string name="resend_email">Resend email</string>
+
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="fit_nation_logo">Fit Nation Logo</string>
+
     <string name="login_screen">Login Fragment</string>
     <string name="main_container">Main Container</string>
     <string name="start_workout">Start Workout</string>

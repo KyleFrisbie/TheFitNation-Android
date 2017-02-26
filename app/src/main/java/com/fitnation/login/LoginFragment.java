@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
-
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
@@ -16,16 +14,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
-/**
- * View for login
- */
 public class LoginFragment extends BaseFragment implements LoginContract.View {
     private LoginContract.Presenter mPresenter;
 
-    @BindView(R.id.login_button) public Button mLoginButton;
-    @BindView(R.id.google_login_button) public Button mGoogleLoginButton;
-    @BindView(R.id.facebook_login_button) public Button mFacebookLoginButton;
     @BindView(R.id.email_editText) public EditText mUsernameEditText;
     @BindView(R.id.password_editText) public EditText mPasswordEditText;
 
@@ -54,25 +45,29 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         mPresenter.start();
     }
 
+    /**
+     * on facebook button pressed will launch the stormpath social login for facebook
+     */
     @OnClick(R.id.facebook_login_button)
     public void onFacebookLoginButtonClicked() {
         mPresenter.onFacebookLoginPressed();
     }
 
+
     @OnClick(R.id.google_login_button)
-    public void onGoogleLoginButtonClicked() { mPresenter.onGoogleSignInPressed();}
+    public void onGoogleLoginButtonClicked() { mPresenter.onGoogleLoginPressed();}
 
     @OnClick(R.id.login_button)
     public void onLoginButtonClicked() {
-        String userName = mUsernameEditText.getText().toString();
-        String password = mPasswordEditText.getText().toString();
-        mPresenter.onLoginPressed(userName, password);
+        mPresenter.onLoginPressed(mUsernameEditText.getText().toString(),
+                                  mPasswordEditText.getText().toString());
     }
 
-    @OnClick(R.id.register_button)
-    public void onRegisterButtonClicked() {
-        mPresenter.onRegisterButtonPressed();
-        }
+    @OnClick(R.id.signUp_button)
+    public void onSignUpButtonClicked() { mPresenter.onSignUpButtonPressed(); }
+
+    @OnClick(R.id.forgot_password_button)
+    public void onForgotLoginButtonClicked() { mPresenter.onForgotLoginButtonPressed(); }
 
     @Override
     public void showProgress() {
