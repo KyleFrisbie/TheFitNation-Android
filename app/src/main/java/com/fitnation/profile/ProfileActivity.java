@@ -20,7 +20,7 @@ public class ProfileActivity extends BaseActivity{
     }
 
     private void launchProfileFragment() {
-        ProfileView profileFragment = ProfileView.newInstance();
+        ProfileFragment profileFragment = ProfileFragment.newInstance();
         profileFragment.setPresenter(new ProfilePresenter(profileFragment));
         getSupportFragmentManager().beginTransaction()
                 .replace(VIEW_CONTAINER, profileFragment).commit();

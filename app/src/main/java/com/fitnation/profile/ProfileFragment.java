@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
-import com.fitnation.login.LoginContract;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +20,7 @@ import butterknife.OnClick;
  */
 
 
-public class ProfileView extends BaseFragment implements ProfileContract.View {
+public class ProfileFragment extends BaseFragment implements ProfileContract.View {
 
     private ProfileContract.Presenter mPresenter;
 
@@ -32,12 +30,12 @@ public class ProfileView extends BaseFragment implements ProfileContract.View {
     @BindView(R.id.ageButton) public EditText mAgeButton;
     @BindView(R.id.lifterTypeButton) public EditText mLifterButton;
 
-    public ProfileView() {
+    public ProfileFragment() {
         // Empty constructor
     }
 
-    public static ProfileView newInstance() {
-        return new ProfileView();
+    public static ProfileFragment newInstance() {
+        return new ProfileFragment();
     }
 
     @Override
