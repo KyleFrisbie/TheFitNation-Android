@@ -1,6 +1,8 @@
 package com.fitnation.login;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.navigation.NavigationActivity;
@@ -11,6 +13,7 @@ import com.stormpath.sdk.models.Account;
 import com.stormpath.sdk.models.StormpathError;
 
 public class LoginActivity extends BaseActivity {
+    private final static String TAG = "LoginActivity";
     protected static int VIEW_CONTAINER = R.id.Login_FrameLayout;
 
     @Override
@@ -34,6 +37,7 @@ public class LoginActivity extends BaseActivity {
         Stormpath.getAccount(new StormpathCallback<Account>() {
             @Override
             public void onSuccess(Account account) {
+                Log.i(TAG, "account was already authenticated" + account.getEmail());
                 launchMainActivity();
             }
 

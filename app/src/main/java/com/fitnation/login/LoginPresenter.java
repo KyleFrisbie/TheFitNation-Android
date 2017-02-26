@@ -17,6 +17,7 @@ import static com.fitnation.login.LoginActivity.VIEW_CONTAINER;
  */
 
 public class LoginPresenter implements LoginContract.Presenter{
+    private final static String TAG = "LoginPresenter";
     private LoginContract.View mView;
 
     public LoginPresenter (LoginContract.View view) { mView = view; }
@@ -51,7 +52,8 @@ public class LoginPresenter implements LoginContract.Presenter{
         Stormpath.loginWithProvider(Provider.GOOGLE, mView.getBaseActivity(), new StormpathCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-
+                String token = Stormpath.getAccessToken();
+                Log.i(TAG, token);
             }
 
             @Override
