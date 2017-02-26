@@ -47,7 +47,7 @@ public class LoginPresenter implements LoginContract.Presenter{
     @Override
     public void onGoogleLoginPressed() {
         //unworking code section...has something to do with not being able to use startActivity
-        /*
+
         Stormpath.loginWithProvider(Provider.GOOGLE, mView.getBaseActivity(), new StormpathCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -61,7 +61,7 @@ public class LoginPresenter implements LoginContract.Presenter{
 
             }
         });
-        */
+
     }
 
     @Override
