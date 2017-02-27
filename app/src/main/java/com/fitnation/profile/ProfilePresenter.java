@@ -1,14 +1,15 @@
 package com.fitnation.profile;
 
 
+import com.fitnation.base.DataResult;
+import com.fitnation.model.UserDemographic;
 
 public class ProfilePresenter implements ProfileContract.Presenter {
     private ProfileContract.View mView;
-    private ProfileModel mModel;
+    private UserDemographic userInfo;
 
     public ProfilePresenter (ProfileContract.View view) {
         mView = view;
-        //mModel = mView;
     }
 
     @Override
@@ -30,15 +31,6 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         //TODO open to gallery or camera
     }
 
-    @Override
-    public void onWeightPressed() {
-
-    }
-
-    @Override
-    public void onHeightPressed() {
-
-    }
 
     @Override
     public void onUserNamePressed() {
@@ -49,6 +41,11 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     @Override
     public void onLifterTypePressed() {
 
+    }
+
+    public void onSave(UserDemographic userDemo){
+        UserDataManager userDataManager = new UserDataManager();
+        userDataManager.SaveProfileData(userDemo);
     }
 
 

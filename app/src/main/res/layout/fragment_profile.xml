@@ -5,16 +5,26 @@
     android:id="@+id/fragment_profile">
 
     <EditText
-        android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/usernameButton"
+        android:id="@+id/firstNameButton"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:hint="Username"
+        android:hint="@string/firstName"
         android:inputType="textNoSuggestions"
         android:maxLines="1"
-        android:lines="1" />
+        android:lines="1"
+        android:gravity="center" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lastNameButton"
+        android:hint="@string/lastName"
+        android:inputType="textNoSuggestions"
+        android:maxLines="1"
+        android:lines="1"
+        android:layout_toRightOf="@+id/firstNameButton"
+        android:gravity="center" />
 
     <EditText
         android:layout_margin="10dp"
@@ -23,8 +33,8 @@
         android:id="@+id/weightButton"
         android:layout_weight="1"
         android:textAlignment="center"
-        android:hint="Weight"
-        android:layout_below="@id/usernameButton"
+        android:hint="@string/weight"
+        android:layout_below="@id/lastNameButton"
         android:layout_centerHorizontal="true"
         android:inputType="number"/>
 
@@ -34,32 +44,106 @@
         android:id="@+id/heightButton"
         android:layout_weight="1"
         android:textAlignment="center"
-        android:hint="Height"
+        android:hint="@string/height"
         android:layout_below="@+id/weightButton"
         android:layout_centerHorizontal="true"
         android:inputType="number"/>
 
     <EditText
+        android:id="@+id/ageButton"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/ageButton"
-        android:hint="Age"
+        android:hint="@string/age"
         android:layout_below="@+id/heightButton"
         android:layout_centerHorizontal="true"
         android:inputType="date"/>
 
-    <EditText
+    <TextView
+        android:id="@+id/genderText"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id="@+id/lifterTypeButton"
-        android:hint="Lifter Type"
-        android:layout_below="@+id/ageButton"
+        android:layout_below="@id/ageButton"
+        android:text="@string/gender"
+        android:layout_centerHorizontal="true" />
+
+    <RadioGroup
+        android:layout_width="350dp"
+        android:layout_height="90dp"
         android:layout_centerHorizontal="true"
-        android:inputType="text"/>
+        android:layout_below="@+id/genderText"
+        android:id="@+id/gendersRadioGroup"
+
+        >
+
+        <RadioButton
+            android:id="@+id/maleRadioButton"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:text="@string/male" />
+
+        <RadioButton
+            android:id="@+id/femaleRadioButton"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:text="@string/other" />
+
+        <RadioButton
+            android:id="@+id/otherRadioButton"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:text="@string/female"
+            android:layout_gravity="center"
+            />
+
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/lifterTypeText"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gendersRadioGroup"
+        android:text="@string/lifterType"
+        android:layout_centerHorizontal="true"/>
+
+    <RadioGroup
+        android:layout_width="350dp"
+        android:layout_height="90dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/lifterTypeText"
+        android:id="@+id/lifterTypeRadioGroup"
+        >
+
+        <RadioButton
+            android:id="@+id/beginnerRadioButton"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:text="@string/beginner" />
+
+        <RadioButton
+            android:id="@+id/intermediateRadioButton"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:text="@string/intermediate" />
+
+        <RadioButton
+            android:id="@+id/advancedRadioButton"
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            android:text="@string/advanced"
+            android:layout_gravity="center"
+            />
+
+
+    </RadioGroup>
 
 
 </RelativeLayout>

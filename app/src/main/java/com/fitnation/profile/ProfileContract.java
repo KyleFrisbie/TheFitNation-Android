@@ -3,6 +3,7 @@ package com.fitnation.profile;
 import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
 import com.fitnation.login.LoginContract;
+import com.fitnation.model.UserDemographic;
 
 
 public interface ProfileContract {
@@ -13,11 +14,9 @@ public interface ProfileContract {
     interface Presenter extends BasePresenter {
         void onAgePressed();
         void onPhotoPressed();
-        void onWeightPressed();
-        void onHeightPressed();
         void onUserNamePressed();
         void onLifterTypePressed();
-
+        void onSave(UserDemographic UserDemo);
     }
 }
 

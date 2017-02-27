@@ -6,7 +6,7 @@ import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 
 /**
- * Created by R on 2/21/2017.
+ * Created by Jeremy on 2/21/2017.
  */
 
 public class ProfileActivity extends BaseActivity{

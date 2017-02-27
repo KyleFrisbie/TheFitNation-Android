@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.model.UserDemographic;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,9 +25,10 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     private ProfileContract.Presenter mPresenter;
 
-    @BindView(R.id.usernameButton) public EditText mUsernameButton;
-    @BindView(R.id.weightButton) public EditText mWeightButton;
-    @BindView(R.id.heightButton) public EditText mHeighteButton;
+    @BindView(R.id.firstNameButton) public EditText mFirstNameTextBox;
+    @BindView(R.id.lastNameButton) public EditText mLastNameTextBox;
+    @BindView(R.id.weightButton) public EditText mWeightTextBox;
+    @BindView(R.id.heightButton) public EditText mHeightTextBox;
     @BindView(R.id.ageButton) public EditText mAgeButton;
     @BindView(R.id.lifterTypeButton) public EditText mLifterButton;
 
@@ -56,19 +58,20 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @OnClick(R.id.usernameButton)
     public void usernameButtonClicked() { mPresenter.onUserNamePressed(); }
 
-    @OnClick(R.id.weightButton)
-    public void weightButtonClicked() { mPresenter.onWeightPressed(); }
-
-    @OnClick(R.id.heightButton)
-    public void heighteButtonClicked() { mPresenter.onHeightPressed(); }
-
     @OnClick(R.id.ageButton)
     public void ageButtonClicked() { mPresenter.onAgePressed(); }
 
     @OnClick(R.id.lifterTypeButton)
     public void lifterTypeClicked() { mPresenter.onLifterTypePressed(); }
 
+    public void onSaveClicked() {
+        UserDemographic userDemo = new UserDemographic();
+        //userDemo.setFirstName(mUsernameTextBox.getText().toString());
+        //userDemo.setLastName(m);
 
+
+        mPresenter.onSave(userDemo);
+    }
 
 
 

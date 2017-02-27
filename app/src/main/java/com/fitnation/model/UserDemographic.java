@@ -1,5 +1,6 @@
 package com.fitnation.model;
 
+import com.fitnation.model.enums.Gender;
 import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.model.enums.UnitOfMeasure;
 
@@ -61,6 +62,72 @@ public class UserDemographic extends RealmObject {
         result = 31 * result + (id != null ? id.hashCode() : 0);
         return result;
     }
+
+    public void setFirstName(String pName){
+        firstName = pName;
+    }
+
+    public String getFirstName(){
+        return firstName;
+    }
+
+    public void setLastName(String pName){
+        lastName = pName;
+    }
+
+    public String getLastName(){
+        return lastName;
+    }
+
+    public void setGender(String pGender){
+        gender = pGender;
+    }
+
+    public String getGender(){
+        return gender;
+    }
+
+    public void setDob(Date pDob){
+        dob = pDob;
+    }
+
+    public Date getDob(){
+        return dob;
+    }
+
+    public void setHeight(Integer pHeight){
+        height = pHeight;
+    }
+
+    public Integer getHeight(){
+        return height;
+    }
+
+    public void setUserWeights(RealmList<UserWeight> pWeights){
+        userWeights = pWeights;
+    }
+
+    public RealmList<UserWeight> getUserWeight(){
+        return userWeights;
+    }
+
+    public void setSkillLevel(String pSkill){
+        skillLevel = pSkill;
+    }
+
+    public String getSkillLevel(){
+        return skillLevel;
+    }
+
+    public void setUnitOfMeasure(String pUnit){
+        unitOfMeasure = pUnit;
+    }
+
+    public String getUnitOfMeasure(){
+        return unitOfMeasure;
+    }
+
+
 
     @Override
     public String toString() {
