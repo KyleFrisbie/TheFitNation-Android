@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.animation.Interpolator;
 
 import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.login.LoginActivity;
@@ -26,7 +25,7 @@ public class SplashScreenActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_splash_screen);
     }
 
