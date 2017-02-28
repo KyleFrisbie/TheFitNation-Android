@@ -1,6 +1,7 @@
 package com.fitnation.login;
 
 import android.app.Activity;
+import android.os.SystemClock;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
+import com.stormpath.sdk.Stormpath;
 
 import org.junit.After;
 import org.junit.Before;
@@ -49,6 +51,7 @@ public class LoginScreenTest extends InstrumentationTest {
         testLoginScreenIsDisplayed();
         onView(withId(R.id.signUp_button)).perform(click());
         testRegisterScreenIsDisplayed();
+
         pressBack();
         onView(withId(R.id.forgot_password_button)).perform(click());
         testForgotLoginScreenIsDisplayed();
@@ -56,6 +59,7 @@ public class LoginScreenTest extends InstrumentationTest {
         testOnGoogleLoginPressed();
         testOnFacebookLoginPressed();
         testMainActivityLaunchedUponLogin();
+        Stormpath.logout();
     }
 
 
@@ -71,10 +75,10 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.email_editText)).perform(typeText("user@example.com"));
         onView(withId(R.id.password_editText)).perform(typeText("Pa55w0rd"));
         onView(withId(R.id.login_button)).perform(click());
-
-        //onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
-        //onView(withText(R.string.app_name)).check(matches(isDisplayed()));
-        //onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
+        SystemClock.sleep(2000);
+        onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
+        onView(withText(R.string.app_name)).check(matches(isDisplayed()));
+        onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
     }
 
     public void testLoginScreenIsDisplayed() {
