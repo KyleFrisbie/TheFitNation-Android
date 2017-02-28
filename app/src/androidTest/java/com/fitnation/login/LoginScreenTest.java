@@ -26,7 +26,9 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withChild;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withInputType;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
@@ -51,7 +53,6 @@ public class LoginScreenTest extends InstrumentationTest {
         testLoginScreenIsDisplayed();
         onView(withId(R.id.signUp_button)).perform(click());
         testRegisterScreenIsDisplayed();
-
         pressBack();
         onView(withId(R.id.forgot_password_button)).perform(click());
         testForgotLoginScreenIsDisplayed();
