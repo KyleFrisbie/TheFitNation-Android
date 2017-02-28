@@ -20,7 +20,7 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //initialize strompath
+        //initialize strompath for temp solution to logout test in navigation screen test
         if(!Stormpath.isInitialized()) {
             StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
                     .baseUrl("https://zippy-sword.apps.stormpath.io/")

@@ -19,6 +19,7 @@ import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.login.LoginActivity;
 import com.stormpath.sdk.Stormpath;
+import com.stormpath.sdk.StormpathConfiguration;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,9 +93,16 @@ public class NavigationActivity extends BaseActivity
         } else if (id == R.id.nav_my_profile) {
 
         } else if (id == R.id.nav_logout){
+            if(!Stormpath.isInitialized()) {
+                StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
+                        .baseUrl("https://zippy-sword.apps.stormpath.io/")
+                        .build();
+                Stormpath.init(this, stormpathConfiguration);
+            }
             Stormpath.logout();
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
+            finish();
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
