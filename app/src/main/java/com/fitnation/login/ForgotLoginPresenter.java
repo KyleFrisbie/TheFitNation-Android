@@ -43,7 +43,8 @@ public class ForgotLoginPresenter implements ForgotLoginContract.Presenter {
                 Toast loginFailedToast = Toast.makeText(mView.getBaseActivity(),
                         "Email sent!", Toast.LENGTH_SHORT);
                 loginFailedToast.show();
-
+                Intent loginIntent = new Intent(mView.getBaseActivity(), LoginActivity.class);
+                mView.getBaseActivity().startActivity(loginIntent);
             }
 
             @Override

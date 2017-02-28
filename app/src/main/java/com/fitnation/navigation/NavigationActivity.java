@@ -95,7 +95,6 @@ public class NavigationActivity extends BaseActivity
             Stormpath.logout();
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
-            finish();
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);

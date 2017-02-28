@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
@@ -66,7 +65,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     @OnClick(R.id.signUp_button)
     public void onSignUpButtonClicked() { mPresenter.onSignUpButtonPressed(); }
 
-    @OnClick(R.id.forgot_password_button)
+    @OnClick(R.id.forgot_login_button)
     public void onForgotLoginButtonClicked() { mPresenter.onForgotLoginButtonPressed(); }
 
     @Override
