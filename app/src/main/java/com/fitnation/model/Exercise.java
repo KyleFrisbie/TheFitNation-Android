@@ -4,14 +4,22 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
+import io.realm.RealmCollection;
+import io.realm.RealmList;
+import io.realm.RealmModel;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * A single Exercise
  */
 
-public class Exercise extends BaseModel {
+public class Exercise extends RealmObject {
+    @PrimaryKey
+    private Long androidId;
     private Long id;
     private String name;
-    private Set<Muscle> muscles = new HashSet<>();
+    private RealmList<Muscle> muscles;
 
     public void setId(Long id) {
         this.id = id;

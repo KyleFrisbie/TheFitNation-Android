@@ -1,13 +1,17 @@
 package com.fitnation.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * A single User weight instance
  */
-public class UserWeight extends BaseModel {
+public class UserWeight extends RealmObject {
+    @PrimaryKey
+    private Long androidId;
     private Long id;
     private Date weightDate;
     private Float weight;

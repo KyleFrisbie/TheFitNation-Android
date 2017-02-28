@@ -1,22 +1,27 @@
 package com.fitnation.model;
 
 
-import java.io.Serializable;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
+import io.realm.RealmCollection;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * A workout template that a user owns
  */
-public class UserWorkoutTemplate extends BaseModel {
+public class UserWorkoutTemplate extends RealmObject {
+    @PrimaryKey
+    private Long androidId;
     private Long id;
     private Date createdOn;
     private WorkoutLog workoutLog;
     private WorkoutTemplate workoutTemplate;
-    private Set<UserWorkoutInstance> userWorkoutInstances = new HashSet<>();
+    private RealmList<UserWorkoutInstance> userWorkoutInstances;
 
     public void setId(Long id) {
         this.id = id;
