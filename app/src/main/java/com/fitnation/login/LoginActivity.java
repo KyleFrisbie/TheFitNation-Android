@@ -16,17 +16,12 @@ public class LoginActivity extends BaseActivity {
     private final static String TAG = "LoginActivity";
     protected static int VIEW_CONTAINER = R.id.Login_FrameLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //initialize strompath for temp solution to logout test in navigation screen test
-        if(!Stormpath.isInitialized()) {
-            StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
-                    .baseUrl("https://zippy-sword.apps.stormpath.io/")
-                    .build();
-            Stormpath.init(this, stormpathConfiguration);
-        }
+        initializeStormpath();
     }
 
     @Override
@@ -47,6 +42,17 @@ public class LoginActivity extends BaseActivity {
                 launchLoginFragment();
             }
         });
+    }
+
+
+    public void initializeStormpath(){
+        //initialize strompath for temp solution to logout test in navigation screen test
+        if(!Stormpath.isInitialized()) {
+            StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
+                    .baseUrl("https://zippy-sword.apps.stormpath.io/")
+                    .build();
+            Stormpath.init(this, stormpathConfiguration);
+        }
     }
 
     private void launchLoginFragment() {

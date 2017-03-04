@@ -1,5 +1,6 @@
 package com.fitnation.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.navigation.NavigationActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +72,6 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
 
     @Override
     public void showProgress() {
-
     }
 
     @Override

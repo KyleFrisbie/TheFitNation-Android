@@ -30,7 +30,6 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             @Override
             public void onSuccess(Void aVoid) {
                 // Handle successful registration
-                Stormpath.getAccessToken();
                 BaseActivity baseActivity = mView.getBaseActivity();
                 Intent launchMain = new Intent(baseActivity, NavigationActivity.class);
                 launchMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -76,5 +75,9 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     @Override
     public void stop() {
 
+    }
+
+    public void returnAuthError(){
+        mView.showAuthError();
     }
 }
