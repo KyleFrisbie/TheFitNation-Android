@@ -47,7 +47,7 @@ public class LoginScreenTest extends InstrumentationTest {
         loginScreenIsDisplayed();
         onLoginButtonPressed();
         navigationScreenIsDisplayed();
-        Stormpath.logout();
+        onLogoutButtonPressed();
     }
 
 
@@ -63,7 +63,7 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.last_name_editText)).perform(typeText("Doe"));
         onView(withId(R.id.register_button)).perform(click());
         navigationScreenIsDisplayed();
-        Stormpath.logout();
+        onLogoutButtonPressed();
     }
 
     //may need dummy email for receiving email
@@ -142,5 +142,20 @@ public class LoginScreenTest extends InstrumentationTest {
         SystemClock.sleep(1000);
         onView(withId(R.id.resetPassword_button)).check(matches(isDisplayed()));
         onView(withId(R.id.resetPassword_editText)).check(matches(isDisplayed()));
+    }
+
+    public void onLogoutButtonPressed(){
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
+        onView(withText("Logout")).perform(click());
+        onView(withId(R.id.activity_login)).check(matches(isDisplayed()));
+        onView(withId(R.id.login_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.signUp_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.facebook_login_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.google_login_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.email_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.signUp_textView)).check(matches(isDisplayed()));
+        onView(withId(R.id.logo_imageView)).check(matches(isDisplayed()));
     }
 }

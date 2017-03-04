@@ -15,9 +15,12 @@
     <string name="sign_up">Sign up!</string>
     <string name="no_account">Dont have and account?</string>
     <string name="forgot_password">Forgot login details</string>
+    <string name="fit_nation_logo">Fit Nation Logo</string>
+
     <string name="facebook">Login with Facebook</string>
     <string name="google">Login with Google</string>
-    <string name="fit_nation_logo">Fit Nation Logo</string>
+    <string name="github">Login with GitHub</string>
+    <string name="twitter">Login with Twitter</string>
 
     <string name="reset_password">Reset Password</string>
     <string name="resend_email">Resend email</string>
