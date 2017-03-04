@@ -2,6 +2,7 @@ package com.fitnation.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,10 @@ import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.navigation.NavigationActivity;
+import com.stormpath.sdk.Stormpath;
+import com.stormpath.sdk.StormpathCallback;
+import com.stormpath.sdk.models.Account;
+import com.stormpath.sdk.models.StormpathError;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +49,26 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     public void onStart() {
         super.onStart();
         mPresenter.start();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        //check to see if stormpath already has the user logged in
+        Stormpath.getAccount(new StormpathCallback<Account>() {
+            @Override
+            public void onSuccess(Account account) {
+                Intent homeActivityIntent = new Intent(getBaseActivity(), NavigationActivity.class);
+                getBaseActivity().startActivity(homeActivityIntent);
+                getBaseActivity().finish();
+            }
+
+            @Override
+            public void onFailure(StormpathError error) {
+
+            }
+        });
     }
 
     /**
