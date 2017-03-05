@@ -28,40 +28,15 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     @Override
     public void onFacebookLoginPressed() {
-        //unworking code section...has something to do with not being able to use startActivity
 
-        Stormpath.loginWithProvider(Provider.FACEBOOK, mView.getBaseActivity(), new StormpathCallback<Void>() {
-
-            @Override
-            public void onSuccess(Void aVoid) {
-
-            }
-
-            @Override
-            public void onFailure(StormpathError error) {
-                // Handle login error
-                returnAuthError();
-            }
-        });
+        Stormpath.loginWithProvider(Provider.FACEBOOK, mView.getBaseActivity(), loginCallback);
 
     }
 
     @Override
     public void onGoogleLoginPressed() {
-        //unworking code section...has something to do with not being able to use startActivity
 
-        Stormpath.loginWithProvider(Provider.GOOGLE, mView.getBaseActivity(), new StormpathCallback<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-
-            }
-
-            @Override
-            public void onFailure(StormpathError error) {
-                returnAuthError();
-
-            }
-        });
+        Stormpath.loginWithProvider(Provider.GOOGLE, mView.getBaseActivity(), loginCallback);
 
     }
 
@@ -76,17 +51,7 @@ public class LoginPresenter implements LoginContract.Presenter{
 
             @Override
             public void onFailure(StormpathError error) {
-                Stormpath.login(userName, password, new StormpathCallback<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        homeActivityIntent();
-                    }
-
-                    @Override
-                    public void onFailure(StormpathError error) {
-                        returnAuthError();
-                    }
-                });
+                Stormpath.login(userName, password, loginCallback);
             }
         });
     }
@@ -125,10 +90,21 @@ public class LoginPresenter implements LoginContract.Presenter{
     }
 
     private void homeActivityIntent(){
-        BaseActivity baseActivity = mView.getBaseActivity();
-        Intent homeActivityIntent = new Intent(baseActivity, NavigationActivity.class);
-        mView.getBaseActivity().startActivity(homeActivityIntent);
+        mView.getBaseActivity().startActivity(new Intent(mView.getBaseActivity(), NavigationActivity.class));
+        mView.getBaseActivity().finish();
     }
+
+    private StormpathCallback<Void> loginCallback = new StormpathCallback<Void>() {
+        @Override
+        public void onSuccess(Void aVoid) {
+            homeActivityIntent();
+        }
+
+        @Override
+        public void onFailure(StormpathError error) {
+
+        }
+    };
 
     private void returnAuthError(){
         String AuthError;

@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.login.LoginActivity;
+import com.fitnation.login.SocialLoginActivity;
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.StormpathConfiguration;
 
