@@ -11,9 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.Interpolator;
 
+import com.crashlytics.android.Crashlytics;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.login.LoginActivity;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * SplashScreen for branding
@@ -23,6 +25,7 @@ public class SplashScreenActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_splash_screen);
     }
 
