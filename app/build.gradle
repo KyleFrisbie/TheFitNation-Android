@@ -39,6 +39,9 @@ android {
             }
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -74,6 +77,5 @@ dependencies {
         transitive = true;
     }
     
-    }
 }
 
