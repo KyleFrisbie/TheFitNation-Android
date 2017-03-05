@@ -15,4 +15,10 @@
     <string name="trends">Trends</string>
     <string name="workout_regimens">Workout Regimens</string>
     <string name="my_profile">My Profile</string>
+    <string name="title_activity_create_exercise">Create Your Exercise</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="build_workout">Create A Workout</string>
+    <string name="beginner">BEGINNER</string>
+    <string name="intermediate">INTERMEDIATE</string>
+    <string name="advanced">ADVANCED</string>
 </resources>

@@ -14,6 +14,12 @@
             android:id="@+id/nav_trends"
             android:icon="@drawable/trends"
             android:title="@string/trends" />
+
+        <item
+            android:id="@+id/nav_build_workout"
+            android:icon="@drawable/build_workout"
+            android:title="@string/build_workout" />
+
         <item
             android:id="@+id/nav_workout_regimens"
             android:icon="@drawable/workout_regimens"
