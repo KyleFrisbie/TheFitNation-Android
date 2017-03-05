@@ -1,6 +1,7 @@
 package com.fitnation.networking;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +39,8 @@ public class JsonParser {
      * @return - a json string
      */
     public static String convertPojoToString(Object obj){
-        return new Gson().toJson(obj);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        return gson.toJson(obj);
     }
 }
