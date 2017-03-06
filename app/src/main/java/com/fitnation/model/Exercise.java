@@ -18,8 +18,17 @@ public class Exercise extends RealmObject {
     @PrimaryKey
     private Long androidId;
     private Long id;
-    private String name;
     private RealmList<Muscle> muscles;
+    private String name;
+
+
+    public Exercise() {
+        //default constructor
+    }
+
+    public void setMuscles(RealmList<Muscle> muscles) {
+        this.muscles = muscles;
+    }
 
     public void setId(Long id) {
         this.id = id;

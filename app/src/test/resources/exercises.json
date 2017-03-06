@@ -1,0 +1,34 @@
+[
+  {
+    "id": 93345,
+    "muscles": [
+      {
+        "id": 3,
+        "name": "biceps"
+      }
+    ],
+    "name": "Bicep Curl"
+  },
+
+  {
+  "id": 52345,
+  "muscles": [
+    {
+      "id": 3,
+      "name": "biceps"
+    }
+  ],
+  "name": "Preacher Curl"
+  }, 
+
+  {
+  "id": 8934753,
+  "muscles": [
+    {
+      "id": 2,
+      "name": "Pectorials"
+    }
+  ],
+  "name": "Bench Press"
+  }
+]

@@ -34,8 +34,17 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".intro.SplashScreenActivity">
         </activity>
+<<<<<<< HEAD
 
     </application>
 
 
+=======
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="82977f91de386a5526b052cdb918975d2ebbb85b" />
+    </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+>>>>>>> refs/remotes/origin/master
 </manifest>
