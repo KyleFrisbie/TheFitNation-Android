@@ -34,10 +34,11 @@ public class FileUtils {
      *
      * @return - the json file turned into a string
      */
-    public static String convertJsonFileToString(Context context, int fileResource) {
+    public static String loadJsonFileIntoString(Context context, int fileResource) {
         String json = null;
         InputStream input = context.getResources().openRawResource(fileResource);
         json = FileUtils.readTextFile(input);
+
         return json;
     }
 }

@@ -38,7 +38,7 @@ public class JsonParser {
      * @param obj - the object to be converted
      * @return - a json string
      */
-    public static String convertPojoToString(Object obj){
+    public static String convertPojoToJsonString(Object obj){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         return gson.toJson(obj);

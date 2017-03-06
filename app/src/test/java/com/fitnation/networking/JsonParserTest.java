@@ -3,7 +3,6 @@ package com.fitnation.networking;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.Muscle;
 import com.fitnation.utils.FileUtils;
-import com.google.gson.Gson;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +52,7 @@ public class JsonParserTest {
     }
 
     @Test
-    public void convertPojoToString() throws Exception {
+    public void convertPojoToJsonString() throws Exception {
         RealmList<Muscle> musclesList = new RealmList<>();
         Muscle biceps = new Muscle();
         biceps.setId(3L);
@@ -68,7 +67,7 @@ public class JsonParserTest {
         InputStream in = this.getClass().getClassLoader().getResourceAsStream("exercise.json");
         String json = FileUtils.readTextFile(in);
 
-        String actual = JsonParser.convertPojoToString(bicepCurl);
+        String actual = JsonParser.convertPojoToJsonString(bicepCurl);
 
         assertEquals(json, actual);
     }
