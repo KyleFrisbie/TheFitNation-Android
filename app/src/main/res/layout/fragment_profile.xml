@@ -1,73 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_profile">
 
-    <EditText
+    <!-- FIRST NAME -->
+    <TextView
+        android:id="@+id/fnText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/firstNameButton"
+        android:text="@string/firstName"
+        android:textSize="18sp"
+        android:layout_marginTop="25dp"
         android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/ageTextBox" />
+
+    <EditText
+        android:id="@+id/firstNameTextBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:hint="@string/firstName"
         android:inputType="textNoSuggestions"
-        android:maxLines="1"
         android:lines="1"
-        android:gravity="center" />
+        android:maxLines="1"
+        android:layout_alignLeft="@id/fnText"
+        android:layout_below="@id/fnText" />
+
+    <!-- LAST NAME -->
+    <TextView
+        android:id="@+id/lnText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lastName"
+        android:textSize="18sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/saveButton" />
+
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lastNameButton"
+        android:id="@+id/lastNameTextBox"
         android:hint="@string/lastName"
         android:inputType="textNoSuggestions"
         android:maxLines="1"
         android:lines="1"
-        android:layout_toRightOf="@+id/firstNameButton"
-        android:gravity="center" />
+        android:gravity="center"
+        android:layout_below="@+id/lnText"
+        android:layout_alignEnd="@+id/lnText" />
 
-    <EditText
-        android:layout_margin="10dp"
+    <!-- WEIGHT -->
+    <TextView
+        android:id="@+id/wtText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/weightButton"
+        android:text="@string/weight"
+        android:textSize="18sp"
+        android:layout_marginTop="25dp"
+        android:layout_below="@id/firstNameTextBox"
+        android:layout_toStartOf="@+id/saveButton" />
+
+    <EditText
+        android:layout_marginTop="17dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/weightTextBox"
         android:layout_weight="1"
         android:textAlignment="center"
         android:hint="@string/weight"
-        android:layout_below="@id/lastNameButton"
-        android:layout_centerHorizontal="true"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:layout_below="@+id/wtText"
+        android:layout_toStartOf="@+id/saveButton" />
+
+    <!-- HEIGHT -->
+    <TextView
+        android:id="@+id/htText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/height"
+        android:textSize="18sp"
+        android:layout_marginTop="25dp"
+        android:layout_alignBaseline="@+id/wtText"
+        android:layout_alignBottom="@+id/wtText"
+        android:layout_alignStart="@+id/lastNameTextBox"
+        />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/heightButton"
+        android:id="@+id/heightTextBox"
         android:layout_weight="1"
         android:textAlignment="center"
         android:hint="@string/height"
-        android:layout_below="@+id/weightButton"
-        android:layout_centerHorizontal="true"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:layout_alignBaseline="@+id/weightTextBox"
+        android:layout_alignBottom="@+id/weightTextBox"
+        android:layout_alignStart="@+id/lastNameTextBox" />
 
-    <EditText
-        android:id="@+id/ageButton"
+
+    <Button
+        android:id="@+id/ageTextBox"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textAlignment="center"
         android:hint="@string/age"
-        android:layout_below="@+id/heightButton"
+        android:layout_below="@+id/heightTextBox"
         android:layout_centerHorizontal="true"
-        android:inputType="date"/>
+        />
 
     <TextView
         android:id="@+id/genderText"
         android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ageButton"
+        android:layout_below="@id/ageTextBox"
         android:text="@string/gender"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp" />
 
     <RadioGroup
         android:layout_width="350dp"
@@ -75,6 +133,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/genderText"
         android:id="@+id/gendersRadioGroup"
+        android:checkedButton="@+id/otherRadioButton"
 
         >
 
@@ -90,13 +149,13 @@
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
-            android:text="@string/other" />
+            android:text="@string/female" />
 
         <RadioButton
             android:id="@+id/otherRadioButton"
             android:layout_width="100dp"
             android:layout_height="30dp"
-            android:text="@string/female"
+            android:text="@string/other"
             android:layout_gravity="center"
             />
 
@@ -110,7 +169,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/gendersRadioGroup"
         android:text="@string/lifterType"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp" />
 
     <RadioGroup
         android:layout_width="350dp"
@@ -118,6 +178,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/lifterTypeText"
         android:id="@+id/lifterTypeRadioGroup"
+        android:checkedButton="@+id/beginnerRadioButton"
         >
 
         <RadioButton
@@ -145,5 +206,16 @@
 
     </RadioGroup>
 
+    <Button
+
+        android:text="Save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/saveButton"
+        android:layout_below="@+id/lifterTypeRadioGroup"
+        android:layout_alignStart="@+id/lifterTypeText"
+        android:onClick="onSaveClicked"/>
+
 
 </RelativeLayout>
+</ScrollView>

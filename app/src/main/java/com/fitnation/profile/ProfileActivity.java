@@ -4,6 +4,10 @@ import android.os.Bundle;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
+import com.fitnation.model.UserDemographic;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by Jeremy on 2/21/2017.
@@ -21,8 +25,19 @@ public class ProfileActivity extends BaseActivity{
 
     private void launchProfileFragment() {
         ProfileFragment profileFragment = ProfileFragment.newInstance();
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<UserDemographic> userDemoResults =
+                realm.where(UserDemographic.class).findAll();
+
+        if (!userDemoResults.isEmpty()){
+            UserDemographic userdemo = userDemoResults.last();
+            profileFragment.setDemographic(userdemo);
+        } else {
+            profileFragment.setDemographic(null);
+        }
+
         profileFragment.setPresenter(new ProfilePresenter(profileFragment));
-        getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                 .replace(VIEW_CONTAINER, profileFragment).commit();
     }
 }

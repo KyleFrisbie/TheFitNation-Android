@@ -1,19 +1,33 @@
 package com.fitnation.profile;
 
 
+import java.util.Map;
+import java.util.Calendar;
+
+import java.util.Date;
+import java.util.Calendar;
+
+import android.app.DatePickerDialog;
+import android.app.DialogFragment;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.UserDemographic;
+import com.fitnation.model.enums.Gender;
+import com.fitnation.model.enums.SkillLevel;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /*
@@ -21,16 +35,27 @@ import butterknife.OnClick;
  */
 
 
-public class ProfileFragment extends BaseFragment implements ProfileContract.View {
+public class ProfileFragment extends BaseFragment implements ProfileContract.View,
+        DatePickerDialog.OnDateSetListener
+        {
 
     private ProfileContract.Presenter mPresenter;
 
-    @BindView(R.id.firstNameButton) public EditText mFirstNameTextBox;
-    @BindView(R.id.lastNameButton) public EditText mLastNameTextBox;
-    @BindView(R.id.weightButton) public EditText mWeightTextBox;
-    @BindView(R.id.heightButton) public EditText mHeightTextBox;
-    @BindView(R.id.ageButton) public EditText mAgeButton;
-    @BindView(R.id.lifterTypeButton) public EditText mLifterButton;
+    @BindView(R.id.firstNameTextBox)     public EditText mFirstNameTextBox;
+    @BindView(R.id.lastNameTextBox)      public EditText mLastNameTextBox;
+    @BindView(R.id.weightTextBox)        public EditText mWeightTextBox;
+    @BindView(R.id.heightTextBox)        public EditText mHeightTextBox;
+    @BindView(R.id.ageTextBox)           public Button mAgePicker;
+    @BindView(R.id.gendersRadioGroup)    public RadioGroup mGenderButton;
+    @BindView(R.id.lifterTypeRadioGroup) public RadioGroup mLifterButton;
+    @BindView(R.id.saveButton)           public Button mSaveButton;
+
+
+    Calendar birthday;
+    Gender gender;
+    SkillLevel skillLevel;
+    UserDemographic userdemo;
+    DatePickerFragment dateFragment;
 
     public ProfileFragment() {
         // Empty constructor
@@ -52,28 +77,74 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     public void onStart() {
         super.onStart();
+        gender = new Gender();
+        dateFragment = new DatePickerFragment();
+        dateFragment.setFragment(this);
+        skillLevel = new SkillLevel();
+        if (userdemo!=null) loadDemographics();
         mPresenter.start();
     }
 
-    @OnClick(R.id.usernameButton)
-    public void usernameButtonClicked() { mPresenter.onUserNamePressed(); }
-
-    @OnClick(R.id.ageButton)
-    public void ageButtonClicked() { mPresenter.onAgePressed(); }
-
-    @OnClick(R.id.lifterTypeButton)
-    public void lifterTypeClicked() { mPresenter.onLifterTypePressed(); }
-
-    public void onSaveClicked() {
-        UserDemographic userDemo = new UserDemographic();
-        //userDemo.setFirstName(mUsernameTextBox.getText().toString());
-        //userDemo.setLastName(m);
+    @OnClick(R.id.ageTextBox)
+    public void onAgeClicked(){
+        dateFragment.show(getFragmentManager(), "datePicker");
 
 
-        mPresenter.onSave(userDemo);
     }
 
+    @OnClick(R.id.saveButton)
+    public void onSaveClicked() {
+        userdemo = new UserDemographic();
 
+        System.out.println(mHeightTextBox.getText().toString());
+        System.out.println(mWeightTextBox.getText().toString());
+
+        userdemo.setFirstName(mFirstNameTextBox.getText().toString());
+        userdemo.setLastName(mLastNameTextBox.getText().toString());
+        userdemo.setDob(birthday.getTime());
+        //Get/Set gender
+        userdemo.setGender(gender.getGenderFromId(mGenderButton.getCheckedRadioButtonId()));
+        userdemo.setHeight(mHeightTextBox.getText().toString());
+        userdemo.setUserWeights(mWeightTextBox.getText().toString());
+        //Get/Set skill level
+        userdemo.setSkillLevel(skillLevel.getSkillLevelFromId
+                (mLifterButton.getCheckedRadioButtonId()));
+
+        mPresenter.onSaveClicked(userdemo);
+    }
+
+    public void loadDemographics(){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(userdemo.getDob());
+
+
+        try {
+            mFirstNameTextBox.setText(userdemo.getFirstName());
+        } catch (Exception e){}
+        try {
+            mLastNameTextBox.setText(userdemo.getLastName());
+        } catch (Exception e){}
+        try {
+            mWeightTextBox.setText(userdemo.getUserWeight().toString());
+        } catch (Exception e){ System.out.println(e.toString());}
+        try {
+            mHeightTextBox.setText(userdemo.getHeight().toString());
+        } catch (Exception e){ System.out.println(e.toString());}
+        try {
+            //mAgePicker.set(userdemo.getDob());
+        } catch (Exception e){}
+        try {
+            mGenderButton.check(gender.getIdFromGender(
+                    userdemo.getGender()));
+        } catch (Exception e){}
+        try {
+            mLifterButton.check(skillLevel.getIdFromSkillLevel(
+                    userdemo.getSkillLevel()));
+        } catch (Exception e){}
+
+    }
+
+    public void setDemographic(UserDemographic userDemo){ userdemo = userDemo; }
 
     @Override
     public void setPresenter(ProfileContract.Presenter presenter){ mPresenter = presenter;}
@@ -81,5 +152,31 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @Override
     public BaseActivity getBaseActivity() {
         return (BaseActivity) getActivity();
+    }
+
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+
+        int yearsOld;
+        if (calendar!=null) {
+            Calendar now = Calendar.getInstance();
+
+            long dateDiff = now.getTimeInMillis() - calendar.getTimeInMillis();
+            if (dateDiff > 0) {
+                dateDiff /= 1000; //TO SECONDS
+                dateDiff /= 3600; //TO HOURS
+                dateDiff /= 24;  //TO DAYS
+                dateDiff /= 365; //TO YEARS
+                yearsOld = (int)(dateDiff);
+                mAgePicker.setText(String.valueOf(yearsOld));
+                birthday = calendar;
+                return;
+            }
+        }
+
+        mAgePicker.setText("Age");
     }
 }

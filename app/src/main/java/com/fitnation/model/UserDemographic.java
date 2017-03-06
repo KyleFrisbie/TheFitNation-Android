@@ -1,13 +1,16 @@
 package com.fitnation.model;
 
-import com.fitnation.model.enums.Gender;
 import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.model.enums.UnitOfMeasure;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -32,6 +35,7 @@ public class UserDemographic extends RealmObject {
     private RealmList<UserWeight> userWeights;
     private WorkoutLog workoutLog;
     private RealmList<WorkoutTemplate> workoutTemplates;
+
 
     public UserDemographic() {
         dob = new Date();
@@ -79,41 +83,62 @@ public class UserDemographic extends RealmObject {
         return lastName;
     }
 
-    public void setGender(String pGender){
-        gender = pGender;
-    }
+    public void setGender(String pGender){ gender = pGender; }
 
     public String getGender(){
         return gender;
     }
 
-    public void setDob(Date pDob){
-        dob = pDob;
+    public void setDob(Date dob){
+        this.dob = dob;
     }
 
     public Date getDob(){
         return dob;
     }
 
-    public void setHeight(Integer pHeight){
-        height = pHeight;
+    public void setHeight(String pHeight){
+        try {
+            height = Integer.parseInt(pHeight);
+        } catch (Exception e){
+            //invalid height input
+            height = 0;
+        }
     }
 
     public Integer getHeight(){
         return height;
     }
 
-    public void setUserWeights(RealmList<UserWeight> pWeights){
-        userWeights = pWeights;
+    public void setUserWeights(String pWeights){
+        UserWeight uWeight = new UserWeight();
+
+        if (userWeights == null) {
+            userWeights = new RealmList<UserWeight>();
+        }
+
+        try {
+            Float weight = Float.parseFloat(pWeights);
+            uWeight.setWeight(weight);
+            userWeights.add(uWeight);
+        } catch (Exception e){
+            System.out.println("Invalid weight input");
+        }
+
+
+
     }
 
-    public RealmList<UserWeight> getUserWeight(){
+    public RealmList<UserWeight> getUserWeights(){
         return userWeights;
     }
 
-    public void setSkillLevel(String pSkill){
-        skillLevel = pSkill;
+    public Float getUserWeight() {
+        Float userWeight = userWeights.last().getWeight();
+        return userWeight;
     }
+
+    public void setSkillLevel(String pSkill){ skillLevel = pSkill; }
 
     public String getSkillLevel(){
         return skillLevel;

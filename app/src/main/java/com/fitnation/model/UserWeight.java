@@ -24,6 +24,10 @@ public class UserWeight extends RealmObject {
         this.id = id;
     }
 
+    public void setWeight(Float weight){
+        this.weight = weight;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -43,6 +47,8 @@ public class UserWeight extends RealmObject {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+    public Float getWeight() { return weight; }
 
     @Override
     public String toString() {

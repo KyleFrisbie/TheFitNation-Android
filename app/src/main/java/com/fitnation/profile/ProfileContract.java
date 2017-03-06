@@ -12,11 +12,7 @@ public interface ProfileContract {
     }
 
     interface Presenter extends BasePresenter {
-        void onAgePressed();
-        void onPhotoPressed();
-        void onUserNamePressed();
-        void onLifterTypePressed();
-        void onSave(UserDemographic UserDemo);
+        void onSaveClicked(UserDemographic userDemo);
     }
 }
 

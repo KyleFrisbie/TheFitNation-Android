@@ -15,6 +15,7 @@ import com.fitnation.base.BaseFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 /**
  * View for login
@@ -50,6 +51,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
 
     @OnClick(R.id.login_button)
     public void onLoginButtonClicked() {
+
         mPresenter.onFacebookLoginPressed();
     }
 
