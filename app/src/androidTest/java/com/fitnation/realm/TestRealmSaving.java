@@ -22,6 +22,7 @@ import io.realm.RealmResults;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * This is to demonstrate the usage of Realm
@@ -90,6 +91,7 @@ public class TestRealmSaving extends InstrumentationTest {
         UserDemographic userDemographicFromDb = result1.get(0);
 
         assertNotNull(userDemographicFromDb);
+        assertTrue(userDemographicFromDb.getAndroidId() != 0L);
         assertEquals(FIRST_NAME, userDemographicFromDb.getFirstName());
         assertEquals(LAST_NAME, userDemographicFromDb.getLastName());
 
