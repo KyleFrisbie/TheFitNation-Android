@@ -3,12 +3,12 @@ apply plugin: 'jacoco-android'
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.fitnation"
         minSdkVersion 19
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         buildTypes {
@@ -31,12 +31,12 @@ android {
 
 dependencies {
     configurations.all {
-        resolutionStrategy.force 'com.android.support:support-annotations:24.2.1'
-        resolutionStrategy.force 'com.android.support:support-compat:24.2.1'
+        resolutionStrategy.force 'com.android.support:support-annotations:25.1.1'
+        resolutionStrategy.force 'com.android.support:support-compat:25.1.1'
     }
 
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile 'com.android.support:support-annotations:24.2.1'
+    androidTestCompile 'com.android.support:support-annotations:25.1.1'
     //Testing
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile 'com.android.support.test:runner:0.5'
@@ -47,30 +47,31 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-v4'
         exclude module: 'recyclerview-v7'
     }
-    androidTestCompile 'com.android.support:recyclerview-v7:24.2.1'
-    androidTestCompile 'com.android.support:appcompat-v7:24.2.1'
-    androidTestCompile 'com.android.support:design:24.2.1'
+    androidTestCompile 'com.android.support:recyclerview-v7:25.1.1'
+    androidTestCompile 'com.android.support:appcompat-v7:25.1.1'
+    androidTestCompile 'com.android.support:design:25.1.1'
     
     //Realm dataAdapters
     compile 'io.realm:android-adapters:1.4.0'
 
-    androidTestCompile 'com.android.support:recyclerview-v7:24.2.1'
-    androidTestCompile 'com.android.support:support-v4:24.2.1'
-    androidTestCompile 'com.android.support:appcompat-v7:24.2.1'
-    androidTestCompile 'com.android.support:design:24.2.1'
+    androidTestCompile 'com.android.support:recyclerview-v7:25.1.1'
+    androidTestCompile 'com.android.support:support-v4:25.1.1'
+    androidTestCompile 'com.android.support:appcompat-v7:25.1.1'
+    androidTestCompile 'com.android.support:design:25.1.1'
 
     //Realm dataAdapters
     compile 'io.realm:android-adapters:1.4.0'
 
     //Design
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support:customtabs:24.2.1'
+    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:design:25.1.1'
+    compile 'com.android.support:support-v4:25.1.1'
+    compile 'com.android.support:customtabs:25.1.1'
 
     //Butterknife for binding views
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    //Storm Path for Oauth
-    compile 'com.stormpath.sdk:stormpath-sdk-android:2.0'
+
+    //Volley for network communications
+    compile 'com.android.volley:volley:1.0.0'
 }

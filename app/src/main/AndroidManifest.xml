@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fitnation">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,24 +30,7 @@
 
         </activity >
 
-        <activity android:name="com.stormpath.sdk.CustomTabActivity"
-            android:exported="true"
-            android:parentActivityName=".login.SocialLoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="io.stormpath.apps.zippy-sword" />
-            </intent-filter>
-        </activity>
-
-
-        <activity android:name=".login.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".intro.SplashScreenActivity">
-        </activity>
-
-        <activity android:name=".login.SocialLoginActivity"
+        <activity android:name=".login.LoginBaseActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".intro.SplashScreenActivity">
         </activity>

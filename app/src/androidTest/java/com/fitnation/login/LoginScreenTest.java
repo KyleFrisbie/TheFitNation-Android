@@ -8,7 +8,6 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
-import com.stormpath.sdk.Stormpath;
 
 import org.junit.After;
 import org.junit.Before;
@@ -30,7 +29,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class LoginScreenTest extends InstrumentationTest {
 
     @Rule
-    public ActivityTestRule<LoginActivity> mActivityRule = new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<LoginBaseActivity> mActivityRule = new ActivityTestRule<>(LoginBaseActivity.class);
 
     @Before
     public void setUp() {
@@ -46,8 +45,6 @@ public class LoginScreenTest extends InstrumentationTest {
     public void testLoginFlow() {
         loginScreenIsDisplayed();
         onLoginButtonPressed();
-        navigationScreenIsDisplayed();
-        onLogoutButtonPressed();
     }
 
 
@@ -62,8 +59,7 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.first_name_editText)).perform(typeText("John"));
         onView(withId(R.id.last_name_editText)).perform(typeText("Doe"));
         onView(withId(R.id.register_button)).perform(click());
-        navigationScreenIsDisplayed();
-        onLogoutButtonPressed();
+        pressBack();
     }
 
     //may need dummy email for receiving email
@@ -89,11 +85,11 @@ public class LoginScreenTest extends InstrumentationTest {
     }
 
     public void onGoogleLoginPressed(){
-        //onView(withId(R.id.google_login_button)).perform(click());
+        onView(withId(R.id.google_login_button)).perform(click());
     }
 
     public void onFacebookLoginPressed(){
-        //onView(withId(R.id.facebook_login_button)).perform(click());
+        onView(withId(R.id.facebook_login_button)).perform(click());
     }
 
     public void onLoginButtonPressed() {
@@ -111,14 +107,14 @@ public class LoginScreenTest extends InstrumentationTest {
     }
 
     public void navigationScreenIsDisplayed(){
-        SystemClock.sleep(1000);
+        SystemClock.sleep(500);
         onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
         onView(withText(R.string.app_name)).check(matches(isDisplayed()));
         onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
     }
 
     public void loginScreenIsDisplayed() {
-        SystemClock.sleep(1000);
+        SystemClock.sleep(500);
         onView(withId(R.id.activity_login)).check(matches(isDisplayed()));
         onView(withId(R.id.login_button)).check(matches(isDisplayed()));
         onView(withId(R.id.signUp_button)).check(matches(isDisplayed()));
@@ -131,6 +127,7 @@ public class LoginScreenTest extends InstrumentationTest {
     }
 
     public void registerScreenIsDisplayed(){
+        SystemClock.sleep(500);
         onView(withId(R.id.register_button)).check(matches(isDisplayed()));
         onView(withId(R.id.registerEmail_editText)).check(matches(isDisplayed()));
         onView(withId(R.id.registerPassword_editText)).check(matches(isDisplayed()));
@@ -139,23 +136,8 @@ public class LoginScreenTest extends InstrumentationTest {
     }
 
     public void forgotLoginScreenIsDisplayed(){
-        SystemClock.sleep(1000);
+        SystemClock.sleep(500);
         onView(withId(R.id.resetPassword_button)).check(matches(isDisplayed()));
         onView(withId(R.id.resetPassword_editText)).check(matches(isDisplayed()));
-    }
-
-    public void onLogoutButtonPressed(){
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
-        onView(withText("Logout")).perform(click());
-        onView(withId(R.id.activity_login)).check(matches(isDisplayed()));
-        onView(withId(R.id.login_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.signUp_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.facebook_login_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.google_login_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.email_editText)).check(matches(isDisplayed()));
-        onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
-        onView(withId(R.id.signUp_textView)).check(matches(isDisplayed()));
-        onView(withId(R.id.logo_imageView)).check(matches(isDisplayed()));
     }
 }

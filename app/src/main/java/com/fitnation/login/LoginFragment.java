@@ -9,16 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
-import com.fitnation.navigation.NavigationActivity;
-import com.stormpath.sdk.Stormpath;
-import com.stormpath.sdk.StormpathCallback;
-import com.stormpath.sdk.models.Account;
-import com.stormpath.sdk.models.StormpathError;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

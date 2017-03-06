@@ -2,26 +2,29 @@ package com.fitnation.login;
 
 import android.content.Intent;
 import android.os.SystemClock;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.fitnation.R;
-import com.fitnation.base.BaseActivity;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.fitnation.navigation.NavigationActivity;
-import com.stormpath.sdk.Provider;
-import com.stormpath.sdk.Stormpath;
-import com.stormpath.sdk.StormpathCallback;
-import com.stormpath.sdk.models.Account;
-import com.stormpath.sdk.models.StormpathError;
 
-import static com.fitnation.login.LoginActivity.VIEW_CONTAINER;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.fitnation.login.LoginBaseActivity.VIEW_CONTAINER;
 
 /**
  * Created by Ryan on 1/31/2017.
  */
 
 public class LoginPresenter implements LoginContract.Presenter{
-    private final static String TAG = "LoginPresenter";
     private LoginContract.View mView;
 
     public LoginPresenter (LoginContract.View view) { mView = view; }
@@ -29,31 +32,65 @@ public class LoginPresenter implements LoginContract.Presenter{
     @Override
     public void onFacebookLoginPressed() {
 
-        Stormpath.loginWithProvider(Provider.FACEBOOK, mView.getBaseActivity(), loginCallback);
 
     }
 
     @Override
     public void onGoogleLoginPressed() {
 
-        Stormpath.loginWithProvider(Provider.GOOGLE, mView.getBaseActivity(), loginCallback);
 
     }
 
     @Override
     public void onLoginPressed(final String userName, final String password) {
-        //check to see if stormpath already has the user logged in
-        Stormpath.getAccount(new StormpathCallback<Account>() {
-            @Override
-            public void onSuccess(Account account) {
-                homeActivityIntent();
+        RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
+        String url = "http://www.the-fit-nation.com/api/account";
+
+        StringRequest sr = new StringRequest
+                (Request.Method.GET, url, new Response.Listener<String>()
+            {
+                @Override
+                public void onResponse(String response) {
+                    //send to gson/json object for formatting
+                    System.out.println("succesful login attempt!!!!!!!\n\n" + response);
+                }
+            },  new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("failed " + error);
+                }
             }
+        ){
+            /*
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", "eeverson@msudenver.edu");
+                params.put("firstName", "Erik");
+                params.put("lastName", "Everson");
+                params.put("login", "eeverson");
+                params.put("password", "Pa55w0rd");
+
+                return params;
+            }
+            */
 
             @Override
-            public void onFailure(StormpathError error) {
-                Stormpath.login(userName, password, loginCallback);
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                //change bearer token to current one
+                params.put("Authorization", "bearer 821cea17-7d89-4e53-9e4b-23480f1be5e7");
+
+                return params;
             }
-        });
+
+        };
+
+        requestQueue.add(sr);
+        requestQueue.start();
     }
 
     @Override
@@ -67,8 +104,8 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     @Override
     public void onForgotLoginButtonPressed() {
-        ForgotLoginFragment forgotLoginFragment = ForgotLoginFragment.newInstance();
-        forgotLoginFragment.setPresenter(new ForgotLoginPresenter(forgotLoginFragment));
+        ResetLoginFragment forgotLoginFragment = ResetLoginFragment.newInstance();
+        forgotLoginFragment.setPresenter(new ResetLoginPresenter(forgotLoginFragment));
         mView.getBaseActivity().getSupportFragmentManager().beginTransaction()
                 .addToBackStack("login")
                 .replace(VIEW_CONTAINER, forgotLoginFragment).commit();
@@ -94,20 +131,7 @@ public class LoginPresenter implements LoginContract.Presenter{
         mView.getBaseActivity().finish();
     }
 
-    private StormpathCallback<Void> loginCallback = new StormpathCallback<Void>() {
-        @Override
-        public void onSuccess(Void aVoid) {
-            homeActivityIntent();
-        }
-
-        @Override
-        public void onFailure(StormpathError error) {
-
-        }
-    };
-
     private void returnAuthError(){
-        String AuthError;
         mView.showAuthError();
     }
 }

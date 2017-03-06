@@ -2,25 +2,17 @@ package com.fitnation.navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
-import com.fitnation.login.LoginActivity;
-import com.fitnation.login.SocialLoginActivity;
-import com.stormpath.sdk.Stormpath;
-import com.stormpath.sdk.StormpathConfiguration;
+import com.fitnation.login.LoginBaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,14 +86,7 @@ public class NavigationActivity extends BaseActivity
         } else if (id == R.id.nav_my_profile) {
 
         } else if (id == R.id.nav_logout){
-            if(!Stormpath.isInitialized()) {
-                StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
-                        .baseUrl("https://zippy-sword.apps.stormpath.io/")
-                        .build();
-                Stormpath.init(this, stormpathConfiguration);
-            }
-            Stormpath.logout();
-            Intent loginIntent = new Intent(this, LoginActivity.class);
+            Intent loginIntent = new Intent(this, LoginBaseActivity.class);
             startActivity(loginIntent);
             finish();
         }

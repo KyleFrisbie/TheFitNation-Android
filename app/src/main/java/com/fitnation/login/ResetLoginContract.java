@@ -7,7 +7,7 @@ import com.fitnation.base.BaseView;
  * Created by Ryan on 1/31/2017.
  */
 
-public interface ForgotLoginContract {
+public interface ResetLoginContract {
     interface View extends BaseView<Presenter> {
         void showProgress();
         void showAuthError();

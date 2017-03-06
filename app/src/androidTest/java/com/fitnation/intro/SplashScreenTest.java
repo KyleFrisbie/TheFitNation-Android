@@ -47,6 +47,7 @@ public class SplashScreenTest extends InstrumentationTest {
 
     @Test
     public void testLoginScreenLaunchedAfterDelay() {
+        SystemClock.sleep(500);
         onView(withId(R.id.activity_login)).check(matches(isDisplayed()));
         onView(withId(R.id.login_button)).check(matches(isDisplayed()));
         onView(withId(R.id.signUp_button)).check(matches(isDisplayed()));

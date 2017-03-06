@@ -1,6 +1,5 @@
 package com.fitnation.navigation;
 
-import android.os.SystemClock;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -8,9 +7,6 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
-import com.fitnation.login.LoginActivity;
-import com.stormpath.sdk.Stormpath;
-import com.stormpath.sdk.StormpathConfiguration;
 
 import org.junit.After;
 import org.junit.Before;

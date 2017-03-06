@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
@@ -15,25 +14,25 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ForgotLoginFragment extends BaseFragment implements ForgotLoginContract.View{
-    private ForgotLoginContract.Presenter mPresenter;
+public class ResetLoginFragment extends BaseFragment implements ResetLoginContract.View{
+    private ResetLoginContract.Presenter mPresenter;
 
     String email;
     @BindView(R.id.resetPassword_editText) public EditText mResetPasswordEditText;
 
-    public ForgotLoginFragment() {
+    public ResetLoginFragment() {
         // Required empty public constructor
     }
 
-    public static ForgotLoginFragment newInstance() {
-        return new ForgotLoginFragment();
+    public static ResetLoginFragment newInstance() {
+        return new ResetLoginFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_forgot_login, container, false);
+        View v = inflater.inflate(R.layout.fragment_reset_login, container, false);
         ButterKnife.bind(this, v);
 
         return v;
@@ -62,7 +61,7 @@ public class ForgotLoginFragment extends BaseFragment implements ForgotLoginCont
     }
 
     @Override
-    public void setPresenter(ForgotLoginContract.Presenter presenter) { mPresenter = presenter; }
+    public void setPresenter(ResetLoginContract.Presenter presenter) { mPresenter = presenter; }
 
     @Override
     public BaseActivity getBaseActivity() {
