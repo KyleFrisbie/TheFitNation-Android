@@ -36,6 +36,12 @@ public class UserDemographic extends RealmObject {
         dob = new Date();
         skillLevel = SkillLevel.BEGINNER;
         unitOfMeasure = UnitOfMeasure.IMPERIAL;
+    }
+
+    /**
+     * Sets the androidId to the next available
+     */
+    public void setAndroidIdToNextAvailable() {
         androidId = PrimaryKeyFactory.getInstance().nextKey(this.getClass());
     }
 

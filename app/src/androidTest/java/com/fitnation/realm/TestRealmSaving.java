@@ -50,6 +50,7 @@ public class TestRealmSaving extends InstrumentationTest {
         final Object syncObject = new Object();
         final DataManager dataManager = new TestDataManager();
         UserDemographic userDemographic = new UserDemographic();
+        userDemographic.setAndroidIdToNextAvailable();
         userDemographic.setFirstName(FIRST_NAME);
         userDemographic.setLastName(LAST_NAME);
 
