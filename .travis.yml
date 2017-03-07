@@ -33,6 +33,3 @@ script:
   
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t e5b2ae53-37f8-4145-a6e3-c27d571a06e1
-
-deploy:
-  - ./gradlew assembleDebug crashlyticsUploadDistributionDebug
