@@ -31,6 +31,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".intro.SplashScreenActivity">
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="82977f91de386a5526b052cdb918975d2ebbb85b" />
 
         <activity android:name=".profile.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -39,4 +42,5 @@
         </activity>
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
