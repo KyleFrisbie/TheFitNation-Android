@@ -32,7 +32,7 @@ public class LoginActivity extends BaseActivity {
     private void launchLoginFragment() {
         LoginFragment loginFragment = LoginFragment.newInstance();
         loginFragment.setPresenter(new LoginPresenter(loginFragment));
-        getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                 .replace(VIEW_CONTAINER, loginFragment).commit();
     }
 
