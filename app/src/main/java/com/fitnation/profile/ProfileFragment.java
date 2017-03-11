@@ -47,7 +47,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @BindView(R.id.gendersRadioGroup)    public RadioGroup mGenderButton;
     @BindView(R.id.lifterTypeRadioGroup) public RadioGroup mLifterButton;
     @BindView(R.id.saveButton)           public Button mSaveButton;
-    @BindView(R.id.weightType)           public ToggleButton mWeightTypeButton;
+    @BindView(R.id.unitType)           public ToggleButton mUnitTypeButton;
 
     final long MILLISECONDS_IN_YEAR = 31556952000L;
     Calendar birthday;
@@ -117,7 +117,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         userdemo.setSkillLevel(skillLevel.getSkillLevelFromId
                 (mLifterButton.getCheckedRadioButtonId()));
 
-        userdemo.setUnitOfMeasure(mWeightTypeButton.getText().toString());
+        userdemo.setUnitOfMeasure(mUnitTypeButton.getText().toString());
 
         mPresenter.saveData(userdemo);
     }
@@ -153,10 +153,10 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         } catch (Exception e){}
 
         try {
-            String weightType = userdemo.getUnitOfMeasure();
+            String unitType = userdemo.getUnitOfMeasure();
             //if weightType is pounds set check, else unchecked
-            mWeightTypeButton.setChecked(
-                    weightType.toLowerCase().contains("pound"));
+            mUnitTypeButton.setChecked(
+                    unitType.toLowerCase().contains("imperial"));
 
         } catch (Exception e){}
 

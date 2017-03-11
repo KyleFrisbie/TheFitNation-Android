@@ -104,7 +104,19 @@
         android:layout_alignBottom="@+id/weightTextBox"
         android:layout_alignStart="@+id/lastNameTextBox" />
 
+    <!--Unit of Measurement-->
+    <ToggleButton
+        android:id="@+id/unitType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fadingEdge="horizontal"
+        android:textOff="Metric"
+        android:textOn="Imperial"
+        android:layout_below="@+id/heightTextBox"
+        android:layout_centerHorizontal="true"/>
 
+    <!-- Age -->
     <Button
         android:id="@+id/ageTextBox"
         android:layout_margin="10dp"
@@ -113,7 +125,7 @@
         android:layout_weight="1"
         android:textAlignment="center"
         android:hint="@string/age"
-        android:layout_below="@+id/heightTextBox"
+        android:layout_below="@+id/unitType"
         android:layout_centerHorizontal="true"
         />
 
@@ -208,16 +220,7 @@
 
     </RadioGroup>
 
-    <ToggleButton
-        android:id="@+id/weightType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fadingEdge="horizontal"
-        android:textOff="Kilograms"
-        android:textOn="Pounds"
-        android:layout_below="@id/lifterTypeRadioGroup"
-        android:layout_centerHorizontal="true"/>
+
 
     <Button
 
@@ -225,7 +228,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/saveButton"
-        android:layout_below="@+id/weightType"
+        android:layout_below="@+id/lifterTypeRadioGroup"
         android:layout_alignStart="@+id/lifterTypeText"
         android:onClick="onSaveClicked"
         />
