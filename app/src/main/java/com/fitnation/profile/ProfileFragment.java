@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.ToggleButton;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
@@ -49,8 +50,9 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @BindView(R.id.gendersRadioGroup)    public RadioGroup mGenderButton;
     @BindView(R.id.lifterTypeRadioGroup) public RadioGroup mLifterButton;
     @BindView(R.id.saveButton)           public Button mSaveButton;
+    @BindView(R.id.weightType)           public ToggleButton mWeightTypeButton;
 
-
+    final long MILLISECONDS_IN_YEAR = 31556952000L;
     Calendar birthday;
     Gender gender;
     SkillLevel skillLevel;
@@ -110,13 +112,12 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         userdemo.setSkillLevel(skillLevel.getSkillLevelFromId
                 (mLifterButton.getCheckedRadioButtonId()));
 
+        userdemo.setUnitOfMeasure(mWeightTypeButton.getText().toString());
+
         mPresenter.onSaveClicked(userdemo);
     }
 
     public void loadDemographics(){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(userdemo.getDob());
-
 
         try {
             mFirstNameTextBox.setText(userdemo.getFirstName());
@@ -131,7 +132,11 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             mHeightTextBox.setText(userdemo.getHeight().toString());
         } catch (Exception e){ System.out.println(e.toString());}
         try {
-            //mAgePicker.set(userdemo.getDob());
+            Date date = userdemo.getDob();
+            Calendar c = Calendar.getInstance();
+            c.setTime(date);
+            int age = getAgeInYears(c);
+            mAgePicker.setText(String.valueOf(age));
         } catch (Exception e){}
         try {
             mGenderButton.check(gender.getIdFromGender(
@@ -140,6 +145,14 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         try {
             mLifterButton.check(skillLevel.getIdFromSkillLevel(
                     userdemo.getSkillLevel()));
+        } catch (Exception e){}
+
+        try {
+            String weightType = userdemo.getUnitOfMeasure();
+            //if weightType is pounds set check, else unchecked
+            mWeightTypeButton.setChecked(
+                    weightType.toLowerCase().contains("pound"));
+
         } catch (Exception e){}
 
     }
@@ -164,19 +177,27 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         if (calendar!=null) {
             Calendar now = Calendar.getInstance();
 
-            long dateDiff = now.getTimeInMillis() - calendar.getTimeInMillis();
-            if (dateDiff > 0) {
-                dateDiff /= 1000; //TO SECONDS
-                dateDiff /= 3600; //TO HOURS
-                dateDiff /= 24;  //TO DAYS
-                dateDiff /= 365; //TO YEARS
-                yearsOld = (int)(dateDiff);
-                mAgePicker.setText(String.valueOf(yearsOld));
-                birthday = calendar;
-                return;
-            }
+            yearsOld = getAgeInYears(calendar);
+
+            mAgePicker.setText(String.valueOf(yearsOld));
+            return;
         }
 
         mAgePicker.setText("Age");
     }
+
+    public int getAgeInYears(Calendar cal){
+        Calendar now = Calendar.getInstance();
+        long mili = now.getTimeInMillis() - cal.getTimeInMillis();
+        if (mili > 0) {
+
+            mili /= MILLISECONDS_IN_YEAR; //TO YEARS
+            int yearsOld = (int) (mili);
+            mAgePicker.setText(String.valueOf(yearsOld));
+            birthday = cal;
+            return yearsOld;
+        }
+        return 0;
+    }
+
 }
