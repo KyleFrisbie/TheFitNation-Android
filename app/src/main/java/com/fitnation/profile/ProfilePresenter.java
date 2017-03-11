@@ -8,8 +8,6 @@ import com.fitnation.model.UserDemographic;
 
 public class ProfilePresenter implements ProfileContract.Presenter {
     private ProfileContract.View mView;
-    private UserDemographic userInfo;
-
 
     public ProfilePresenter (ProfileContract.View view) {
         mView = view;
@@ -26,15 +24,9 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
 
     @Override
-    public void onSaveClicked(UserDemographic userDemo) {
+    public void saveData(UserDemographic userDemo) {
         UserDataManager userDataManager = new UserDataManager();
         userDataManager.SaveProfileData(userDemo);
-    }
-
-
-
-    public void onSave(UserDemographic userDemo){
-
     }
 
 

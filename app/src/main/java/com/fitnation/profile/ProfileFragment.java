@@ -1,16 +1,13 @@
 package com.fitnation.profile;
 
 
-import java.util.Map;
 import java.util.Calendar;
 
 import java.util.Date;
-import java.util.Calendar;
 
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +71,17 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     View v = inflater.inflate(R.layout.fragment_profile, container, false);
     ButterKnife.bind(this, v);
 
+        v.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyPressed, KeyEvent keyEvent) {
+                if( keyPressed == KeyEvent.KEYCODE_BACK){
+                    onSaveClicked();
+                    return true;
+                }
+                return false;
+            }
+        });
+
     return v;
     }
 
@@ -98,9 +106,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public void onSaveClicked() {
         userdemo = new UserDemographic();
 
-        System.out.println(mHeightTextBox.getText().toString());
-        System.out.println(mWeightTextBox.getText().toString());
-
         userdemo.setFirstName(mFirstNameTextBox.getText().toString());
         userdemo.setLastName(mLastNameTextBox.getText().toString());
         userdemo.setDob(birthday.getTime());
@@ -114,7 +119,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
         userdemo.setUnitOfMeasure(mWeightTypeButton.getText().toString());
 
-        mPresenter.onSaveClicked(userdemo);
+        mPresenter.saveData(userdemo);
     }
 
     public void loadDemographics(){
@@ -199,5 +204,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         }
         return 0;
     }
+
+
 
 }
