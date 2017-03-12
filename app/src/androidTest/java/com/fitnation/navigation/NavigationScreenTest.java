@@ -45,7 +45,7 @@ public class NavigationScreenTest extends InstrumentationTest{
     public void navigationActivityDisplayed() {
         onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
         onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
-        onView(withId(R.id.content_navigation)).check(matches(isDisplayed()));
+        onView(withId(R.id.content_main_container)).check(matches(isDisplayed()));
         onView(withText(R.string.main_container)).check(matches(isDisplayed()));
     }
 

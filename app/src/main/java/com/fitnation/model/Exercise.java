@@ -1,5 +1,6 @@
 package com.fitnation.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -14,7 +15,7 @@ import io.realm.annotations.PrimaryKey;
  * A single Exercise
  */
 
-public class Exercise extends RealmObject {
+public class Exercise extends RealmObject implements Serializable {
     @PrimaryKey
     private Long androidId;
     private Long id;

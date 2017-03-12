@@ -17,7 +17,7 @@ import android.view.MenuItem;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
-import com.fitnation.exercise.CreateExerciseActivity;
+import com.fitnation.exercise.CreateExerciseFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,8 +89,8 @@ public class NavigationActivity extends BaseActivity
         } else if (id == R.id.nav_workout_regimens) {
 
         } else if (id == R.id.nav_build_workout) {
-            Intent launchCreateAWorkout = new Intent(this, CreateExerciseActivity.class);
-            startActivity(launchCreateAWorkout);
+            mToolbar.setElevation(0);
+            getSupportFragmentManager().beginTransaction().add(R.id.content_main_container, CreateExerciseFragment.newInstance()).commit();
 
         } else if (id == R.id.nav_my_profile) {
 
