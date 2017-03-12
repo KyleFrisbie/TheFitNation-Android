@@ -89,8 +89,7 @@ public class NavigationActivity extends BaseActivity
         } else if (id == R.id.nav_workout_regimens) {
 
         } else if (id == R.id.nav_build_workout) {
-            mToolbar.setElevation(0);
-            getSupportFragmentManager().beginTransaction().add(R.id.content_main_container, CreateExerciseFragment.newInstance()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_container, CreateExerciseFragment.newInstance()).commit();
 
         } else if (id == R.id.nav_my_profile) {
 

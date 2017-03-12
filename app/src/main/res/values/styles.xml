@@ -18,6 +18,10 @@
 
     <style name="TextView" parent="AppTheme"></style>
 
+    <style name="TextView.Actionable" parent="TextView">
+        <item name="android:textColor">@color/actionable</item>
+    </style>
+
     <style name="TextView.Header" parent="TextView">
         <item name="android:textColor">@color/textColor</item>
         <item name="android:gravity">center</item>

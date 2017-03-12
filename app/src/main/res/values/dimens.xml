@@ -6,4 +6,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="green_top_bar_height">30dp</dimen>
+    <dimen name="card_height">100dp</dimen>
 </resources>
