@@ -2,6 +2,8 @@ package com.fitnation.base;
 
 import android.app.Application;
 
+import com.fitnation.model.PrimaryKeyFactory;
+
 import io.realm.Realm;
 
 /**
@@ -13,5 +15,6 @@ public class FitNationApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Realm.init(getApplicationContext());
+        PrimaryKeyFactory.getInstance().initialize(Realm.getDefaultInstance());
     }
 }

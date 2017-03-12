@@ -43,8 +43,39 @@ public class UserDemographic extends RealmObject {
         unitOfMeasure = UnitOfMeasure.IMPERIAL;
     }
 
+    /**
+     * Sets the androidId to the next available
+     */
+    public void setAndroidIdToNextAvailable() {
+        androidId = PrimaryKeyFactory.getInstance().nextKey(this.getClass());
+    }
+
     public void setId(Long id) {
         androidId = id;
+    }
+
+    public Long getAndroidId() {
+        return androidId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     @Override
