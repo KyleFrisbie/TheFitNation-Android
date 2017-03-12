@@ -1,7 +1,6 @@
 package com.fitnation.login;
 
 import android.os.SystemClock;
-import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -56,8 +55,7 @@ public class LoginScreenTest extends InstrumentationTest {
         registerScreenIsDisplayed();
         onView(withId(R.id.registerEmail_editText)).perform(typeText("user@example.com"));
         onView(withId(R.id.registerPassword_editText)).perform(typeText("Pa55w0rd"));
-        onView(withId(R.id.first_name_editText)).perform(typeText("John"));
-        onView(withId(R.id.last_name_editText)).perform(typeText("Doe"));
+        onView(withId(R.id.userName_editText)).perform(typeText("John"));
         onView(withId(R.id.register_button)).perform(click());
         pressBack();
     }
@@ -131,8 +129,7 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.register_button)).check(matches(isDisplayed()));
         onView(withId(R.id.registerEmail_editText)).check(matches(isDisplayed()));
         onView(withId(R.id.registerPassword_editText)).check(matches(isDisplayed()));
-        onView(withId(R.id.first_name_editText)).check(matches(isDisplayed()));
-        onView(withId(R.id.last_name_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.userName_editText)).check(matches(isDisplayed()));
     }
 
     public void forgotLoginScreenIsDisplayed(){

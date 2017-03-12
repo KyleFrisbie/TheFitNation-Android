@@ -18,8 +18,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
 
     @BindView(R.id.registerEmail_editText) public EditText mEmail;
     @BindView(R.id.registerPassword_editText) public EditText mPassword;
-    @BindView(R.id.first_name_editText) public EditText mFirstName;
-    @BindView(R.id.last_name_editText) public EditText mLastName;
+    @BindView(R.id.userName_editText) public EditText userName;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -47,7 +46,10 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
 
     @OnClick(R.id.register_button)
     public void onRegisterButtonPressed() {
-        mPresenter.onRegisterCreatePressed(mEmail.getText().toString(), mPassword.getText().toString());
+        mPresenter.onRegisterCreatePressed(mEmail.getText().toString().trim(),
+                mPassword.getText().toString().trim(),
+                userName.getText().toString().trim(),
+                "en");
     }
 
     @Override

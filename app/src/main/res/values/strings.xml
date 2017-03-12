@@ -27,6 +27,7 @@
 
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
+    <string name="username">User Name</string>
 
     <string name="login_screen">Login Fragment</string>
     <string name="main_container">Main Container</string>

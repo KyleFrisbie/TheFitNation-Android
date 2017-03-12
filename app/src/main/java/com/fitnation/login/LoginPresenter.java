@@ -4,17 +4,23 @@ import android.content.Intent;
 import android.os.SystemClock;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.navigation.NavigationActivity;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,53 +50,42 @@ public class LoginPresenter implements LoginContract.Presenter{
     @Override
     public void onLoginPressed(final String userName, final String password) {
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
-        String url = "http://www.the-fit-nation.com/api/account";
+        String url = "http://www.the-fit-nation-dev.herokuapp.com/api/register";
+        Map<String, String> map = new HashMap<>();
+        map.put("email", "eeverson@msudenver.edu");
+        map.put("langKey", "en");
+        map.put("login", userName);
+        map.put("password", password);
 
-        StringRequest sr = new StringRequest
-                (Request.Method.GET, url, new Response.Listener<String>()
-            {
-                @Override
-                public void onResponse(String response) {
-                    //send to gson/json object for formatting
-                    System.out.println("succesful login attempt!!!!!!!\n\n" + response);
-                }
-            },  new Response.ErrorListener() {
 
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    System.out.println("failed " + error);
-                }
+
+        JsonObjectRequest jsonObjectPost = new JsonObjectRequest(Request.Method.POST, url,
+                new JSONObject(map), new Response.Listener<JSONObject>()
+        {
+            @Override
+            public void onResponse(JSONObject response) {
+                //send to gson/json object for formatting
+                System.out.println("succesful login attempt!!!!!!!\n\n" + response);
             }
+        },  new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("failed " + error.getMessage());
+            }
+        }
         ){
-            /*
             @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("email", "eeverson@msudenver.edu");
-                params.put("firstName", "Erik");
-                params.put("lastName", "Everson");
-                params.put("login", "eeverson");
-                params.put("password", "Pa55w0rd");
-
-                return params;
-            }
-            */
-
-            @Override
-            public Map<String, String> getHeaders() {
+            public Map<String, String> getHeaders() throws AuthFailureError{
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", "application/json");
-                //change bearer token to current one
-                params.put("Authorization", "bearer 821cea17-7d89-4e53-9e4b-23480f1be5e7");
-
                 return params;
             }
 
         };
 
-        requestQueue.add(sr);
+        requestQueue.add(jsonObjectPost);
         requestQueue.start();
+
     }
 
     @Override
@@ -125,6 +120,7 @@ public class LoginPresenter implements LoginContract.Presenter{
     public void stop() {
 
     }
+
 
     private void homeActivityIntent(){
         mView.getBaseActivity().startActivity(new Intent(mView.getBaseActivity(), NavigationActivity.class));

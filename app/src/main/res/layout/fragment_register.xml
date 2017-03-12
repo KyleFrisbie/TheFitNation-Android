@@ -35,19 +35,9 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/first_name_editText"
-        android:hint="@string/first_name"
+        android:id="@+id/userName_editText"
+        android:hint="@string/username"
         android:layout_below="@+id/registerPassword_editText"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/last_name_editText"
-        android:hint="@string/last_name"
-        android:layout_below="@+id/first_name_editText"
         android:layout_alignParentStart="true" />
 
     <Button
@@ -55,6 +45,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/register_button"
-        android:layout_below="@+id/last_name_editText"
+        android:layout_below="@+id/userName_editText"
         android:layout_alignParentStart="true" />
 </RelativeLayout>
