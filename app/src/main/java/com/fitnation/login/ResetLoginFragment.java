@@ -38,16 +38,16 @@ public class ResetLoginFragment extends BaseFragment implements ResetLoginContra
         return v;
     }
 
-    @OnClick(R.id.resetPassword_button)
-    public void onResetPasswordButtonPressed() {
-        email = mResetPasswordEditText.getText().toString();
-        mPresenter.onResetPasswordButtonPressed(email);
-    }
-
     @Override
     public void onStart() {
         super.onStart();
         mPresenter.start();
+    }
+
+    @OnClick(R.id.resetPassword_button)
+    public void onResetPasswordButtonPressed() {
+        email = mResetPasswordEditText.getText().toString();
+        mPresenter.onResetPasswordButtonPressed(email);
     }
 
     @Override

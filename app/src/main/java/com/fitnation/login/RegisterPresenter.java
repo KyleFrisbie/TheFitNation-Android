@@ -42,7 +42,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                     @Override
                     public void onResponse(JSONObject response) {
                         //send to gson/json object for formatting
-                        System.out.println("succesful login attempt!!!!!!!\n\n" + response);
+                        System.out.println("succesful register attempt!!!!!!!\n\n" + response);
                     }
                 },  new Response.ErrorListener() {
                     @Override

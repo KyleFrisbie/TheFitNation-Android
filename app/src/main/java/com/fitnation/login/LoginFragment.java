@@ -73,11 +73,12 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     public void onForgotLoginButtonClicked() { mPresenter.onForgotLoginButtonPressed(); }
 
     @Override
-    public void showProgress() {
+    public void showProgress(String progressMessage) {
+
     }
 
     @Override
-    public void showAuthError() {
+    public void showAuthError(String errorMessage) {
 
     }
 

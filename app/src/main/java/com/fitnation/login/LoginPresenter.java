@@ -26,9 +26,6 @@ import java.util.Map;
 
 import static com.fitnation.login.LoginBaseActivity.VIEW_CONTAINER;
 
-/**
- * Created by Ryan on 1/31/2017.
- */
 
 public class LoginPresenter implements LoginContract.Presenter{
     private LoginContract.View mView;
@@ -36,56 +33,76 @@ public class LoginPresenter implements LoginContract.Presenter{
     public LoginPresenter (LoginContract.View view) { mView = view; }
 
     @Override
-    public void onFacebookLoginPressed() {
-
-
-    }
-
-    @Override
-    public void onGoogleLoginPressed() {
-
-
-    }
-
-    @Override
     public void onLoginPressed(final String userName, final String password) {
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
-        String url = "http://www.the-fit-nation-dev.herokuapp.com/api/register";
-        Map<String, String> map = new HashMap<>();
-        map.put("email", "eeverson@msudenver.edu");
-        map.put("langKey", "en");
-        map.put("login", userName);
-        map.put("password", password);
-
-
+        String url = "http://the-fit-nation-dev.herokuapp.com/api/token";
 
         JsonObjectRequest jsonObjectPost = new JsonObjectRequest(Request.Method.POST, url,
-                new JSONObject(map), new Response.Listener<JSONObject>()
+                null, new Response.Listener<JSONObject>()
         {
             @Override
             public void onResponse(JSONObject response) {
-                //send to gson/json object for formatting
-                System.out.println("succesful login attempt!!!!!!!\n\n" + response);
+                System.out.println("succesful login attempt!!!!!!!\n\n" + response.toString());
             }
         },  new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println("failed " + error.getMessage());
             }
-        }
-        ){
+        }){
+            @Override
+            public byte[] getBody() {
+                Map<String,String> params = new HashMap<>();
+                params.put("username", userName);
+                params.put("password", password);
+                params.put("grant-type", "password");
+                params.put("scope", "read write");
+                params.put("client_secret", "production-secret-to-be-made");
+                params.put("client_id", "TheFitNationapp");
+                params.put("submit", "login");
+                String postBody = generateFormDataForPostBody(params);
+
+                return postBody.getBytes();
+            }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError{
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/json");
+                params.put("Content-Type", "multipart/form-data;boundary=" + "&&");
                 return params;
             }
-
         };
 
         requestQueue.add(jsonObjectPost);
         requestQueue.start();
+    }
 
+    private String generateFormDataForPostBody(Map<String, String> params){
+        StringBuilder sbPost = new StringBuilder();
+        for (String key : params.keySet()) {
+            if (params.get(key) != null) {
+                sbPost.append("\r\n" + "--" + "&&" + "\r\n");
+                sbPost.append("Content-Disposition: form-data; name=\"" + key + "\"" + "\r\n\r\n");
+                sbPost.append(params.get(key));
+            }
+        }
+
+        return sbPost.toString();
+    }
+
+    @Override
+    public void onFacebookLoginPressed() {    }
+
+    @Override
+    public void onGoogleLoginPressed() {    }
+
+    @Override
+    public void onForgotLoginButtonPressed() {
+        ResetLoginFragment forgotLoginFragment = ResetLoginFragment.newInstance();
+        forgotLoginFragment.setPresenter(new ResetLoginPresenter(forgotLoginFragment));
+        mView.getBaseActivity().getSupportFragmentManager().beginTransaction()
+                .addToBackStack("login fragment")
+                .replace(VIEW_CONTAINER, forgotLoginFragment).commit();
     }
 
     @Override
@@ -93,17 +110,8 @@ public class LoginPresenter implements LoginContract.Presenter{
         RegisterFragment registerFragment = RegisterFragment.newInstance();
         registerFragment.setPresenter(new RegisterPresenter(registerFragment));
         mView.getBaseActivity().getSupportFragmentManager().beginTransaction()
-                .addToBackStack("login")
+                .addToBackStack("login fragment")
                 .replace(VIEW_CONTAINER, registerFragment).commit();
-    }
-
-    @Override
-    public void onForgotLoginButtonPressed() {
-        ResetLoginFragment forgotLoginFragment = ResetLoginFragment.newInstance();
-        forgotLoginFragment.setPresenter(new ResetLoginPresenter(forgotLoginFragment));
-        mView.getBaseActivity().getSupportFragmentManager().beginTransaction()
-                .addToBackStack("login")
-                .replace(VIEW_CONTAINER, forgotLoginFragment).commit();
     }
 
     @Override
@@ -119,15 +127,5 @@ public class LoginPresenter implements LoginContract.Presenter{
     @Override
     public void stop() {
 
-    }
-
-
-    private void homeActivityIntent(){
-        mView.getBaseActivity().startActivity(new Intent(mView.getBaseActivity(), NavigationActivity.class));
-        mView.getBaseActivity().finish();
-    }
-
-    private void returnAuthError(){
-        mView.showAuthError();
     }
 }
