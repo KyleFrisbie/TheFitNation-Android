@@ -15,10 +15,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Erik on 2/18/2017.
- */
-
 public class ResetLoginPresenter implements ResetLoginContract.Presenter {
     private ResetLoginContract.View mView;
 
@@ -49,12 +45,15 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter {
         {
             @Override
             public void onResponse(String response) {
-                System.out.println("succesful password rest\n\n" + response);
+                responseMessage(response);
             }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     System.out.println("failed " + error.getMessage());
+                    if(error.networkResponse != null){
+                        errorResponseMessage(error);
+                    }
                 }
         }){
             @Override
@@ -63,7 +62,7 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter {
             }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/json");
                 params.put("Accept", "text/plain");
                 return params;
@@ -72,5 +71,14 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter {
 
         requestQueue.add(resetPasswordWithEmailRequest);
         requestQueue.start();
+    }
+
+    private void responseMessage(String message){
+        mView.showProgress(message);
+    }
+
+    private void errorResponseMessage(VolleyError error){
+        VolleyErrorMessageGenerator volleyErrorMessageGenerator = new VolleyErrorMessageGenerator(error);
+        mView.showAuthError(volleyErrorMessageGenerator.GetErrorMessage());
     }
 }

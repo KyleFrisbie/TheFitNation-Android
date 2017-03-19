@@ -9,8 +9,8 @@ import com.fitnation.base.BaseView;
 
 public interface RegisterContract {
     interface View extends BaseView<Presenter> {
-        void showProgress();
-        void showAuthError();
+        void showProgress(String message);
+        void showAuthError(String errorMessage);
     }
 
     interface Presenter extends BasePresenter {

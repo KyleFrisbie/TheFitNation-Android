@@ -7,5 +7,5 @@
     <color name="defaultBackground">#FFFFFF</color>
     <color name="statusBar">@color/colorPrimary</color>
     <color name="textColor">#FFFFFF</color>
-    <color name="loginEditText">#b39f9c9c</color>
+    <color name="loginEditText">#edffffff</color>
 </resources>

@@ -2,11 +2,13 @@ package com.fitnation.login;
 
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -15,9 +17,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Erik on 2/18/2017.
- */
+import static com.fitnation.login.LoginBaseActivity.VIEW_CONTAINER;
 
 public class RegisterPresenter implements RegisterContract.Presenter {
     private RegisterContract.View mView;
@@ -35,7 +35,11 @@ public class RegisterPresenter implements RegisterContract.Presenter {
         map.put("login", userName);
         map.put("password", password);
 
-
+        /*
+        * This implementation of volley has a workaround which ignores the null return from the
+        * server. The solution to this is to create a custom request which will accept string
+        * responses from the server yet will be able to send a JSON Body.
+         */
         JsonObjectRequest jsonObjectPost = new JsonObjectRequest(Request.Method.POST, url,
                 new JSONObject(map), new Response.Listener<JSONObject>()
                 {
@@ -43,22 +47,26 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                     public void onResponse(JSONObject response) {
                         //send to gson/json object for formatting
                         System.out.println("succesful register attempt!!!!!!!\n\n" + response);
+
                     }
                 },  new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("failed " + error.getMessage());
+                        System.out.println("failed " + error.toString());
+                        if(error.networkResponse != null){
+                            errorResponseMessage(error);
+                        }else{
+                            registerResponse("sucessful register", true);
+                        }
                     }
                 }
                 ){
-
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError{
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/json");
                 return params;
             }
-
         };
 
         requestQueue.add(jsonObjectPost);
@@ -81,7 +89,21 @@ public class RegisterPresenter implements RegisterContract.Presenter {
 
     }
 
-    public void returnAuthError(){
-        mView.showAuthError();
+    private void responseMessage(String message){
+        mView.showProgress(message);
+    }
+
+    private void errorResponseMessage(VolleyError error){
+        VolleyErrorMessageGenerator volleyErrorMessageGenerator = new VolleyErrorMessageGenerator(error);
+        mView.showAuthError(volleyErrorMessageGenerator.GetErrorMessage());
+    }
+
+    private void registerResponse(String response, Boolean registerSuccess){
+        mView.showProgress(response);
+        if(registerSuccess){
+            String message = "Registration Successful";
+            responseMessage(message);
+            mView.getBaseActivity().getSupportFragmentManager().popBackStack();
+        }
     }
 }

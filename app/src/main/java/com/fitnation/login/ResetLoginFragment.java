@@ -1,10 +1,13 @@
 package com.fitnation.login;
 
 import android.os.Bundle;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
@@ -51,13 +54,17 @@ public class ResetLoginFragment extends BaseFragment implements ResetLoginContra
     }
 
     @Override
-    public void showProgress() {
-
+    public void showProgress(String message) {
+        Snackbar progressSnackBar = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
+                message, BaseTransientBottomBar.LENGTH_SHORT);
+        progressSnackBar.show();
     }
 
     @Override
-    public void showAuthError() {
-
+    public void showAuthError(String errorMessage) {
+        Snackbar progressSnackBar = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
+                errorMessage, BaseTransientBottomBar.LENGTH_SHORT);
+        progressSnackBar.show();
     }
 
     @Override

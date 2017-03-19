@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/login_background_3">
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:layout_marginTop="69dp"
         android:id="@+id/resetPassword_editText"
         android:hint="@string/email"
-        android:layout_alignParentTop="true"
+        android:background="@color/loginEditText"
+        android:padding="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="6dp"
+        android:layout_above="@+id/resetPassword_button"
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:text="@string/reset_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
         android:id="@+id/resetPassword_button"
-        android:layout_below="@+id/resetPassword_editText"
-        android:layout_centerHorizontal="true" />
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:background="@color/actionable"
+        android:text="@string/reset_password"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/resetPassword_editText"
+        android:layout_alignEnd="@+id/resetPassword_editText" />
 </RelativeLayout>

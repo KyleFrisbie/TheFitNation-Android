@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.Settings;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,13 +75,14 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     public void onForgotLoginButtonClicked() { mPresenter.onForgotLoginButtonPressed(); }
 
     @Override
-    public void showProgress(String progressMessage) {
-
+    public void showProgress(String message) {
     }
 
     @Override
     public void showAuthError(String errorMessage) {
-
+        Snackbar progressSnackBar = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
+                errorMessage, BaseTransientBottomBar.LENGTH_SHORT);
+        progressSnackBar.show();
     }
 
     @Override

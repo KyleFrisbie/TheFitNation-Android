@@ -9,7 +9,7 @@ import com.fitnation.base.BaseView;
 
 public interface LoginContract {
     interface View extends BaseView<Presenter> {
-        void showProgress(String progressMessage);
+        void showProgress(String message);
         void showAuthError(String errorMessage);
     }
 

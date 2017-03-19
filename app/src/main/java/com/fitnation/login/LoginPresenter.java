@@ -21,6 +21,7 @@ import com.google.gson.JsonSyntaxException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,13 +30,16 @@ import static com.fitnation.login.LoginBaseActivity.VIEW_CONTAINER;
 
 public class LoginPresenter implements LoginContract.Presenter{
     private LoginContract.View mView;
+    final String boundary = "----WebKitFormBoundary7MA4YWxkTrZu0gW";
 
     public LoginPresenter (LoginContract.View view) { mView = view; }
 
     @Override
     public void onLoginPressed(final String userName, final String password) {
+        //volley implementation
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
-        String url = "http://the-fit-nation-dev.herokuapp.com/api/token";
+        String url = "http://the-fit-nation-dev.herokuapp.com/oauth/token";
+
 
         JsonObjectRequest jsonObjectPost = new JsonObjectRequest(Request.Method.POST, url,
                 null, new Response.Listener<JSONObject>()
@@ -43,11 +47,18 @@ public class LoginPresenter implements LoginContract.Presenter{
             @Override
             public void onResponse(JSONObject response) {
                 System.out.println("succesful login attempt!!!!!!!\n\n" + response.toString());
+                String token = null;
+                Intent mainActivityIntent = new Intent(mView.getBaseActivity(), NavigationActivity.class)
+                        .putExtra("token", token);
+                mView.getBaseActivity().startActivity(mainActivityIntent);
             }
         },  new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println("failed " + error.getMessage());
+                if(error.networkResponse != null){
+                    errorResponseMessage(error);
+                }
             }
         }){
             @Override
@@ -57,20 +68,25 @@ public class LoginPresenter implements LoginContract.Presenter{
                 params.put("password", password);
                 params.put("grant-type", "password");
                 params.put("scope", "read write");
-                params.put("client_secret", "production-secret-to-be-made");
+                params.put("client_secret", "my-secret-token-to-change-in-production");
                 params.put("client_id", "TheFitNationapp");
                 params.put("submit", "login");
                 String postBody = generateFormDataForPostBody(params);
-
                 return postBody.getBytes();
             }
 
+//            @Override
+//            public Map<String, String> getHeaders(){
+//                HashMap<String, String> headers = new HashMap<>();
+//                headers.put("Content-Type", "multipart/form-data; boundary=" + boundary);
+//                return headers;
+//            }
+
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError{
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "multipart/form-data;boundary=" + "&&");
-                return params;
+            public String getBodyContentType() {
+                return ("multipart/form-data; boundary=" + boundary);
             }
+
         };
 
         requestQueue.add(jsonObjectPost);
@@ -79,14 +95,19 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     private String generateFormDataForPostBody(Map<String, String> params){
         StringBuilder sbPost = new StringBuilder();
-        for (String key : params.keySet()) {
-            if (params.get(key) != null) {
-                sbPost.append("\r\n" + "--" + "&&" + "\r\n");
-                sbPost.append("Content-Disposition: form-data; name=\"" + key + "\"" + "\r\n\r\n");
-                sbPost.append(params.get(key));
+        if(params != null) {
+            for (String key : params.keySet()) {
+                if (params.get(key) != null) {
+                    sbPost.append("\r\n" + "--" + boundary + "\r\n");
+                    sbPost.append("Content-Disposition: form-data; name=\"");
+                    sbPost.append(key);
+                    sbPost.append("\"");
+                    sbPost.append("\r\n\r\n");
+                    sbPost.append(params.get(key));
+                }
             }
         }
-
+        sbPost.append("--" + boundary + "--");
         return sbPost.toString();
     }
 
@@ -127,5 +148,10 @@ public class LoginPresenter implements LoginContract.Presenter{
     @Override
     public void stop() {
 
+    }
+
+    private void errorResponseMessage(VolleyError error){
+        VolleyErrorMessageGenerator volleyErrorMessageGenerator = new VolleyErrorMessageGenerator(error);
+        mView.showAuthError(volleyErrorMessageGenerator.GetErrorMessage());
     }
 }
