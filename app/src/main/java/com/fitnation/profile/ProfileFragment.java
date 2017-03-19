@@ -2,7 +2,6 @@ package com.fitnation.profile;
 
 
 import java.util.Calendar;
-
 import java.util.Date;
 
 import android.app.DatePickerDialog;
@@ -47,7 +46,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @BindView(R.id.gendersRadioGroup)    public RadioGroup mGenderButton;
     @BindView(R.id.lifterTypeRadioGroup) public RadioGroup mLifterButton;
     @BindView(R.id.saveButton)           public Button mSaveButton;
-    @BindView(R.id.unitType)           public ToggleButton mUnitTypeButton;
+    @BindView(R.id.unitType)             public ToggleButton mUnitTypeButton;
 
     final long MILLISECONDS_IN_YEAR = 31556952000L;
     Calendar birthday;
