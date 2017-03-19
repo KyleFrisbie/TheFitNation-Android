@@ -52,7 +52,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                         if(error.networkResponse != null){
                             errorResponseMessage(error);
                         }else{
-                            registerResponse("sucessful register", true);
+                            registerResponse("Registration Successful", true);
                         }
                     }
                 }
@@ -95,10 +95,9 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     }
 
     private void registerResponse(String response, Boolean registerSuccess){
-        mView.showProgress(response);
+        responseMessage(response);
         if(registerSuccess){
-            String message = "Registration Successful";
-            responseMessage(message);
+            responseMessage(response);
             mView.getBaseActivity().getSupportFragmentManager().popBackStack();
         }
     }

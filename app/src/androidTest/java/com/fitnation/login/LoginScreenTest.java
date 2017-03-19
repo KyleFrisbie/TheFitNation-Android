@@ -84,6 +84,20 @@ public class LoginScreenTest extends InstrumentationTest {
         pressBack();
     }
 
+    @Test
+    public void testForgotLoginFlowForFailure(){
+        loginScreenIsDisplayed();
+        onView(withId(R.id.forgot_login_button)).perform(click());
+        forgotLoginScreenIsDisplayed();
+        onView(withId(R.id.resetPassword_editText)).perform(typeText("email@email123456.com"));
+        pressBack();
+        onView(withId(R.id.resetPassword_button)).perform(click());
+        SystemClock.sleep(500);
+        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("400")))
+                .check(matches(isDisplayed()));
+        pressBack();
+    }
+
 
     @Test
     public void testGoogleSignInFlow(){
