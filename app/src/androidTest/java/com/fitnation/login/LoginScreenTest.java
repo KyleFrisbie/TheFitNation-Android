@@ -65,7 +65,7 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.userName_editText)).perform(typeText("androidtest"));
         pressBack();
         onView(withId(R.id.register_button)).perform(click());
-        loginScreenIsDisplayed();
+        SystemClock.sleep(500);
         onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("400")))
                 .check(matches(isDisplayed()));
     }
