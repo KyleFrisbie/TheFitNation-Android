@@ -46,7 +46,6 @@ public class LoginPresenter implements LoginContract.Presenter{
         {
             @Override
             public void onResponse(JSONObject response) {
-                System.out.println("succesful login attempt!!!!!!!\n\n" + response.toString());
                 String token = null;
                 Intent mainActivityIntent = new Intent(mView.getBaseActivity(), NavigationActivity.class)
                         .putExtra("token", token);
@@ -55,7 +54,6 @@ public class LoginPresenter implements LoginContract.Presenter{
         },  new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("failed " + error.getMessage());
                 if(error.networkResponse != null){
                     errorResponseMessage(error);
                 }

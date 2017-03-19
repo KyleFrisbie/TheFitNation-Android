@@ -50,7 +50,6 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.out.println("failed " + error.getMessage());
                     if(error.networkResponse != null){
                         errorResponseMessage(error);
                     }
