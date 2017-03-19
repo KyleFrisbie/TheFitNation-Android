@@ -22,6 +22,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -43,7 +44,13 @@ public class LoginScreenTest extends InstrumentationTest {
     @Test
     public void testLoginFlow() {
         loginScreenIsDisplayed();
-        onLoginButtonPressed();
+        onView(withId(R.id.email_editText)).perform(typeText("testemail@android.com"));
+        onView(withId(R.id.password_editText)).perform(typeText("Pa55w0rd"));
+        pressBack();
+        onView(withId(R.id.login_button)).perform(click());
+        SystemClock.sleep(500);
+        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("500: Internal Server Error")))
+                .check(matches(isDisplayed()));
     }
 
 
@@ -51,57 +58,43 @@ public class LoginScreenTest extends InstrumentationTest {
     @Test
     public void testSignUpFlow(){
         loginScreenIsDisplayed();
-        onSignUpButtonPressed();
+        onView(withId(R.id.signUp_button)).perform(click());
         registerScreenIsDisplayed();
-        onView(withId(R.id.registerEmail_editText)).perform(typeText("user@example.com"));
+        onView(withId(R.id.registerEmail_editText)).perform(typeText("testregisteremail@android.com"));
         onView(withId(R.id.registerPassword_editText)).perform(typeText("Pa55w0rd"));
-        onView(withId(R.id.userName_editText)).perform(typeText("John"));
-        onView(withId(R.id.register_button)).perform(click());
+        onView(withId(R.id.userName_editText)).perform(typeText("androidtest"));
         pressBack();
+        onView(withId(R.id.register_button)).perform(click());
+        loginScreenIsDisplayed();
+        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("400")))
+                .check(matches(isDisplayed()));
     }
 
-    //may need dummy email for receiving email
     @Test
     public void testForgotLoginFlow(){
         loginScreenIsDisplayed();
-        onForgotLoginButtonPressed();
+        onView(withId(R.id.forgot_login_button)).perform(click());
         forgotLoginScreenIsDisplayed();
-        onView(withId(R.id.resetPassword_editText)).perform(typeText("user@example.com"));
+        onView(withId(R.id.resetPassword_editText)).perform(typeText("testemail@android.com"));
+        pressBack();
         onView(withId(R.id.resetPassword_button)).perform(click());
+        SystemClock.sleep(500);
+        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("e-mail was sent")))
+                .check(matches(isDisplayed()));
         pressBack();
     }
 
 
     @Test
     public void testGoogleSignInFlow(){
-        onGoogleLoginPressed();
+        loginScreenIsDisplayed();
+        onView(withId(R.id.google_login_button)).perform(click());
     }
 
     @Test
     public void testFacebookSignInFlow(){
-        onFacebookLoginPressed();
-    }
-
-    public void onGoogleLoginPressed(){
-        onView(withId(R.id.google_login_button)).perform(click());
-    }
-
-    public void onFacebookLoginPressed(){
+        loginScreenIsDisplayed();
         onView(withId(R.id.facebook_login_button)).perform(click());
-    }
-
-    public void onLoginButtonPressed() {
-        onView(withId(R.id.email_editText)).perform(typeText("user@example.com"));
-        onView(withId(R.id.password_editText)).perform(typeText("Pa55w0rd"));
-        onView(withId(R.id.login_button)).perform(click());
-    }
-
-    public void onSignUpButtonPressed(){
-        onView(withId(R.id.signUp_button)).perform(click());
-    }
-
-    public void onForgotLoginButtonPressed(){
-        onView(withId(R.id.forgot_login_button)).perform(click());
     }
 
     public void navigationScreenIsDisplayed(){
