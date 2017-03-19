@@ -55,6 +55,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
      */
     @OnClick(R.id.facebook_login_button)
     public void onFacebookLoginButtonClicked() {
+        //empty methods that do nothing yet
         mPresenter.onFacebookLoginPressed();
     }
 
