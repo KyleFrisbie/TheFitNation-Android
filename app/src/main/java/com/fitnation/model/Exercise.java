@@ -1,7 +1,10 @@
 package com.fitnation.model;
 
+import com.fitnation.model.enums.SkillLevel;
+
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Objects;
 
@@ -21,9 +24,36 @@ public class Exercise extends RealmObject implements Serializable {
     private Long id;
     private RealmList<Muscle> muscles;
     private String name;
+    private String imageUri;
+    private String notes;
+    private String skillLevelLevel;
+    private String exerciseFamilyName;
 
     public Exercise() {
         //default constructor
+    }
+
+    /**
+     * Loaded Constructor
+     * @param id
+     * @param name
+     * @param imageUri
+     * @param notes
+     * @param skillLevel
+     * @param muscles
+     * @param exerciseFamilyName
+     */
+    public Exercise(Long id, String name, String imageUri, String notes, String skillLevel, List<Muscle> muscles, String exerciseFamilyName) {
+        this.id = id;
+        this.name = name;
+        this.imageUri = imageUri;
+        this.notes = notes;
+        this.skillLevelLevel = skillLevel;
+        this.muscles = new RealmList<Muscle>();
+        for (Muscle muscle: muscles) {
+            this.muscles.add(muscle);
+        }
+        this.exerciseFamilyName = exerciseFamilyName;
     }
 
     public void setMuscles(RealmList<Muscle> muscles) {
@@ -48,25 +78,24 @@ public class Exercise extends RealmObject implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Exercise exercise = (Exercise) o;
-        if (exercise.id == null || id == null) {
-            return false;
-        }
-        return Objects.equals(id, exercise.id);
-    }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    @Override
-    public String toString() {
-        return "Exercise{" +
-            "id=" + id +
-            ", name='" + name + "'" +
-            '}';
+        Exercise exercise = (Exercise) o;
+
+        if (androidId != null ? !androidId.equals(exercise.androidId) : exercise.androidId != null)
+            return false;
+        if (id != null ? !id.equals(exercise.id) : exercise.id != null) return false;
+        if (muscles != null ? !muscles.equals(exercise.muscles) : exercise.muscles != null)
+            return false;
+        if (name != null ? !name.equals(exercise.name) : exercise.name != null) return false;
+        if (imageUri != null ? !imageUri.equals(exercise.imageUri) : exercise.imageUri != null)
+            return false;
+        if (notes != null ? !notes.equals(exercise.notes) : exercise.notes != null) return false;
+        if (skillLevelLevel != null ? !skillLevelLevel.equals(exercise.skillLevelLevel) : exercise.skillLevelLevel != null)
+            return false;
+        return exerciseFamilyName != null ? exerciseFamilyName.equals(exercise.exerciseFamilyName) : exercise.exerciseFamilyName == null;
+
     }
 
     @Override

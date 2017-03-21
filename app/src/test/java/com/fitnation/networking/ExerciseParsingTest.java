@@ -2,12 +2,14 @@ package com.fitnation.networking;
 
 import com.fitnation.model.Exercise;
 import com.fitnation.model.Muscle;
+import com.fitnation.model.enums.ExerciseFamily;
 import com.fitnation.utils.FileUtils;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
@@ -17,7 +19,7 @@ import static org.junit.Assert.*;
 /**
  *
  */
-public class JsonParserTest {
+public class ExerciseParsingTest {
     @Before
     public void setUp() throws Exception {
 
@@ -35,19 +37,19 @@ public class JsonParserTest {
 
     @Test
     public void convertJsonStringToPojo() throws Exception {
-        Muscle biceps = new Muscle();
-        biceps.setId(3L);
-        biceps.setName("biceps");
-        Exercise EXPECTED = new Exercise();
-        EXPECTED.setId(93345L);
-        EXPECTED.setName("Bicep Curl");
+        List<Muscle> muscles = new ArrayList<>();
+        Muscle chest = new Muscle(1103, "Sternal Head", "Chest");
+        muscles.add(chest);
+
+        Exercise EXPECTED = new Exercise(1651l, "Squat", "http://some.image.io", "Squats are a bitch", "Beginner", muscles, ExerciseFamily.FREE_WEIGHTS);
+
         InputStream in = this.getClass().getClassLoader().getResourceAsStream("exercise.json");
         String json = FileUtils.readTextFile(in);
 
-        Exercise bicepCurl = JsonParser.convertJsonStringToPojo(json, Exercise.class);
+        Exercise squat = JsonParser.convertJsonStringToPojo(json, Exercise.class);
 
-        assertNotNull(bicepCurl);
-        assertEquals(EXPECTED, bicepCurl);
+        assertNotNull(squat);
+        assertEquals(EXPECTED, squat);
 
     }
 

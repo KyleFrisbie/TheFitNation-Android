@@ -24,6 +24,10 @@ public class ExerciseInstanceSet extends RealmObject{
         this.reqQuantity = reqQuantity;
     }
 
+    public ExerciseInstanceSet() {
+        //required default constructor
+    }
+
     public Float getReqQuantity() {
         return reqQuantity;
     }

@@ -1,8 +1,8 @@
 {
   "id": 1651,
   "name": "Squat",
-  "imageUri": null,
-  "notes": null,
+  "imageUri": "http://some.image.io",
+  "notes": "Squats are a bitch",
   "skillLevelId": 1251,
   "skillLevelLevel": "Beginner",
   "muscles": [
