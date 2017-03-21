@@ -48,8 +48,12 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         List<ExerciseInstanceSet> sets = exerciseInstance.getExerciseInstanceSets();
         String setText = "";
         String repText = "";
+        int cutOff = 3;
+        if(cutOff >= sets.size()) {
+            cutOff = sets.size();
+        }
 
-        for (int i = 0; i < sets.size(); i++) {
+        for (int i = 0; i < cutOff; i++) {
             ExerciseInstanceSet set = sets.get(i);
 
             if(i == 0) {
@@ -89,15 +93,11 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.add_exercise_box) CheckBox addExerciseBox;
         @BindView(R.id.exercise_name) TextView exerciseName;
         @BindView(R.id.set_one) TextView setOne;
-        @BindView(R.id.set_two) TextView setTwo;
-        @BindView(R.id.set_three) TextView setThree;
         @BindView(R.id.set_one_reps) TextView setOneReps;
-        @BindView(R.id.set_two_reps) TextView setTwoReps;
-        @BindView(R.id.set_three_reps) TextView setThreeReps;
         @BindView(R.id.edit_exercise) ImageView editExercise;
 
         public ViewHolder(View view) {

@@ -17,6 +17,8 @@ import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.ExerciseInstance;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -110,9 +112,29 @@ public class CreateExerciseFragment extends BaseFragment implements CreateExerci
         ExercisesListFragment advancedFragment = (ExercisesListFragment) mSectionsPagerAdapter.instantiateItem(mViewPager, 2);
 
         //TODO filter by skill level
+        List<ExerciseInstance> list1 = new ArrayList<ExerciseInstance>(exercises.size());
+        List<ExerciseInstance> list2 = new ArrayList<ExerciseInstance>(exercises.size());
+        List<ExerciseInstance> list3 = new ArrayList<ExerciseInstance>(exercises.size());
 
-        beginnerFragment.displayExercises(exercises);
-        intermediatFragment.displayExercises(exercises);
-        advancedFragment.displayExercises(exercises);
+        for (ExerciseInstance instance : exercises) {
+            ExerciseInstance copy1 = null;
+            ExerciseInstance copy2 = null;
+            ExerciseInstance copy3 = null;
+
+            try {
+                copy1 = (ExerciseInstance)instance.clone();
+                copy2 = (ExerciseInstance)instance.clone();
+                copy3 = (ExerciseInstance)instance.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+            list1.add(copy1);
+            list2.add(copy2);
+            list3.add(copy3);
+        }
+
+        beginnerFragment.displayExercises(list1);
+        intermediatFragment.displayExercises(list2);
+        advancedFragment.displayExercises(list3);
     }
 }

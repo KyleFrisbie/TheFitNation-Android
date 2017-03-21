@@ -1,156 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="5dp">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
+        app:cardUseCompatPadding="true"
         android:layout_height="@dimen/card_height">
 
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="@dimen/activity_vertical_margin">
+            android:layout_marginTop="@dimen/activity_vertical_margin">
 
             <CheckBox
                 android:id="@+id/add_exercise_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true" />
+                android:layout_marginLeft="-11dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/exercise_name"
+                style="@style/TextView.Actionable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bench Press"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.271"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.509" />
+
+            <TextView
+                android:id="@+id/sets_continued"
+                style="@style/TextView.Actionable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="fill"
+                android:layout_row="3"
+                android:text="..."
+                android:textAlignment="center"
+                android:layout_marginLeft="0dp"
+                app:layout_constraintLeft_toLeftOf="@+id/set_one"
+                android:layout_marginRight="8dp"
+                app:layout_constraintRight_toRightOf="@+id/set_one"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="0dp" />
+
+            <TextView
+                android:id="@+id/set_one_reps"
+                style="@style/TextView.Actionable"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="0dp"
+                android:text="08"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/edit_exercise"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"></TextView>
+
 
             <TextView
                 style="@style/TextView.Actionable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="55dp"
-                android:layout_toEndOf="@+id/add_exercise_box"
-                android:text="Bench Press"
-                android:id="@+id/exercise_name" />
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="48dp"
-                android:layout_toEndOf="@+id/exercise_name"
-                android:id="@+id/linearLayout">
-
-                <GridLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/set_grid"
-                    android:columnCount="2"
-                    android:rowCount="4">
-
-                    <TextView
-                        android:id="@+id/set_one"
-                        style="@style/TextView.Actionable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="0"
-                        android:text="01"></TextView>
-
-                    <TextView
-                        android:id="@+id/set_one_reps"
-                        style="@style/TextView.Actionable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_marginLeft="6dp"
-                        android:layout_row="0"
-                        android:text="08"></TextView>
-
-                    <TextView
-                        android:id="@+id/set_two"
-                        style="@style/TextView.Actionable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="1"
-                        android:text="02"></TextView>
-
-                    <TextView
-                        android:id="@+id/set_two_reps"
-                        style="@style/TextView.Actionable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_marginLeft="6dp"
-                        android:layout_row="1"
-                        android:text="08"></TextView>
-
-                    <TextView
-                        android:id="@+id/set_three"
-                        style="@style/TextView.Actionable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="2"
-                        android:text="03"></TextView>
-
-                    <TextView
-                        android:id="@+id/set_three_reps"
-                        style="@style/TextView.Actionable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_marginLeft="6dp"
-                        android:layout_row="2"
-                        android:text="08"></TextView>
-
-                    <TextView
-                        android:id="@+id/sets_continued"
-                        style="@style/TextView.Actionable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_gravity="fill"
-                        android:layout_row="3"
-                        android:text="..."
-                        android:textAlignment="center" />
-
-                    <TextView
-                        android:id="@+id/reps_continued"
-                        style="@style/TextView.Actionable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:layout_gravity="fill"
-                        android:layout_marginLeft="6dp"
-                        android:layout_row="3"
-                        android:text="..."
-                        android:textAlignment="center" />
-                </GridLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="8dp"
+                android:text="Edit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toLeftOf="@+id/edit_exercise"
+                app:layout_constraintRight_toRightOf="@+id/edit_exercise"
+                app:layout_constraintTop_toBottomOf="@+id/edit_exercise"
+                tools:layout_conversion_absoluteHeight="16dp"
+                tools:layout_conversion_absoluteWidth="24dp"
+                tools:layout_conversion_absoluteX="371dp"
+                tools:layout_conversion_absoluteY="65dp" />
 
             <ImageView
                 android:id="@+id/edit_exercise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                app:srcCompat="@drawable/edit_exercise"/>
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/edit_exercise" />
+
             <TextView
+                android:id="@+id/set_one"
+                style="@style/TextView.Actionable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextView.Actionable"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@id/edit_exercise"
-                android:layout_marginTop="3dp"
-                android:text="Edit"/>
+                android:text="01"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="-3dp"
+                app:layout_constraintRight_toLeftOf="@+id/set_one_reps"
+                android:layout_marginRight="24dp"></TextView>
 
-            </RelativeLayout>
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/reps_continued"
+                style="@style/TextView.Actionable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="fill"
+                android:layout_row="3"
+                android:text="..."
+                android:textAlignment="center"
+                android:layout_marginRight="5dp"
+                app:layout_constraintRight_toRightOf="@+id/set_one_reps"
+                android:layout_marginLeft="0dp"
+                app:layout_constraintLeft_toLeftOf="@+id/set_one_reps"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="0dp" />
+
+
+        </android.support.constraint.ConstraintLayout>
 
 
     </android.support.v7.widget.CardView>

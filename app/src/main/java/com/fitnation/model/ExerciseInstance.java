@@ -9,7 +9,7 @@ import io.realm.RealmObject;
 /**
  * Created by Ryan on 3/21/2017.
  */
-public class ExerciseInstance extends RealmObject implements Serializable {
+public class ExerciseInstance extends RealmObject implements Serializable, Cloneable {
     private Long id;
     private Long androidId;
     private String notes;
@@ -25,7 +25,6 @@ public class ExerciseInstance extends RealmObject implements Serializable {
     }
 
     public ExerciseInstance(Exercise exercise) {
-        androidId = PrimaryKeyFactory.getInstance().nextKey(this.getClass());
         this.exercise = exercise;
         exerciseInstanceSets = new RealmList<>();
         exerciseInstanceSets.add(new ExerciseInstanceSet(1, 8f));
@@ -48,6 +47,10 @@ public class ExerciseInstance extends RealmObject implements Serializable {
 
     public Exercise getExercise() {
         return exercise;
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     public Long getId() {
