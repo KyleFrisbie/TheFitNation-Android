@@ -14,6 +14,16 @@ public class ExerciseInstanceSet extends RealmObject{
     private Float effortQuantity;
     private Float restTime;
 
+    /**
+     * Constructor
+     * @param orderNumber - the set's order
+     * @param reqQuantity - the reps to do
+     */
+    public ExerciseInstanceSet(Integer orderNumber, Float reqQuantity) {
+        this.orderNumber = orderNumber;
+        this.reqQuantity = reqQuantity;
+    }
+
     public Float getReqQuantity() {
         return reqQuantity;
     }

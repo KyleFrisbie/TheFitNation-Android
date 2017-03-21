@@ -1,10 +1,18 @@
 {
-  "id": 93345,
+  "id": 1651,
+  "name": "Squat",
+  "imageUri": null,
+  "notes": null,
+  "skillLevelId": 1251,
+  "skillLevelLevel": "Beginner",
   "muscles": [
     {
-      "id": 3,
-      "name": "biceps"
+      "id": 1103,
+      "name": "Sternal Head",
+      "bodyPartId": 1053,
+      "bodyPartName": "Chest"
     }
   ],
-  "name": "Bicep Curl"
+  "exerciseFamilyId": 1301,
+  "exerciseFamilyName": "Free Weights"
 }

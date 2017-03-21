@@ -27,10 +27,6 @@
             android:name=".login.LoginActivity"
             android:parentActivityName=".intro.SplashScreenActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".exercise.CreateExerciseActivity"
-            android:label="@string/title_activity_create_exercise"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="82977f91de386a5526b052cdb918975d2ebbb85b" />

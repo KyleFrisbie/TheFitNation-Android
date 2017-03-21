@@ -5,10 +5,16 @@ package com.fitnation.exercise;
  */
 
 public class ExerciseListPresenter implements ExerciseListContract.Presenter {
+    private ExercisesManager mExerciseManager;
+
+    public ExerciseListPresenter() {
+
+    }
+
     @Override
     public void onViewReady() {
         //get the exercises
-        
+
     }
 
     @Override

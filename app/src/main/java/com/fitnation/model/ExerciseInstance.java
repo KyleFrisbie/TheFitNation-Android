@@ -20,6 +20,20 @@ public class ExerciseInstance extends RealmObject implements Serializable {
     private Unit effortUnit;
     private boolean selected;
 
+    public ExerciseInstance() {
+
+    }
+
+    public ExerciseInstance(Exercise exercise) {
+        androidId = PrimaryKeyFactory.getInstance().nextKey(this.getClass());
+        this.exercise = exercise;
+        exerciseInstanceSets = new RealmList<>();
+        exerciseInstanceSets.add(new ExerciseInstanceSet(1, 8f));
+        exerciseInstanceSets.add(new ExerciseInstanceSet(2, 8f));
+        exerciseInstanceSets.add(new ExerciseInstanceSet(3, 8f));
+        exerciseInstanceSets.add(new ExerciseInstanceSet(4, 8f));
+    }
+
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
