@@ -1,8 +1,10 @@
 package com.fitnation.exercise;
 
 import android.content.Context;
+import android.util.ArrayMap;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -11,16 +13,17 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
+import com.fitnation.model.enums.ExerciseFamily;
 import com.fitnation.networking.EnvironmentManager;
 import com.fitnation.networking.JsonParser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Ryan on 3/21/2017.
  */
-
 public class ExercisesManager {
     private static final String TAG = ExercisesManager.class.getSimpleName();
     private RequestQueue mRequestQueue;
@@ -30,29 +33,47 @@ public class ExercisesManager {
     }
 
     public void getExercises(final ExercisesRequestCallback callback) {
-        // Instantiate the RequestQueue.
-        String resourceRoute = "exercises";
-
-        String url = EnvironmentManager.getRequestUrl(resourceRoute);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        List<Exercise> exercises = JsonParser.convertJsonStringToList(response, Exercise[].class);
-                        List<ExerciseInstance> exerciseInstances = convertExercisesToInstances(exercises);
-                        callback.onExercisesRetrieved(exerciseInstances);
-                    }
-                }, new Response.ErrorListener() {
+        new Thread(new Runnable() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, error.getMessage());
-                callback.onError();
+            public void run() {
+                // Instantiate the RequestQueue.
+                String resourceRoute = "exercises";
+
+                String url = EnvironmentManager.getRequestUrl(resourceRoute);
+                StringRequest getExercisesRequest = new StringRequest(Request.Method.GET, url,
+                        new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response) {
+                                List<Exercise> exercises = JsonParser.convertJsonStringToList(response, Exercise[].class);
+                                List<ExerciseInstance> exerciseInstances = convertExercisesToInstances(exercises);
+                                callback.onExercisesRetrieved(exerciseInstances);
+                            }
+                        },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.e(TAG, error.toString());
+                                callback.onError();
+                            }
+                        }
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        String authToken = "07390b15-f877-4672-9da7-29217b8f75c5";
+                        Map<String, String> mHeaders = new ArrayMap();
+
+                        mHeaders.put("Authorization", "Bearer" + " " + authToken);
+                        mHeaders.put("Content-Type", "application/json");
+
+                        return mHeaders;
+                    }
+                };
+
+                mRequestQueue.add(getExercisesRequest);
             }
-        });
-// Add the request to the RequestQueue.
-        mRequestQueue.add(stringRequest);
+        }).start();
     }
 
     private List<ExerciseInstance> convertExercisesToInstances(List<Exercise> exercises) {
@@ -65,4 +86,15 @@ public class ExercisesManager {
         return exerciseInstances;
     }
 
+    public static List<ExerciseInstance> filterExerciseBySkillLevel(List<ExerciseInstance> exerciseInstances, String filter) {
+        List<ExerciseInstance> filteredList = new ArrayList<>();
+
+        for (ExerciseInstance exerciseInstance: exerciseInstances) {
+            if(exerciseInstance.getExercise().getSkillLevelLevel() == filter) {
+                filteredList.add(exerciseInstance);
+            }
+        }
+
+        return filteredList;
+    }
 }

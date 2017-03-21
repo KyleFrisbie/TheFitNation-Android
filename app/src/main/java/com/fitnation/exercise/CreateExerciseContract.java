@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Ryan on 3/21/2017.
  */
 
-public interface ExerciseListContract {
+public interface CreateExerciseContract {
     interface View extends BaseView<Presenter> {
         void showProgress();
         void displayExercises(List<ExerciseInstance> exercises);

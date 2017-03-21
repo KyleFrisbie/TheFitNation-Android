@@ -56,6 +56,10 @@ public class Exercise extends RealmObject implements Serializable {
         this.exerciseFamilyName = exerciseFamilyName;
     }
 
+    public String getSkillLevelLevel() {
+        return skillLevelLevel;
+    }
+
     public void setMuscles(RealmList<Muscle> muscles) {
         this.muscles = muscles;
     }

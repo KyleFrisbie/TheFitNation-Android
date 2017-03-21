@@ -3,7 +3,6 @@ package com.fitnation.exercise;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,9 +12,9 @@ import android.view.ViewGroup;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
-import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,28 +23,27 @@ import butterknife.ButterKnife;
 /**
  * Displays a list of exercises
  */
-public class ExercisesListFragment extends BaseFragment implements ExerciseListContract.View{
+public class ExercisesListFragment extends BaseFragment {
     private static final String EXERCISE_LIST = "EXERCISE_LIST";
     private List<ExerciseInstance> mExercises;
     @BindView(R.id.exercise_recycler_view)
     public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ExerciseListContract.Presenter mPresenter;
 
 
     public ExercisesListFragment() {
         // Required empty public constructor
     }
 
-    public static ExercisesListFragment newInstance(List<Exercise> exercises) {
-        Bundle bundle = new Bundle();
-
-//        bundle.putSerializable(EXERCISE_LIST, exercises);
-        //TODO list of serializible objects
-
+    public static ExercisesListFragment newInstance(List<ExerciseInstance> exerciseInstances) {
         ExercisesListFragment  exercisesListFragment = new ExercisesListFragment();
-        exercisesListFragment.setArguments(bundle);
+
+        if(exerciseInstances != null && !exerciseInstances.isEmpty()) {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(EXERCISE_LIST, new ArrayList<>(exerciseInstances));
+            exercisesListFragment.setArguments(bundle);
+        }
 
         return exercisesListFragment;
     }
@@ -53,8 +51,11 @@ public class ExercisesListFragment extends BaseFragment implements ExerciseListC
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
 
-        mExercises = (List<ExerciseInstance>) getArguments().get(EXERCISE_LIST);
+        if(bundle != null) {
+            mExercises = (List<ExerciseInstance>) bundle.get(EXERCISE_LIST);
+        }
     }
 
     @Override
@@ -73,25 +74,17 @@ public class ExercisesListFragment extends BaseFragment implements ExerciseListC
         return v;
     }
 
-    @Override
-    public void setPresenter(ExerciseListContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public BaseActivity getBaseActivity() {
-        return null;
-    }
-
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void displayExercises(List<ExerciseInstance> exercises) {
+    public void displayExercises( final List<ExerciseInstance> exercises) {
         mExercises = exercises;
-        mAdapter = new ExerciseAdapter(exercises);
-        mRecyclerView.setAdapter(mAdapter);
+
+        if(getView() != null) {
+            mAdapter = new ExerciseAdapter(mExercises);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 }
