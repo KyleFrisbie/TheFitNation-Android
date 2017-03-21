@@ -3,16 +3,13 @@
   "name": "Squat",
   "imageUri": "http://some.image.io",
   "notes": "Squats are a bitch",
-  "skillLevelId": 1251,
   "skillLevelLevel": "Beginner",
   "muscles": [
     {
       "id": 1103,
       "name": "Sternal Head",
-      "bodyPartId": 1053,
       "bodyPartName": "Chest"
     }
   ],
-  "exerciseFamilyId": 1301,
   "exerciseFamilyName": "Free Weights"
 }

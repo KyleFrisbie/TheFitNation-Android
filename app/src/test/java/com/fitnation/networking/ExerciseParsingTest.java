@@ -37,11 +37,7 @@ public class ExerciseParsingTest {
 
     @Test
     public void convertJsonStringToPojo() throws Exception {
-        List<Muscle> muscles = new ArrayList<>();
-        Muscle chest = new Muscle(1103, "Sternal Head", "Chest");
-        muscles.add(chest);
-
-        Exercise EXPECTED = new Exercise(1651l, "Squat", "http://some.image.io", "Squats are a bitch", "Beginner", muscles, ExerciseFamily.FREE_WEIGHTS);
+        Exercise EXPECTED = getExercise();
 
         InputStream in = this.getClass().getClassLoader().getResourceAsStream("exercise.json");
         String json = FileUtils.readTextFile(in);
@@ -55,22 +51,22 @@ public class ExerciseParsingTest {
 
     @Test
     public void convertPojoToJsonString() throws Exception {
-        RealmList<Muscle> musclesList = new RealmList<>();
-        Muscle biceps = new Muscle();
-        biceps.setId(3L);
-        biceps.setName("biceps");
-        musclesList.add(biceps);
+        Exercise EXPECTED = getExercise();
 
-        Exercise bicepCurl = new Exercise();
-        bicepCurl.setId(93345L);
-        bicepCurl.setName("Bicep Curl");
-        bicepCurl.setMuscles(musclesList);
 
         InputStream in = this.getClass().getClassLoader().getResourceAsStream("exercise.json");
         String json = FileUtils.readTextFile(in);
 
-        String actual = JsonParser.convertPojoToJsonString(bicepCurl);
+        String actual = JsonParser.convertPojoToJsonString(getExercise());
 
         assertEquals(json, actual);
+    }
+
+    private Exercise getExercise() {
+        List<Muscle> muscles = new ArrayList<>();
+        Muscle chest = new Muscle(1103, "Sternal Head", "Chest");
+        muscles.add(chest);
+
+        return new Exercise(1651l, "Squat", "http://some.image.io", "Squats are a bitch", "Beginner", muscles, ExerciseFamily.FREE_WEIGHTS);
     }
 }

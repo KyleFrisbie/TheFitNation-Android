@@ -22,11 +22,11 @@ public class Exercise extends RealmObject implements Serializable {
     @PrimaryKey
     private Long androidId;
     private Long id;
-    private RealmList<Muscle> muscles;
     private String name;
     private String imageUri;
     private String notes;
     private String skillLevelLevel;
+    private RealmList<Muscle> muscles;
     private String exerciseFamilyName;
 
     public Exercise() {
