@@ -32,6 +32,10 @@ public class ExerciseInstanceSet extends RealmObject{
         return reqQuantity;
     }
 
+    public int getReqQuantityAsInt() {
+        return Math.round(reqQuantity);
+    }
+
     public Integer getOrderNumber() {
         return orderNumber;
     }

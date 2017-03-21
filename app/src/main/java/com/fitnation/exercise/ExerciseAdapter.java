@@ -58,10 +58,10 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
 
             if(i == 0) {
                 setText = String.valueOf(set.getOrderNumber());
-                repText = String.valueOf(set.getReqQuantity());
+                repText = String.valueOf(set.getReqQuantityAsInt());
             } else {
                 setText = setText + "\n" + String.valueOf(set.getOrderNumber());
-                repText = repText + "\n" + String.valueOf(set.getReqQuantity());
+                repText = repText + "\n" + String.valueOf(set.getReqQuantityAsInt());
             }
         }
 

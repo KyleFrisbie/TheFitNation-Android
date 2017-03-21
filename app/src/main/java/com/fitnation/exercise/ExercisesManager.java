@@ -61,7 +61,7 @@ public class ExercisesManager {
                 ) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String authToken = "906e0033-03da-41b3-95d6-a4b84a088098";
+                        String authToken = "811f0d0b-02a4-407a-8e4d-85ce0af348b8";
                         Map<String, String> mHeaders = new ArrayMap();
 
                         mHeaders.put("Authorization", "Bearer" + " " + authToken);
@@ -90,7 +90,7 @@ public class ExercisesManager {
         List<ExerciseInstance> filteredList = new ArrayList<>();
 
         for (ExerciseInstance exerciseInstance: exerciseInstances) {
-            if(exerciseInstance.getExercise().getSkillLevelLevel() == filter) {
+            if(exerciseInstance.getExercise().getSkillLevelLevel().equalsIgnoreCase(filter)) {
                 filteredList.add(exerciseInstance);
             }
         }

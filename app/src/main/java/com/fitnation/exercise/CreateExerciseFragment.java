@@ -16,6 +16,7 @@ import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.ExerciseInstance;
+import com.fitnation.model.enums.SkillLevel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -110,8 +111,7 @@ public class CreateExerciseFragment extends BaseFragment implements CreateExerci
         ExercisesListFragment beginnerFragment = (ExercisesListFragment) mSectionsPagerAdapter.instantiateItem(mViewPager, 0);
         ExercisesListFragment intermediatFragment = (ExercisesListFragment) mSectionsPagerAdapter.instantiateItem(mViewPager, 1);
         ExercisesListFragment advancedFragment = (ExercisesListFragment) mSectionsPagerAdapter.instantiateItem(mViewPager, 2);
-
-        //TODO filter by skill level
+        
         List<ExerciseInstance> list1 = new ArrayList<ExerciseInstance>(exercises.size());
         List<ExerciseInstance> list2 = new ArrayList<ExerciseInstance>(exercises.size());
         List<ExerciseInstance> list3 = new ArrayList<ExerciseInstance>(exercises.size());
@@ -133,8 +133,8 @@ public class CreateExerciseFragment extends BaseFragment implements CreateExerci
             list3.add(copy3);
         }
 
-        beginnerFragment.displayExercises(list1);
-        intermediatFragment.displayExercises(list2);
-        advancedFragment.displayExercises(list3);
+        beginnerFragment.displayExercises(ExercisesManager.filterExerciseBySkillLevel(list1, SkillLevel.BEGINNER));
+        intermediatFragment.displayExercises(ExercisesManager.filterExerciseBySkillLevel(list2, SkillLevel.INTERMEDIATE));
+        advancedFragment.displayExercises(ExercisesManager.filterExerciseBySkillLevel(list3, SkillLevel.ADVANCED));
     }
 }
