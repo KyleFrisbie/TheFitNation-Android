@@ -22,7 +22,6 @@ public class Exercise extends RealmObject implements Serializable {
     private RealmList<Muscle> muscles;
     private String name;
 
-
     public Exercise() {
         //default constructor
     }
@@ -37,6 +36,14 @@ public class Exercise extends RealmObject implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

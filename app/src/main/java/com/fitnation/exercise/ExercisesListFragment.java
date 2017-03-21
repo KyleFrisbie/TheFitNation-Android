@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fitnation.R;
+import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.Exercise;
+import com.fitnation.model.ExerciseInstance;
 
 import java.util.List;
 
@@ -22,13 +24,14 @@ import butterknife.ButterKnife;
 /**
  * Displays a list of exercises
  */
-public class ExercisesListFragment extends BaseFragment {
+public class ExercisesListFragment extends BaseFragment implements ExerciseListContract.View{
     private static final String EXERCISE_LIST = "EXERCISE_LIST";
-    private List<Exercise> mExercises;
+    private List<ExerciseInstance> mExercises;
     @BindView(R.id.exercise_recycler_view)
     public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ExerciseListContract.Presenter mPresenter;
 
 
     public ExercisesListFragment() {
@@ -51,7 +54,7 @@ public class ExercisesListFragment extends BaseFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mExercises = (List<Exercise>) getArguments().get(EXERCISE_LIST);
+        mExercises = (List<ExerciseInstance>) getArguments().get(EXERCISE_LIST);
     }
 
     @Override
@@ -60,13 +63,35 @@ public class ExercisesListFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_exercises_list, container, false);
         ButterKnife.bind(this, v);
+
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-//        mAdapter = new ExerciseAdapter(mExercises);
+        mAdapter = new ExerciseAdapter(mExercises);
         mRecyclerView.setAdapter(mAdapter);
 
         return v;
     }
 
+    @Override
+    public void setPresenter(ExerciseListContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public BaseActivity getBaseActivity() {
+        return null;
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void displayExercises(List<ExerciseInstance> exercises) {
+        mExercises = exercises;
+        mAdapter = new ExerciseAdapter(exercises);
+        mRecyclerView.setAdapter(mAdapter);
+    }
 }

@@ -1,77 +1,108 @@
 package com.fitnation.exercise;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.fitnation.R;
 import com.fitnation.model.Exercise;
+import com.fitnation.model.ExerciseInstance;
+import com.fitnation.model.ExerciseInstanceSet;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Ryan Newsom on 3/19/17. *
  */
-public class ExerciseAdapter extends RecyclerView.Adapter {
-    private List<Exercise> mExercises;
+public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHolder> {
+    private List<ExerciseInstance> mExercises;
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+    /**
+     * Constructor
+     * @param exercises
+     */
+    public ExerciseAdapter(List<ExerciseInstance> exercises) {
+        mExercises = exercises;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.exercise_in_list, parent, false);
+        return new ViewHolder(view);
+    }
 
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final ExerciseInstance exerciseInstance = mExercises.get(position);
+        Exercise exercise = exerciseInstance.getExercise();
+        List<ExerciseInstanceSet> sets = exerciseInstance.getExerciseInstanceSets();
+        String setText = "";
+        String repText = "";
+
+        for (int i = 0; i < sets.size(); i++) {
+            ExerciseInstanceSet set = sets.get(i);
+
+            if(i == 0) {
+                setText = String.valueOf(set.getOrderNumber());
+                repText = String.valueOf(set.getReqQuantity());
+            } else {
+                setText = setText + "\n" + String.valueOf(set.getOrderNumber());
+                repText = repText + "\n" + String.valueOf(set.getReqQuantity());
+            }
+        }
+
+        holder.addExerciseBox.setChecked(exerciseInstance.isSelected());
+        holder.exerciseName.setText(exercise.getName());
+        holder.setOne.setText(setText);
+        holder.setOneReps.setText(repText);
+        //TODO add click listener to edit ImageView
+        holder.addExerciseBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                exerciseInstance.setSelected(checked);
+            }
+        });
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return mExercises.get(position).getId();
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        if(mExercises != null) {
+            return mExercises.size();
+        } else {
+            return 0;
+        }
     }
 
-//    public ExerciseAdapter(List<Exercise> exercises) {
-//        mExercises = exercises;
-//    }
-//
-//    // Provide a reference to the views for each data item
-//    // Complex data items may need more than one view per item, and
-//    // you provide access to all the views for a data item in a view holder
-//    public static class ViewHolder extends RecyclerView.ViewHolder {
-//        // each data item is just a string in this case
-//        public TextView mTextView;
-//        public ViewHolder(TextView v) {
-//            super(v);
-//            mTextView = v;
-//        }
-//    }
-//
-//    // Create new views (invoked by the layout manager)
-//    @Override
-//    public ExerciseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-//                                                   int viewType) {
-//        // create a new view
-//        TextView v = (TextView) LayoutInflater.from(parent.getContext())
-//                .inflate(R.layout.my_text_view, parent, false);
-//        // set the view's size, margins, paddings and layout parameters
-//        ViewHolder vh = new ViewHolder(v);
-//        return vh;
-//    }
-//
-//    // Replace the contents of a view (invoked by the layout manager)
-//    @Override
-//    public void onBindViewHolder(ViewHolder holder, int position) {
-//        // - get element from your dataset at this position
-//        // - replace the contents of the view with that element
-//        holder.mTextView.setText(mDataset[position]);
-//
-//    }
-//
-//    // Return the size of your dataset (invoked by the layout manager)
-//    @Override
-//    public int getItemCount() {
-//        if(mExercises != null) {
-//            return mExercises.size();
-//        } else {
-//            return 0;
-//        }
-//    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.add_exercise_box) CheckBox addExerciseBox;
+        @BindView(R.id.exercise_name) TextView exerciseName;
+        @BindView(R.id.set_one) TextView setOne;
+        @BindView(R.id.set_two) TextView setTwo;
+        @BindView(R.id.set_three) TextView setThree;
+        @BindView(R.id.set_one_reps) TextView setOneReps;
+        @BindView(R.id.set_two_reps) TextView setTwoReps;
+        @BindView(R.id.set_three_reps) TextView setThreeReps;
+        @BindView(R.id.edit_exercise) ImageView editExercise;
+
+        public ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
 }
