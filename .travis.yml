@@ -18,6 +18,7 @@ android:
   - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
   licenses:
   - '.+'
+  - android-sdk-license-.+
 
 before_install:
   - mkdir "$ANDROID_HOME/licenses" || true
