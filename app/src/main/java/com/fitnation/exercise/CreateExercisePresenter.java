@@ -63,19 +63,15 @@ public class CreateExercisePresenter implements CreateExerciseContract.Presenter
         }
     }
 
-    @Override
-    public void onUserSavedWorkout(String name) {
-        // TODO Go through all the fragments and get their exercises. Take all the filtered, add it to one list.
-        //TODO Create UserExerciseInstance out of the ExerciseInstance list
-        //TODO Create a UserWorkoutTemplate with a child UserWorkoutInstance
-        //TODO Save the WorkoutInstance to the DB
-        //TODO Save the UserWorkoutTemplate to the web service
-    }
-
     //----------------------------------SaveDialogCallback----------------------------------//
 
     @Override
     public void onSaveRequested(String name) {
         Log.i(TAG, "User requested to save workout with name: " + name);
+        // TODO Go through all the fragments and get their exercises. Take all the filtered, add it to one list.
+        //TODO Create UserExerciseInstance out of the ExerciseInstance list
+        //TODO Create a UserWorkoutTemplate with a child UserWorkoutInstance
+        //TODO Save the WorkoutInstance to the DB
+        //TODO Save the UserWorkoutTemplate to the web service
     }
 }

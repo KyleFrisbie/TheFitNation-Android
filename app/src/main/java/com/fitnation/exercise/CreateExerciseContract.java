@@ -24,6 +24,5 @@ public interface CreateExerciseContract {
 
     interface Presenter extends BasePresenter {
         void onActionButtonClicked(ExerciseAction action);
-        void onUserSavedWorkout(String name);
     }
 }
