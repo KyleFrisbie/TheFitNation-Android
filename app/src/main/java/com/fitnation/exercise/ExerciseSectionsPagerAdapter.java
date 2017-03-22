@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.fitnation.R;
 import com.fitnation.model.Exercise;
+import com.fitnation.model.enums.ExerciseAction;
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

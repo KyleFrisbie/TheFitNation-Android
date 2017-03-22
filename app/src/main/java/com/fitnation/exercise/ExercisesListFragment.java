@@ -8,17 +8,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.ExerciseInstance;
+import com.fitnation.model.enums.ExerciseAction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Displays a list of exercises
@@ -41,6 +44,7 @@ public class ExercisesListFragment extends BaseFragment {
 
         if(exerciseInstances != null && !exerciseInstances.isEmpty()) {
             Bundle bundle = new Bundle();
+
             bundle.putSerializable(EXERCISE_LIST, new ArrayList<>(exerciseInstances));
             exercisesListFragment.setArguments(bundle);
         }
