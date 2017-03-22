@@ -27,9 +27,12 @@ import java.util.Map;
 public class ExercisesManager {
     private static final String TAG = ExercisesManager.class.getSimpleName();
     private RequestQueue mRequestQueue;
+    private List<ExerciseInstance> mSelectedExercises;
+
 
     public ExercisesManager(Context context) {
         mRequestQueue = Volley.newRequestQueue(context);
+        mSelectedExercises = new ArrayList<>();
     }
 
     public void getExercises(final ExercisesRequestCallback callback) {
@@ -74,6 +77,18 @@ public class ExercisesManager {
                 mRequestQueue.add(getExercisesRequest);
             }
         }).start();
+    }
+
+    public void exerciseInstanceSelected(ExerciseInstance exerciseInstance, boolean isSelected) {
+        if(isSelected) {
+            Log.i(TAG, "Exercise was selected: " + exerciseInstance.getExercise().getName());
+            mSelectedExercises.add(exerciseInstance);
+        } else {
+            Log.i(TAG, "Attempting to remove Exercise");
+            if(mSelectedExercises.remove(exerciseInstance)){
+                Log.i(TAG, "Exercise was removed: " + exerciseInstance.getExercise().getName());
+            }
+        }
     }
 
     private List<ExerciseInstance> convertExercisesToInstances(List<Exercise> exercises) {

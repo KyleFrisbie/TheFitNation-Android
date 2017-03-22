@@ -18,12 +18,10 @@ public class CreateExercisePresenter implements CreateExerciseContract.Presenter
     private static final String TAG = CreateExercisePresenter.class.getSimpleName();
     private ExercisesManager mExerciseManager;
     private CreateExerciseContract.View mView;
-    private List<ExerciseInstance> mSelectedExercises;
 
     public CreateExercisePresenter(Context context, CreateExerciseContract.View view) {
         mView = view;
         mExerciseManager = new ExercisesManager(context);
-        mSelectedExercises = new ArrayList<>();
     }
 
     @Override
@@ -68,15 +66,7 @@ public class CreateExercisePresenter implements CreateExerciseContract.Presenter
 
     @Override
     public void onExerciseSelected(ExerciseInstance exerciseInstance, boolean isSelected) {
-        if(isSelected) {
-            Log.i(TAG, "Exercise was selected: " + exerciseInstance.getExercise().getName());
-            mSelectedExercises.add(exerciseInstance);
-        } else {
-            Log.i(TAG, "Attempting to remove Exercise");
-            if(mSelectedExercises.remove(exerciseInstance)){
-                Log.i(TAG, "Exercise was removed: " + exerciseInstance.getExercise().getName());
-            }
-        }
+        mExerciseManager.exerciseInstanceSelected(exerciseInstance, isSelected);
     }
 
     //----------------------------------SaveDialogCallback----------------------------------//
