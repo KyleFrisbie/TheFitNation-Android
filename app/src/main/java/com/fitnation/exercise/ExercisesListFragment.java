@@ -27,7 +27,7 @@ import butterknife.OnClick;
 /**
  * Displays a list of exercises
  */
-public class ExercisesListFragment extends BaseFragment implements ExerciseSelectedCallback {
+public class ExercisesListFragment extends BaseFragment {
     private static final String TAG = ExercisesListFragment.class.getSimpleName();
     private static final String EXERCISE_LIST = "EXERCISE_LIST";
     private List<ExerciseInstance> mExercises;
@@ -35,15 +35,14 @@ public class ExercisesListFragment extends BaseFragment implements ExerciseSelec
     public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<ExerciseInstance> mSelectedExercises;
+    private ExerciseSelectedCallback mExerciseSelectedCallback;
 
 
     public ExercisesListFragment() {
         // Required empty public constructor
-        mSelectedExercises = new ArrayList<>();
     }
 
-    public static ExercisesListFragment newInstance(List<ExerciseInstance> exerciseInstances) {
+    public static ExercisesListFragment newInstance(List<ExerciseInstance> exerciseInstances, ExerciseSelectedCallback callback) {
         ExercisesListFragment  exercisesListFragment = new ExercisesListFragment();
 
         if(exerciseInstances != null && !exerciseInstances.isEmpty()) {
@@ -53,8 +52,16 @@ public class ExercisesListFragment extends BaseFragment implements ExerciseSelec
             exercisesListFragment.setArguments(bundle);
         }
 
+        exercisesListFragment.setExerciseSelectedCallback(callback);
+
         return exercisesListFragment;
     }
+
+    public void setExerciseSelectedCallback(ExerciseSelectedCallback exerciseSelectedCallback) {
+        mExerciseSelectedCallback = exerciseSelectedCallback;
+    }
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +83,7 @@ public class ExercisesListFragment extends BaseFragment implements ExerciseSelec
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ExerciseAdapter(mExercises, this);
+        mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback);
         mRecyclerView.setAdapter(mAdapter);
 
         return v;
@@ -86,7 +93,7 @@ public class ExercisesListFragment extends BaseFragment implements ExerciseSelec
         mExercises = exercises;
 
         if(getView() != null) {
-            mAdapter = new ExerciseAdapter(mExercises, this);
+            mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback);
             mRecyclerView.setAdapter(mAdapter);
         }
     }
@@ -94,18 +101,5 @@ public class ExercisesListFragment extends BaseFragment implements ExerciseSelec
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onExerciseSelected(ExerciseInstance exerciseInstance, boolean isSelected) {
-        if(isSelected) {
-            Log.i(TAG, "Exercise was selected: " + exerciseInstance.getExercise().getName());
-            mSelectedExercises.add(exerciseInstance);
-        } else {
-            Log.i(TAG, "Attempting to remove Exercise");
-            if(mSelectedExercises.remove(exerciseInstance)){
-                Log.i(TAG, "Exercise was removed: " + exerciseInstance.getExercise().getName());
-            }
-        }
     }
 }

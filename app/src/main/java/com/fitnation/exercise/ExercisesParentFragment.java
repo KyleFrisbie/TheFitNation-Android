@@ -29,7 +29,7 @@ import butterknife.OnClick;
 /**
  * Created by Ryan Newsom on 3/12/17.
  */
-public class ExercisesParentFragment extends BaseFragment implements CreateExerciseContract.View {
+public class ExercisesParentFragment extends BaseFragment implements CreateExerciseContract.View, ExerciseSelectedCallback {
     private CreateExerciseContract.Presenter mPresenter;
     private static final String EXERCISE_ACTION = "EXERCISE_ACTION";
     private ExerciseAction mAction;
@@ -90,7 +90,7 @@ public class ExercisesParentFragment extends BaseFragment implements CreateExerc
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new ExerciseSectionsPagerAdapter(getFragmentManager(), getContext());
+        mSectionsPagerAdapter = new ExerciseSectionsPagerAdapter(getFragmentManager(), getContext(), this);
         // Set up the ViewPager with the sections adapter.
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -164,5 +164,10 @@ public class ExercisesParentFragment extends BaseFragment implements CreateExerc
     @Override
     public void promptUserToSave(DialogFragment alertDialog) {
         alertDialog.show(getFragmentManager(), null);
+    }
+
+    @Override
+    public void onExerciseSelected(ExerciseInstance exerciseInstance, boolean isSelected) {
+        mPresenter.onExerciseSelected(exerciseInstance, isSelected);
     }
 }

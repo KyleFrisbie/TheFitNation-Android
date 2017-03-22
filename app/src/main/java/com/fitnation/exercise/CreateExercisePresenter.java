@@ -7,6 +7,7 @@ import android.util.Log;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.enums.ExerciseAction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,10 +18,12 @@ public class CreateExercisePresenter implements CreateExerciseContract.Presenter
     private static final String TAG = CreateExercisePresenter.class.getSimpleName();
     private ExercisesManager mExerciseManager;
     private CreateExerciseContract.View mView;
+    private List<ExerciseInstance> mSelectedExercises;
 
     public CreateExercisePresenter(Context context, CreateExerciseContract.View view) {
         mView = view;
         mExerciseManager = new ExercisesManager(context);
+        mSelectedExercises = new ArrayList<>();
     }
 
     @Override
@@ -60,6 +63,19 @@ public class CreateExercisePresenter implements CreateExerciseContract.Presenter
 
         } else if(action == ExerciseAction.LAUNCH) {
             //TODO Launch a new instance of this workout
+        }
+    }
+
+    @Override
+    public void onExerciseSelected(ExerciseInstance exerciseInstance, boolean isSelected) {
+        if(isSelected) {
+            Log.i(TAG, "Exercise was selected: " + exerciseInstance.getExercise().getName());
+            mSelectedExercises.add(exerciseInstance);
+        } else {
+            Log.i(TAG, "Attempting to remove Exercise");
+            if(mSelectedExercises.remove(exerciseInstance)){
+                Log.i(TAG, "Exercise was removed: " + exerciseInstance.getExercise().getName());
+            }
         }
     }
 

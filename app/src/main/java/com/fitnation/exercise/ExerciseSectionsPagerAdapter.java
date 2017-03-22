@@ -19,17 +19,19 @@ import com.fitnation.model.enums.ExerciseAction;
  */
 public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
+    private ExerciseSelectedCallback mExerciseSelectedCallback;
 
-    public ExerciseSectionsPagerAdapter(FragmentManager fm, Context context) {
+    public ExerciseSectionsPagerAdapter(FragmentManager fm, Context context, ExerciseSelectedCallback exerciseSelectedCallback) {
         super(fm);
         mContext = context;
+        mExerciseSelectedCallback = exerciseSelectedCallback;
     }
 
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return ExercisesListFragment.newInstance(null);
+        return ExercisesListFragment.newInstance(null, mExerciseSelectedCallback);
     }
 
     @Override
