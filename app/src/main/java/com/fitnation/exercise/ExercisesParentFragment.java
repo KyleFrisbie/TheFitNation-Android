@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -21,7 +19,6 @@ import com.fitnation.model.enums.ExerciseAction;
 import com.fitnation.model.enums.SkillLevel;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,7 +28,7 @@ import butterknife.OnClick;
 /**
  * Created by Ryan Newsom on 3/12/17.
  */
-public class CreateExerciseFragment extends BaseFragment implements CreateExerciseContract.View {
+public class ExercisesParentFragment extends BaseFragment implements CreateExerciseContract.View {
     private CreateExerciseContract.Presenter mPresenter;
     private static final String EXERCISE_ACTION = "EXERCISE_ACTION";
     private ExerciseAction mAction;
@@ -51,7 +48,7 @@ public class CreateExerciseFragment extends BaseFragment implements CreateExerci
     @BindView(R.id.container)
     public ViewPager mViewPager;
 
-    public CreateExerciseFragment() {
+    public ExercisesParentFragment() {
         //required empty constructor
     }
 
@@ -59,8 +56,8 @@ public class CreateExerciseFragment extends BaseFragment implements CreateExerci
      * Creates a new Fragment
      * @return New instance of a Create Exercise Fragment
      */
-    public static CreateExerciseFragment newInstance(Context context, ExerciseAction action) {
-        CreateExerciseFragment fragment = new CreateExerciseFragment();
+    public static ExercisesParentFragment newInstance(Context context, ExerciseAction action) {
+        ExercisesParentFragment fragment = new ExercisesParentFragment();
         fragment.setPresenter(new CreateExercisePresenter(context, fragment));
 
         Bundle args = new Bundle();
