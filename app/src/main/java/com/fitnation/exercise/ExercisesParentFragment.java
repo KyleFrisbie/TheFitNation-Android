@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -158,5 +159,10 @@ public class ExercisesParentFragment extends BaseFragment implements CreateExerc
         beginnerFragment.displayExercises(ExercisesManager.filterExerciseBySkillLevel(list1, SkillLevel.BEGINNER));
         intermediatFragment.displayExercises(ExercisesManager.filterExerciseBySkillLevel(list2, SkillLevel.INTERMEDIATE));
         advancedFragment.displayExercises(ExercisesManager.filterExerciseBySkillLevel(list3, SkillLevel.ADVANCED));
+    }
+
+    @Override
+    public void promptUserToSave(DialogFragment alertDialog) {
+        alertDialog.show(getFragmentManager(), null);
     }
 }
