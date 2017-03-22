@@ -91,6 +91,13 @@ public class ExercisesManager {
         }
     }
 
+    public void createWorkoutAndSave() {
+        //TODO Create UserExerciseInstance out of the ExerciseInstance list
+        //TODO Create a UserWorkoutTemplate with a child UserWorkoutInstance
+        //TODO Save the WorkoutInstance to the DB
+        //TODO Save the UserWorkoutTemplate to the web service
+    }
+
     private List<ExerciseInstance> convertExercisesToInstances(List<Exercise> exercises) {
         List<ExerciseInstance> exerciseInstances = new ArrayList<>(exercises.size());
         for (Exercise exercise: exercises) {
