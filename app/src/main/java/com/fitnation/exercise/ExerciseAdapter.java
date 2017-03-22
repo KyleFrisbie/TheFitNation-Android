@@ -26,13 +26,16 @@ import butterknife.ButterKnife;
  */
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHolder> {
     private List<ExerciseInstance> mExercises;
+    private ExerciseSelectedCallback mSelectedExercisesCallback;
 
     /**
      * Constructor
-     * @param exercises
+     * @param exercises - exercises to be shown
+     * @param callback - notified when an exercise is selected/unselected
      */
-    public ExerciseAdapter(List<ExerciseInstance> exercises) {
+    public ExerciseAdapter(List<ExerciseInstance> exercises, ExerciseSelectedCallback callback) {
         mExercises = exercises;
+        mSelectedExercisesCallback = callback;
     }
 
     @Override
@@ -74,6 +77,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 exerciseInstance.setSelected(checked);
+                mSelectedExercisesCallback.onExerciseSelected(exerciseInstance, checked);
             }
         });
     }
