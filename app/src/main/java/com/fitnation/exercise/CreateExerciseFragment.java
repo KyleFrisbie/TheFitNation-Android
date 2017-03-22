@@ -111,7 +111,7 @@ public class CreateExerciseFragment extends BaseFragment implements CreateExerci
         ExercisesListFragment beginnerFragment = (ExercisesListFragment) mSectionsPagerAdapter.instantiateItem(mViewPager, 0);
         ExercisesListFragment intermediatFragment = (ExercisesListFragment) mSectionsPagerAdapter.instantiateItem(mViewPager, 1);
         ExercisesListFragment advancedFragment = (ExercisesListFragment) mSectionsPagerAdapter.instantiateItem(mViewPager, 2);
-        
+
         List<ExerciseInstance> list1 = new ArrayList<ExerciseInstance>(exercises.size());
         List<ExerciseInstance> list2 = new ArrayList<ExerciseInstance>(exercises.size());
         List<ExerciseInstance> list3 = new ArrayList<ExerciseInstance>(exercises.size());

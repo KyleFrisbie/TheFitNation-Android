@@ -5,8 +5,7 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fitnation.navigation.NavigationActivity"
-    tools:showIn="@layout/activity_navigation">
+    tools:context="com.fitnation.navigation.NavigationActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -26,4 +25,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    
+    <Button
+        android:id="@+id/exercise_list_action"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/activity_vertical_margin" />
 </android.support.design.widget.CoordinatorLayout>
