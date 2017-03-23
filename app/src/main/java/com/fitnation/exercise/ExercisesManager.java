@@ -79,7 +79,7 @@ public class ExercisesManager extends DataManager{
                 ) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String authToken = "4339b8dd-312d-4c54-b10a-02a107eb81a7";
+                        String authToken = "e0f9c8f0-6948-49a5-8e08-159b9ef53a82";
                         Map<String, String> mHeaders = new ArrayMap();
 
                         mHeaders.put("Authorization", "Bearer" + " " + authToken);
@@ -112,28 +112,34 @@ public class ExercisesManager extends DataManager{
      * Creates a workout out of the currently selected exercises and saves it under the given name
      * @param name - The name of the workout
      */
-    public void createWorkoutAndSave(String name, WorkoutTemplate workoutTemplate) {
-        WorkoutTemplate trueWorkoutTemplate = getWorkoutTemplate(workoutTemplate);
-        WorkoutInstance workoutInstanceTemplate = new WorkoutInstance(name, 0f, 1, trueWorkoutTemplate, "");
-        RealmList<ExerciseInstance> selectedExercises = new RealmList<>();
-
-        for (ExerciseInstance exerciseInstance : mSelectedExercises) {
-            selectedExercises.add(exerciseInstance);
-        }
-
-        workoutInstanceTemplate.setExercises(selectedExercises);
-        workoutInstanceTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutInstance.class));
-        saveData(trueWorkoutTemplate, new DataResult() {
+    public void createWorkoutAndSave(final String name, final WorkoutTemplate workoutTemplate) {
+        new Thread(new Runnable() {
             @Override
-            public void onError() {
-                Log.e(TAG, "WorkoutTemplate was not succesfully saved");
-            }
+            public void run() {
+                WorkoutTemplate trueWorkoutTemplate = getWorkoutTemplate(workoutTemplate);
+                WorkoutInstance workoutInstanceTemplate = new WorkoutInstance(name, 0f, 1, trueWorkoutTemplate, "");
+                RealmList<ExerciseInstance> selectedExercises = new RealmList<>();
 
-            @Override
-            public void onSuccess() {
-                Log.e(TAG, "WorkoutTemplate was succesfully saved");
+                for (ExerciseInstance exerciseInstance : mSelectedExercises) {
+                    selectedExercises.add(exerciseInstance);
+                }
+
+                workoutInstanceTemplate.setExercises(selectedExercises);
+                workoutInstanceTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutInstance.class));
+                saveData(trueWorkoutTemplate, new DataResult() {
+                    @Override
+                    public void onError() {
+                        Log.e(TAG, "WorkoutTemplate was not succesfully saved");
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        Log.e(TAG, "WorkoutTemplate was succesfully saved");
+                    }
+                });
             }
-        });
+        }).start();
+
 
         //TODO Save the UserWorkoutTemplate to the web service
     }
@@ -153,7 +159,6 @@ public class ExercisesManager extends DataManager{
                 Log.i(TAG, "We have at least one workout template in the DB");
                 Realm realm = Realm.getDefaultInstance();
                 RealmResults<WorkoutTemplate> query = realm.where(WorkoutTemplate.class).findAll();
-                realm.close();
                 if (query.size() == 0) {
                     Log.i(TAG, "No workout template's found in query, making a new one");
                     workoutTemplate = new WorkoutTemplate();

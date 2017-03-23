@@ -27,24 +27,17 @@ public abstract class DataManager {
      * @param <T> - generic data type
      */
     public <T extends RealmObject> void saveData(final T data, final DataResult resultCallback) {
+        try {
+            Realm realm = Realm.getDefaultInstance();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Realm realm = Realm.getDefaultInstance();
-
-                    realm.beginTransaction();
-                    realm.copyToRealmOrUpdate(data);
-                    realm.commitTransaction();
-                } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
-                    resultCallback.onError();
-                }
-                resultCallback.onSuccess();
-            }
-        }).start();
-
+            realm.beginTransaction();
+            realm.copyToRealmOrUpdate(data);
+            realm.commitTransaction();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+            resultCallback.onError();
+        }
+        resultCallback.onSuccess();
     }
 
     /**
