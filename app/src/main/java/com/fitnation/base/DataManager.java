@@ -14,12 +14,10 @@ import io.realm.RealmObject;
  */
 public abstract class DataManager {
     private static final String TAG = "DataManager";
-    protected Realm mRealm;
     /**
      * Constructor
      */
-    public DataManager(Context context) {
-        mRealm = Realm.getDefaultInstance();
+    public DataManager() {
     }
 
     /**

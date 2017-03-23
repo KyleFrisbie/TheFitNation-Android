@@ -46,7 +46,6 @@ public class ExercisesManager extends DataManager{
 
 
     public ExercisesManager(Context context) {
-        super(context);
         mRequestQueue = Volley.newRequestQueue(context);
         mSelectedExercises = new ArrayList<>();
     }
@@ -152,8 +151,9 @@ public class ExercisesManager extends DataManager{
                 Log.i(TAG, "Looks like none exist, going to create a new workout template");
             } else {
                 Log.i(TAG, "We have at least one workout template in the DB");
-                RealmResults<WorkoutTemplate> query = mRealm.where(WorkoutTemplate.class).findAll();
-
+                Realm realm = Realm.getDefaultInstance();
+                RealmResults<WorkoutTemplate> query = realm.where(WorkoutTemplate.class).findAll();
+                realm.close();
                 if (query.size() == 0) {
                     Log.i(TAG, "No workout template's found in query, making a new one");
                     workoutTemplate = new WorkoutTemplate();
