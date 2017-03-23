@@ -1,5 +1,8 @@
 package com.fitnation.model;
 
+import java.util.List;
+
+import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
@@ -14,7 +17,7 @@ public class ExerciseInstanceSet extends RealmObject{
     private Float restTime;
     private ExerciseInstance exerciseInstance;
     private String notes;
-//    TODO discuss with Kyle & Mike private RealmList<UserExerciseInstanceSet> userExerciseInstanceSets;
+    private RealmList<UserExerciseInstanceSet> userExerciseInstanceSets;
 
     /**
      * Constructor
@@ -22,10 +25,17 @@ public class ExerciseInstanceSet extends RealmObject{
      * @param orderNumber - the set's order
      * @param reqQuantity - the reps to do
      */
-    public ExerciseInstanceSet(ExerciseInstance exerciseInstance, Integer orderNumber, Float reqQuantity) {
+    public ExerciseInstanceSet(ExerciseInstance exerciseInstance, Integer orderNumber, Float reqQuantity, List<UserExerciseInstanceSet> userExerciseInstanceSetList) {
         this.exerciseInstance = exerciseInstance;
         this.orderNumber = orderNumber;
         this.repQuantity = reqQuantity;
+        this.userExerciseInstanceSets = new RealmList<UserExerciseInstanceSet>();
+
+        if(userExerciseInstanceSetList != null) {
+            for (UserExerciseInstanceSet set : userExerciseInstanceSetList) {
+                userExerciseInstanceSets.add(set);
+            }
+        }
     }
 
     public ExerciseInstanceSet() {

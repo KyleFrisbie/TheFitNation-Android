@@ -37,11 +37,6 @@ public class SaveWorkoutDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Get field from view
-        mEditText = (EditText) view.findViewById(R.id.exercise_name);
-        // Fetch arguments from bundle and set title
-
-        getDialog().setTitle(R.string.save_workout_title);
         // Show soft keyboard automatically and request focus to field
         mEditText.requestFocus();
         getDialog().getWindow().setSoftInputMode(
@@ -55,7 +50,7 @@ public class SaveWorkoutDialogFragment extends DialogFragment {
         alertDialogBuilder.setPositiveButton("SAVE",  new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mCallback.onSaveRequested("");
+                mCallback.onSaveRequested(mEditText.getText().toString());
             }
         });
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -67,6 +62,7 @@ public class SaveWorkoutDialogFragment extends DialogFragment {
         LayoutInflater i = getActivity().getLayoutInflater();
         View v = i.inflate(R.layout.fragment_save_workout_dialog, null);
         alertDialogBuilder.setView(v);
+        mEditText = (EditText) v.findViewById(R.id.exercise_name_to_save);
 
         return alertDialogBuilder.create();
     }

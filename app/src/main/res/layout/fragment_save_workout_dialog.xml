@@ -5,7 +5,7 @@
     android:layout_gravity="center" android:orientation="vertical"  >
 
     <EditText
-        android:id="@+id/exercise_name"
+        android:id="@+id/exercise_name_to_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"

@@ -27,10 +27,10 @@ public class ExerciseInstance extends RealmObject implements Serializable, Clone
     public ExerciseInstance(Exercise exercise) {
         this.exercise = exercise;
         exerciseInstanceSets = new RealmList<>();
-        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 1, 8f));
-        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 2, 8f));
-        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 3, 8f));
-        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 4, 8f));
+        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 1, 8f, null));
+        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 2, 8f, null));
+        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 3, 8f, null));
+        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 4, 8f, null));
     }
 
     public void setSelected(boolean selected) {

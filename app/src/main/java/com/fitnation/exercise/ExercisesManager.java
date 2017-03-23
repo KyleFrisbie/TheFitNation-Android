@@ -5,6 +5,7 @@ import android.util.ArrayMap;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -13,7 +14,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
-import com.fitnation.model.enums.ExerciseFamily;
 import com.fitnation.networking.EnvironmentManager;
 import com.fitnation.networking.JsonParser;
 
@@ -64,7 +64,7 @@ public class ExercisesManager {
                 ) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String authToken = "1f9e9c39-89f9-4a8c-bcf2-ae2282ce6a04";
+                        String authToken = "fd352e55-36f5-4632-a3e9-31cd6521fa28";
                         Map<String, String> mHeaders = new ArrayMap();
 
                         mHeaders.put("Authorization", "Bearer" + " " + authToken);
@@ -73,6 +73,8 @@ public class ExercisesManager {
                         return mHeaders;
                     }
                 };
+
+                getExercisesRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
 
                 mRequestQueue.add(getExercisesRequest);
             }
