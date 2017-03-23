@@ -3,37 +3,57 @@ package com.fitnation.model;
 import io.realm.RealmObject;
 
 /**
- * Created by Ryan on 3/21/2017.
+ * An Exercise Instance Termplate's set
  */
-
 public class ExerciseInstanceSet extends RealmObject{
     private Long id;
     private Long androidId;
     private Integer orderNumber;
-    private Float reqQuantity;
+    private Float repQuantity;
     private Float effortQuantity;
     private Float restTime;
+    private ExerciseInstance exerciseInstance;
+    private String notes;
+//    TODO discuss with Kyle & Mike private RealmList<UserExerciseInstanceSet> userExerciseInstanceSets;
 
     /**
      * Constructor
+     * @param exerciseInstance - the exercise this set belongs to
      * @param orderNumber - the set's order
      * @param reqQuantity - the reps to do
      */
-    public ExerciseInstanceSet(Integer orderNumber, Float reqQuantity) {
+    public ExerciseInstanceSet(ExerciseInstance exerciseInstance, Integer orderNumber, Float reqQuantity) {
+        this.exerciseInstance = exerciseInstance;
         this.orderNumber = orderNumber;
-        this.reqQuantity = reqQuantity;
+        this.repQuantity = reqQuantity;
     }
 
     public ExerciseInstanceSet() {
         //required default constructor
     }
 
-    public Float getReqQuantity() {
-        return reqQuantity;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public ExerciseInstance getExerciseInstance() {
+        return exerciseInstance;
+    }
+
+    public Float getEffortQuantity() {
+        return effortQuantity;
+    }
+
+    public Float getRestTime() {
+        return restTime;
+    }
+
+    public Float getRepQuantity() {
+        return repQuantity;
     }
 
     public int getReqQuantityAsInt() {
-        return Math.round(reqQuantity);
+        return Math.round(repQuantity);
     }
 
     public Integer getOrderNumber() {
