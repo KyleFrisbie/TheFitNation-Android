@@ -175,16 +175,6 @@ public class ExercisesManager extends DataManager{
         return workoutTemplate;
     }
 
-    private RealmList<UserExerciseInstance> getUserExerciseInstancesFromTemplateInstances(List<ExerciseInstance> selectedExercises, UserWorkoutInstance workoutInstance) {
-        RealmList<UserExerciseInstance> userExerciseInstances = new RealmList<>();
-
-        for (ExerciseInstance selectedExercise : selectedExercises) {
-            userExerciseInstances.add(new UserExerciseInstance(selectedExercise, selectedExercise.getNotes(), workoutInstance));
-        }
-
-        return userExerciseInstances;
-    }
-
     private List<ExerciseInstance> convertExercisesToInstances(List<Exercise> exercises) {
         List<ExerciseInstance> exerciseInstances = new ArrayList<>(exercises.size());
         for (Exercise exercise: exercises) {
