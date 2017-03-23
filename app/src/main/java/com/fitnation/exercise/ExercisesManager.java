@@ -79,7 +79,7 @@ public class ExercisesManager extends DataManager{
                 ) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String authToken = "e0f9c8f0-6948-49a5-8e08-159b9ef53a82";
+                        String authToken = "61ea30c1-66ae-4639-bbd6-b70a713018a6";
                         Map<String, String> mHeaders = new ArrayMap();
 
                         mHeaders.put("Authorization", "Bearer" + " " + authToken);
@@ -167,6 +167,7 @@ public class ExercisesManager extends DataManager{
                     Log.i(TAG, "Found the workout template");
                     workoutTemplate = query.first();
                 }
+                realm.close();
             }
 
         }
