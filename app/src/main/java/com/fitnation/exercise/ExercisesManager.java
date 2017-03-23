@@ -141,10 +141,10 @@ public class ExercisesManager extends DataManager{
 
     private WorkoutTemplate getWorkoutTemplate(WorkoutTemplate workoutTemplate) {
         Log.i(TAG, "Determining workout template");
-        Long androidKey = PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class);
 
         if(workoutTemplate == null) {
             Log.i(TAG, "Workout template was not given, so going to see if one exists");
+            Long androidKey = PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class);
 
             if (androidKey == 1) {
                 workoutTemplate = new WorkoutTemplate();
