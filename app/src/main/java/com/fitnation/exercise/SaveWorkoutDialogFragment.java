@@ -13,11 +13,11 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.fitnation.R;
+import com.fitnation.exercise.callbacks.SaveDialogCallback;
 
 /**
- * Created by Ryan on 3/21/2017.
+ * Prompts a user to save a workout
  */
-
 public class SaveWorkoutDialogFragment extends DialogFragment {
     private EditText mEditText;
     private SaveDialogCallback mCallback;

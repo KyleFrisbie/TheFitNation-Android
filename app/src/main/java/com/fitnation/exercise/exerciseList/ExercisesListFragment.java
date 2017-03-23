@@ -1,28 +1,24 @@
-package com.fitnation.exercise;
+package com.fitnation.exercise.exerciseList;
 
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.fitnation.R;
-import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.exercise.callbacks.ExerciseSelectedCallback;
 import com.fitnation.model.ExerciseInstance;
-import com.fitnation.model.enums.ExerciseAction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Displays a list of exercises

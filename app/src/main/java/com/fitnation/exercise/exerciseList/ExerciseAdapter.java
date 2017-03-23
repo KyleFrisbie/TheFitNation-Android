@@ -1,17 +1,16 @@
-package com.fitnation.exercise;
+package com.fitnation.exercise.exerciseList;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fitnation.R;
+import com.fitnation.exercise.callbacks.ExerciseSelectedCallback;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.ExerciseInstanceSet;

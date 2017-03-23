@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Ryan on 3/21/2017.
  */
 
-public interface CreateExerciseContract {
+public interface ExercisesParentContract {
     interface View extends BaseView<Presenter> {
         void showProgress();
         void displayExercises(List<ExerciseInstance> exercises);

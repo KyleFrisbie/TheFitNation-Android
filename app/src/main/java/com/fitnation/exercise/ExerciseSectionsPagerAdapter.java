@@ -10,8 +10,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.fitnation.R;
-import com.fitnation.model.Exercise;
-import com.fitnation.model.enums.ExerciseAction;
+import com.fitnation.exercise.exerciseList.ExercisesListFragment;
+import com.fitnation.exercise.callbacks.ExerciseSelectedCallback;
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

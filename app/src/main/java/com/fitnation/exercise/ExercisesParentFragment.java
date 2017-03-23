@@ -15,6 +15,8 @@ import android.widget.Button;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.exercise.exerciseList.ExercisesListFragment;
+import com.fitnation.exercise.callbacks.ExerciseSelectedCallback;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.enums.ExerciseAction;
 import com.fitnation.model.enums.SkillLevel;
@@ -29,8 +31,8 @@ import butterknife.OnClick;
 /**
  * Created by Ryan Newsom on 3/12/17.
  */
-public class ExercisesParentFragment extends BaseFragment implements CreateExerciseContract.View, ExerciseSelectedCallback {
-    private CreateExerciseContract.Presenter mPresenter;
+public class ExercisesParentFragment extends BaseFragment implements ExercisesParentContract.View, ExerciseSelectedCallback {
+    private ExercisesParentContract.Presenter mPresenter;
     private static final String EXERCISE_ACTION = "EXERCISE_ACTION";
     private ExerciseAction mAction;
     @BindView(R.id.exercise_list_action)
@@ -59,7 +61,7 @@ public class ExercisesParentFragment extends BaseFragment implements CreateExerc
      */
     public static ExercisesParentFragment newInstance(Context context, ExerciseAction action) {
         ExercisesParentFragment fragment = new ExercisesParentFragment();
-        fragment.setPresenter(new CreateExercisePresenter(context, fragment));
+        fragment.setPresenter(new ExercisesParentPresenter(context, fragment));
 
         Bundle args = new Bundle();
         if(action != null) {
@@ -103,7 +105,7 @@ public class ExercisesParentFragment extends BaseFragment implements CreateExerc
     }
 
     @Override
-    public void setPresenter(CreateExerciseContract.Presenter presenter) {
+    public void setPresenter(ExercisesParentContract.Presenter presenter) {
         mPresenter = presenter;
     }
 

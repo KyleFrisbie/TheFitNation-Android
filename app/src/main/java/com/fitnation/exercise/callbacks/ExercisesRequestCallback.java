@@ -1,4 +1,4 @@
-package com.fitnation.exercise;
+package com.fitnation.exercise.callbacks;
 
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;

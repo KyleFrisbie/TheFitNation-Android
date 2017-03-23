@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.networking.EnvironmentManager;
@@ -93,7 +94,11 @@ public class ExercisesManager {
         }
     }
 
-    public void createWorkoutAndSave() {
+    /**
+     * Creates a workout out of the currently selected exercises and saves it under the given name
+     * @param name - The name of the workout
+     */
+    public void createWorkoutAndSave(String name) {
         //TODO Create UserExerciseInstance out of the ExerciseInstance list
         //TODO Create a UserWorkoutTemplate with a child UserWorkoutInstance
         //TODO Save the WorkoutInstance to the DB

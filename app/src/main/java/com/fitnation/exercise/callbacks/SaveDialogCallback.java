@@ -1,4 +1,4 @@
-package com.fitnation.exercise;
+package com.fitnation.exercise.callbacks;
 
 /**
  * Created by Ryan on 3/21/2017.
