@@ -1,5 +1,6 @@
 package com.fitnation.base;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.Collection;
@@ -13,11 +14,12 @@ import io.realm.RealmObject;
  */
 public abstract class DataManager {
     private static final String TAG = "DataManager";
-
+    protected Realm mRealm;
     /**
      * Constructor
      */
-    public DataManager() {
+    public DataManager(Context context) {
+        mRealm = Realm.getDefaultInstance();
     }
 
     /**

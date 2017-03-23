@@ -74,6 +74,6 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void onSaveRequested(String name) {
         Log.i(TAG, "User requested to save workout with name: " + name);
-        mExerciseManager.createWorkoutAndSave(name);
+        mExerciseManager.createWorkoutAndSave(name, null);
     }
 }

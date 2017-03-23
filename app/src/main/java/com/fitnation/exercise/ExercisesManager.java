@@ -18,6 +18,7 @@ import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.PrimaryKeyFactory;
+import com.fitnation.model.UserDemographic;
 import com.fitnation.model.UserExerciseInstance;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.UserWorkoutTemplate;
@@ -30,7 +31,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 /**
  * Created by Ryan on 3/21/2017.
@@ -42,6 +46,7 @@ public class ExercisesManager extends DataManager{
 
 
     public ExercisesManager(Context context) {
+        super(context);
         mRequestQueue = Volley.newRequestQueue(context);
         mSelectedExercises = new ArrayList<>();
     }
@@ -75,7 +80,7 @@ public class ExercisesManager extends DataManager{
                 ) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String authToken = "fd352e55-36f5-4632-a3e9-31cd6521fa28";
+                        String authToken = "4339b8dd-312d-4c54-b10a-02a107eb81a7";
                         Map<String, String> mHeaders = new ArrayMap();
 
                         mHeaders.put("Authorization", "Bearer" + " " + authToken);
@@ -108,10 +113,9 @@ public class ExercisesManager extends DataManager{
      * Creates a workout out of the currently selected exercises and saves it under the given name
      * @param name - The name of the workout
      */
-    public void createWorkoutAndSave(String name) {
-        WorkoutTemplate workoutTemplate = new WorkoutTemplate();
-        workoutTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class));
-        WorkoutInstance workoutInstanceTemplate = new WorkoutInstance(name, 0f, 1, workoutTemplate, "");
+    public void createWorkoutAndSave(String name, WorkoutTemplate workoutTemplate) {
+        WorkoutTemplate trueWorkoutTemplate = getWorkoutTemplate(workoutTemplate);
+        WorkoutInstance workoutInstanceTemplate = new WorkoutInstance(name, 0f, 1, trueWorkoutTemplate, "");
         RealmList<ExerciseInstance> selectedExercises = new RealmList<>();
 
         for (ExerciseInstance exerciseInstance : mSelectedExercises) {
@@ -120,7 +124,7 @@ public class ExercisesManager extends DataManager{
 
         workoutInstanceTemplate.setExercises(selectedExercises);
         workoutInstanceTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutInstance.class));
-        saveData(workoutTemplate, new DataResult() {
+        saveData(trueWorkoutTemplate, new DataResult() {
             @Override
             public void onError() {
                 Log.e(TAG, "WorkoutTemplate was not succesfully saved");
@@ -133,6 +137,36 @@ public class ExercisesManager extends DataManager{
         });
 
         //TODO Save the UserWorkoutTemplate to the web service
+    }
+
+    private WorkoutTemplate getWorkoutTemplate(WorkoutTemplate workoutTemplate) {
+        Log.i(TAG, "Determining workout template");
+        Long androidKey = PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class);
+
+        if(workoutTemplate == null) {
+            Log.i(TAG, "Workout template was not given, so going to see if one exists");
+
+            if (androidKey == 1) {
+                workoutTemplate = new WorkoutTemplate();
+                workoutTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class));
+                Log.i(TAG, "Looks like none exist, going to create a new workout template");
+            } else {
+                Log.i(TAG, "We have at least one workout template in the DB");
+                RealmResults<WorkoutTemplate> query = mRealm.where(WorkoutTemplate.class).findAll();
+
+                if (query.size() == 0) {
+                    Log.i(TAG, "No workout template's found in query, making a new one");
+                    workoutTemplate = new WorkoutTemplate();
+                    workoutTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class));
+                } else {
+                    Log.i(TAG, "Found the workout template");
+                    workoutTemplate = query.first();
+                }
+            }
+
+        }
+
+        return workoutTemplate;
     }
 
     private RealmList<UserExerciseInstance> getUserExerciseInstancesFromTemplateInstances(List<ExerciseInstance> selectedExercises, UserWorkoutInstance workoutInstance) {
