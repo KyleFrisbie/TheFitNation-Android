@@ -12,9 +12,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.base.DataManager;
+import com.fitnation.base.DataResult;
 import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
+import com.fitnation.model.PrimaryKeyFactory;
+import com.fitnation.model.UserExerciseInstance;
+import com.fitnation.model.UserWorkoutInstance;
+import com.fitnation.model.UserWorkoutTemplate;
+import com.fitnation.model.WorkoutInstance;
+import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.networking.EnvironmentManager;
 import com.fitnation.networking.JsonParser;
 
@@ -22,10 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import io.realm.RealmList;
+
 /**
  * Created by Ryan on 3/21/2017.
  */
-public class ExercisesManager {
+public class ExercisesManager extends DataManager{
     private static final String TAG = ExercisesManager.class.getSimpleName();
     private RequestQueue mRequestQueue;
     private List<ExerciseInstance> mSelectedExercises;
@@ -43,7 +53,7 @@ public class ExercisesManager {
                 // Instantiate the RequestQueue.
                 String resourceRoute = "exercises";
 
-                String url = EnvironmentManager.getRequestUrl(resourceRoute);
+                String url = EnvironmentManager.getInstance().getRequestUrl(resourceRoute);
                 StringRequest getExercisesRequest = new StringRequest(Request.Method.GET, url,
                         new Response.Listener<String>()
                         {
@@ -99,10 +109,40 @@ public class ExercisesManager {
      * @param name - The name of the workout
      */
     public void createWorkoutAndSave(String name) {
-        //TODO Create UserExerciseInstance out of the ExerciseInstance list
-        //TODO Create a UserWorkoutTemplate with a child UserWorkoutInstance
-        //TODO Save the WorkoutInstance to the DB
+        WorkoutTemplate workoutTemplate = new WorkoutTemplate();
+        workoutTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class));
+        WorkoutInstance workoutInstanceTemplate = new WorkoutInstance(name, 0f, 1, workoutTemplate, "");
+        RealmList<ExerciseInstance> selectedExercises = new RealmList<>();
+
+        for (ExerciseInstance exerciseInstance : mSelectedExercises) {
+            selectedExercises.add(exerciseInstance);
+        }
+
+        workoutInstanceTemplate.setExercises(selectedExercises);
+        workoutInstanceTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutInstance.class));
+        saveData(workoutTemplate, new DataResult() {
+            @Override
+            public void onError() {
+                Log.e(TAG, "WorkoutTemplate was not succesfully saved");
+            }
+
+            @Override
+            public void onSuccess() {
+                Log.e(TAG, "WorkoutTemplate was succesfully saved");
+            }
+        });
+
         //TODO Save the UserWorkoutTemplate to the web service
+    }
+
+    private RealmList<UserExerciseInstance> getUserExerciseInstancesFromTemplateInstances(List<ExerciseInstance> selectedExercises, UserWorkoutInstance workoutInstance) {
+        RealmList<UserExerciseInstance> userExerciseInstances = new RealmList<>();
+
+        for (ExerciseInstance selectedExercise : selectedExercises) {
+            userExerciseInstances.add(new UserExerciseInstance(selectedExercise, selectedExercise.getNotes(), workoutInstance));
+        }
+
+        return userExerciseInstances;
     }
 
     private List<ExerciseInstance> convertExercisesToInstances(List<Exercise> exercises) {

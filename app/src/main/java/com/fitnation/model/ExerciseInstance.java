@@ -49,6 +49,10 @@ public class ExerciseInstance extends RealmObject implements Serializable, Clone
         return exercise;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

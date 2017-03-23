@@ -1,11 +1,8 @@
 package com.fitnation.model;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
-import io.realm.RealmCollection;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -19,18 +16,39 @@ public class WorkoutInstance extends RealmObject {
     private Long id;
     private String name;
     private Date createdOn;
-    private Integer restBetweenInstances;
+    private Date lastUpdated;
+    private Float restBetweenInstances;
     private Integer orderNumber;
     private WorkoutTemplate workoutTemplate;
     private RealmList<UserWorkoutInstance> userWorkoutInstances;
-    private RealmList<Exercise> exercises;
+    private RealmList<ExerciseInstance> exerciseInstances ;
+    private String notes;
 
     public WorkoutInstance() {
         createdOn = new Date();
+        lastUpdated = new Date();
+    }
+
+    public WorkoutInstance(String name, Float restBetweenInstances, Integer orderNumber, WorkoutTemplate workoutTemplate, String notes) {
+        createdOn = new Date();
+        lastUpdated = new Date();
+        this.name = name;
+        this.restBetweenInstances = restBetweenInstances;
+        this.orderNumber = orderNumber;
+        this.workoutTemplate = workoutTemplate;
+        this.notes = notes;
+    }
+
+    public void setAndroidId(Long androidId) {
+        this.androidId = androidId;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setExercises(RealmList<ExerciseInstance> exercises) {
+        this.exerciseInstances  = exercises;
     }
 
     @Override
