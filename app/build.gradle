@@ -42,6 +42,19 @@ android {
     lintOptions {
         abortOnError false
     }
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res/layouts/exercise',
+                            'src/main/res/layouts/login',
+                            'src/main/res/layouts/root',
+                            'src/main/res/layouts',
+                            'src/main/res'
+                    ]
+        }
+    }
+
 }
 
 dependencies {

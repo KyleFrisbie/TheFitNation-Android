@@ -87,7 +87,7 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_create_exercise_parent, container, false);
+        View v = inflater.inflate(R.layout.workout_fragment_create_workout_parent, container, false);
         ButterKnife.bind(this, v);
 
         // Create the adapter that will return a fragment for each of the three

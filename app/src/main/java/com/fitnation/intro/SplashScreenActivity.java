@@ -26,7 +26,7 @@ public class SplashScreenActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
-        setContentView(R.layout.activity_splash_screen);
+        setContentView(R.layout.login_activity_splash_screen);
     }
 
     @Override

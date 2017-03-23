@@ -28,7 +28,7 @@ public class NavigationActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_navigation);
+        setContentView(R.layout.root_activity_navigation);
         ButterKnife.bind(this);
         setUpActionBar();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);

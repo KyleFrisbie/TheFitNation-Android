@@ -36,7 +36,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_login, container, false);
+        View v = inflater.inflate(R.layout.login_fragment_login, container, false);
         ButterKnife.bind(this, v);
 
         return v;

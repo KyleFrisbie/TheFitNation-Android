@@ -16,7 +16,9 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
     </style>
 
-    <style name="TextView" parent="AppTheme"></style>
+    <style name="TextView" parent="AppTheme">
+
+    </style>
 
     <style name="TextView.Actionable" parent="TextView">
         <item name="android:textColor">@color/actionable</item>
@@ -27,6 +29,10 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_weight">0.2</item>
         <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="TextView.Title" parent="TextView">
+        <item name="android:textSize">@dimen/title_text_size</item>
     </style>
 
 

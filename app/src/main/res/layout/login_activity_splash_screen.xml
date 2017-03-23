@@ -7,6 +7,6 @@
     android:fitsSystemWindows="true"
     tools:context="com.fitnation.intro.SplashScreenActivity">
 
-    <include layout="@layout/content_splash_screen" />
+    <include layout="@layout/login_content_splash_screen" />
 
 </android.support.design.widget.CoordinatorLayout>

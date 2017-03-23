@@ -31,7 +31,7 @@ public class SaveWorkoutDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_save_workout_dialog, container);
+        return inflater.inflate(R.layout.workout_fragment_save_workout_dialog, container);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class SaveWorkoutDialogFragment extends DialogFragment {
             }
         });
         LayoutInflater i = getActivity().getLayoutInflater();
-        View v = i.inflate(R.layout.fragment_save_workout_dialog, null);
+        View v = i.inflate(R.layout.workout_fragment_save_workout_dialog, null);
         alertDialogBuilder.setView(v);
         mEditText = (EditText) v.findViewById(R.id.exercise_name_to_save);
 
