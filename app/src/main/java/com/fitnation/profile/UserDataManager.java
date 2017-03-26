@@ -45,46 +45,8 @@ public class UserDataManager extends DataManager {
             }
         });
 
-        //save data to webservice
 
-        Context ctx = FitNationApplication.context;
-        UserDemographicSingleton queue = UserDemographicSingleton.getInstance(ctx);
-        String url = "https://the-fit-nation-dev.herokuapp.com/api/user-demographics/byLoggedInUser";
-
-
-        //  GET a User Demographic
-        /*
-        StringRequest stringRequest = new UserDemoStringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("GET", response.toString());
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("GET", error.toString());
-            }
-        });
-        */
-
-        StringRequest stringRequest = new UserDemoStringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("GET", response.toString());
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("GET", error.toString());
-            }
-        });
-
-        Log.d("", stringRequest.toString());
-        queue.addToRequestQueue(stringRequest);
     }
 
-    private String getJson(UserDemographic userDemo){
-        return JsonParser.convertPojoToJsonString(userDemo);
-    }
 
 }

@@ -1,6 +1,8 @@
 package com.fitnation.profile;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -13,8 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.ToggleButton;
+import android.widget.TextView;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
@@ -38,15 +39,14 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     private ProfileContract.Presenter mPresenter;
 
-    @BindView(R.id.firstNameTextBox)     public EditText mFirstNameTextBox;
-    @BindView(R.id.lastNameTextBox)      public EditText mLastNameTextBox;
-    @BindView(R.id.weightTextBox)        public EditText mWeightTextBox;
-    @BindView(R.id.heightTextBox)        public EditText mHeightTextBox;
-    @BindView(R.id.ageTextBox)           public Button mAgePicker;
-    @BindView(R.id.gendersRadioGroup)    public RadioGroup mGenderButton;
-    @BindView(R.id.lifterTypeRadioGroup) public RadioGroup mLifterButton;
-    @BindView(R.id.saveButton)           public Button mSaveButton;
-    @BindView(R.id.unitType)             public ToggleButton mUnitTypeButton;
+    @BindView(R.id.nameText)          public EditText mNameTextBox;
+    @BindView(R.id.weightEditText)    public EditText mWeightTextBox;
+    @BindView(R.id.heightEditText)    public EditText mHeightTextBox;
+    @BindView(R.id.ageText)           public EditText mAgeTextBox;
+    @BindView(R.id.birthdayEditText)  public EditText mDobTextBox;
+    @BindView(R.id.saveButton)        public Button mSaveButton;
+    @BindView(R.id.switchMeasurement) public TextView mUnitTypeButton;
+    @BindView(R.id.genderEditText)    public EditText mGenderTextBox;
 
     final long MILLISECONDS_IN_YEAR = 31556952000L;
     Calendar birthday;
@@ -105,15 +105,14 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public void onSaveClicked() {
         userdemo = new UserDemographic();
 
-        userdemo.setFirstName(mFirstNameTextBox.getText().toString());
-        userdemo.setLastName(mLastNameTextBox.getText().toString());
-        userdemo.setDob(birthday.getTime());
+        userdemo.setFirstName(mNameTextBox.getText().toString());
+        userdemo.setDateOfBirth(birthday.getTime());
         //Get/Set gender
-        userdemo.setGender(gender.getGenderFromId(mGenderButton.getCheckedRadioButtonId()));
+        userdemo.setGender((mGenderTextBox.getText().toString()));
         userdemo.setHeight(mHeightTextBox.getText().toString());
         userdemo.setUserWeights(mWeightTextBox.getText().toString());
         //Get/Set skill level
-        userdemo.setSkillLevel(skillLevel.getSkillLevelFromId
+        userdemo.setSkillLevelLevel(skillLevel.getSkillLevelFromId
                 (mLifterButton.getCheckedRadioButtonId()));
 
         userdemo.setUnitOfMeasure(mUnitTypeButton.getText().toString());
@@ -124,10 +123,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public void loadDemographics(){
 
         try {
-            mFirstNameTextBox.setText(userdemo.getFirstName());
-        } catch (Exception e){}
-        try {
-            mLastNameTextBox.setText(userdemo.getLastName());
+            mNameTextBox.setText(userdemo.getFirstName());
         } catch (Exception e){}
         try {
             mWeightTextBox.setText(userdemo.getUserWeight().toString());
@@ -136,19 +132,21 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             mHeightTextBox.setText(userdemo.getHeight().toString());
         } catch (Exception e){ System.out.println(e.toString());}
         try {
-            Date date = userdemo.getDob();
+            String dob = userdemo.getDateOfBirth();
             Calendar c = Calendar.getInstance();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dateFormat.parse(dob);
             c.setTime(date);
             int age = getAgeInYears(c);
-            mAgePicker.setText(String.valueOf(age));
+            mAgeTextBox.setText("age: " + String.valueOf(age));
         } catch (Exception e){}
         try {
-            mGenderButton.check(gender.getIdFromGender(
+            mGenderTextBox.check(gender.getIdFromGender(
                     userdemo.getGender()));
         } catch (Exception e){}
         try {
             mLifterButton.check(skillLevel.getIdFromSkillLevel(
-                    userdemo.getSkillLevel()));
+                    userdemo.getSkillLevelLevel()));
         } catch (Exception e){}
 
         try {

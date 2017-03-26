@@ -28,8 +28,9 @@ public class UserDemoStringRequest extends StringRequest {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("Content-Type", "application/json");
         params.put("Accept", "application/json");
-        params.put("Authorization", "Bearer 136e2d65-b8f9-4905-8055-803e3ed5b833");
+        params.put("Authorization", "Bearer 2cd2ab74-cecd-4a8c-a61a-2b7e83a5313a");
         return params;
     }
+
 
 }
