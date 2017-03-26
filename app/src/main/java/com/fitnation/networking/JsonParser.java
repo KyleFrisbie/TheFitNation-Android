@@ -1,10 +1,14 @@
 package com.fitnation.networking;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Parses JSON
@@ -42,5 +46,24 @@ public class JsonParser {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         return gson.toJson(obj);
+    }
+
+    public static Map<String, String> convertPojoToJsonMap(Object obj){
+        String jString = convertPojoToJsonString(obj);
+        Log.d("JSONPARSER", jString);
+        return simpleJsonStringToMap(jString);
+    }
+
+    private static Map<String, String> simpleJsonStringToMap(String jString){
+        jString.replaceAll("(\\{|\\}|\")", "");
+        String [] jArray = jString.split("\\,");
+        Map<String, String> jMap = new HashMap<String, String>();
+
+        for(String i: jArray){
+            String[] pair = i.split(":");
+            jMap.put(pair[0].trim(), pair[1].trim());
+        }
+
+        return jMap;
     }
 }

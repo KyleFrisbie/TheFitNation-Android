@@ -1,16 +1,14 @@
 package com.fitnation.model;
 
+import android.util.Log;
+
 import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.model.enums.UnitOfMeasure;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
-import java.util.logging.Logger;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -26,20 +24,26 @@ public class UserDemographic extends RealmObject {
     private String firstName;
     private String lastName;
     private String gender;
-    private Date dob;
     private Integer height;
-    private String skillLevel;
+    private Integer skillLevelId;
+    private String skillLevelLevel;
     private String unitOfMeasure;
     private Boolean isActive;
     private RealmList<Gym> gyms;
     private RealmList<UserWeight> userWeights;
     private WorkoutLog workoutLog;
     private RealmList<WorkoutTemplate> workoutTemplates;
+    private String dateOfBirth;
+    private String createdOn;
+    private String lastLogin;
 
 
     public UserDemographic() {
-        dob = new Date();
-        skillLevel = SkillLevel.BEGINNER;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateOfBirth = dateFormat.format(new Date());
+        createdOn = dateFormat.format(new Date());
+        lastLogin = dateFormat.format(new Date());
+        skillLevelLevel = SkillLevel.BEGINNER;
         unitOfMeasure = UnitOfMeasure.IMPERIAL;
     }
 
@@ -62,21 +66,6 @@ public class UserDemographic extends RealmObject {
         return id;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -120,13 +109,12 @@ public class UserDemographic extends RealmObject {
         return gender;
     }
 
-    public void setDob(Date dob){
-        this.dob = dob;
+    public void setDateOfBirth(Date dateOfBirth){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        this.dateOfBirth = dateFormat.format(dateOfBirth);
     }
 
-    public Date getDob(){
-        return dob;
-    }
+    public String getDateOfBirth(){ return dateOfBirth; }
 
     public void setHeight(String pHeight){
         try {
@@ -169,10 +157,19 @@ public class UserDemographic extends RealmObject {
         return userWeight;
     }
 
-    public void setSkillLevel(String pSkill){ skillLevel = pSkill; }
+    public void setSkillLevelLevel(String skillLevel) {
+        if (skillLevel.contains("B")) { //beginner
+            skillLevelId = 1251;
+        }else if (skillLevel.contains("I")){ //intermediate
+            skillLevelId = 1252;
+        } else { //advanced
+            skillLevelId = 1253;
+        }
+        skillLevelLevel = skillLevel;
+    }
 
-    public String getSkillLevel(){
-        return skillLevel;
+    public String getSkillLevelLevel(){
+        return skillLevelLevel;
     }
 
     public void setUnitOfMeasure(String pUnit){
@@ -189,12 +186,12 @@ public class UserDemographic extends RealmObject {
     public String toString() {
         return "UserDemographic{" +
             "id=" + id +
-            ", first_name='" + firstName + "'" +
-            ", last_name='" + lastName + "'" +
+                "firstName=" + firstName +
+                "lastName=" + lastName +
             ", gender='" + gender + "'" +
-            ", dob='" + dob + "'" +
+            ", dateOfBirth='" + dateOfBirth + "'" +
             ", height='" + height + "'" +
-            ", skill_level='" + skillLevel + "'" +
+            ", skill_level='" + skillLevelLevel + "'" +
             ", unit_of_measure='" +  unitOfMeasure + "'" +
             ", is_active='" + isActive + "'" +
             '}';
