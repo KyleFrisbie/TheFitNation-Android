@@ -1,27 +1,18 @@
 package com.fitnation.login;
 
 import android.content.Intent;
-import android.os.SystemClock;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.Factories.VolleyErrorMessageFactory;
 import com.fitnation.navigation.NavigationActivity;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -149,7 +140,7 @@ public class LoginPresenter implements LoginContract.Presenter{
     }
 
     private void errorResponseMessage(VolleyError error){
-        VolleyErrorMessageGenerator volleyErrorMessageGenerator = new VolleyErrorMessageGenerator(error);
-        mView.showAuthError(volleyErrorMessageGenerator.GetErrorMessage());
+        VolleyErrorMessageFactory volleyErrorMessageFactory = new VolleyErrorMessageFactory(error);
+        mView.showAuthError(volleyErrorMessageFactory.GetErrorMessage());
     }
 }

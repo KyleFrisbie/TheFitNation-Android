@@ -1,6 +1,5 @@
 package com.fitnation.login;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.crashlytics.android.answers.Answers;
@@ -9,6 +8,9 @@ import com.crashlytics.android.answers.CustomEvent;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 
+/**
+ * Base activity to contain all login fragments.
+ */
 public class LoginBaseActivity extends BaseActivity {
     public static final int VIEW_CONTAINER = R.id.activity_login;
 

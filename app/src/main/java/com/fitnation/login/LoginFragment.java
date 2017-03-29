@@ -19,6 +19,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * Login Fragement with view properties only. Sends data to the presentor class for buisness logic.
+ */
 public class LoginFragment extends BaseFragment implements LoginContract.View {
     private LoginContract.Presenter mPresenter;
 
@@ -51,7 +54,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     }
 
     /**
-     * on facebook button pressed will launch the stormpath social login for facebook
+     * on facebook button pressed will launch no nothing so far
      */
     @OnClick(R.id.facebook_login_button)
     public void onFacebookLoginButtonClicked() {
@@ -59,19 +62,30 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         mPresenter.onFacebookLoginPressed();
     }
 
-
+    /**
+     * On google button pressed will do nothing
+     */
     @OnClick(R.id.google_login_button)
     public void onGoogleLoginButtonClicked() { mPresenter.onGoogleLoginPressed();}
 
+    /**
+     * ON login button will take text in edit texts and pass them for server token request.
+     */
     @OnClick(R.id.login_button)
     public void onLoginButtonClicked() {
         mPresenter.onLoginPressed(mUsernameEditText.getText().toString(),
                                   mPasswordEditText.getText().toString());
     }
 
+    /**
+     * On Sign up Button pressed launches the register fragment.
+     */
     @OnClick(R.id.signUp_button)
     public void onSignUpButtonClicked() { mPresenter.onSignUpButtonPressed(); }
 
+    /**
+     * on Forgot login button pressed will launch the reset password by email fragment flow.
+     */
     @OnClick(R.id.forgot_login_button)
     public void onForgotLoginButtonClicked() { mPresenter.onForgotLoginButtonPressed(); }
 

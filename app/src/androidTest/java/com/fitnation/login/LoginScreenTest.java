@@ -60,13 +60,13 @@ public class LoginScreenTest extends InstrumentationTest {
         loginScreenIsDisplayed();
         onView(withId(R.id.signUp_button)).perform(click());
         registerScreenIsDisplayed();
-        onView(withId(R.id.registerEmail_editText)).perform(typeText("testregisteremail@android.com"));
+        onView(withId(R.id.registerEmail_editText)).perform(typeText("email@android.com"));
         onView(withId(R.id.registerPassword_editText)).perform(typeText("Pa55w0rd"));
-        onView(withId(R.id.userName_editText)).perform(typeText("androidtest"));
+        onView(withId(R.id.userName_editText)).perform(typeText("android"));
         pressBack();
         onView(withId(R.id.register_button)).perform(click());
         SystemClock.sleep(500);
-        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("400")))
+        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("400: Bad Request Error")))
                 .check(matches(isDisplayed()));
     }
 
@@ -93,7 +93,7 @@ public class LoginScreenTest extends InstrumentationTest {
         pressBack();
         onView(withId(R.id.resetPassword_button)).perform(click());
         SystemClock.sleep(500);
-        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("400")))
+        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("400: Bad Request Error")))
                 .check(matches(isDisplayed()));
         pressBack();
     }

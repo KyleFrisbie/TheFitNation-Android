@@ -14,7 +14,7 @@ import com.fitnation.login.LoginBaseActivity;
 import io.fabric.sdk.android.Fabric;
 
 /**
- * SplashScreen for branding
+ * SplashScreen for branding and app loading
  */
 public class SplashScreenActivity extends BaseActivity {
     @Override

@@ -9,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.Factories.VolleyErrorMessageFactory;
 
 import org.json.JSONObject;
 
@@ -48,6 +49,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         System.out.println("failed " + error.getMessage());
+                        errorResponseMessage(error);
                     }
                 }
                 ){
@@ -64,6 +66,11 @@ public class RegisterPresenter implements RegisterContract.Presenter {
         requestQueue.add(jsonObjectPost);
         requestQueue.start();
 
+    }
+
+    private void errorResponseMessage(VolleyError error){
+        VolleyErrorMessageFactory errorMessageFactory = new VolleyErrorMessageFactory(error);
+        mView.showAuthError(errorMessageFactory.GetErrorMessage());
     }
 
     @Override
