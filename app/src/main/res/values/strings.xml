@@ -19,11 +19,24 @@
     <string name="weightField">Weight:</string>
     <string name="height">Height</string>
     <string name="weight">Weight</string>
-    <string name="lifterType">Lifter Type</string>
+
+    <string name="lifterType">Skill:</string>
+    <string-array name="lifterTypeArray">
+        <item>Beginner</item>
+        <item>Intermediate</item>
+        <item>Advanced</item>
+    </string-array>
     <string name="beginner">Beginner</string>
     <string name="intermediate">Intermediate</string>
     <string name="advanced">Advanced</string>
     <string name="gender">Gender</string>
+
+    <string-array name="genderArray">
+        <item>Other</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
     <string name="genderField">Gender:</string>
     <string name="male">Male</string>
     <string name="female">Female</string>

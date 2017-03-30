@@ -57,7 +57,7 @@
 
         <!-- GENDER -->
         <TextView
-            android:id="@+id/genderlView"
+            android:id="@+id/genderView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/emailView"
@@ -67,23 +67,24 @@
             android:textAlignment="viewStart"
             android:textSize="18sp" />
 
-        <EditText
+
+        <Spinner
             android:id="@+id/genderEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/genderlView"
-            android:layout_alignBottom="@+id/genderlView"
+            android:layout_alignBottom="@+id/genderView"
             android:layout_alignEnd="@+id/emailEditText"
             android:layout_alignStart="@+id/emailEditText"
             android:hint="@string/gender"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_alignTop="@+id/genderView" />
 
         <!-- BIRTHDAY -->
         <TextView
             android:id="@+id/birthdayView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/genderlView"
+            android:layout_below="@+id/genderView"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="35dp"
             android:text="@string/birthdayField"
@@ -99,7 +100,11 @@
             android:layout_alignStart="@+id/genderEditText"
             android:layout_toStartOf="@+id/ageText"
             android:hint="@string/birthday"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:clickable="true"
+            android:inputType="date"
+            android:focusable="false"/>
+
         <!-- AGE -->
         <EditText
             android:id="@+id/ageText"
@@ -109,7 +114,10 @@
             android:layout_alignBottom="@+id/birthdayEditText"
             android:layout_alignEnd="@+id/genderEditText"
             android:hint="@string/age"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:clickable="true"
+            android:inputType="date"
+            android:focusable="false"/>
 
         <!-- WEIGHT -->
         <TextView
@@ -167,13 +175,36 @@
             android:hint="@string/height"
             android:textSize="18sp" />
 
+        <!-- LIFTER TYPE -->
+        <TextView
+            android:id="@+id/lifterTypeView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/lifterType"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:layout_below="@+id/heightView"
+            android:layout_alignStart="@+id/heightView" />
+
+        <Spinner
+            android:id="@+id/lifterTypeSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/gender"
+            android:textSize="18sp"
+            android:layout_alignTop="@+id/lifterTypeView"
+            android:layout_alignStart="@+id/heightEditText"
+            android:layout_alignEnd="@+id/switchMeasurement" />
+
+        <!-- SAVE -->
         <Button
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
             android:text="Save"
-            android:layout_below="@+id/heightEditText"
+            android:layout_below="@+id/lifterTypeSpinner"
             android:layout_centerHorizontal="true" />
 
 

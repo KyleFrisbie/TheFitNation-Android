@@ -12,9 +12,11 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fitnation.R;
@@ -34,8 +36,7 @@ import butterknife.OnClick;
 
 
 public class ProfileFragment extends BaseFragment implements ProfileContract.View,
-        DatePickerDialog.OnDateSetListener
-        {
+        DatePickerDialog.OnDateSetListener {
 
     private ProfileContract.Presenter mPresenter;
 
@@ -46,7 +47,9 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @BindView(R.id.birthdayEditText)  public EditText mDobTextBox;
     @BindView(R.id.saveButton)        public Button mSaveButton;
     @BindView(R.id.switchMeasurement) public TextView mUnitTypeButton;
-    @BindView(R.id.genderEditText)    public EditText mGenderTextBox;
+    @BindView(R.id.genderEditText)    public Spinner mGenderSpinner;
+    @BindView(R.id.lifterTypeSpinner) public Spinner mLifterTypeSpinner;
+
 
     final long MILLISECONDS_IN_YEAR = 31556952000L;
     Calendar birthday;
@@ -54,6 +57,8 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     SkillLevel skillLevel;
     UserDemographic userdemo;
     DatePickerFragment dateFragment;
+    ArrayAdapter<CharSequence> genderAdapter;
+    ArrayAdapter<CharSequence> lifterTypeAdapter;
 
     public ProfileFragment() {
         // Empty constructor
@@ -66,9 +71,11 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    View v = inflater.inflate(R.layout.fragment_profile, container, false);
-    ButterKnife.bind(this, v);
+
+
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+        ButterKnife.bind(this, v);
 
         v.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -80,6 +87,16 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
                 return false;
             }
         });
+
+        genderAdapter = ArrayAdapter.createFromResource(this.getBaseActivity(),
+                R.array.genderArray, android.R.layout.simple_spinner_item);
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mGenderSpinner.setAdapter(genderAdapter);
+
+        lifterTypeAdapter = ArrayAdapter.createFromResource(this.getBaseActivity(),
+                R.array.lifterTypeArray, android.R.layout.simple_spinner_item);
+        lifterTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mLifterTypeSpinner.setAdapter(lifterTypeAdapter);
 
     return v;
     }
@@ -94,11 +111,18 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mPresenter.start();
     }
 
-    @OnClick(R.id.ageTextBox)
+    @OnClick(R.id.birthdayEditText)
+    public void onDobClicked(){
+        openDatePicker();
+    }
+
+    @OnClick(R.id.ageText)
     public void onAgeClicked(){
+        openDatePicker();
+    }
+
+    private void openDatePicker(){
         dateFragment.show(getFragmentManager(), "datePicker");
-
-
     }
 
     @OnClick(R.id.saveButton)
@@ -108,12 +132,11 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         userdemo.setFirstName(mNameTextBox.getText().toString());
         userdemo.setDateOfBirth(birthday.getTime());
         //Get/Set gender
-        userdemo.setGender((mGenderTextBox.getText().toString()));
+        userdemo.setGender((mGenderSpinner.getSelectedItem().toString()));
         userdemo.setHeight(mHeightTextBox.getText().toString());
         userdemo.setUserWeights(mWeightTextBox.getText().toString());
         //Get/Set skill level
-        userdemo.setSkillLevelLevel(skillLevel.getSkillLevelFromId
-                (mLifterButton.getCheckedRadioButtonId()));
+        userdemo.setSkillLevelLevel(mLifterTypeSpinner.getSelectedItem().toString());
 
         userdemo.setUnitOfMeasure(mUnitTypeButton.getText().toString());
 
@@ -138,22 +161,26 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             Date date = dateFormat.parse(dob);
             c.setTime(date);
             int age = getAgeInYears(c);
+            mDobTextBox.setText(dob);
             mAgeTextBox.setText("age: " + String.valueOf(age));
         } catch (Exception e){}
         try {
-            mGenderTextBox.check(gender.getIdFromGender(
-                    userdemo.getGender()));
+            mGenderSpinner.setSelection(
+                    genderAdapter.getPosition(userdemo.getGender()));
         } catch (Exception e){}
         try {
-            mLifterButton.check(skillLevel.getIdFromSkillLevel(
-                    userdemo.getSkillLevelLevel()));
+            mLifterTypeSpinner.setSelection(
+                    lifterTypeAdapter.getPosition(userdemo.getSkillLevelLevel()));
         } catch (Exception e){}
 
         try {
             String unitType = userdemo.getUnitOfMeasure();
             //if weightType is pounds set check, else unchecked
-            mUnitTypeButton.setChecked(
-                    unitType.toLowerCase().contains("imperial"));
+            if (unitType.toLowerCase().contains("imperial")) {
+                mUnitTypeButton.setText(R.string.switchMeasureImperial);
+            } else {
+                mUnitTypeButton.setText(R.string.switchMeasureMetrics);
+            }
 
         } catch (Exception e){}
 
@@ -174,18 +201,18 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public void onDateSet(DatePicker view, int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
-
         int yearsOld;
         if (calendar!=null) {
             Calendar now = Calendar.getInstance();
 
             yearsOld = getAgeInYears(calendar);
-
-            mAgePicker.setText(String.valueOf(yearsOld));
+            mDobTextBox.setText(
+                    String.valueOf(year)+"-"+String.valueOf(month)+"-"+String.valueOf(day));
+            mAgeTextBox.setText("age:" + String.valueOf(yearsOld));
             return;
         }
 
-        mAgePicker.setText("Age");
+        mAgeTextBox.setText("Age");
     }
 
     public int getAgeInYears(Calendar cal){
@@ -195,7 +222,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
             mili /= MILLISECONDS_IN_YEAR; //TO YEARS
             int yearsOld = (int) (mili);
-            mAgePicker.setText(String.valueOf(yearsOld));
+
             birthday = cal;
             return yearsOld;
         }
