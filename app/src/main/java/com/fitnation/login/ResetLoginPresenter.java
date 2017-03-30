@@ -8,7 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.fitnation.Factories.VolleyErrorMessageFactory;
+import com.fitnation.Factory.VolleyErrorMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,7 +75,7 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter {
     }
 
     private void errorResponseMessage(VolleyError error){
-        VolleyErrorMessageFactory volleyErrorMessageFactory = new VolleyErrorMessageFactory(error);
-        mView.showAuthError(volleyErrorMessageFactory.GetErrorMessage(mView.getBaseActivity()));
+        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
+        mView.showAuthError(volleyErrorMessage.GetErrorMessage(mView.getBaseActivity()));
     }
 }

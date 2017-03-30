@@ -8,7 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.fitnation.Factories.VolleyErrorMessageFactory;
+import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.navigation.NavigationActivity;
 
 import org.json.JSONObject;
@@ -133,7 +133,7 @@ public class LoginPresenter implements LoginContract.Presenter{
     }
 
     private void errorResponseMessage(VolleyError error){
-        VolleyErrorMessageFactory volleyErrorMessageFactory = new VolleyErrorMessageFactory(error);
-        mView.showAuthError(volleyErrorMessageFactory.GetErrorMessage(mView.getBaseActivity()));
+        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
+        mView.showAuthError(volleyErrorMessage.GetErrorMessage(mView.getBaseActivity()));
     }
 }

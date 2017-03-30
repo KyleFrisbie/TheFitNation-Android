@@ -1,4 +1,4 @@
-package com.fitnation.Factories;
+package com.fitnation.Factory;
 
 import android.content.Context;
 
@@ -9,16 +9,20 @@ import com.fitnation.networking.RefreshAccessToken;
 /**
  * A factory for generating alert dialog messages for HTTP response codes from the server.
  */
-public class VolleyErrorMessageFactory {
+public class VolleyErrorMessage {
     private VolleyError volleyError;
 
     /**
      * Constructor: Sets the error message retrieved from the server
      * @param volleyError Error response information from server
      */
-    public VolleyErrorMessageFactory(VolleyError volleyError){
+    public VolleyErrorMessage(VolleyError volleyError){
         this.volleyError = volleyError;
     }
+
+    /**
+     * Testing constructor
+     */
 
     /**
      * Retrieves an error message based on the response code from the server.
