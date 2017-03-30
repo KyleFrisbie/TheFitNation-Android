@@ -1,15 +1,16 @@
 package com.fitnation.Factories;
 
-import android.support.v7.app.AlertDialog;
+import android.content.Context;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
+import com.fitnation.networking.RefreshAccessToken;
 
 /**
  * A factory for generating alert dialog messages for HTTP response codes from the server.
  */
 public class VolleyErrorMessageFactory {
-    VolleyError volleyError;
+    private VolleyError volleyError;
 
     /**
      * Constructor: Sets the error message retrieved from the server
@@ -23,11 +24,11 @@ public class VolleyErrorMessageFactory {
      * Retrieves an error message based on the response code from the server.
      * @return String response message indication error number and type.
      */
-    public String GetErrorMessage(){
-        return GenerateErrorMessage(volleyError.networkResponse);
+    public String GetErrorMessage(Context context){
+        return GenerateErrorMessage(volleyError.networkResponse, context);
     }
 
-    private String GenerateErrorMessage(NetworkResponse response) {
+    private String GenerateErrorMessage(NetworkResponse response, Context context) {
         String message = String.valueOf(response.statusCode);
         switch (response.statusCode) {
             case 100:
@@ -100,7 +101,12 @@ public class VolleyErrorMessageFactory {
                 message = "400: Bad Request Error";
                 break;
             case 401:
-                message = "401: Unauthorized Error";
+                RefreshAccessToken refreshAccessToken = new RefreshAccessToken();
+                if(refreshAccessToken.refresh(context)){
+                    message = "Authorization has been refreshed";
+                }else {
+                    message = "401: Unauthorized Error";
+                }
                 break;
             case 402:
                 message = "402: Payment Required";

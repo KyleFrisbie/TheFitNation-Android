@@ -49,7 +49,7 @@ public class LoginScreenTest extends InstrumentationTest {
         pressBack();
         onView(withId(R.id.login_button)).perform(click());
         SystemClock.sleep(500);
-        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("500: Internal Server Error")))
+        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("400: Bad Request Error")))
                 .check(matches(isDisplayed()));
     }
 

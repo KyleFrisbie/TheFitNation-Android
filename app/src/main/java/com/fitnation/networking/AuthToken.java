@@ -1,5 +1,6 @@
 package com.fitnation.networking;
 
+
 class AuthToken {
     private String accessToken;
     private String refreshToken;
@@ -19,6 +20,10 @@ class AuthToken {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
     private AuthToken() {

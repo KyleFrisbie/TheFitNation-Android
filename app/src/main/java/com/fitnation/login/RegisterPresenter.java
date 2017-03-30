@@ -70,7 +70,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
 
     private void errorResponseMessage(VolleyError error){
         VolleyErrorMessageFactory errorMessageFactory = new VolleyErrorMessageFactory(error);
-        mView.showAuthError(errorMessageFactory.GetErrorMessage());
+        mView.showAuthError(errorMessageFactory.GetErrorMessage(mView.getBaseActivity()));
     }
 
     @Override

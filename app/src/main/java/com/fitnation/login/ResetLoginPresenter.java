@@ -76,6 +76,6 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter {
 
     private void errorResponseMessage(VolleyError error){
         VolleyErrorMessageFactory volleyErrorMessageFactory = new VolleyErrorMessageFactory(error);
-        mView.showAuthError(volleyErrorMessageFactory.GetErrorMessage());
+        mView.showAuthError(volleyErrorMessageFactory.GetErrorMessage(mView.getBaseActivity()));
     }
 }

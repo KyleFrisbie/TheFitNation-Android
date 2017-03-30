@@ -32,14 +32,14 @@ public class LoginPresenter implements LoginContract.Presenter{
         String url = "http://the-fit-nation-dev.herokuapp.com/oauth/token";
 
 
-        JsonObjectRequest jsonObjectPost = new JsonObjectRequest(Request.Method.POST, url,
-                null, new Response.Listener<JSONObject>()
+        JsonObjectRequest jsonObjectPost = new JsonObjectRequest(Request.Method.POST,
+                url, null, new Response.Listener<JSONObject>()
         {
             @Override
             public void onResponse(JSONObject response) {
-                String token = null;
-                Intent mainActivityIntent = new Intent(mView.getBaseActivity(), NavigationActivity.class)
-                        .putExtra("token", token);
+                // TODO: handle json response and get the token data into the singleton
+                System.out.println(response);
+                Intent mainActivityIntent = new Intent(mView.getBaseActivity(), NavigationActivity.class);
                 mView.getBaseActivity().startActivity(mainActivityIntent);
             }
         },  new Response.ErrorListener() {
@@ -55,48 +55,41 @@ public class LoginPresenter implements LoginContract.Presenter{
                 Map<String,String> params = new HashMap<>();
                 params.put("username", userName);
                 params.put("password", password);
-                params.put("grant-type", "password");
-                params.put("scope", "read write");
+                params.put("grant_type", "password");
+                params.put("scope", "read+write");
                 params.put("client_secret", "my-secret-token-to-change-in-production");
                 params.put("client_id", "TheFitNationapp");
                 params.put("submit", "login");
-                String postBody = generateFormDataForPostBody(params);
-                return postBody.getBytes();
+                String bodyString = convertToUrlEncodedPostBody(params);
+                return bodyString.getBytes();
             }
-
-//            @Override
-//            public Map<String, String> getHeaders(){
-//                HashMap<String, String> headers = new HashMap<>();
-//                headers.put("Content-Type", "multipart/form-data; boundary=" + boundary);
-//                return headers;
-//            }
 
             @Override
             public String getBodyContentType() {
-                return ("multipart/form-data; boundary=" + boundary);
+                return ("application/x-www-form-urlencoded");
             }
-
         };
 
         requestQueue.add(jsonObjectPost);
         requestQueue.start();
     }
 
-    private String generateFormDataForPostBody(Map<String, String> params){
+    private String convertToUrlEncodedPostBody(Map<String, String> params){
         StringBuilder sbPost = new StringBuilder();
         if(params != null) {
+            int count = 0;
             for (String key : params.keySet()) {
                 if (params.get(key) != null) {
-                    sbPost.append("\r\n" + "--" + boundary + "\r\n");
-                    sbPost.append("Content-Disposition: form-data; name=\"");
+                    if(count != 0) {
+                        sbPost.append("&");
+                    }
                     sbPost.append(key);
-                    sbPost.append("\"");
-                    sbPost.append("\r\n\r\n");
+                    sbPost.append("=");
                     sbPost.append(params.get(key));
+                    count++;
                 }
             }
         }
-        sbPost.append("--" + boundary + "--");
         return sbPost.toString();
     }
 
@@ -141,6 +134,6 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     private void errorResponseMessage(VolleyError error){
         VolleyErrorMessageFactory volleyErrorMessageFactory = new VolleyErrorMessageFactory(error);
-        mView.showAuthError(volleyErrorMessageFactory.GetErrorMessage());
+        mView.showAuthError(volleyErrorMessageFactory.GetErrorMessage(mView.getBaseActivity()));
     }
 }
