@@ -109,16 +109,6 @@ public class LoginPresenter implements LoginContract.Presenter{
             accessToken = response.getString("access_token");
             refreshToken = response.getString("refresh_token");
 
-            // TODO: set up realm class for token and then store token in it for persistence
-//            Realm realm = Realm.getDefaultInstance();
-//            realm.beginTransaction();
-//
-//            RealmToken realmToken = realm.createObject(RealmToken.class);
-//            realmToken.setAccessToken(accessToken);
-//            realmToken.setRefreshToken(refreshToken);
-//
-//            realm.commitTransaction();
-
             AuthToken.getInstance().setAccessToken(accessToken);
             AuthToken.getInstance().setRefreshToken(refreshToken);
 

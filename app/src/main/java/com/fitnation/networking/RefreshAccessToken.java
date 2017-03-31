@@ -8,15 +8,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.fitnation.model.PrimaryKeyFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import io.realm.Realm;
 
 public class RefreshAccessToken {
     private String refreshToken;
@@ -29,7 +26,7 @@ public class RefreshAccessToken {
             refreshToken = AuthToken.getInstance().getRefreshToken();
             tokenExists = true;
         }else{
-            //get token from realm
+            // TODO: get token from realm
             tokenExists = true;
         }
 
@@ -104,16 +101,6 @@ public class RefreshAccessToken {
 
             accessToken = response.getString("access_token");
             refreshToken = response.getString("refresh_token");
-
-                // TODO: set up realm class for token and then store token in it for persistence
-//            Realm realm = Realm.getDefaultInstance();
-//            realm.beginTransaction();
-//
-//            RealmToken realmToken = realm.createObject(RealmToken.class);
-//            realmToken.setAccessToken(accessToken);
-//            realmToken.setRefreshToken(refreshToken);
-//
-//            realm.commitTransaction();
 
             AuthToken.getInstance().setAccessToken(accessToken);
             AuthToken.getInstance().setRefreshToken(refreshToken);

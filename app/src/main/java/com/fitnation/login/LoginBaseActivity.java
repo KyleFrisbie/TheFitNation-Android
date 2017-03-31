@@ -19,8 +19,6 @@ public class LoginBaseActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        checkForValidRefreshToken();
-
         setContentView(R.layout.activity_login);
         launchLoginFragment();
         onKeyMetric();
@@ -48,22 +46,5 @@ public class LoginBaseActivity extends BaseActivity {
         Answers.getInstance().logCustom(new CustomEvent("Login Screen")
                 .putCustomAttribute("Category", "Activity")
                 .putCustomAttribute("Length", 350));
-    }
-
-    private void checkForValidRefreshToken(){
-        if (isRefreshSuccessful()) {
-            intentToAppHomeScreen();
-        }
-    }
-
-    private boolean isRefreshSuccessful(){
-        RefreshAccessToken refreshAccessToken = new RefreshAccessToken();
-        return refreshAccessToken.refresh(this);
-    }
-
-    private void intentToAppHomeScreen(){
-        Intent appHomeScreenIntent = new Intent(this, NavigationActivity.class);
-        this.startActivity(appHomeScreenIntent);
-        this.finish();
     }
 }

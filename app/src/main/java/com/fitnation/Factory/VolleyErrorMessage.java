@@ -1,5 +1,6 @@
 package com.fitnation.Factory;
 
+import android.app.AlertDialog;
 import android.content.Context;
 
 import com.android.volley.NetworkResponse;
@@ -34,7 +35,9 @@ public class VolleyErrorMessage {
     }
 
     private String GenerateErrorMessage(NetworkResponse response, Context context) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         String message = String.valueOf(response.statusCode);
+
         switch (response.statusCode) {
             case 100:
                 message = "100: Continue";

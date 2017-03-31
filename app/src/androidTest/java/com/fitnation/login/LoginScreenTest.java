@@ -42,9 +42,9 @@ public class LoginScreenTest extends InstrumentationTest {
     }
 
     @Test
-    public void testLoginFlow() {
+    public void testLoginFlowFor400Error() {
         loginScreenIsDisplayed();
-        onView(withId(R.id.email_editText)).perform(typeText("testemail@android.com"));
+        onView(withId(R.id.email_editText)).perform(typeText("badusername"));
         onView(withId(R.id.password_editText)).perform(typeText("Pa55w0rd"));
         pressBack();
         onView(withId(R.id.login_button)).perform(click());
@@ -53,14 +53,23 @@ public class LoginScreenTest extends InstrumentationTest {
                 .check(matches(isDisplayed()));
     }
 
-
-    //test needs to be reworked to sign up user and then delete same user after completion of test
     @Test
-    public void testSignUpFlow(){
+    public void testLoginFlowForSuccess(){
+        loginScreenIsDisplayed();
+        onView(withId(R.id.email_editText)).perform(typeText("androidtest"));
+        onView(withId(R.id.password_editText)).perform(typeText("Pa55w0rd"));
+        pressBack();
+        onView(withId(R.id.login_button)).perform(click());
+        SystemClock.sleep(500);
+        navigationScreenIsDisplayed();
+    }
+
+    @Test
+    public void testSignUpFlowFor400Error(){
         loginScreenIsDisplayed();
         onView(withId(R.id.signUp_button)).perform(click());
         registerScreenIsDisplayed();
-        onView(withId(R.id.registerEmail_editText)).perform(typeText("email@android.com"));
+        onView(withId(R.id.registerEmail_editText)).perform(typeText("testemail@android.com"));
         onView(withId(R.id.registerPassword_editText)).perform(typeText("Pa55w0rd"));
         onView(withId(R.id.userName_editText)).perform(typeText("android"));
         pressBack();
@@ -71,7 +80,20 @@ public class LoginScreenTest extends InstrumentationTest {
     }
 
     @Test
-    public void testForgotLoginFlow(){
+    public void testForgotLoginFlowFor400Error(){
+        loginScreenIsDisplayed();
+        onView(withId(R.id.forgot_login_button)).perform(click());
+        forgotLoginScreenIsDisplayed();
+        onView(withId(R.id.resetPassword_editText)).perform(typeText("bademail@badrequest.com"));
+        pressBack();
+        onView(withId(R.id.resetPassword_button)).perform(click());
+        SystemClock.sleep(500);
+        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("400: Bad Request Error")))
+                .check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testForgotLoginFlowForSuccess(){
         loginScreenIsDisplayed();
         onView(withId(R.id.forgot_login_button)).perform(click());
         forgotLoginScreenIsDisplayed();
@@ -81,23 +103,7 @@ public class LoginScreenTest extends InstrumentationTest {
         SystemClock.sleep(500);
         onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("e-mail was sent")))
                 .check(matches(isDisplayed()));
-        pressBack();
     }
-
-    @Test
-    public void testForgotLoginFlowForFailure(){
-        loginScreenIsDisplayed();
-        onView(withId(R.id.forgot_login_button)).perform(click());
-        forgotLoginScreenIsDisplayed();
-        onView(withId(R.id.resetPassword_editText)).perform(typeText("email@email123456.com"));
-        pressBack();
-        onView(withId(R.id.resetPassword_button)).perform(click());
-        SystemClock.sleep(500);
-        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("400: Bad Request Error")))
-                .check(matches(isDisplayed()));
-        pressBack();
-    }
-
 
     @Test
     public void testGoogleSignInFlow(){
