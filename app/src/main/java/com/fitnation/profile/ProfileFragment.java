@@ -6,8 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +31,7 @@ import com.fitnation.model.enums.SkillLevel;
 import butterknife.ButterKnife;
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnFocusChange;
 
 /*
  * View / Fragment Class for Profile
@@ -46,15 +49,17 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @BindView(R.id.ageText)           public EditText mAgeTextBox;
     @BindView(R.id.birthdayEditText)  public EditText mDobTextBox;
     @BindView(R.id.saveButton)        public Button mSaveButton;
-    @BindView(R.id.switchMeasurement) public TextView mUnitTypeButton;
     @BindView(R.id.genderEditText)    public Spinner mGenderSpinner;
     @BindView(R.id.lifterTypeSpinner) public Spinner mLifterTypeSpinner;
+    @BindView(R.id.switchMeasurement) public TextView mSwitchMeasurementButton;
 
-
+    boolean unsavedChanges = false;
     final long MILLISECONDS_IN_YEAR = 31556952000L;
+    final double INCH_PER_CM = 0.393701;
+    final double CM_PER_INCH = 2.54;
+    final double LBS_PER_KG = 2.20462;
+    final double KG_PER_LB = 0.453592;
     Calendar birthday;
-    Gender gender;
-    SkillLevel skillLevel;
     UserDemographic userdemo;
     DatePickerFragment dateFragment;
     ArrayAdapter<CharSequence> genderAdapter;
@@ -103,12 +108,87 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     public void onStart() {
         super.onStart();
-        gender = new Gender();
         dateFragment = new DatePickerFragment();
         dateFragment.setFragment(this);
-        skillLevel = new SkillLevel();
-        if (userdemo!=null) loadDemographics();
+
+        if (userdemo == null) {
+            userdemo = mPresenter.loadData();
+        }
+        loadDemographics();
         mPresenter.start();
+    }
+
+    @OnClick(R.id.switchMeasurement)
+    public void onSwitchMeasurementClicked(){
+        double weightFlt = 0;
+        double heightFlt = 0;
+        try {
+            //Since weight/height may have in/cm text in their value.  We just want the num val
+            weightFlt = getWeightValue();
+            heightFlt = getHeightValue();
+        } catch (NumberFormatException ex){
+            Log.d("PROFILE",
+                    "Failed to get numeric value from weight/height text box" + ex.toString());
+        }
+        // if mSwitchMeasurement says Switch to Metric
+        if (mSwitchMeasurementButton.getText().toString().toLowerCase().contains("metric")){
+            mSwitchMeasurementButton.setText(getString(R.string.switchMeasureImperial));
+            weightFlt = (weightFlt * KG_PER_LB);  //lb to kg
+            heightFlt = (heightFlt * CM_PER_INCH); //cm to inch
+            mWeightTextBox.setText(String.format("%.1f", weightFlt)+ " kgs");
+            mHeightTextBox.setText(String.format("%.1f", heightFlt)+ " cms");
+        } else {
+            mSwitchMeasurementButton.setText(getString(R.string.switchMeasureMetrics));
+            weightFlt = (weightFlt * LBS_PER_KG);  //kgs to lbs
+            heightFlt = (heightFlt * INCH_PER_CM); //cm to inch
+            mWeightTextBox.setText(String.format("%.1f", weightFlt) + " lbs");
+            mHeightTextBox.setText(String.format("%.1f", heightFlt) + " inches");
+        }
+
+        unsavedChanges = true;
+    }
+    private Float getWeightValue(){
+        String weightString[] = mWeightTextBox.getText().toString().trim().split("\\s+");
+        Log.i("PROFILE", "Weight is "+weightString[0]);
+        if (weightString[0] != null && !weightString[0].isEmpty()){
+            return Float.valueOf(weightString[0]);
+        } else {
+            return 0.0f;
+        }
+
+    }
+
+    private Float getHeightValue(){
+        String heightString[] = mHeightTextBox.getText().toString().trim().split("\\s+");
+        Log.i("PROFILE", "Height is "+heightString[0]);
+        if (heightString[0] != null && !heightString[0].isEmpty()){
+            return Float.valueOf(heightString[0]);
+        } else {
+            return 0.0f;
+        }
+    }
+
+    @OnFocusChange(R.id.weightEditText)
+    void weightFocusChanged(){
+        measurementsAddUnits();
+    }
+
+    @OnFocusChange(R.id.heightEditText)
+    void heightFocusChanged(){
+        measurementsAddUnits();
+    }
+
+    private void measurementsAddUnits(){
+
+        if (mSwitchMeasurementButton.getText().toString().toLowerCase().contains("imperial")){
+
+            mWeightTextBox.setText(String.format("%.1f", getWeightValue())+ " kgs");
+            mHeightTextBox.setText(String.format("%.1f", getHeightValue())+ " cms");
+        } else {
+            mWeightTextBox.setText(String.format("%.1f", getWeightValue())+ " lbs");
+            mHeightTextBox.setText(String.format("%.1f", getHeightValue())+ " inches");
+        }
+        unsavedChanges = true;
     }
 
     @OnClick(R.id.birthdayEditText)
@@ -127,34 +207,60 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     @OnClick(R.id.saveButton)
     public void onSaveClicked() {
+        if (!unsavedChanges) return; //if nothing has been changed dont save again
         userdemo = new UserDemographic();
+        try {
+            userdemo.setFirstName(mNameTextBox.getText().toString().split("\\s+")[0]);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            userdemo.setFirstName("");
+            Log.d("PROFILE", "Name textbox empty or not enough elements" + ex.toString());
+        }
 
-        userdemo.setFirstName(mNameTextBox.getText().toString());
+        try {
+            userdemo.setLastName(mNameTextBox.getText().toString().split("\\s+")[1]);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            userdemo.setLastName("");
+            Log.d("PROFILE", "Name textbox empty or not enough elements" + ex.toString());
+        }
+
+
+
         userdemo.setDateOfBirth(birthday.getTime());
         //Get/Set gender
         userdemo.setGender((mGenderSpinner.getSelectedItem().toString()));
-        userdemo.setHeight(mHeightTextBox.getText().toString());
-        userdemo.setUserWeights(mWeightTextBox.getText().toString());
+        userdemo.setHeight(getHeightValue().toString());
+        userdemo.setUserWeights(getWeightValue().toString());
         //Get/Set skill level
         userdemo.setSkillLevelLevel(mLifterTypeSpinner.getSelectedItem().toString());
 
-        userdemo.setUnitOfMeasure(mUnitTypeButton.getText().toString());
+        if (mSwitchMeasurementButton.getText().toString().toLowerCase().contains("metric")){
+            userdemo.setUnitOfMeasure("Metric");
+        } else {
+            userdemo.setUnitOfMeasure("Imperial");
+        }
 
+        unsavedChanges = false;
         mPresenter.saveData(userdemo);
     }
 
     public void loadDemographics(){
 
         try {
-            mNameTextBox.setText(userdemo.getFirstName());
-        } catch (Exception e){}
-        try {
+            String first = userdemo.getFirstName();
+            String last = userdemo.getLastName();
+            mNameTextBox.setText(first + " " + last);
+        } catch (Exception e){
+
+        } try {
             mWeightTextBox.setText(userdemo.getUserWeight().toString());
-        } catch (Exception e){ System.out.println(e.toString());}
-        try {
+        } catch (Exception e){
+            Log.d("PROFILE", e.toString());
+            System.out.println(e.toString());
+        } try {
             mHeightTextBox.setText(userdemo.getHeight().toString());
-        } catch (Exception e){ System.out.println(e.toString());}
-        try {
+        } catch (Exception e){
+            Log.d("PROFILE", e.toString());
+        } try {
             String dob = userdemo.getDateOfBirth();
             Calendar c = Calendar.getInstance();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -163,26 +269,34 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             int age = getAgeInYears(c);
             mDobTextBox.setText(dob);
             mAgeTextBox.setText("age: " + String.valueOf(age));
-        } catch (Exception e){}
+        } catch (Exception e){
+            Log.d("PROFILE", e.toString());
+        }
         try {
             mGenderSpinner.setSelection(
                     genderAdapter.getPosition(userdemo.getGender()));
-        } catch (Exception e){}
+        } catch (Exception e){
+            Log.d("PROFILE", e.toString());
+        }
         try {
-            mLifterTypeSpinner.setSelection(
-                    lifterTypeAdapter.getPosition(userdemo.getSkillLevelLevel()));
-        } catch (Exception e){}
+            mLifterTypeSpinner
+                    .setSelection(lifterTypeAdapter.getPosition(userdemo.getSkillLevelLevel()));
+        } catch (Exception e){
+            Log.d("PROFILE", e.toString());
+        }
 
         try {
             String unitType = userdemo.getUnitOfMeasure();
             //if weightType is pounds set check, else unchecked
             if (unitType.toLowerCase().contains("imperial")) {
-                mUnitTypeButton.setText(R.string.switchMeasureImperial);
+                mSwitchMeasurementButton.setText(R.string.switchMeasureImperial);
             } else {
-                mUnitTypeButton.setText(R.string.switchMeasureMetrics);
+                mSwitchMeasurementButton.setText(R.string.switchMeasureMetrics);
             }
 
-        } catch (Exception e){}
+        } catch (Exception e){
+            Log.d("PROFILE", e.toString());
+        }
 
     }
 
@@ -199,6 +313,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
+        unsavedChanges = true;
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         int yearsOld;

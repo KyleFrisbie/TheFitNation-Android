@@ -1,23 +1,15 @@
 package com.fitnation.profile;
 
-
-import android.app.DialogFragment;
-import android.content.Context;
 import android.util.Log;
-
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 
 import com.fitnation.networking.JsonParser;
-import com.fitnation.base.DataResult;
-import com.fitnation.base.FitNationApplication;
 import com.fitnation.model.UserDemographic;
-import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
@@ -40,6 +32,8 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     @Override
     public void stop() {}
 
+    String url;
+    String accessToken = "65b3a0fa-c5c9-411d-b91c-50ebc04d6582";
 
     @Override
     public void saveData(UserDemographic pUserDemo) {
@@ -50,7 +44,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         //save data to webservice
 
         UserDemographicSingleton queue = UserDemographicSingleton.getInstance(mView.getBaseActivity());
-        String url = "https://the-fit-nation-dev.herokuapp.com/api/user-demographics/byLoggedInUser";
+        url = "https://the-fit-nation-dev.herokuapp.com/api/user-demographics/byLoggedInUser";
 
 
         //  GET a User Demographic
@@ -95,7 +89,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", "application/json");
                 params.put("Accept", "application/json");
-                params.put("Authorization", "Bearer 43e0c2d2-cba7-4600-82bf-eb651fdbb9e8");
+                params.put("Authorization", "Bearer "+accessToken);
                 return params;
             }
         };
@@ -123,6 +117,37 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
         Log.d("JSON REQUEST", jsonRequest.toString());
         queue.addToRequestQueue(jsonRequest);
+    }
+    public UserDemographic loadData(){
+
+        UserDemographicSingleton queue = UserDemographicSingleton.getInstance(mView.getBaseActivity());
+        String id = "";
+        url = "https://the-fit-nation-dev.herokuapp.com/api/user-demographics/"+id;
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("GET", response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("GET", error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                params.put("Accept", "application/json");
+                params.put("Authorization", "Bearer "+accessToken);
+                return params;
+            }
+        };
+
+        queue.addToRequestQueue(jsonRequest);
+        return null;
     }
 
 

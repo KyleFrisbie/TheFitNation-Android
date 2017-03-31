@@ -24,7 +24,7 @@ public class UserDemographic extends RealmObject {
     private String firstName;
     private String lastName;
     private String gender;
-    private Integer height;
+    private Float height;
     private Integer skillLevelId;
     private String skillLevelLevel;
     private String unitOfMeasure;
@@ -118,14 +118,14 @@ public class UserDemographic extends RealmObject {
 
     public void setHeight(String pHeight){
         try {
-            height = Integer.parseInt(pHeight);
+            height = Float.parseFloat(pHeight);
         } catch (Exception e){
-            //invalid height input
-            height = 0;
+            Log.d("USERDEMO", e.toString());
+            height = 0.0f;
         }
     }
 
-    public Integer getHeight(){
+    public Float getHeight(){
         return height;
     }
 

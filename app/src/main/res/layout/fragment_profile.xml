@@ -30,6 +30,8 @@
             android:layout_marginRight="25dp"
             android:layout_toEndOf="@+id/nameView"
             android:hint="@string/name"
+            android:lines="1"
+            android:maxLines="1"
             android:textSize="18sp" />
 
         <!-- EMAIL -->
@@ -40,6 +42,7 @@
             android:layout_below="@+id/nameView"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="35dp"
+            android:inputType="textEmailAddress"
             android:text="@string/emailField"
             android:textAlignment="viewStart"
             android:textSize="18sp" />
@@ -53,7 +56,9 @@
             android:layout_alignEnd="@+id/nameText"
             android:layout_alignStart="@+id/nameText"
             android:hint="@string/email"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:maxLines="1"
+            android:lines="1"/>
 
         <!-- GENDER -->
         <TextView
@@ -103,7 +108,9 @@
             android:textSize="18sp"
             android:clickable="true"
             android:inputType="date"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:maxLines="1"
+            android:lines="1"/>
 
         <!-- AGE -->
         <EditText
@@ -117,7 +124,9 @@
             android:textSize="18sp"
             android:clickable="true"
             android:inputType="date"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:maxLines="1"
+            android:lines="1"/>
 
         <!-- WEIGHT -->
         <TextView
@@ -139,8 +148,12 @@
             android:layout_alignBottom="@+id/weightView"
             android:layout_alignStart="@+id/birthdayEditText"
             android:layout_toStartOf="@+id/switchMeasurement"
+            android:inputType="numberDecimal"
             android:hint="@string/weight"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:lines="1"
+            android:maxLines="1"
+            />
 
         <TextView
             android:id="@+id/switchMeasurement"
@@ -172,8 +185,11 @@
             android:layout_alignBottom="@+id/heightView"
             android:layout_alignEnd="@+id/weightEditText"
             android:layout_alignStart="@+id/weightEditText"
+            android:inputType="number"
             android:hint="@string/height"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:lines="1"
+            android:maxLines="1"/>
 
         <!-- LIFTER TYPE -->
         <TextView
