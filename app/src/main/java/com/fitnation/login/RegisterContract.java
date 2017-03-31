@@ -4,9 +4,8 @@ import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
 
 /**
- * Created by Ryan on 1/31/2017.
+ * An interface between the view and the presenter
  */
-
 public interface RegisterContract {
     interface View extends BaseView<Presenter> {
         void showProgress(String message);

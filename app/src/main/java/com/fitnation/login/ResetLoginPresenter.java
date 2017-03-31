@@ -13,6 +13,9 @@ import com.fitnation.Factory.VolleyErrorMessage;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * contains the business logic for the view
+ */
 public class ResetLoginPresenter implements ResetLoginContract.Presenter {
     private ResetLoginContract.View mView;
 
@@ -20,7 +23,6 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter {
 
     @Override
     public void onViewReady() {
-
     }
 
     @Override
@@ -30,13 +32,12 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter {
 
     @Override
     public void stop() {
-
     }
 
     @Override
     public void onResetPasswordButtonPressed(final String email) {
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
-        System.out.println("in the button pressed");
+        // TODO: change to the url class when it is implemented
         String url = "http://the-fit-nation-dev.herokuapp.com/api/account/reset_password/init";
 
         StringRequest resetPasswordWithEmailRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()

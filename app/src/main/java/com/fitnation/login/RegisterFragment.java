@@ -1,5 +1,7 @@
 package com.fitnation.login;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
@@ -56,9 +58,9 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
 
     @Override
     public void showProgress(String message) {
-        Snackbar progressSnackBar = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
-                message, BaseTransientBottomBar.LENGTH_SHORT);
-        progressSnackBar.show();
+        Snackbar thanksMessage = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
+                "Welcome to The Fit Nation", BaseTransientBottomBar.LENGTH_SHORT);
+        thanksMessage.show();
     }
 
     @Override

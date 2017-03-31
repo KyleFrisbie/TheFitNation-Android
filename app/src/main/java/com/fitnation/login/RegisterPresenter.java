@@ -1,6 +1,5 @@
 package com.fitnation.login;
 
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,9 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Erik on 2/18/2017.
+ * Presenter for register screen that contains all the business logic associated with the screen
  */
-
 public class RegisterPresenter implements RegisterContract.Presenter {
     private RegisterContract.View mView;
 
@@ -28,7 +26,10 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     public void onRegisterCreatePressed(final String email, final String password, final String userName,
                                         final String language) {
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
+
+        // TODO: convert to accept url class when it become available
         String url = "http://the-fit-nation-dev.herokuapp.com/api/register";
+
         Map<String, String> map = new HashMap<>();
         map.put("email", email);
         map.put("langKey", language);
@@ -41,21 +42,24 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                 {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //send to gson/json object for formatting
-                        System.out.println("succesful login attempt!!!!!!!\n\n" + response);
+                        handleJsonResponse();
+
                     }
                 },  new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("failed " + error.getMessage());
-                        errorResponseMessage(error);
+                        if(error.networkResponse != null) {
+                            errorResponseMessage(error);
+                        }else{
+                            handleJsonResponse();
+                        }
                     }
                 }
                 ){
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError{
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/json");
                 return params;
             }
@@ -67,6 +71,20 @@ public class RegisterPresenter implements RegisterContract.Presenter {
 
     }
 
+    // TODO: finish up handleing the return message
+
+    /**
+     * handles the json from the server
+     */
+    private void handleJsonResponse(){
+        String message = null;
+        mView.showProgress(message);
+    }
+
+    /**
+     * gets and returns the error message to the view for display.
+     * @param error error message containing http error codes
+     */
     private void errorResponseMessage(VolleyError error){
         VolleyErrorMessage errorMessageFactory = new VolleyErrorMessage(error);
         mView.showAuthError(errorMessageFactory.GetErrorMessage(mView.getBaseActivity()));

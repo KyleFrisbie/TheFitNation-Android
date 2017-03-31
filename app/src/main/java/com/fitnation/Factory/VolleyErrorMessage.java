@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
-import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.RefreshAccessToken;
 
 /**
@@ -21,10 +20,6 @@ public class VolleyErrorMessage {
     public VolleyErrorMessage(VolleyError volleyError){
         this.volleyError = volleyError;
     }
-
-    /**
-     * Testing constructor
-     */
 
     /**
      * Retrieves an error message based on the response code from the server.

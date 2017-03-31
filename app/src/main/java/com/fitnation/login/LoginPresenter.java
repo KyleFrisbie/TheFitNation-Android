@@ -11,7 +11,6 @@ import com.android.volley.toolbox.Volley;
 import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.networking.AuthToken;
-import com.fitnation.networking.RealmToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,35 +18,34 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.realm.Realm;
-
 import static com.fitnation.login.LoginBaseActivity.VIEW_CONTAINER;
 
-
+/**
+ * Presenter for the login screen. contains all the login logic for the login screen
+ */
 public class LoginPresenter implements LoginContract.Presenter{
     private LoginContract.View mView;
-    final String boundary = "----WebKitFormBoundary7MA4YWxkTrZu0gW";
 
     public LoginPresenter (LoginContract.View view) { mView = view; }
 
     @Override
     public void onLoginPressed(final String userName, final String password) {
-        //volley implementation
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
-        String url = "http://the-fit-nation-dev.herokuapp.com/oauth/token";
 
+        // TODO: change over to the url selector class when that is implemented.
+        String url = "http://the-fit-nation-dev.herokuapp.com/oauth/token";
 
         JsonObjectRequest jsonObjectPost = new JsonObjectRequest(Request.Method.POST,
                 url, null, new Response.Listener<JSONObject>()
         {
             @Override
             public void onResponse(JSONObject response) {
-                // TODO: handle json response and get the token data into the singleton
+
                 storeTokens(response);
-                System.out.println(response + " stored: " + AuthToken.getInstance().getRefreshToken() +
-                        " access: " + AuthToken.getInstance().getAccessToken());
+
                 Intent mainActivityIntent = new Intent(mView.getBaseActivity(), NavigationActivity.class);
                 mView.getBaseActivity().startActivity(mainActivityIntent);
+
             }
         },  new Response.ErrorListener() {
             @Override
@@ -81,6 +79,11 @@ public class LoginPresenter implements LoginContract.Presenter{
         requestQueue.start();
     }
 
+    /**
+     * Converts a hashmap of values to url encoded form for requests.
+     * @param params Hashmap to be converted
+     * @return String containing the converted hashmap
+     */
     private String convertToUrlEncodedPostBody(Map<String, String> params){
         StringBuilder sbPost = new StringBuilder();
         if(params != null) {
@@ -100,6 +103,10 @@ public class LoginPresenter implements LoginContract.Presenter{
         return sbPost.toString();
     }
 
+    /**
+     * Stores the json response token from the server to a local singleton for universal access
+     * @param response The Json object from the server
+     */
     private void storeTokens(JSONObject response){
         String accessToken;
         String refreshToken;
@@ -115,6 +122,15 @@ public class LoginPresenter implements LoginContract.Presenter{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Creates the error message by getting the factory
+     * @param error The volley error message.
+     */
+    private void errorResponseMessage(VolleyError error){
+        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
+        mView.showAuthError(volleyErrorMessage.GetErrorMessage(mView.getBaseActivity()));
     }
 
     @Override
@@ -156,8 +172,5 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     }
 
-    private void errorResponseMessage(VolleyError error){
-        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
-        mView.showAuthError(volleyErrorMessage.GetErrorMessage(mView.getBaseActivity()));
-    }
+
 }

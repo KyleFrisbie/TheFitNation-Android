@@ -1,6 +1,5 @@
 package com.fitnation.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.crashlytics.android.answers.Answers;
@@ -8,10 +7,10 @@ import com.crashlytics.android.answers.ContentViewEvent;
 import com.crashlytics.android.answers.CustomEvent;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
-import com.fitnation.navigation.NavigationActivity;
-import com.fitnation.networking.AuthToken;
-import com.fitnation.networking.RefreshAccessToken;
 
+/**
+ * The base login activity to hold all of the fragments
+ */
 public class LoginBaseActivity extends BaseActivity {
     public static final int VIEW_CONTAINER = R.id.activity_login;
 
@@ -32,6 +31,9 @@ public class LoginBaseActivity extends BaseActivity {
                 .putCustomAttribute("Screen Orientation", "Landscape"));
     }
 
+    /**
+     * Launches the login fragment with a fragment transaction
+     */
     private void launchLoginFragment() {
         LoginFragment loginFragment = LoginFragment.newInstance();
         loginFragment.setPresenter(new LoginPresenter(loginFragment));

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
@@ -34,7 +33,6 @@ public class ResetLoginFragment extends BaseFragment implements ResetLoginContra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_reset_login, container, false);
         ButterKnife.bind(this, v);
 
