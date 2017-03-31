@@ -10,11 +10,16 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.navigation.NavigationActivity;
+import com.fitnation.networking.AuthToken;
+import com.fitnation.networking.RealmToken;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import io.realm.Realm;
 
 import static com.fitnation.login.LoginBaseActivity.VIEW_CONTAINER;
 
@@ -38,7 +43,9 @@ public class LoginPresenter implements LoginContract.Presenter{
             @Override
             public void onResponse(JSONObject response) {
                 // TODO: handle json response and get the token data into the singleton
-                System.out.println(response);
+                storeTokens(response);
+                System.out.println(response + " stored: " + AuthToken.getInstance().getRefreshToken() +
+                        " access: " + AuthToken.getInstance().getAccessToken());
                 Intent mainActivityIntent = new Intent(mView.getBaseActivity(), NavigationActivity.class);
                 mView.getBaseActivity().startActivity(mainActivityIntent);
             }
@@ -91,6 +98,33 @@ public class LoginPresenter implements LoginContract.Presenter{
             }
         }
         return sbPost.toString();
+    }
+
+    private void storeTokens(JSONObject response){
+        String accessToken;
+        String refreshToken;
+
+        try {
+
+            accessToken = response.getString("access_token");
+            refreshToken = response.getString("refresh_token");
+
+            // TODO: set up realm class for token and then store token in it for persistence
+//            Realm realm = Realm.getDefaultInstance();
+//            realm.beginTransaction();
+//
+//            RealmToken realmToken = realm.createObject(RealmToken.class);
+//            realmToken.setAccessToken(accessToken);
+//            realmToken.setRefreshToken(refreshToken);
+//
+//            realm.commitTransaction();
+
+            AuthToken.getInstance().setAccessToken(accessToken);
+            AuthToken.getInstance().setRefreshToken(refreshToken);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

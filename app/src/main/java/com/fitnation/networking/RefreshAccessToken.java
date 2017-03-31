@@ -8,60 +8,71 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.model.PrimaryKeyFactory;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import io.realm.Realm;
 
 public class RefreshAccessToken {
     private String refreshToken;
     private boolean isRefreshSuccessful;
 
     public boolean refresh(Context context){
+        boolean tokenExists = false;
+
         if(AuthToken.getInstance().getRefreshToken() != null){
             refreshToken = AuthToken.getInstance().getRefreshToken();
+            tokenExists = true;
+        }else{
+            //get token from realm
+            tokenExists = true;
         }
 
-        // TODO:find out how to get context
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        String url = "http://the-fit-nation-dev.herokuapp.com/oauth/token";
+        if(tokenExists) {
+            RequestQueue requestQueue = Volley.newRequestQueue(context);
+            String url = "http://the-fit-nation-dev.herokuapp.com/oauth/token";
 
-        JsonObjectRequest jsonObjectPost= new JsonObjectRequest(Request.Method.POST,
-                url, null, new Response.Listener<JSONObject>()
-        {
-            @Override
-            public void onResponse(JSONObject response){
-                isRefreshSuccessful = true;
-            }
-        }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error){
-                isRefreshSuccessful = false;
-            }
-        }){
-            @Override
-            public byte[] getBody() {
-                Map<String,String> params = new HashMap<>();
-                params.put("refresh_token", refreshToken);
-                params.put("grant_type", "refresh_token");
-                params.put("scope", "read+write");
-                params.put("client_secret", "my-secret-token-to-change-in-production");
-                params.put("client_id", "TheFitNationapp");
-                params.put("submit", "login");
-                String bodyString = convertToUrlEncodedPostBody(params);
-                return bodyString.getBytes();
-            }
+            JsonObjectRequest jsonObjectPost = new JsonObjectRequest(Request.Method.POST,
+                    url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    isRefreshSuccessful = true;
+                    storeTokens(response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    isRefreshSuccessful = false;
+                }
+            }) {
+                @Override
+                public byte[] getBody() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("refresh_token", refreshToken);
+                    params.put("grant_type", "refresh_token");
+                    params.put("scope", "read+write");
+                    params.put("client_secret", "my-secret-token-to-change-in-production");
+                    params.put("client_id", "TheFitNationapp");
+                    params.put("submit", "login");
+                    String bodyString = convertToUrlEncodedPostBody(params);
+                    return bodyString.getBytes();
+                }
 
-            @Override
-            public String getBodyContentType() {
-                return ("application/x-www-form-urlencoded");
-            }
-        };
+                @Override
+                public String getBodyContentType() {
+                    return ("application/x-www-form-urlencoded");
+                }
+            };
 
 
-        requestQueue.add(jsonObjectPost);
-        requestQueue.start();
+            requestQueue.add(jsonObjectPost);
+            requestQueue.start();
+        }
 
         return isRefreshSuccessful;
     }
@@ -85,4 +96,30 @@ public class RefreshAccessToken {
         return sbPost.toString();
     }
 
+    private void storeTokens(JSONObject response){
+        String accessToken;
+        String refreshToken;
+
+        try {
+
+            accessToken = response.getString("access_token");
+            refreshToken = response.getString("refresh_token");
+
+                // TODO: set up realm class for token and then store token in it for persistence
+//            Realm realm = Realm.getDefaultInstance();
+//            realm.beginTransaction();
+//
+//            RealmToken realmToken = realm.createObject(RealmToken.class);
+//            realmToken.setAccessToken(accessToken);
+//            realmToken.setRefreshToken(refreshToken);
+//
+//            realm.commitTransaction();
+
+            AuthToken.getInstance().setAccessToken(accessToken);
+            AuthToken.getInstance().setRefreshToken(refreshToken);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

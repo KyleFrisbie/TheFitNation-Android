@@ -9,6 +9,8 @@ import com.crashlytics.android.answers.CustomEvent;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.navigation.NavigationActivity;
+import com.fitnation.networking.AuthToken;
+import com.fitnation.networking.RefreshAccessToken;
 
 public class LoginBaseActivity extends BaseActivity {
     public static final int VIEW_CONTAINER = R.id.activity_login;
@@ -17,8 +19,7 @@ public class LoginBaseActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: create a checker to see if user has valid stored refresh token.
-
+        checkForValidRefreshToken();
 
         setContentView(R.layout.activity_login);
         launchLoginFragment();
@@ -50,25 +51,14 @@ public class LoginBaseActivity extends BaseActivity {
     }
 
     private void checkForValidRefreshToken(){
-        if(refreshTokenExists()) {
-            if (isRefreshTokenValid()) {
-                refreshAccessToken();
-                intentToAppHomeScreen();
-            }
+        if (isRefreshSuccessful()) {
+            intentToAppHomeScreen();
         }
     }
 
-    private boolean refreshTokenExists(){
-
-        return false;
-    }
-
-    private boolean isRefreshTokenValid(){
-        return false;
-    }
-
-    private void refreshAccessToken(){
-
+    private boolean isRefreshSuccessful(){
+        RefreshAccessToken refreshAccessToken = new RefreshAccessToken();
+        return refreshAccessToken.refresh(this);
     }
 
     private void intentToAppHomeScreen(){
@@ -76,5 +66,4 @@ public class LoginBaseActivity extends BaseActivity {
         this.startActivity(appHomeScreenIntent);
         this.finish();
     }
-
 }

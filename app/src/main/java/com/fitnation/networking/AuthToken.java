@@ -1,9 +1,9 @@
 package com.fitnation.networking;
 
 
-class AuthToken {
-    private String accessToken;
-    private String refreshToken;
+public class AuthToken {
+    private String accessToken = null;
+    private String refreshToken = null;
 
     private static AuthToken ourInstance;
 
@@ -24,6 +24,10 @@ class AuthToken {
 
     public String getRefreshToken() {
         return refreshToken;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
     }
 
     private AuthToken() {

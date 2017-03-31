@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
+import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.RefreshAccessToken;
 
 /**
@@ -106,9 +107,9 @@ public class VolleyErrorMessage {
                 break;
             case 401:
                 RefreshAccessToken refreshAccessToken = new RefreshAccessToken();
-                if(refreshAccessToken.refresh(context)){
+                if (refreshAccessToken.refresh(context)) {
                     message = "Authorization has been refreshed";
-                }else {
+                } else {
                     message = "401: Unauthorized Error";
                 }
                 break;
