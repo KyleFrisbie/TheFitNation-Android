@@ -64,6 +64,10 @@ public class Exercise extends RealmObject implements Serializable {
         this.muscles = muscles;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

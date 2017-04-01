@@ -26,15 +26,17 @@ import butterknife.ButterKnife;
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHolder> {
     private List<ExerciseInstance> mExercises;
     private ExerciseSelectedCallback mSelectedExercisesCallback;
+    private OnEditExercisePressed mEditPressedCallback;
 
     /**
      * Constructor
      * @param exercises - exercises to be shown
      * @param callback - notified when an exercise is selected/unselected
      */
-    public ExerciseAdapter(List<ExerciseInstance> exercises, ExerciseSelectedCallback callback) {
+    public ExerciseAdapter(List<ExerciseInstance> exercises, ExerciseSelectedCallback callback, OnEditExercisePressed onEditExercisePressed) {
         mExercises = exercises;
         mSelectedExercisesCallback = callback;
+        mEditPressedCallback = onEditExercisePressed;
     }
 
     @Override
@@ -46,7 +48,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ExerciseInstance exerciseInstance = mExercises.get(position);
-        Exercise exercise = exerciseInstance.getExercise();
+        final Exercise exercise = exerciseInstance.getExercise();
         List<ExerciseInstanceSet> sets = exerciseInstance.getExerciseInstanceSets();
         String setText = "";
         String repText = "";
@@ -71,7 +73,12 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         holder.exerciseName.setText(exercise.getName());
         holder.setOne.setText(setText);
         holder.setOneReps.setText(repText);
-        //TODO add click listener to edit ImageView
+        holder.editExercise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mEditPressedCallback.onEditPressed(exerciseInstance);
+            }
+        });
         holder.addExerciseBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
