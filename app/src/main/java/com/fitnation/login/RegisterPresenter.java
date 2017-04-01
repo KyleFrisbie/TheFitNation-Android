@@ -6,6 +6,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.Factory.VolleyErrorMessage;
 
@@ -30,18 +31,10 @@ public class RegisterPresenter implements RegisterContract.Presenter {
         // TODO: convert to accept url class when it become available
         String url = "http://the-fit-nation-dev.herokuapp.com/api/register";
 
-        Map<String, String> map = new HashMap<>();
-        map.put("email", email);
-        map.put("langKey", language);
-        map.put("login", userName);
-        map.put("password", password);
-
-
-        JsonObjectRequest jsonObjectPost = new JsonObjectRequest(Request.Method.POST, url,
-                new JSONObject(map), new Response.Listener<JSONObject>()
+        StringRequest jsonObjectPost = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
                 {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(String response) {
                         handleJsonResponse();
 
                     }
@@ -50,12 +43,22 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                     public void onErrorResponse(VolleyError error) {
                         if(error.networkResponse != null) {
                             errorResponseMessage(error);
-                        }else{
-                            handleJsonResponse();
                         }
                     }
                 }
                 ){
+
+            @Override
+            public byte[] getBody() {
+                Map<String, String> map = new HashMap<>();
+                map.put("email", email);
+                map.put("langKey", language);
+                map.put("login", userName);
+                map.put("password", password);
+
+                JSONObject jsonObject = new JSONObject(map);
+                return jsonObject.toString().getBytes();
+            }
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError{

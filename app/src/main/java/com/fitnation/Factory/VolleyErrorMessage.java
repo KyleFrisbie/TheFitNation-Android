@@ -2,6 +2,8 @@ package com.fitnation.Factory;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
@@ -30,7 +32,6 @@ public class VolleyErrorMessage {
     }
 
     private String GenerateErrorMessage(NetworkResponse response, Context context) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         String message = String.valueOf(response.statusCode);
 
         switch (response.statusCode) {
