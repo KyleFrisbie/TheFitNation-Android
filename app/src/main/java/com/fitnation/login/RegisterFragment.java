@@ -59,7 +59,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     @Override
     public void showProgress(String message) {
         Snackbar thanksMessage = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
-                "Welcome and before you log in please verify your email", BaseTransientBottomBar.LENGTH_LONG);
+                "Welcome: Before you log in please verify your email", BaseTransientBottomBar.LENGTH_LONG);
         thanksMessage.show();
     }
 
