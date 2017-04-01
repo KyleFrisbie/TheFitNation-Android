@@ -1,9 +1,8 @@
 package com.fitnation.utils;
 
 /**
- * Created by Ryan on 4/1/2017.
+ * An environment containing the base url for all requests
  */
-
 public class Environment {
     private String baseUrl;
 
