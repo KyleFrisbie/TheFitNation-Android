@@ -1,5 +1,6 @@
 package com.fitnation.login;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
@@ -58,8 +60,17 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
 
     @Override
     public void showProgress(String message) {
-        Snackbar thanksMessage = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
-                "Welcome: Before you log in please verify your email", BaseTransientBottomBar.LENGTH_LONG);
+        InputMethodManager inputMethodManager = (InputMethodManager) getBaseActivity()
+                .getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+        final Snackbar thanksMessage = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
+                "Welcome: Before you log in please verify your email", BaseTransientBottomBar.LENGTH_INDEFINITE);
+                thanksMessage.setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        thanksMessage.dismiss();
+                    }
+                });
         thanksMessage.show();
     }
 
