@@ -1,14 +1,13 @@
 package com.fitnation.Factory;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 import com.fitnation.networking.RefreshAccessToken;
 
+// TODO: implement alert dialog and snackbar selectively based on code response
+// TODO: get error messages from volley instead of generating custom messages based on error code
 /**
  * A factory for generating alert dialog messages for HTTP response codes from the server.
  */

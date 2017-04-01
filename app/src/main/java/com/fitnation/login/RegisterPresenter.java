@@ -74,8 +74,6 @@ public class RegisterPresenter implements RegisterContract.Presenter {
 
     }
 
-    // TODO: finish up handleing the return message
-
     /**
      * handles the json from the server
      */

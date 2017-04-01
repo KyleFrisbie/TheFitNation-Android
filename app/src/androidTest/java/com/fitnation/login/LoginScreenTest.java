@@ -24,6 +24,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
+// TODO: create mock objects for volley responses from server
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class LoginScreenTest extends InstrumentationTest {

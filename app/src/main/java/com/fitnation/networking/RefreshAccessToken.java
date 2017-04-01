@@ -25,9 +25,6 @@ public class RefreshAccessToken {
         if(AuthToken.getInstance().getRefreshToken() != null){
             refreshToken = AuthToken.getInstance().getRefreshToken();
             tokenExists = true;
-        }else{
-            // TODO: get token from realm
-            tokenExists = true;
         }
 
         if(tokenExists) {
