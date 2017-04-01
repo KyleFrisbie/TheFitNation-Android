@@ -19,7 +19,8 @@ public class WorkoutInstance extends RealmObject {
     private Date lastUpdated;
     private Float restBetweenInstances;
     private Integer orderNumber;
-    private WorkoutTemplate workoutTemplate;
+    private Long workoutTemplateId;
+    private String workoutTemplateName;
     private RealmList<UserWorkoutInstance> userWorkoutInstances;
     private RealmList<ExerciseInstance> exerciseInstances ;
     private String notes;
@@ -35,7 +36,8 @@ public class WorkoutInstance extends RealmObject {
         this.name = name;
         this.restBetweenInstances = restBetweenInstances;
         this.orderNumber = orderNumber;
-        this.workoutTemplate = workoutTemplate;
+        this.workoutTemplateId = workoutTemplate.getId();
+        this.workoutTemplateName = workoutTemplate.getName();
         this.notes = notes;
     }
 

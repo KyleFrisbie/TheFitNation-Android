@@ -79,7 +79,7 @@ public class ExercisesManager extends DataManager{
                 ) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String authToken = "e983abdc-ec56-4880-a45a-39196a373a69";
+                        String authToken = "8722333d-d5f5-4b22-9f85-8987b0de732b";
                         Map<String, String> mHeaders = new ArrayMap();
 
                         mHeaders.put("Authorization", "Bearer" + " " + authToken);
@@ -142,7 +142,7 @@ public class ExercisesManager extends DataManager{
 
 
 
-        //TODO Save the UserWorkoutTemplate to the web service
+
     }
 
     private WorkoutTemplate getWorkoutTemplate(WorkoutTemplate workoutTemplate) {

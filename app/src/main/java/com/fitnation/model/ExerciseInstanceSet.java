@@ -15,7 +15,7 @@ public class ExerciseInstanceSet extends RealmObject{
     private Float repQuantity;
     private Float effortQuantity;
     private Float restTime;
-    private ExerciseInstance exerciseInstance;
+    private Long exerciseInstanceId;
     private String notes;
     private RealmList<UserExerciseInstanceSet> userExerciseInstanceSets;
 
@@ -26,7 +26,7 @@ public class ExerciseInstanceSet extends RealmObject{
      * @param reqQuantity - the reps to do
      */
     public ExerciseInstanceSet(ExerciseInstance exerciseInstance, Integer orderNumber, Float reqQuantity, List<UserExerciseInstanceSet> userExerciseInstanceSetList) {
-        this.exerciseInstance = exerciseInstance;
+        this.exerciseInstanceId = exerciseInstance.getId();
         this.orderNumber = orderNumber;
         this.repQuantity = reqQuantity;
         this.userExerciseInstanceSets = new RealmList<UserExerciseInstanceSet>();
@@ -42,12 +42,12 @@ public class ExerciseInstanceSet extends RealmObject{
         //required default constructor
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
-    public ExerciseInstance getExerciseInstance() {
-        return exerciseInstance;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Float getEffortQuantity() {

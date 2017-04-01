@@ -18,7 +18,7 @@ public class UserExerciseInstanceSet extends RealmObject {
     private Float effortQuantity;
     private Float restTime;
     private String notes;
-    private ExerciseInstanceSet exerciseInstanceSet;
+    private Long exerciseInstanceSetId;
 
     /**
      * Constructor
@@ -41,7 +41,7 @@ public class UserExerciseInstanceSet extends RealmObject {
         this.effortQuantity = effortQuantity;
         this.restTime = restTime;
         this.notes = notes;
-        this.exerciseInstanceSet = exerciseInstanceSet;
+        this.exerciseInstanceSetId = exerciseInstanceSet.getId();
     }
 
     public UserExerciseInstanceSet(ExerciseInstanceSet exerciseInstanceSet, UserExerciseInstance exerciseInstance) {

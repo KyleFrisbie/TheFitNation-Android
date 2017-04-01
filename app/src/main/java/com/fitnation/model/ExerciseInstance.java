@@ -13,7 +13,6 @@ public class ExerciseInstance extends RealmObject implements Serializable, Clone
     private Long id;
     private Long androidId;
     private String notes;
-    private WorkoutInstance workoutInstance;
     private RealmList<ExerciseInstanceSet> exerciseInstanceSets;
     private Exercise exercise;
     private Unit repUnit;
