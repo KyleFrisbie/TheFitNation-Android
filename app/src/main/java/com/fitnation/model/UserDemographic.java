@@ -36,6 +36,7 @@ public class UserDemographic extends RealmObject {
     private String dateOfBirth;
     private String createdOn;
     private String lastLogin;
+    private String userLogin;
 
 
     public UserDemographic() {
@@ -144,8 +145,6 @@ public class UserDemographic extends RealmObject {
             System.out.println("Invalid weight input");
         }
 
-
-
     }
 
     public RealmList<UserWeight> getUserWeights(){
@@ -179,6 +178,10 @@ public class UserDemographic extends RealmObject {
     public String getUnitOfMeasure(){
         return unitOfMeasure;
     }
+
+    public String getUserLogin(){ return userLogin; }
+
+    public void setUserLogin(String userLogin) {this.userLogin = userLogin;}
 
 
 

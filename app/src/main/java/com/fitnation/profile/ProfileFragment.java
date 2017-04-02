@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.model.User;
 import com.fitnation.model.UserDemographic;
 import com.fitnation.model.enums.Gender;
 import com.fitnation.model.enums.SkillLevel;
@@ -48,6 +49,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @BindView(R.id.heightEditText)    public EditText mHeightTextBox;
     @BindView(R.id.ageText)           public EditText mAgeTextBox;
     @BindView(R.id.birthdayEditText)  public EditText mDobTextBox;
+    @BindView(R.id.emailEditText)     public EditText mEmailTextBox;
     @BindView(R.id.saveButton)        public Button mSaveButton;
     @BindView(R.id.genderEditText)    public Spinner mGenderSpinner;
     @BindView(R.id.lifterTypeSpinner) public Spinner mLifterTypeSpinner;
@@ -61,6 +63,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     final double KG_PER_LB = 0.453592;
     Calendar birthday;
     UserDemographic userdemo;
+    User user;
     DatePickerFragment dateFragment;
     ArrayAdapter<CharSequence> genderAdapter;
     ArrayAdapter<CharSequence> lifterTypeAdapter;
@@ -77,7 +80,10 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
+        if (userdemo == null) {
+            mPresenter.getUserDemographic(this);
+        }
+        loadDemographics();
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, v);
@@ -111,10 +117,8 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         dateFragment = new DatePickerFragment();
         dateFragment.setFragment(this);
 
-        if (userdemo == null) {
-            userdemo = mPresenter.loadData();
-        }
-        loadDemographics();
+
+
         mPresenter.start();
     }
 
@@ -244,13 +248,15 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     }
 
     public void loadDemographics(){
+        if (userdemo==null) return;
 
         try {
             String first = userdemo.getFirstName();
             String last = userdemo.getLastName();
-            mNameTextBox.setText(first + " " + last);
+            if (first != null && last != null)
+                mNameTextBox.setText(first + " " + last);
         } catch (Exception e){
-
+            Log.d("PROFILE", e.toString());
         } try {
             mWeightTextBox.setText(userdemo.getUserWeight().toString());
         } catch (Exception e){
@@ -300,7 +306,18 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     }
 
-    public void setDemographic(UserDemographic userDemo){ userdemo = userDemo; }
+    public void loadUser(){
+        if (user==null) return;
+
+        try{
+            mEmailTextBox.setText(user.getEmail());
+        } catch (Exception e) {
+            Log.d("PROFILE", e.toString());
+        }
+    }
+
+    public void setDemographic(UserDemographic userDemo){ this.userdemo = userDemo; }
+    public void setUser(User user){ this.user = user;}
 
     @Override
     public void setPresenter(ProfileContract.Presenter presenter){ mPresenter = presenter;}

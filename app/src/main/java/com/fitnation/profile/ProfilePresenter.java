@@ -1,5 +1,6 @@
 package com.fitnation.profile;
 
+import android.app.Fragment;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -8,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import com.fitnation.model.User;
 import com.fitnation.networking.JsonParser;
 import com.fitnation.model.UserDemographic;
 
@@ -33,7 +35,10 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     public void stop() {}
 
     String url;
-    String accessToken = "65b3a0fa-c5c9-411d-b91c-50ebc04d6582";
+    String accessToken = "5d0ad065-4394-4e43-a26a-38c77852e36f";
+    UserDemographic userdemo;
+    User user;
+    private UserDemographicSingleton queue;
 
     @Override
     public void saveData(UserDemographic pUserDemo) {
@@ -41,26 +46,10 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         UserDataManager userDataManager = new UserDataManager();
         userDataManager.SaveProfileData(userDemo);
 
-        //save data to webservice
-
-        UserDemographicSingleton queue = UserDemographicSingleton.getInstance(mView.getBaseActivity());
+        //save data to web
+        queue = UserDemographicSingleton.getInstance(mView.getBaseActivity());
         url = "https://the-fit-nation-dev.herokuapp.com/api/user-demographics/byLoggedInUser";
 
-
-        //  GET a User Demographic
-        /*
-        StringRequest stringRequest = new UserDemoStringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("GET", response.toString());
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("GET", error.toString());
-            }
-        });
-        */
 
         String jString = JsonParser.convertPojoToJsonString(userDemo);
         JSONObject udjObj;
@@ -93,41 +82,33 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                 return params;
             }
         };
-        /*
-        StringRequest stringRequest = new UserDemoStringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("PUT", response.toString());
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("PUT", error.toString());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String> params = JsonParser.convertPojoToJsonMap(userDemo);
-                Log.d("PUT", params.toString());
-                return params;
-            }
-        }; */
-
 
         Log.d("JSON REQUEST", jsonRequest.toString());
         queue.addToRequestQueue(jsonRequest);
     }
-    public UserDemographic loadData(){
 
-        UserDemographicSingleton queue = UserDemographicSingleton.getInstance(mView.getBaseActivity());
-        String id = "";
+
+
+    public void getUserDemographic(final ProfileFragment fragment){
+
+        queue = UserDemographicSingleton.getInstance(mView.getBaseActivity());
+        String id = "3154";
         url = "https://the-fit-nation-dev.herokuapp.com/api/user-demographics/"+id;
 
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+
+        //USERDEMOGRAPHIC
+        JsonObjectRequest jsonRequestUserDemo =
+                new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
             @Override
             public void onResponse(JSONObject response) {
                 Log.i("GET", response.toString());
+                userdemo = JsonParser.convertJsonStringToPojo(response.toString(), UserDemographic.class);
+                fragment.setDemographic(userdemo);
+                fragment.loadDemographics();
+                getUserInfo(userdemo.getUserLogin(), fragment);
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -146,9 +127,40 @@ public class ProfilePresenter implements ProfileContract.Presenter {
             }
         };
 
-        queue.addToRequestQueue(jsonRequest);
-        return null;
+        queue.addToRequestQueue(jsonRequestUserDemo);
     }
 
+    public void getUserInfo(String loginId, final ProfileFragment fragment){
+        //USER
+        queue = UserDemographicSingleton.getInstance(mView.getBaseActivity());
+        url = "https://the-fit-nation-dev.herokuapp.com/api/users/"+loginId;
+        JsonObjectRequest jsonRequestUser =
+                new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.i("GET", response.toString());
+                        user = JsonParser.convertJsonStringToPojo(response.toString(), User.class);
+                        fragment.setUser(user);
+                        fragment.loadUser();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("GET", error.toString());
+                    }
+                }) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+
+                        HashMap<String, String> params = new HashMap<String, String>();
+                        params.put("Content-Type", "application/json");
+                        params.put("Accept", "application/json");
+                        params.put("Authorization", "Bearer "+accessToken);
+                        return params;
+                    }
+                };
+
+        queue.addToRequestQueue(jsonRequestUser);
+    }
 }
