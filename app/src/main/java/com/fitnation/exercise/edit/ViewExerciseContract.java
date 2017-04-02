@@ -2,6 +2,7 @@ package com.fitnation.exercise.edit;
 
 import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
+import com.fitnation.exercise.callbacks.OnSetSelectedCallback;
 import com.fitnation.model.ExerciseInstance;
 
 /**
@@ -9,7 +10,7 @@ import com.fitnation.model.ExerciseInstance;
  */
 public interface ViewExerciseContract {
     interface View extends BaseView<Presenter> {
-        void bindExerciseInstanceToView(ExerciseInstance exerciseInstance);
+        void bindExerciseInstanceToView(ExerciseInstance exerciseInstance, OnSetSelectedCallback callback);
     }
 
     interface Presenter extends BasePresenter {

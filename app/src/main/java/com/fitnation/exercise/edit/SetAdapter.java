@@ -1,5 +1,6 @@
 package com.fitnation.exercise.edit;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.fitnation.R;
+import com.fitnation.exercise.callbacks.OnSetSelectedCallback;
 import com.fitnation.model.ExerciseInstanceSet;
 
 import java.util.List;
@@ -24,12 +26,14 @@ import butterknife.ButterKnife;
 public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     private static final String TAG = SetAdapter.class.getSimpleName();
     public List<ExerciseInstanceSet> mSets;
+    private OnSetSelectedCallback mOnSetSelectedCallback;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.exercise_value) EditText exerciseValueView;
         @BindView(R.id.reps_value) EditText repsValueView;
         @BindView(R.id.rest_value) EditText restValueView;
         @BindView(R.id.set_order) TextView setOrderView;
+        @BindView(R.id.root_set_in_list) ConstraintLayout mRootView;
 
         public ViewHolder(View view) {
             super(view);
@@ -41,8 +45,9 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
      * Constructor
      * @param exerciseInstanceSets - the sets to be displayed
      */
-    public SetAdapter(List<ExerciseInstanceSet> exerciseInstanceSets) {
+    public SetAdapter(List<ExerciseInstanceSet> exerciseInstanceSets, OnSetSelectedCallback callback) {
         mSets = exerciseInstanceSets;
+        mOnSetSelectedCallback = callback;
     }
 
     public List<ExerciseInstanceSet> getExerciseInstanceSets() {
@@ -63,6 +68,15 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         holder.exerciseValueView.setText(String.valueOf(set.getEffortQuantity()));
         holder.repsValueView.setText(String.valueOf(set.getRepQuantityAsInt()));
         holder.restValueView.setText(String.valueOf(set.getRestTime()));
+
+        holder.mRootView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mOnSetSelectedCallback.onSetSelected(set);
+
+                return true;
+            }
+        });
 
         holder.repsValueView.addTextChangedListener(new TextWatcher() {
             @Override

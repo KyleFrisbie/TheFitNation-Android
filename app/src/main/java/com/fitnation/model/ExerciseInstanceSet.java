@@ -62,6 +62,10 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
         this.id = id;
     }
 
+    public void setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
     public Float getEffortQuantity() {
         return effortQuantity;
     }

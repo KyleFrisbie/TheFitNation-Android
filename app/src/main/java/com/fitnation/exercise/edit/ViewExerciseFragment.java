@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.exercise.callbacks.OnSetSelectedCallback;
 import com.fitnation.model.ExerciseInstance;
 
 import butterknife.BindView;
@@ -84,17 +85,18 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        bindExerciseInstanceToView(mExerciseInstance);
+
+        mPresenter.onViewReady();
 
         return v;
     }
 
     @Override
-    public void bindExerciseInstanceToView(ExerciseInstance exerciseInstance) {
+    public void bindExerciseInstanceToView(ExerciseInstance exerciseInstance, OnSetSelectedCallback callback) {
         mExerciseNameView.setText(exerciseInstance.getExercise().getName());
         mLevelView.setText(exerciseInstance.getExercise().getSkillLevelLevel());
         mNotesView.setText(exerciseInstance.getNotes());
-        mAdapter = new SetAdapter(exerciseInstance.getExerciseInstanceSets());
+        mAdapter = new SetAdapter(exerciseInstance.getExerciseInstanceSets(), callback);
         mRecyclerView.setAdapter(mAdapter);
     }
 
