@@ -50,6 +50,10 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
         //required default constructor
     }
 
+    public void setRepQuantity(Float repQuantity) {
+        this.repQuantity = repQuantity;
+    }
+
     public Long getId() {
         return id;
     }
@@ -70,12 +74,20 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
         return repQuantity;
     }
 
-    public int getReqQuantityAsInt() {
+    public int getRepQuantityAsInt() {
         return Math.round(repQuantity);
+    }
+
+    public void setRestTime(Float restTime) {
+        this.restTime = restTime;
     }
 
     public Integer getOrderNumber() {
         return orderNumber;
+    }
+
+    public void setEffortQuantity(Float effortQuantity) {
+        this.effortQuantity = effortQuantity;
     }
 
     @Override

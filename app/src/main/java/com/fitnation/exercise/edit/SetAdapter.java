@@ -1,6 +1,9 @@
 package com.fitnation.exercise.edit;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +12,6 @@ import android.widget.TextView;
 
 import com.fitnation.R;
 import com.fitnation.model.ExerciseInstanceSet;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import butterknife.ButterKnife;
  * Adapter for ExerciseInstanceSets
  */
 public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
+    private static final String TAG = SetAdapter.class.getSimpleName();
     public List<ExerciseInstanceSet> mSets;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,12 +57,78 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(SetAdapter.ViewHolder holder, int position) {
-        ExerciseInstanceSet set = mSets.get(position);
+        final ExerciseInstanceSet set = mSets.get(position);
 
         holder.setOrderView.setText(String.valueOf(set.getOrderNumber()));
         holder.exerciseValueView.setText(String.valueOf(set.getEffortQuantity()));
-        holder.repsValueView.setText(String.valueOf(set.getReqQuantityAsInt()));
+        holder.repsValueView.setText(String.valueOf(set.getRepQuantityAsInt()));
         holder.restValueView.setText(String.valueOf(set.getRestTime()));
+
+        holder.repsValueView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                try {
+                    Float newAmount = Float.valueOf(editable.toString());
+                    set.setRepQuantity(newAmount);
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+        });
+
+        holder.exerciseValueView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                try {
+                    Float newAmount = Float.valueOf(editable.toString());
+                    set.setEffortQuantity(newAmount);
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+        });
+
+        holder.restValueView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                try {
+                    Float newAmount = Float.valueOf(editable.toString());
+                    set.setRestTime(newAmount);
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+        });
     }
 
     @Override

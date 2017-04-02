@@ -162,10 +162,9 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
     }
 
     @Override
-    public void displayUpdatedExercises(List<ExerciseInstance> updatedExercises) {
-        int selected = mViewPager.getCurrentItem();
-        ExercisesListFragment listFragment = (ExercisesListFragment) mSectionsPagerAdapter.getItem(selected);
-        listFragment.displayExercises(updatedExercises);
+    public void displayUpdatedExercises(List<ExerciseInstance> exerciseListTab1, List<ExerciseInstance> exerciseListTab2, List<ExerciseInstance> exerciseListTab3) {
+        mSectionsPagerAdapter.notifyDataSetChanged();
+        mSectionsPagerAdapter.refresh(exerciseListTab1, exerciseListTab2, exerciseListTab3);
     }
 
     @Override

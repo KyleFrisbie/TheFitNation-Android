@@ -18,7 +18,7 @@ public interface ExercisesParentContract {
     interface View extends BaseView<Presenter> {
         void showProgress();
         void displayExercises(List<ExerciseInstance> exercisesTabOne,List<ExerciseInstance> exercisesTabTwo, List<ExerciseInstance> exercisesTabThree);
-        void displayUpdatedExercises(List<ExerciseInstance> updatedExercises);
+        void displayUpdatedExercises(List<ExerciseInstance> exerciseListTab1, List<ExerciseInstance> exerciseListTab2, List<ExerciseInstance> exerciseListTab3);
         void promptUserToSave(DialogFragment alertDialog);
         int getSelectedTab();
     }

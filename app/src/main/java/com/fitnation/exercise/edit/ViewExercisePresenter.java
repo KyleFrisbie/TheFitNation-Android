@@ -43,7 +43,6 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter {
 
     @Override
     public void onAddSetClicked() {
-        //TODO add a set to the exercise instance
         RealmList<ExerciseInstanceSet> sets =  mExercise.getExerciseInstanceSets();
         int orderNumber = sets.size() + 1;
         sets.add(new ExerciseInstanceSet(mExercise, orderNumber));

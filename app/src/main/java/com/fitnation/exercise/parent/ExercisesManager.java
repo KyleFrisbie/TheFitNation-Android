@@ -50,8 +50,16 @@ public class ExercisesManager extends DataManager {
         mSelectedExercises = new ArrayList<>();
     }
 
-    public List<ExerciseInstance> getExercises() {
-        return mExerciseInstances;
+    public List<ExerciseInstance> getExercisesTab1() {
+        return mExerciseInstancesTab1;
+    }
+
+    public List<ExerciseInstance> getExercisesTab2() {
+        return mExerciseInstancesTab2;
+    }
+
+    public List<ExerciseInstance> getExercisesTab3() {
+        return mExerciseInstancesTab3;
     }
 
     public void getExercises(final ExercisesRequestCallback callback) {
@@ -105,7 +113,7 @@ public class ExercisesManager extends DataManager {
                 ) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String authToken = "855a6ded-b07c-4725-88f4-56eda6a0ffb2";
+                        String authToken = "e48e7f37-0279-4117-9fd9-4730135b2c7d";
                         Map<String, String> mHeaders = new ArrayMap();
 
                         mHeaders.put("Authorization", "Bearer" + " " + authToken);
@@ -220,6 +228,7 @@ public class ExercisesManager extends DataManager {
                 mExerciseInstancesTab3.add(updated);
                 break;
         }
+
     }
 
     private List<ExerciseInstance> convertExercisesToInstances(List<Exercise> exercises) {

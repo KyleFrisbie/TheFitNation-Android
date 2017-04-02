@@ -97,9 +97,9 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void exerciseUpdated(@Nullable ExerciseInstance updatedExerciseInstance) {
         if(updatedExerciseInstance != null) {
-            mExerciseInstanceBeingEdited = updatedExerciseInstance;
+            mExerciseInstanceBeingEdited = (ExerciseInstance) updatedExerciseInstance.clone();
             mExerciseManager.updateExerciseList(mExerciseInstanceBeingEdited, updatedExerciseInstance, mView.getSelectedTab());
-            mView.displayUpdatedExercises(mExerciseManager.getExercises());
+            mView.displayUpdatedExercises(mExerciseManager.getExercisesTab1(), mExerciseManager.getExercisesTab2(), mExerciseManager.getExercisesTab3());
         }
     }
 }
