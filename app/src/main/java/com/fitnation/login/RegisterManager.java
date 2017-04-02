@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO: get interface working for connecting to presenter
 /**
  * Handles the register request
  */

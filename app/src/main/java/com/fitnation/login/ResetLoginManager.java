@@ -12,6 +12,7 @@ import com.fitnation.utils.EnvironmentManager;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO: get interface working for connecting to presenter
 /**
  * handles the email reset password request
  */
