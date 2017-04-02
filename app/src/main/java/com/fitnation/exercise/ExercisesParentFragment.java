@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -99,6 +100,7 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
         mSectionsPagerAdapter = new ExerciseSectionsPagerAdapter(getFragmentManager(), getContext(), this, this);
         // Set up the ViewPager with the sections adapter.
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mSectionsPagerAdapter.notifyDataSetChanged();
 
         TabLayout tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -149,57 +151,27 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
     }
 
     @Override
-    public void displayExercises(List<ExerciseInstance> exercises) {
+    public void displayExercises(List<ExerciseInstance> tabOneExercises, List<ExerciseInstance> tabTwoExercises, List<ExerciseInstance> tabThreeExercises) {
         //check skill level chosen by user, create list of ExerciseInstances based off that
         ExercisesListFragment beginnerFragment = (ExercisesListFragment) mSectionsPagerAdapter.instantiateItem(mViewPager, 0);
         ExercisesListFragment intermediatFragment = (ExercisesListFragment) mSectionsPagerAdapter.instantiateItem(mViewPager, 1);
         ExercisesListFragment advancedFragment = (ExercisesListFragment) mSectionsPagerAdapter.instantiateItem(mViewPager, 2);
 
-        List<ExerciseInstance> list1 = new ArrayList<ExerciseInstance>(exercises.size());
-        List<ExerciseInstance> list2 = new ArrayList<ExerciseInstance>(exercises.size());
-        List<ExerciseInstance> list3 = new ArrayList<ExerciseInstance>(exercises.size());
+        beginnerFragment.displayExercises(tabOneExercises);
+        intermediatFragment.displayExercises(tabTwoExercises);
+        advancedFragment.displayExercises(tabThreeExercises);
+    }
 
-        for (ExerciseInstance instance : exercises) {
-            ExerciseInstance copy1 = null;
-            ExerciseInstance copy2 = null;
-            ExerciseInstance copy3 = null;
-
-            try {
-                copy1 = (ExerciseInstance)instance.clone();
-                copy2 = (ExerciseInstance)instance.clone();
-                copy3 = (ExerciseInstance)instance.clone();
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
-            list1.add(copy1);
-            list2.add(copy2);
-            list3.add(copy3);
-        }
-
-        beginnerFragment.displayExercises(ExercisesManager.filterExerciseBySkillLevel(list1, SkillLevel.BEGINNER));
-        intermediatFragment.displayExercises(ExercisesManager.filterExerciseBySkillLevel(list2, SkillLevel.INTERMEDIATE));
-        advancedFragment.displayExercises(ExercisesManager.filterExerciseBySkillLevel(list3, SkillLevel.ADVANCED));
+    @Override
+    public void displayUpdatedExercises(List<ExerciseInstance> updatedExercises) {
+        int selected = mViewPager.getCurrentItem();
+        ExercisesListFragment listFragment = (ExercisesListFragment) mSectionsPagerAdapter.getItem(selected);
+        listFragment.displayExercises(updatedExercises);
     }
 
     @Override
     public void promptUserToSave(DialogFragment alertDialog) {
         alertDialog.show(getFragmentManager(), null);
-    }
-
-    @Override
-    public void hideForEditExercise(boolean hide) {
-        TabLayout tabLayout = (TabLayout) getView().findViewById(R.id.tabs);
-        if(hide) {
-            if (tabLayout != null) {
-                tabLayout.setVisibility(View.GONE);
-            }
-            mActionButton.setVisibility(View.INVISIBLE);
-        } else {
-            if (tabLayout != null) {
-                tabLayout.setVisibility(View.VISIBLE);
-            }
-            mActionButton.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override

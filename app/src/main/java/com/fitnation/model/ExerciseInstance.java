@@ -1,6 +1,7 @@
 package com.fitnation.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 import io.realm.RealmList;
@@ -43,6 +44,11 @@ public class ExerciseInstance extends RealmObject implements Serializable, Clone
 
     public RealmList<ExerciseInstanceSet> getExerciseInstanceSets() {
         return exerciseInstanceSets;
+    }
+
+    public void setExerciseInstanceSets(List<ExerciseInstanceSet> exerciseInstanceSets) {
+        this.exerciseInstanceSets = new RealmList<ExerciseInstanceSet>(exerciseInstanceSets.toArray(new ExerciseInstanceSet[exerciseInstanceSets.size()]));
+
     }
 
     public Exercise getExercise() {

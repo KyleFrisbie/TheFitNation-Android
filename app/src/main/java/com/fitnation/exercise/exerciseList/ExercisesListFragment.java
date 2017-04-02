@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class ExercisesListFragment extends BaseFragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private ExerciseSelectedCallback mExerciseSelectedCallback;
     private OnEditExercisePressed mOnEditExercisePressed;
+    private boolean mHasUpdatedData;
 
 
     public ExercisesListFragment() {
@@ -67,12 +69,36 @@ public class ExercisesListFragment extends BaseFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
 
         if(bundle != null) {
             mExercises = (List<ExerciseInstance>) bundle.get(EXERCISE_LIST);
         }
+    }
+
+    @Override
+    public void onResume() {
+        Log.i(TAG, "onResume()");
+        super.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        Log.i(TAG, "onStart()");
+        super.onStart();
+        if(mHasUpdatedData) {
+            mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressed);
+            mRecyclerView.setAdapter(mAdapter);
+            mHasUpdatedData = false;
+        }
+    }
+
+    @Override
+    public void onStop() {
+        Log.i(TAG, "onStop()");
+        super.onStop();
     }
 
     @Override
@@ -97,6 +123,8 @@ public class ExercisesListFragment extends BaseFragment {
         if(getView() != null) {
             mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressed);
             mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mHasUpdatedData = true;
         }
     }
 

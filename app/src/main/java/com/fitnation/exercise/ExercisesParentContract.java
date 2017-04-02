@@ -18,9 +18,9 @@ import java.util.List;
 public interface ExercisesParentContract {
     interface View extends BaseView<Presenter> {
         void showProgress();
-        void displayExercises(List<ExerciseInstance> exercises);
+        void displayExercises(List<ExerciseInstance> exercisesTabOne,List<ExerciseInstance> exercisesTabTwo, List<ExerciseInstance> exercisesTabThree);
+        void displayUpdatedExercises(List<ExerciseInstance> updatedExercises);
         void promptUserToSave(DialogFragment alertDialog);
-        void hideForEditExercise(boolean hide);
     }
 
     interface Presenter extends BasePresenter {

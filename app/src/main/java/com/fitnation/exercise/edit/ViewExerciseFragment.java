@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
-import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
 
 import butterknife.BindView;
@@ -39,7 +38,7 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
     public TextView mNotesView;
     @BindView(R.id.sets_recycler_view)
     public RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private SetAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
 
@@ -88,7 +87,7 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         bindExerciseInstanceToView(mExerciseInstance);
-        
+
         return v;
     }
 
@@ -103,6 +102,12 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
     @OnClick(R.id.add_set)
     public void onAddSetClicked() {
         mPresenter.onAddSetClicked();
+    }
+
+    @OnClick(R.id.save_button)
+    public void onSaveClicked() {
+        mExerciseInstance.setExerciseInstanceSets(mAdapter.getExerciseInstanceSets());
+        mPresenter.onSaveClicked(mExerciseInstance);
     }
 
     @OnClick(R.id.reset_button)

@@ -40,6 +40,10 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         mSets = exerciseInstanceSets;
     }
 
+    public List<ExerciseInstanceSet> getExerciseInstanceSets() {
+        return mSets;
+    }
+
     @Override
     public SetAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.set_in_list, parent, false);

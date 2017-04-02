@@ -24,6 +24,7 @@ import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.model.WorkoutTemplate;
+import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.networking.EnvironmentManager;
 import com.fitnation.networking.JsonParser;
 
@@ -43,11 +44,19 @@ public class ExercisesManager extends DataManager{
     private static final String TAG = ExercisesManager.class.getSimpleName();
     private RequestQueue mRequestQueue;
     private List<ExerciseInstance> mSelectedExercises;
+    private List<ExerciseInstance> mExerciseInstances;
+    private List<ExerciseInstance> mExerciseInstancesTab1;
+    private List<ExerciseInstance> mExerciseInstancesTab2;
+    private List<ExerciseInstance> mExerciseInstancesTab3;
 
 
     public ExercisesManager(Context context) {
         mRequestQueue = Volley.newRequestQueue(context);
         mSelectedExercises = new ArrayList<>();
+    }
+
+    public List<ExerciseInstance> getExercises() {
+        return mExerciseInstances;
     }
 
     public void getExercises(final ExercisesRequestCallback callback) {
@@ -65,7 +74,32 @@ public class ExercisesManager extends DataManager{
                             public void onResponse(String response) {
                                 List<Exercise> exercises = JsonParser.convertJsonStringToList(response, Exercise[].class);
                                 List<ExerciseInstance> exerciseInstances = convertExercisesToInstances(exercises);
-                                callback.onExercisesRetrieved(exerciseInstances);
+                                mExerciseInstances = exerciseInstances;
+                                mExerciseInstancesTab1 = new ArrayList<ExerciseInstance>(exercises.size());
+                                mExerciseInstancesTab2 = new ArrayList<ExerciseInstance>(exercises.size());
+                                mExerciseInstancesTab3 = new ArrayList<ExerciseInstance>(exercises.size());
+
+                                for (ExerciseInstance instance : exerciseInstances) {
+                                    ExerciseInstance copy1 = null;
+                                    ExerciseInstance copy2 = null;
+                                    ExerciseInstance copy3 = null;
+
+                                    try {
+                                        copy1 = (ExerciseInstance)instance.clone();
+                                        copy2 = (ExerciseInstance)instance.clone();
+                                        copy3 = (ExerciseInstance)instance.clone();
+                                    } catch (CloneNotSupportedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    mExerciseInstancesTab1.add(copy1);
+                                    mExerciseInstancesTab2.add(copy2);
+                                    mExerciseInstancesTab3.add(copy3);
+
+                                    mExerciseInstancesTab1 = filterExerciseBySkillLevel(mExerciseInstancesTab1, SkillLevel.BEGINNER);
+                                    mExerciseInstancesTab2 = filterExerciseBySkillLevel(mExerciseInstancesTab2, SkillLevel.INTERMEDIATE);
+                                    mExerciseInstancesTab3 = filterExerciseBySkillLevel(mExerciseInstancesTab3, SkillLevel.ADVANCED);
+                                }
+                                callback.onExercisesRetrieved(mExerciseInstancesTab1, mExerciseInstancesTab2, mExerciseInstancesTab3);
                             }
                         },
                         new Response.ErrorListener()
@@ -79,7 +113,7 @@ public class ExercisesManager extends DataManager{
                 ) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String authToken = "9f67142a-4ff7-4747-abb0-fffae79cebbe";
+                        String authToken = "eb986152-33b3-4e8a-806a-bf8c27e798c4";
                         Map<String, String> mHeaders = new ArrayMap();
 
                         mHeaders.put("Authorization", "Bearer" + " " + authToken);
@@ -174,6 +208,11 @@ public class ExercisesManager extends DataManager{
         }
 
         return workoutTemplate;
+    }
+
+    public void updateExerciseList(ExerciseInstance original, ExerciseInstance updated) {
+        mExerciseInstances.remove(original);
+        mExerciseInstances.add(updated);
     }
 
     private List<ExerciseInstance> convertExercisesToInstances(List<Exercise> exercises) {

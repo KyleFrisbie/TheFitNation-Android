@@ -1,6 +1,6 @@
 package com.fitnation.exercise.edit;
 
-import com.fitnation.model.Exercise;
+import com.fitnation.exercise.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.model.ExerciseInstance;
 
 /**
@@ -10,10 +10,12 @@ import com.fitnation.model.ExerciseInstance;
 public class ViewExercisePresenter implements ViewExerciseContract.Presenter {
     private ExerciseInstance mExercise;
     private ViewExerciseContract.View mView;
+    private OnExerciseUpdatedCallback mOnExerciseUpdatedCallback;
 
-    public ViewExercisePresenter(ExerciseInstance exercise, ViewExerciseContract.View view) {
+    public ViewExercisePresenter(ExerciseInstance exercise, ViewExerciseContract.View view, OnExerciseUpdatedCallback onExerciseUpdatedCallback) {
         mExercise = exercise;
         mView = view;
+        mOnExerciseUpdatedCallback = onExerciseUpdatedCallback;
     }
 
     @Override
@@ -37,8 +39,9 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter {
     }
 
     @Override
-    public void onSaveClicked() {
-
+    public void onSaveClicked(ExerciseInstance mExerciseInstance) {
+        mView.getBaseActivity().getSupportFragmentManager().popBackStack();
+        mOnExerciseUpdatedCallback.exerciseUpdated(mExerciseInstance);
     }
 
     @Override

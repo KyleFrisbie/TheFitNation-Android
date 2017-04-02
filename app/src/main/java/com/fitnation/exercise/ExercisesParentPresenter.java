@@ -1,10 +1,12 @@
 package com.fitnation.exercise;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.fitnation.R;
 import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
+import com.fitnation.exercise.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.exercise.callbacks.SaveDialogCallback;
 import com.fitnation.exercise.edit.ViewExerciseFragment;
 import com.fitnation.exercise.edit.ViewExercisePresenter;
@@ -18,10 +20,11 @@ import java.util.List;
  * Created by Ryan on 3/21/2017.
  */
 
-public class ExercisesParentPresenter implements ExercisesParentContract.Presenter, ExercisesRequestCallback, SaveDialogCallback {
+public class ExercisesParentPresenter implements ExercisesParentContract.Presenter, ExercisesRequestCallback, SaveDialogCallback, OnExerciseUpdatedCallback {
     private static final String TAG = ExercisesParentPresenter.class.getSimpleName();
     private ExercisesManager mExerciseManager;
     private ExercisesParentContract.View mView;
+    private ExerciseInstance mExerciseInstanceBeingEdited;
 
     public ExercisesParentPresenter(Context context, ExercisesParentContract.View view) {
         mView = view;
@@ -47,19 +50,19 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
 
     @Override
     public void onEditPressed(ExerciseInstance exercise) {
-        mView.hideForEditExercise(true);
+        mExerciseInstanceBeingEdited = exercise;
         NavigationActivity navigationActivity = (NavigationActivity) mView.getBaseActivity();
-        navigationActivity.displayBackArrow(true, "Edit");
         ViewExerciseFragment viewExerciseFragment = ViewExerciseFragment.newInstance(exercise);
-        viewExerciseFragment.setPresenter(new ViewExercisePresenter(exercise, viewExerciseFragment));
-        mView.getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_content, viewExerciseFragment).addToBackStack(null).commit();
+        navigationActivity.displayBackArrow(true, "Edit");
+        viewExerciseFragment.setPresenter(new ViewExercisePresenter(exercise, viewExerciseFragment, this));
+        mView.getBaseActivity().getSupportFragmentManager().beginTransaction().add(R.id.content_main_container, viewExerciseFragment).addToBackStack(null).commit();
     }
 
     //----------------------------------ExercisesRequestCallback----------------------------------//
 
     @Override
-    public void onExercisesRetrieved(List<ExerciseInstance> exerciseList) {
-        mView.displayExercises(exerciseList);
+    public void onExercisesRetrieved(List<ExerciseInstance> exerciseList1, List<ExerciseInstance> exerciseList2, List<ExerciseInstance> exerciseList3) {
+        mView.displayExercises(exerciseList1, exerciseList2, exerciseList3);
     }
 
     @Override
@@ -89,5 +92,16 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     public void onSaveRequested(String name) {
         Log.i(TAG, "User requested to save workout with name: " + name);
         mExerciseManager.createWorkoutAndSave(name, null);
+    }
+
+    //----------------------------------OnExerciseUpdatedCallback----------------------------------//
+
+    @Override
+    public void exerciseUpdated(@Nullable ExerciseInstance updatedExerciseInstance) {
+        if(updatedExerciseInstance != null) {
+            mExerciseInstanceBeingEdited = updatedExerciseInstance;
+            mExerciseManager.updateExerciseList(mExerciseInstanceBeingEdited, updatedExerciseInstance);
+            mView.displayUpdatedExercises(mExerciseManager.getExercises());
+        }
     }
 }

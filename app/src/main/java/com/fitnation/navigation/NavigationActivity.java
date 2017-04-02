@@ -75,8 +75,6 @@ public class NavigationActivity extends BaseActivity
                 Fragment fragment = fragmentList.get(0);
                 if(fragment instanceof ExercisesParentFragment) {
                     displayBackArrow(false, getString(R.string.build_workout_title));
-                    ExercisesParentFragment exercisesParentFragment = (ExercisesParentFragment) fragment;
-                    exercisesParentFragment.hideForEditExercise(false);
                 }
             }
             int backStackCount = getSupportFragmentManager().getBackStackEntryCount();

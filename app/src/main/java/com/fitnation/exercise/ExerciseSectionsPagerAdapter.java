@@ -15,6 +15,8 @@ import com.fitnation.exercise.callbacks.ExerciseSelectedCallback;
 import com.fitnation.exercise.exerciseList.OnEditExercisePressed;
 import com.fitnation.model.ExerciseInstance;
 
+import java.util.List;
+
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
  * one of the sections/tabs/pages.
@@ -23,6 +25,9 @@ public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
     private ExerciseSelectedCallback mExerciseSelectedCallback;
     private OnEditExercisePressed mOnEditExercisePressed;
+    private List<ExerciseInstance> mExerciseListTab1;
+    private List<ExerciseInstance> mExerciseListTab2;
+    private List<ExerciseInstance> mExerciseListTab3;
 
     public ExerciseSectionsPagerAdapter(FragmentManager fm, Context context, ExerciseSelectedCallback exerciseSelectedCallback, OnEditExercisePressed onEditExercisePressed) {
         super(fm);
@@ -31,11 +36,31 @@ public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
         mOnEditExercisePressed = onEditExercisePressed;
     }
 
+    public void setExerciseData(List<ExerciseInstance> exerciseListTab1, List<ExerciseInstance> exerciseListTab2, List<ExerciseInstance> exerciseListTab3) {
+        mExerciseListTab1 = exerciseListTab1;
+        mExerciseListTab2 = exerciseListTab2;
+        mExerciseListTab3 = exerciseListTab3;
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return ExercisesListFragment.newInstance(null, mExerciseSelectedCallback, mOnEditExercisePressed);
+        switch (position) {
+            case 0:
+                return ExercisesListFragment.newInstance(mExerciseListTab1, mExerciseSelectedCallback, mOnEditExercisePressed);
+            case 1:
+                return ExercisesListFragment.newInstance(mExerciseListTab2, mExerciseSelectedCallback, mOnEditExercisePressed);
+            case 2:
+                return ExercisesListFragment.newInstance(mExerciseListTab3, mExerciseSelectedCallback, mOnEditExercisePressed);
+            default:
+                return null;
+        }
     }
 
     @Override
