@@ -5,9 +5,8 @@ import android.support.annotation.Nullable;
 import com.fitnation.model.ExerciseInstance;
 
 /**
- * Created by Ryan on 4/1/2017.
+ * Callback for when an exercise gets updated
  */
-
 public interface OnExerciseUpdatedCallback {
     /**
      * Notified when an exercise is finished being updated

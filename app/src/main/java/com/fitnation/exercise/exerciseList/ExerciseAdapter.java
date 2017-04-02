@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Ryan Newsom on 3/19/17. *
+ * Adapter for displaying some ExerciseInstance's
  */
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHolder> {
     private List<ExerciseInstance> mExercises;

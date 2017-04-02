@@ -16,6 +16,6 @@ public interface ViewExerciseContract {
         void onAddSetClicked();
         void onSaveClicked(ExerciseInstance mExerciseInstance);
         void onResetClicked();
-        void onExit();
+        void onExit(ExerciseInstance exerciseInstance);
     }
 }

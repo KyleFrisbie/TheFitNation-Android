@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
-import com.fitnation.exercise.ExercisesParentFragment;
+import com.fitnation.exercise.parent.ExercisesParentFragment;
 import com.fitnation.model.enums.ExerciseAction;
 
 import java.util.List;

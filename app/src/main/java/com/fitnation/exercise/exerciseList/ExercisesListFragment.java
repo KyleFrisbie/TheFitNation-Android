@@ -123,9 +123,15 @@ public class ExercisesListFragment extends BaseFragment {
         return v;
     }
 
-    public void displayExercises( final List<ExerciseInstance> exercises) {
+    public void displayExercises(final List<ExerciseInstance> exercises) {
         mExercises = exercises;
-        mHasUpdatedData = true;
+        if(getView() != null) {
+            mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressed);
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mHasUpdatedData = true;
+        }
+
     }
 
     @Override

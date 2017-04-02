@@ -27,7 +27,6 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
     private static final String TAG = ViewExerciseFragment.class.getSimpleName();
     private static final String EXERCISE_KEY = "EXERCISE_KEY";
     private ExerciseInstance mExerciseInstance;
-    private ExerciseInstance mOriginalExerciseInstance;
     private ViewExerciseContract.Presenter mPresenter;
 
     @BindView(R.id.exercise_name_edit)
@@ -72,13 +71,7 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
 
         if(args != null) {
             mExerciseInstance = (ExerciseInstance) args.getSerializable(EXERCISE_KEY);
-            try {
-                mOriginalExerciseInstance = (ExerciseInstance) mExerciseInstance.clone();
-            } catch (CloneNotSupportedException e) {
-                Log.wtf(TAG, e.getMessage());
-            }
         }
-
     }
 
     @Override
@@ -118,17 +111,18 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
 
     @OnClick(R.id.reset_button)
     public void onResetClicked() {
-        try {
-            mExerciseInstance = (ExerciseInstance) mOriginalExerciseInstance.clone();
-        } catch (CloneNotSupportedException e) {
-            Log.wtf(TAG, e.getMessage());
-        }
-
-        bindExerciseInstanceToView(mExerciseInstance);
+        mPresenter.onResetClicked();
     }
 
     @Override
     public BaseActivity getBaseActivity() {
         return (BaseActivity) getActivity();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mExerciseInstance.setExerciseInstanceSets(mAdapter.getExerciseInstanceSets());
+        mPresenter.onExit(mExerciseInstance);
     }
 }

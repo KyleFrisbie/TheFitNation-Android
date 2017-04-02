@@ -18,9 +18,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Ryan on 4/1/2017.
+ * Adapter for ExerciseInstanceSets
  */
-
 public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     public List<ExerciseInstanceSet> mSets;
 
@@ -36,6 +35,10 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         }
     }
 
+    /**
+     * Constructor
+     * @param exerciseInstanceSets - the sets to be displayed
+     */
     public SetAdapter(List<ExerciseInstanceSet> exerciseInstanceSets) {
         mSets = exerciseInstanceSets;
     }

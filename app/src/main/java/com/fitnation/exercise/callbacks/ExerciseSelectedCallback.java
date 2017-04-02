@@ -4,9 +4,8 @@ import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
 
 /**
- * Created by Ryan on 3/21/2017.
+ * Callback for when an individual exercise is selected
  */
-
 public interface ExerciseSelectedCallback {
     void onExerciseSelected(ExerciseInstance exerciseInstance, boolean isSelected);
 }

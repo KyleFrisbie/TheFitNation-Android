@@ -1,5 +1,7 @@
 package com.fitnation.exercise.edit;
 
+import android.util.Log;
+
 import com.fitnation.exercise.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.ExerciseInstanceSet;
@@ -10,14 +12,22 @@ import io.realm.RealmList;
  * Presenter for viewing an exercise
  */
 public class ViewExercisePresenter implements ViewExerciseContract.Presenter {
+    private static final String TAG = ViewExercisePresenter.class.getSimpleName();
     private ExerciseInstance mExercise;
     private ViewExerciseContract.View mView;
     private OnExerciseUpdatedCallback mOnExerciseUpdatedCallback;
+    private ExerciseInstance mOriginalExerciseInstance;
+
 
     public ViewExercisePresenter(ExerciseInstance exercise, ViewExerciseContract.View view, OnExerciseUpdatedCallback onExerciseUpdatedCallback) {
         mExercise = exercise;
         mView = view;
         mOnExerciseUpdatedCallback = onExerciseUpdatedCallback;
+        try {
+            mOriginalExerciseInstance = (ExerciseInstance) exercise.clone();
+        } catch (CloneNotSupportedException e) {
+            Log.wtf(TAG, e.getMessage());
+        }
     }
 
     @Override
@@ -41,22 +51,30 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter {
         RealmList<ExerciseInstanceSet> sets =  mExercise.getExerciseInstanceSets();
         int orderNumber = sets.size() + 1;
         sets.add(new ExerciseInstanceSet(mExercise, orderNumber));
+        mView.bindExerciseInstanceToView(mExercise);
         //update the view
     }
 
     @Override
-    public void onSaveClicked(ExerciseInstance mExerciseInstance) {
+    public void onSaveClicked(ExerciseInstance exerciseInstance) {
+        mOnExerciseUpdatedCallback.exerciseUpdated(exerciseInstance);
         mView.getBaseActivity().getSupportFragmentManager().popBackStack();
-        mOnExerciseUpdatedCallback.exerciseUpdated(mExerciseInstance);
     }
 
     @Override
     public void onResetClicked() {
+        try {
+            mExercise = (ExerciseInstance) mOriginalExerciseInstance.clone();
+        } catch (CloneNotSupportedException e) {
+            Log.wtf(TAG, e.getMessage());
+        }
 
+        mView.bindExerciseInstanceToView(mExercise);
     }
 
     @Override
-    public void onExit() {
-
+    public void onExit(ExerciseInstance exerciseInstance) {
+        mOnExerciseUpdatedCallback.exerciseUpdated(exerciseInstance);
+        mView.getBaseActivity().getSupportFragmentManager().popBackStack();
     }
 }

@@ -1,11 +1,10 @@
-package com.fitnation.exercise;
+package com.fitnation.exercise.parent;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -22,10 +21,8 @@ import com.fitnation.exercise.callbacks.ExerciseSelectedCallback;
 import com.fitnation.exercise.exerciseList.OnEditExercisePressed;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.enums.ExerciseAction;
-import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.navigation.NavigationActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -156,6 +153,8 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
         ExercisesListFragment beginnerFragment = (ExercisesListFragment) mSectionsPagerAdapter.instantiateItem(mViewPager, 0);
         ExercisesListFragment intermediatFragment = (ExercisesListFragment) mSectionsPagerAdapter.instantiateItem(mViewPager, 1);
         ExercisesListFragment advancedFragment = (ExercisesListFragment) mSectionsPagerAdapter.instantiateItem(mViewPager, 2);
+
+        mSectionsPagerAdapter.setExerciseData(tabOneExercises, tabTwoExercises, tabThreeExercises);
 
         beginnerFragment.displayExercises(tabOneExercises);
         intermediatFragment.displayExercises(tabTwoExercises);

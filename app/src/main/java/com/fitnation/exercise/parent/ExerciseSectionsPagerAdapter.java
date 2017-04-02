@@ -1,8 +1,4 @@
-package com.fitnation.exercise;
-
-/**
- * Created by Ryan Newsom on 3/12/17. *
- */
+package com.fitnation.exercise.parent;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -18,8 +14,7 @@ import com.fitnation.model.ExerciseInstance;
 import java.util.List;
 
 /**
- * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
- * one of the sections/tabs/pages.
+ * Manages the different tabs Fragments
  */
 public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
@@ -29,6 +24,13 @@ public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
     private List<ExerciseInstance> mExerciseListTab2;
     private List<ExerciseInstance> mExerciseListTab3;
 
+    /**
+     * Constructor
+     * @param fm - fragment manager to be used
+     * @param context - context
+     * @param exerciseSelectedCallback- callback to be notified when an Exercise is selected
+     * @param onEditExercisePressed - callabck to be notified when an Exercise's edit button is pressed
+     */
     public ExerciseSectionsPagerAdapter(FragmentManager fm, Context context, ExerciseSelectedCallback exerciseSelectedCallback, OnEditExercisePressed onEditExercisePressed) {
         super(fm);
         mContext = context;
@@ -40,11 +42,6 @@ public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
         mExerciseListTab1 = exerciseListTab1;
         mExerciseListTab2 = exerciseListTab2;
         mExerciseListTab3 = exerciseListTab3;
-    }
-
-    @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
     }
 
     @Override
@@ -65,8 +62,9 @@ public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        // Show 3 total pages.
-        return 3;
+        final int PAGE_COUNT = 3;
+
+        return PAGE_COUNT;
     }
 
     @Override
