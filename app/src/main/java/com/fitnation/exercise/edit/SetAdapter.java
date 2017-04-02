@@ -19,13 +19,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmList;
 
 /**
  * Adapter for ExerciseInstanceSets
  */
 public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     private static final String TAG = SetAdapter.class.getSimpleName();
-    public List<ExerciseInstanceSet> mSets;
+    public RealmList<ExerciseInstanceSet> mSets;
     private OnSetSelectedCallback mOnSetSelectedCallback;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -45,12 +46,12 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
      * Constructor
      * @param exerciseInstanceSets - the sets to be displayed
      */
-    public SetAdapter(List<ExerciseInstanceSet> exerciseInstanceSets, OnSetSelectedCallback callback) {
+    public SetAdapter(RealmList<ExerciseInstanceSet> exerciseInstanceSets, OnSetSelectedCallback callback) {
         mSets = exerciseInstanceSets;
         mOnSetSelectedCallback = callback;
     }
 
-    public List<ExerciseInstanceSet> getExerciseInstanceSets() {
+    public RealmList<ExerciseInstanceSet> getExerciseInstanceSets() {
         return mSets;
     }
 

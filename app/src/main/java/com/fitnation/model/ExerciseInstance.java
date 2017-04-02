@@ -1,16 +1,23 @@
 package com.fitnation.model;
 
+import android.os.Parcelable;
+
+import org.parceler.Parcel;
+import org.parceler.ParcelPropertyConverter;
+
 import java.io.Serializable;
 import java.util.List;
 
 
+import io.realm.ExerciseInstanceRealmProxy;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
  * Created by Ryan on 3/21/2017.
  */
-public class ExerciseInstance extends RealmObject implements Serializable, Cloneable {
+@Parcel(implementations = { ExerciseInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { ExerciseInstance.class })
+public class ExerciseInstance extends RealmObject implements Cloneable {
     public static final Float REPS_DEFAULT = 8f;
     public static final Float EFFORT_DEFAULT = 20f;
     public static final Float REST_TIME_DEFAULT = 30f;
@@ -53,9 +60,9 @@ public class ExerciseInstance extends RealmObject implements Serializable, Clone
         return exerciseInstanceSets;
     }
 
-    public void setExerciseInstanceSets(List<ExerciseInstanceSet> exerciseInstanceSets) {
-        this.exerciseInstanceSets = new RealmList<ExerciseInstanceSet>(exerciseInstanceSets.toArray(new ExerciseInstanceSet[exerciseInstanceSets.size()]));
-
+    @ParcelPropertyConverter(ExerciseInstanceSetParcelConverter.class)
+    public void setExerciseInstanceSets(RealmList<ExerciseInstanceSet> exerciseInstanceSets) {
+        this.exerciseInstanceSets = exerciseInstanceSets;
     }
 
     public Exercise getExercise() {

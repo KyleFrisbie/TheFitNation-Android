@@ -66,7 +66,11 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
     @Override
     public void onExit(ExerciseInstance exerciseInstance) {
         mOnExerciseUpdatedCallback.exerciseUpdated(exerciseInstance);
-        mView.getBaseActivity().getSupportFragmentManager().popBackStack();
+        try {
+            mView.getBaseActivity().getSupportFragmentManager().popBackStack();
+        } catch (IllegalStateException ise) {
+            Log.e(TAG, "Error onExit(): " + ise.getMessage());
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.fitnation.exercise.edit;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,8 @@ import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.exercise.callbacks.OnSetSelectedCallback;
 import com.fitnation.model.ExerciseInstance;
+
+import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +57,7 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
     public static ViewExerciseFragment newInstance(ExerciseInstance exerciseInstance) {
         ViewExerciseFragment viewExerciseFragment = new ViewExerciseFragment();
         Bundle args = new Bundle();
-        args.putSerializable(EXERCISE_KEY, exerciseInstance);
+        args.putParcelable(EXERCISE_KEY, Parcels.wrap(exerciseInstance));
         viewExerciseFragment.setArguments(args);
 
         return viewExerciseFragment;
@@ -123,8 +126,10 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
 
     @Override
     public void onStop() {
+        if(mExerciseInstance != null) {
+            mExerciseInstance.setExerciseInstanceSets(mAdapter.getExerciseInstanceSets());
+            mPresenter.onExit(mExerciseInstance);
+        }
         super.onStop();
-        mExerciseInstance.setExerciseInstanceSets(mAdapter.getExerciseInstanceSets());
-        mPresenter.onExit(mExerciseInstance);
     }
 }

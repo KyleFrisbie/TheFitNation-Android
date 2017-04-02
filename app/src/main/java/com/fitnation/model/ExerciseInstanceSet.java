@@ -1,13 +1,19 @@
 package com.fitnation.model;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
+import io.realm.ExerciseInstanceSetRealmProxy;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
  * An Exercise Instance Termplate's set
  */
+@Parcel(implementations = { ExerciseInstanceSetRealmProxy.class },
+        value = Parcel.Serialization.BEAN,
+        analyze = { ExerciseInstanceSet.class })
 public class ExerciseInstanceSet extends RealmObject implements Cloneable{
     private Long id;
     private Long androidId;
