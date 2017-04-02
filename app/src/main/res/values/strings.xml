@@ -7,6 +7,47 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
 
+    <!-- USER INFO STRINGS -->
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="nameField">Name:</string>
+    <string name="name">Name</string>
+    <string name="emailField">Email:</string>
+    <string name="email">Email</string>
+
+    <string name="heightField">Height:</string>
+    <string name="weightField">Weight:</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+
+    <string name="lifterType">Skill:</string>
+    <string-array name="lifterTypeArray">
+        <item>Beginner</item>
+        <item>Intermediate</item>
+        <item>Advanced</item>
+    </string-array>
+    <string name="beginner">Beginner</string>
+    <string name="intermediate">Intermediate</string>
+    <string name="advanced">Advanced</string>
+    <string name="gender">Gender</string>
+
+    <string-array name="genderArray">
+        <item>Other</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string name="genderField">Gender:</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="birthday">Birthday</string>
+    <string name="birthdayField">Birthday:</string>
+    <string name="unitOfMeasure">Unit of Measure</string>
+    <string name="age">Age</string>
+    <string name="switchMeasureMetrics">Switch to Metrics</string>
+    <string name="switchMeasureImperial">Switch to Imperial</string>
+
     <string name="login">Login</string>
     <string name="login_screen">Login Fragment</string>
     <string name="main_container">Main Container</string>

@@ -1,5 +1,6 @@
 package com.fitnation.navigation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
+import com.fitnation.profile.ProfileActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,7 +89,7 @@ public class NavigationActivity extends BaseActivity
         } else if (id == R.id.nav_workout_regimens) {
 
         } else if (id == R.id.nav_my_profile) {
-
+            startActivity(new Intent(this, ProfileActivity.class));
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
