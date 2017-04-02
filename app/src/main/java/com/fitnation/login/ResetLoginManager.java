@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.utils.EnvironmentManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +25,8 @@ public class ResetLoginManager implements ResetLoginManagerContract.Manager {
     public void resetPasswordRequest(final String email){
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
         // TODO: change to the url class when it is implemented
-        String url = "http://the-fit-nation-dev.herokuapp.com/api/account/reset_password/init";
+        String endpoint = "api/account/reset_password/init";
+        String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;;
 
         StringRequest resetPasswordWithEmailRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
         {

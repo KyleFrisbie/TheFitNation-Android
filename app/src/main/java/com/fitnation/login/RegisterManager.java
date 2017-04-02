@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.utils.EnvironmentManager;
 
 import org.json.JSONObject;
 
@@ -28,7 +29,8 @@ public class RegisterManager implements RegisterManagerContract.Manager{
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
 
         // TODO: convert to accept url class when it become available
-        String url = "http://the-fit-nation-dev.herokuapp.com/api/register";
+        String endpoint = "api/register";
+        String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
         StringRequest jsonObjectPost = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
         {

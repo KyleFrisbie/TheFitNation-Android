@@ -10,6 +10,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.base.BaseActivity;
+import com.fitnation.utils.EnvironmentManager;
 
 import org.json.JSONObject;
 
@@ -32,7 +33,8 @@ public class RegisterPresenter implements RegisterContract.Presenter, RegisterMa
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
 
         // TODO: convert to accept url class when it become available
-        String url = "http://the-fit-nation-dev.herokuapp.com/api/register";
+        String endpoint = "api/register";
+        String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
         StringRequest jsonObjectPost = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
                 {

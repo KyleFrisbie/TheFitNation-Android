@@ -12,6 +12,7 @@ import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.networking.AuthToken;
+import com.fitnation.utils.EnvironmentManager;
 import com.fitnation.utils.NetworkUtils;
 
 import org.json.JSONException;
@@ -38,7 +39,8 @@ public class LoginPresenter implements LoginContract.Presenter, LoginManagerCont
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
 
         // TODO: change over to the url selector class when that is implemented.
-        String url = "http://the-fit-nation-dev.herokuapp.com/oauth/token";
+        String endpoint = "oauth/token";
+        String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
         JsonObjectRequest jsonObjectPost = new JsonObjectRequest(Request.Method.POST,
                 url, null, new Response.Listener<JSONObject>()

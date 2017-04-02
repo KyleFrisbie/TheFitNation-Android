@@ -10,6 +10,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.networking.AuthToken;
+import com.fitnation.utils.EnvironmentManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +32,8 @@ public class LoginManager implements LoginManagerContract.Manager{
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
 
         // TODO: change over to the url selector class when that is implemented.
-        String url = "http://the-fit-nation-dev.herokuapp.com/oauth/token";
+        String endpoint = "oauth/token";
+        String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
         JsonObjectRequest jsonObjectPost = new JsonObjectRequest(Request.Method.POST,
                 url, null, new Response.Listener<JSONObject>()
