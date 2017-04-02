@@ -85,6 +85,9 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
 
     @Override
     public void showAuthError(String errorMessage) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getBaseActivity()
+                .getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), 0);
         Snackbar progressSnackBar = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
                 errorMessage, BaseTransientBottomBar.LENGTH_SHORT);
         progressSnackBar.show();

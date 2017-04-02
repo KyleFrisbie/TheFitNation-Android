@@ -46,7 +46,7 @@ public class LoginScreenTest extends InstrumentationTest {
     @Test
     public void testLoginFlowFor400Error() {
         loginScreenIsDisplayed();
-        onView(withId(R.id.email_editText)).perform(typeText("badusername"));
+        onView(withId(R.id.email_editText)).perform(typeText("badusername@email.com"));
         onView(withId(R.id.password_editText)).perform(typeText("Pa55w0rd"));
         pressBack();
         onView(withId(R.id.login_button)).perform(click());
