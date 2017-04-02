@@ -3,10 +3,13 @@ package com.fitnation.exercise;
 import android.content.Context;
 import android.util.Log;
 
+import com.fitnation.R;
 import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
 import com.fitnation.exercise.callbacks.SaveDialogCallback;
+import com.fitnation.exercise.edit.ViewExerciseFragment;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.enums.ExerciseAction;
+import com.fitnation.navigation.NavigationActivity;
 
 import java.util.List;
 
@@ -39,6 +42,14 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void stop() {
 
+    }
+
+    @Override
+    public void onEditPressed(ExerciseInstance exercise) {
+        mView.hideForEditExercise();
+        NavigationActivity navigationActivity = (NavigationActivity) mView.getBaseActivity();
+        navigationActivity.displayBackArrow(true, "Edit");
+        mView.getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_content, ViewExerciseFragment.newInstance(exercise)).addToBackStack(null).commit();
     }
 
     //----------------------------------ExercisesRequestCallback----------------------------------//

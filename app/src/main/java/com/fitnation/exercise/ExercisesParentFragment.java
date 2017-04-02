@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,11 @@ import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.exercise.exerciseList.ExercisesListFragment;
 import com.fitnation.exercise.callbacks.ExerciseSelectedCallback;
+import com.fitnation.exercise.exerciseList.OnEditExercisePressed;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.enums.ExerciseAction;
 import com.fitnation.model.enums.SkillLevel;
+import com.fitnation.navigation.NavigationActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +34,8 @@ import butterknife.OnClick;
 /**
  * Created by Ryan Newsom on 3/12/17.
  */
-public class ExercisesParentFragment extends BaseFragment implements ExercisesParentContract.View, ExerciseSelectedCallback {
+public class ExercisesParentFragment extends BaseFragment implements ExercisesParentContract.View, ExerciseSelectedCallback, OnEditExercisePressed {
+    private static final String TAG = ExercisesParentFragment.class.getSimpleName();
     private ExercisesParentContract.Presenter mPresenter;
     private static final String EXERCISE_ACTION = "EXERCISE_ACTION";
     private ExerciseAction mAction;
@@ -92,7 +96,7 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new ExerciseSectionsPagerAdapter(getFragmentManager(), getContext(), this);
+        mSectionsPagerAdapter = new ExerciseSectionsPagerAdapter(getFragmentManager(), getContext(), this, this);
         // Set up the ViewPager with the sections adapter.
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -105,13 +109,19 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.i(TAG, "onViewCreated()");
+    }
+
+    @Override
     public void setPresenter(ExercisesParentContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
     public BaseActivity getBaseActivity() {
-        return null;
+        return (BaseActivity) getActivity();
     }
 
     @Override
@@ -121,8 +131,16 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
 
     @Override
     public void onStart() {
+        Log.i(TAG, "onStart()");
         super.onStart();
         mPresenter.onViewReady();
+        ((NavigationActivity) getActivity()).displayBackArrow(false, "Build A Workout");
+    }
+
+    @Override
+    public void onResume() {
+        Log.i(TAG, "onResume()");
+        super.onResume();
     }
 
     @OnClick(R.id.exercise_list_action)
@@ -169,7 +187,21 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
     }
 
     @Override
+    public void hideForEditExercise() {
+        TabLayout tabLayout = (TabLayout) getView().findViewById(R.id.tabs);
+        if(tabLayout != null) {
+            tabLayout.setVisibility(View.GONE);
+        }
+        mActionButton.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
     public void onExerciseSelected(ExerciseInstance exerciseInstance, boolean isSelected) {
         mPresenter.onExerciseSelected(exerciseInstance, isSelected);
+    }
+
+    @Override
+    public void onEditPressed(ExerciseInstance exercise) {
+        mPresenter.onEditPressed(exercise);
     }
 }

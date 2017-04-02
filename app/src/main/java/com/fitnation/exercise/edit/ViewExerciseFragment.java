@@ -66,6 +66,7 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
         if(args != null) {
             mExerciseInstance = (ExerciseInstance) args.getSerializable(EXERCISE_KEY);
         }
+
     }
 
     @Override

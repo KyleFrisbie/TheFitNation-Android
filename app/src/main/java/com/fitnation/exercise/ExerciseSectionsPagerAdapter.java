@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.fitnation.R;
 import com.fitnation.exercise.exerciseList.ExercisesListFragment;
 import com.fitnation.exercise.callbacks.ExerciseSelectedCallback;
+import com.fitnation.exercise.exerciseList.OnEditExercisePressed;
+import com.fitnation.model.ExerciseInstance;
 
 /**
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -20,18 +22,20 @@ import com.fitnation.exercise.callbacks.ExerciseSelectedCallback;
 public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
     private ExerciseSelectedCallback mExerciseSelectedCallback;
+    private OnEditExercisePressed mOnEditExercisePressed;
 
-    public ExerciseSectionsPagerAdapter(FragmentManager fm, Context context, ExerciseSelectedCallback exerciseSelectedCallback) {
+    public ExerciseSectionsPagerAdapter(FragmentManager fm, Context context, ExerciseSelectedCallback exerciseSelectedCallback, OnEditExercisePressed onEditExercisePressed) {
         super(fm);
         mContext = context;
         mExerciseSelectedCallback = exerciseSelectedCallback;
+        mOnEditExercisePressed = onEditExercisePressed;
     }
 
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return ExercisesListFragment.newInstance(null, mExerciseSelectedCallback);
+        return ExercisesListFragment.newInstance(null, mExerciseSelectedCallback, mOnEditExercisePressed);
     }
 
     @Override

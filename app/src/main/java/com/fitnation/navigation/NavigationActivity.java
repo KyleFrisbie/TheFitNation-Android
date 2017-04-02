@@ -2,17 +2,21 @@ package com.fitnation.navigation;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.exercise.ExercisesParentFragment;
 import com.fitnation.model.enums.ExerciseAction;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +28,7 @@ public class NavigationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.toolbar) public Toolbar mToolbar;
     @BindView(R.id.drawer_layout) public DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +42,48 @@ public class NavigationActivity extends BaseActivity
 
     private void setUpActionBar() {
         setSupportActionBar(mToolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        mToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                mToolbar,
+                R.string.navigation_drawer_open,  /* "open drawer" description */
+                R.string.navigation_drawer_close  /* "close drawer" description */
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
     }
 
     @Override
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
+
         } else {
-            super.onBackPressed();
+            List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+            if (fragmentList != null) {
+                Fragment fragment = fragmentList.get(0);
+                if(fragment instanceof ExercisesParentFragment) {
+                    displayBackArrow(false, "Build a Workout");
+                }
+            }
+            int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
+
+            if (backStackCount >= 1) {
+                getSupportFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -92,5 +127,25 @@ public class NavigationActivity extends BaseActivity
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void displayBackArrow(boolean show, String title) {
+        if (title != null) {
+            getSupportActionBar().setTitle(title);
+        }
+        if(show) {
+            mToggle.setDrawerIndicatorEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            mToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+        } else {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            mToggle.setDrawerIndicatorEnabled(true);
+            mToggle.setToolbarNavigationClickListener(null);
+        }
     }
 }

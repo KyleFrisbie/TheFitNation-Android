@@ -20,10 +20,13 @@ public interface ExercisesParentContract {
         void showProgress();
         void displayExercises(List<ExerciseInstance> exercises);
         void promptUserToSave(DialogFragment alertDialog);
+        void hideForEditExercise();
     }
 
     interface Presenter extends BasePresenter {
         void onActionButtonClicked(ExerciseAction action);
         void onExerciseSelected(ExerciseInstance exerciseInstance, boolean isSelected);
+
+        void onEditPressed(ExerciseInstance exercise);
     }
 }

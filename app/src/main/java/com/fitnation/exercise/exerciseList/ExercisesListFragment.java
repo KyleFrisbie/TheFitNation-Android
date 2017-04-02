@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.fitnation.R;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.exercise.callbacks.ExerciseSelectedCallback;
+import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
 import com.fitnation.exercise.edit.ViewExerciseFragment;
 import com.fitnation.model.ExerciseInstance;
 
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
 /**
  * Displays a list of exercises
  */
-public class ExercisesListFragment extends BaseFragment implements OnEditExercisePressed {
+public class ExercisesListFragment extends BaseFragment {
     private static final String TAG = ExercisesListFragment.class.getSimpleName();
     private static final String EXERCISE_LIST = "EXERCISE_LIST";
     private List<ExerciseInstance> mExercises;
@@ -33,13 +34,14 @@ public class ExercisesListFragment extends BaseFragment implements OnEditExercis
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ExerciseSelectedCallback mExerciseSelectedCallback;
+    private OnEditExercisePressed mOnEditExercisePressed;
 
 
     public ExercisesListFragment() {
         // Required empty public constructor
     }
 
-    public static ExercisesListFragment newInstance(List<ExerciseInstance> exerciseInstances, ExerciseSelectedCallback callback) {
+    public static ExercisesListFragment newInstance(List<ExerciseInstance> exerciseInstances, ExerciseSelectedCallback callback, OnEditExercisePressed onEditExercisePressed) {
         ExercisesListFragment  exercisesListFragment = new ExercisesListFragment();
 
         if(exerciseInstances != null && !exerciseInstances.isEmpty()) {
@@ -50,6 +52,7 @@ public class ExercisesListFragment extends BaseFragment implements OnEditExercis
         }
 
         exercisesListFragment.setExerciseSelectedCallback(callback);
+        exercisesListFragment.setOnEditExercisePressed(onEditExercisePressed);
 
         return exercisesListFragment;
     }
@@ -58,7 +61,9 @@ public class ExercisesListFragment extends BaseFragment implements OnEditExercis
         mExerciseSelectedCallback = exerciseSelectedCallback;
     }
 
-
+    public void setOnEditExercisePressed(OnEditExercisePressed onEditExercisePressed) {
+        this.mOnEditExercisePressed = onEditExercisePressed;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,7 +85,7 @@ public class ExercisesListFragment extends BaseFragment implements OnEditExercis
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, this);
+        mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressed);
         mRecyclerView.setAdapter(mAdapter);
 
         return v;
@@ -90,7 +95,7 @@ public class ExercisesListFragment extends BaseFragment implements OnEditExercis
         mExercises = exercises;
 
         if(getView() != null) {
-            mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, this);
+            mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressed);
             mRecyclerView.setAdapter(mAdapter);
         }
     }
@@ -98,10 +103,5 @@ public class ExercisesListFragment extends BaseFragment implements OnEditExercis
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onEditPressed(ExerciseInstance exercise) {
-        getFragmentManager().beginTransaction().add(R.id.main_content, ViewExerciseFragment.newInstance(exercise)).commit();
     }
 }
