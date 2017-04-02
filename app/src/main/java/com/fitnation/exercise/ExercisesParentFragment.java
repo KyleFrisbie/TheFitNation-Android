@@ -187,12 +187,19 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
     }
 
     @Override
-    public void hideForEditExercise() {
+    public void hideForEditExercise(boolean hide) {
         TabLayout tabLayout = (TabLayout) getView().findViewById(R.id.tabs);
-        if(tabLayout != null) {
-            tabLayout.setVisibility(View.GONE);
+        if(hide) {
+            if (tabLayout != null) {
+                tabLayout.setVisibility(View.GONE);
+            }
+            mActionButton.setVisibility(View.INVISIBLE);
+        } else {
+            if (tabLayout != null) {
+                tabLayout.setVisibility(View.VISIBLE);
+            }
+            mActionButton.setVisibility(View.VISIBLE);
         }
-        mActionButton.setVisibility(View.INVISIBLE);
     }
 
     @Override

@@ -1,16 +1,17 @@
 package com.fitnation.exercise.edit;
 
 import com.fitnation.model.Exercise;
+import com.fitnation.model.ExerciseInstance;
 
 /**
  * Created by Ryan on 4/1/2017.
  */
 
 public class ViewExercisePresenter implements ViewExerciseContract.Presenter {
-    private Exercise mExercise;
+    private ExerciseInstance mExercise;
     private ViewExerciseContract.View mView;
 
-    public ViewExercisePresenter(Exercise exercise, ViewExerciseContract.View view) {
+    public ViewExercisePresenter(ExerciseInstance exercise, ViewExerciseContract.View view) {
         mExercise = exercise;
         mView = view;
     }

@@ -20,7 +20,7 @@ public interface ExercisesParentContract {
         void showProgress();
         void displayExercises(List<ExerciseInstance> exercises);
         void promptUserToSave(DialogFragment alertDialog);
-        void hideForEditExercise();
+        void hideForEditExercise(boolean hide);
     }
 
     interface Presenter extends BasePresenter {
