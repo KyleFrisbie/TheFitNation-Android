@@ -8,7 +8,7 @@ import io.realm.RealmObject;
 /**
  * An Exercise Instance Termplate's set
  */
-public class ExerciseInstanceSet extends RealmObject{
+public class ExerciseInstanceSet extends RealmObject implements Cloneable{
     private Long id;
     private Long androidId;
     private Integer orderNumber;
@@ -76,5 +76,10 @@ public class ExerciseInstanceSet extends RealmObject{
 
     public Integer getOrderNumber() {
         return orderNumber;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

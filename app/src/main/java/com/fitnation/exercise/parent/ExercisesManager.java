@@ -78,14 +78,11 @@ public class ExercisesManager extends DataManager {
                                     ExerciseInstance copy1 = null;
                                     ExerciseInstance copy2 = null;
                                     ExerciseInstance copy3 = null;
+                                    
+                                    copy1 = (ExerciseInstance)instance.clone();
+                                    copy2 = (ExerciseInstance)instance.clone();
+                                    copy3 = (ExerciseInstance)instance.clone();
 
-                                    try {
-                                        copy1 = (ExerciseInstance)instance.clone();
-                                        copy2 = (ExerciseInstance)instance.clone();
-                                        copy3 = (ExerciseInstance)instance.clone();
-                                    } catch (CloneNotSupportedException e) {
-                                        e.printStackTrace();
-                                    }
                                     mExerciseInstancesTab1.add(copy1);
                                     mExerciseInstancesTab2.add(copy2);
                                     mExerciseInstancesTab3.add(copy3);
@@ -108,7 +105,7 @@ public class ExercisesManager extends DataManager {
                 ) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String authToken = "31e798c4-9131-45ea-aa74-10fa04ebefff";
+                        String authToken = "855a6ded-b07c-4725-88f4-56eda6a0ffb2";
                         Map<String, String> mHeaders = new ArrayMap();
 
                         mHeaders.put("Authorization", "Bearer" + " " + authToken);

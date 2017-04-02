@@ -23,11 +23,7 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter {
         mExercise = exercise;
         mView = view;
         mOnExerciseUpdatedCallback = onExerciseUpdatedCallback;
-        try {
-            mOriginalExerciseInstance = (ExerciseInstance) exercise.clone();
-        } catch (CloneNotSupportedException e) {
-            Log.wtf(TAG, e.getMessage());
-        }
+        mOriginalExerciseInstance = (ExerciseInstance) exercise.clone();
     }
 
     @Override
@@ -52,7 +48,6 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter {
         int orderNumber = sets.size() + 1;
         sets.add(new ExerciseInstanceSet(mExercise, orderNumber));
         mView.bindExerciseInstanceToView(mExercise);
-        //update the view
     }
 
     @Override
@@ -63,11 +58,7 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter {
 
     @Override
     public void onResetClicked() {
-        try {
-            mExercise = (ExerciseInstance) mOriginalExerciseInstance.clone();
-        } catch (CloneNotSupportedException e) {
-            Log.wtf(TAG, e.getMessage());
-        }
+        mExercise = (ExerciseInstance) mOriginalExerciseInstance.clone();
 
         mView.bindExerciseInstanceToView(mExercise);
     }
@@ -77,4 +68,5 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter {
         mOnExerciseUpdatedCallback.exerciseUpdated(exerciseInstance);
         mView.getBaseActivity().getSupportFragmentManager().popBackStack();
     }
+
 }

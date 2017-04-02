@@ -66,8 +66,21 @@ public class ExerciseInstance extends RealmObject implements Serializable, Clone
         return notes;
     }
 
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public Object clone() {
+        ExerciseInstance cloned = null;
+        try {
+            cloned = (ExerciseInstance) super.clone();
+            RealmList<ExerciseInstanceSet> setsClones = new RealmList<>();
+            for (ExerciseInstanceSet set : exerciseInstanceSets) {
+                ExerciseInstanceSet clone = (ExerciseInstanceSet) set.clone();
+                setsClones.add(clone);
+            }
+            cloned.setExerciseInstanceSets(setsClones);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+        return cloned;
     }
 
     public Long getId() {

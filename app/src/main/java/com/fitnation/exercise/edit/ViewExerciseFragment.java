@@ -98,7 +98,7 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    @OnClick(R.id.add_set)
+    @OnClick(R.id.add_set_button)
     public void onAddSetClicked() {
         mPresenter.onAddSetClicked();
     }
