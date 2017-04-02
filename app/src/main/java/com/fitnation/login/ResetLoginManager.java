@@ -24,7 +24,6 @@ public class ResetLoginManager implements ResetLoginManagerContract.Manager {
 
     public void resetPasswordRequest(final String email){
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
-        // TODO: change to the url class when it is implemented
         String endpoint = "api/account/reset_password/init";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;;
 
@@ -32,6 +31,7 @@ public class ResetLoginManager implements ResetLoginManagerContract.Manager {
         {
             @Override
             public void onResponse(String response) {
+                // TODO: convert to a successResponse return
                 responseMessage(response);
             }
         }, new Response.ErrorListener() {

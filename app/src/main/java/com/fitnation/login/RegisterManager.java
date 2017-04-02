@@ -27,8 +27,6 @@ public class RegisterManager implements RegisterManagerContract.Manager{
     public void requestRegistration(final String email, final String password, final String userName,
                                     final String language){
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
-
-        // TODO: convert to accept url class when it become available
         String endpoint = "api/register";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
@@ -36,6 +34,7 @@ public class RegisterManager implements RegisterManagerContract.Manager{
         {
             @Override
             public void onResponse(String response) {
+                // TODO: convert to a successResponse return
                 handleJsonResponse();
 
             }

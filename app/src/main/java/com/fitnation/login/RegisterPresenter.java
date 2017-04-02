@@ -29,10 +29,7 @@ public class RegisterPresenter implements RegisterContract.Presenter, RegisterMa
     @Override
     public void onRegisterCreatePressed(final String email, final String password, final String userName,
                                         final String language) {
-
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
-
-        // TODO: convert to accept url class when it become available
         String endpoint = "api/register";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
@@ -40,6 +37,7 @@ public class RegisterPresenter implements RegisterContract.Presenter, RegisterMa
                 {
                     @Override
                     public void onResponse(String response) {
+                        // TODO: convert to a successResponse return
                         handleJsonResponse();
 
                     }
@@ -79,7 +77,6 @@ public class RegisterPresenter implements RegisterContract.Presenter, RegisterMa
 
     }
 
-    // TODO: convert to a successResponse return
     /**
      * handles the json from the server
      */

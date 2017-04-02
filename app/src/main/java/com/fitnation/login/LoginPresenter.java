@@ -37,8 +37,6 @@ public class LoginPresenter implements LoginContract.Presenter, LoginManagerCont
     public void onLoginPressed(final String userName, final String password) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
-
-        // TODO: change over to the url selector class when that is implemented.
         String endpoint = "oauth/token";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
