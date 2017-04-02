@@ -15,7 +15,7 @@ public class ExerciseInstanceSet extends RealmObject{
     private Float repQuantity;
     private Float effortQuantity;
     private Float restTime;
-    private ExerciseInstance exerciseInstance;
+    private Long exerciseInstanceId;
     private String notes;
 
     /**
@@ -26,7 +26,7 @@ public class ExerciseInstanceSet extends RealmObject{
      * @param restTime - The rest time the user should take
      */
     public ExerciseInstanceSet(ExerciseInstance exerciseInstance, Integer orderNumber, Float reqQuantity, Float effortQuantity, Float restTime) {
-        this.exerciseInstance = exerciseInstance;
+        this.exerciseInstanceId = exerciseInstance.getId();
         this.orderNumber = orderNumber;
         this.repQuantity = reqQuantity;
         this.effortQuantity = effortQuantity;
@@ -37,12 +37,12 @@ public class ExerciseInstanceSet extends RealmObject{
         //required default constructor
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
-    public ExerciseInstance getExerciseInstance() {
-        return exerciseInstance;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Float getEffortQuantity() {

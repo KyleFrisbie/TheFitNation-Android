@@ -176,7 +176,7 @@ public class ExercisesManager extends DataManager{
 
 
 
-        //TODO Save the UserWorkoutTemplate to the web service
+
     }
 
     private WorkoutTemplate getWorkoutTemplate(WorkoutTemplate workoutTemplate) {
