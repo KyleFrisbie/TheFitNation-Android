@@ -74,7 +74,7 @@ public class NavigationActivity extends BaseActivity
             if (fragmentList != null) {
                 Fragment fragment = fragmentList.get(0);
                 if(fragment instanceof ExercisesParentFragment) {
-                    displayBackArrow(false, "Build a Workout");
+                    displayBackArrow(false, getString(R.string.build_workout_title));
                     ExercisesParentFragment exercisesParentFragment = (ExercisesParentFragment) fragment;
                     exercisesParentFragment.hideForEditExercise(false);
                 }

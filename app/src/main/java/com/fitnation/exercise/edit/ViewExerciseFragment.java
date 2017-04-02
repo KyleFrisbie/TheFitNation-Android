@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,10 @@ import butterknife.OnClick;
  * Allows the user to Edit an
  */
 public class ViewExerciseFragment extends BaseFragment implements ViewExerciseContract.View {
+    private static final String TAG = ViewExerciseFragment.class.getSimpleName();
     private static final String EXERCISE_KEY = "EXERCISE_KEY";
     private ExerciseInstance mExerciseInstance;
+    private ExerciseInstance mOriginalExerciseInstance;
     private ViewExerciseContract.Presenter mPresenter;
 
     @BindView(R.id.exercise_name_edit)
@@ -65,6 +68,11 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
         Bundle args = getArguments();
         if(args != null) {
             mExerciseInstance = (ExerciseInstance) args.getSerializable(EXERCISE_KEY);
+            try {
+                mOriginalExerciseInstance = (ExerciseInstance) mExerciseInstance.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -76,20 +84,36 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
         View v = inflater.inflate(R.layout.exercise_fragment_view_exercise, container, false);
         ButterKnife.bind(this, v);
 
-        mExerciseNameView.setText(mExerciseInstance.getExercise().getName());
-        mLevelView.setText(mExerciseInstance.getExercise().getSkillLevelLevel());
-        mNotesView.setText(mExerciseInstance.getNotes());
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new SetAdapter(mExerciseInstance.getExerciseInstanceSets());
-
+        bindExerciseInstanceToView(mExerciseInstance);
+        
         return v;
+    }
+
+    private void bindExerciseInstanceToView(ExerciseInstance exerciseInstance) {
+        mExerciseNameView.setText(exerciseInstance.getExercise().getName());
+        mLevelView.setText(exerciseInstance.getExercise().getSkillLevelLevel());
+        mNotesView.setText(exerciseInstance.getNotes());
+        mAdapter = new SetAdapter(exerciseInstance.getExerciseInstanceSets());
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @OnClick(R.id.add_set)
     public void onAddSetClicked() {
         mPresenter.onAddSetClicked();
+    }
+
+    @OnClick(R.id.reset_button)
+    public void onResetClicked() {
+        try {
+            mExerciseInstance = (ExerciseInstance) mOriginalExerciseInstance.clone();
+        } catch (CloneNotSupportedException e) {
+            Log.e(TAG, e.getMessage());
+        }
+
+        bindExerciseInstanceToView(mExerciseInstance);
     }
 
     @Override

@@ -17,25 +17,20 @@ public class ExerciseInstanceSet extends RealmObject{
     private Float restTime;
     private ExerciseInstance exerciseInstance;
     private String notes;
-    private RealmList<UserExerciseInstanceSet> userExerciseInstanceSets;
 
     /**
-     * Constructor
      * @param exerciseInstance - the exercise this set belongs to
      * @param orderNumber - the set's order
      * @param reqQuantity - the reps to do
+     * @param effortQuantity - Weight, Time, etc.
+     * @param restTime - The rest time the user should take
      */
-    public ExerciseInstanceSet(ExerciseInstance exerciseInstance, Integer orderNumber, Float reqQuantity, List<UserExerciseInstanceSet> userExerciseInstanceSetList) {
+    public ExerciseInstanceSet(ExerciseInstance exerciseInstance, Integer orderNumber, Float reqQuantity, Float effortQuantity, Float restTime) {
         this.exerciseInstance = exerciseInstance;
         this.orderNumber = orderNumber;
         this.repQuantity = reqQuantity;
-        this.userExerciseInstanceSets = new RealmList<UserExerciseInstanceSet>();
-
-        if(userExerciseInstanceSetList != null) {
-            for (UserExerciseInstanceSet set : userExerciseInstanceSetList) {
-                userExerciseInstanceSets.add(set);
-            }
-        }
+        this.effortQuantity = effortQuantity;
+        this.restTime = restTime;
     }
 
     public ExerciseInstanceSet() {
