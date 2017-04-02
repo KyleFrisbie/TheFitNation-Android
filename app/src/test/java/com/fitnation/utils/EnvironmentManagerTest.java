@@ -41,6 +41,4 @@ public class EnvironmentManagerTest {
         assertTrue(current.getBaseUrl().equals(DEV_ENDPOINT));
         assertTrue(current.getApiUrl().equals(DEV_API_ENDPOINT));
     }
-
-
 }
