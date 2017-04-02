@@ -45,7 +45,7 @@ public class UserExerciseInstanceSet extends RealmObject {
     }
 
     public UserExerciseInstanceSet(ExerciseInstanceSet exerciseInstanceSet, UserExerciseInstance exerciseInstance) {
-        this.exerciseInstanceSet = exerciseInstanceSet;
+        this.exerciseInstanceSetId = exerciseInstanceSet.getId();
         this.userExerciseInstance = exerciseInstance;
         this.orderNumber = exerciseInstanceSet.getOrderNumber();
         this.repQuantity = exerciseInstanceSet.getRepQuantity();

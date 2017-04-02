@@ -175,6 +175,17 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
     }
 
     @Override
+    public int getSelectedTab() {
+        int selected = -1;
+
+        if(mViewPager != null) {
+            selected = mViewPager.getCurrentItem();
+        }
+
+        return selected;
+    }
+
+    @Override
     public void onExerciseSelected(ExerciseInstance exerciseInstance, boolean isSelected) {
         mPresenter.onExerciseSelected(exerciseInstance, isSelected);
     }

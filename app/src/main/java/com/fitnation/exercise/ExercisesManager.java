@@ -40,7 +40,7 @@ import io.realm.RealmResults;
 /**
  * Created by Ryan on 3/21/2017.
  */
-public class ExercisesManager extends DataManager{
+public class ExercisesManager extends DataManager {
     private static final String TAG = ExercisesManager.class.getSimpleName();
     private RequestQueue mRequestQueue;
     private List<ExerciseInstance> mSelectedExercises;
@@ -113,7 +113,7 @@ public class ExercisesManager extends DataManager{
                 ) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        String authToken = "eb986152-33b3-4e8a-806a-bf8c27e798c4";
+                        String authToken = "31e798c4-9131-45ea-aa74-10fa04ebefff";
                         Map<String, String> mHeaders = new ArrayMap();
 
                         mHeaders.put("Authorization", "Bearer" + " " + authToken);
@@ -210,9 +210,24 @@ public class ExercisesManager extends DataManager{
         return workoutTemplate;
     }
 
-    public void updateExerciseList(ExerciseInstance original, ExerciseInstance updated) {
+    public void updateExerciseList(ExerciseInstance original, ExerciseInstance updated, int tab) {
         mExerciseInstances.remove(original);
         mExerciseInstances.add(updated);
+
+        switch(tab) {
+            case 0:
+                mExerciseInstancesTab1.remove(original);
+                mExerciseInstancesTab1.add(updated);
+                break;
+            case 1:
+                mExerciseInstancesTab2.remove(original);
+                mExerciseInstancesTab2.add(updated);
+                break;
+            case 2:
+                mExerciseInstancesTab3.remove(original);
+                mExerciseInstancesTab3.add(updated);
+                break;
+        }
     }
 
     private List<ExerciseInstance> convertExercisesToInstances(List<Exercise> exercises) {

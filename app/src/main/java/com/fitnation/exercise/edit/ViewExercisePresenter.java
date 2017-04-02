@@ -2,11 +2,13 @@ package com.fitnation.exercise.edit;
 
 import com.fitnation.exercise.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.model.ExerciseInstance;
+import com.fitnation.model.ExerciseInstanceSet;
+
+import io.realm.RealmList;
 
 /**
- * Created by Ryan on 4/1/2017.
+ * Presenter for viewing an exercise
  */
-
 public class ViewExercisePresenter implements ViewExerciseContract.Presenter {
     private ExerciseInstance mExercise;
     private ViewExerciseContract.View mView;
@@ -35,7 +37,11 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter {
 
     @Override
     public void onAddSetClicked() {
-
+        //TODO add a set to the exercise instance
+        RealmList<ExerciseInstanceSet> sets =  mExercise.getExerciseInstanceSets();
+        int orderNumber = sets.size() + 1;
+        sets.add(new ExerciseInstanceSet(mExercise, orderNumber));
+        //update the view
     }
 
     @Override

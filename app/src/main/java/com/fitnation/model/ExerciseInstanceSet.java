@@ -33,6 +33,19 @@ public class ExerciseInstanceSet extends RealmObject{
         this.restTime = restTime;
     }
 
+    /**
+     * Constructor, will set default rep, effort, and rest time
+     * @param exerciseInstance
+     * @param orderNumber - order of the set compared to the others
+     */
+    public ExerciseInstanceSet(ExerciseInstance exerciseInstance, Integer orderNumber) {
+        this.exerciseInstanceId = exerciseInstance.getId();
+        this.orderNumber = orderNumber;
+        repQuantity = ExerciseInstance.REPS_DEFAULT;
+        effortQuantity = ExerciseInstance.EFFORT_DEFAULT;
+        restTime = ExerciseInstance.REST_TIME_DEFAULT;
+    }
+
     public ExerciseInstanceSet() {
         //required default constructor
     }

@@ -9,7 +9,7 @@ import com.fitnation.model.ExerciseInstance;
  */
 public interface ViewExerciseContract {
     interface View extends BaseView<Presenter> {
-
+        void bindExerciseInstanceToView(ExerciseInstance exerciseInstance);
     }
 
     interface Presenter extends BasePresenter {

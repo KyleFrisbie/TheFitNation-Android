@@ -11,6 +11,10 @@ import io.realm.RealmObject;
  * Created by Ryan on 3/21/2017.
  */
 public class ExerciseInstance extends RealmObject implements Serializable, Cloneable {
+    public static final Float REPS_DEFAULT = 8f;
+    public static final Float EFFORT_DEFAULT = 20f;
+    public static final Float REST_TIME_DEFAULT = 30f;
+
     private Long id;
     private Long androidId;
     private String notes;
@@ -24,13 +28,17 @@ public class ExerciseInstance extends RealmObject implements Serializable, Clone
 
     }
 
+    /**
+     * Constructor
+     * @param exercise - exercise to have an instance created out of
+     */
     public ExerciseInstance(Exercise exercise) {
         this.exercise = exercise;
         exerciseInstanceSets = new RealmList<>();
-        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 1, 8f, 8f, 30f));
-        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 2, 8f, 8f, 30f));
-        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 3, 8f, 8f, 30f));
-        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 4, 8f, 8f, 30f));
+        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 1, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
+        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 2, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
+        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 3, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
+        exerciseInstanceSets.add(new ExerciseInstanceSet(this, 4, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
     }
 
     public void setSelected(boolean selected) {

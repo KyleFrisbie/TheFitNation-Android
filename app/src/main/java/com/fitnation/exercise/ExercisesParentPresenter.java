@@ -100,7 +100,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     public void exerciseUpdated(@Nullable ExerciseInstance updatedExerciseInstance) {
         if(updatedExerciseInstance != null) {
             mExerciseInstanceBeingEdited = updatedExerciseInstance;
-            mExerciseManager.updateExerciseList(mExerciseInstanceBeingEdited, updatedExerciseInstance);
+            mExerciseManager.updateExerciseList(mExerciseInstanceBeingEdited, updatedExerciseInstance, mView.getSelectedTab());
             mView.displayUpdatedExercises(mExerciseManager.getExercises());
         }
     }

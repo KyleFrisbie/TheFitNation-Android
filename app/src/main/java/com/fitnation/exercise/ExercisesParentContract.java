@@ -21,6 +21,7 @@ public interface ExercisesParentContract {
         void displayExercises(List<ExerciseInstance> exercisesTabOne,List<ExerciseInstance> exercisesTabTwo, List<ExerciseInstance> exercisesTabThree);
         void displayUpdatedExercises(List<ExerciseInstance> updatedExercises);
         void promptUserToSave(DialogFragment alertDialog);
+        int getSelectedTab();
     }
 
     interface Presenter extends BasePresenter {

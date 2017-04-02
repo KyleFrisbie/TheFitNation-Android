@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Allows the user to Edit an
+ * Allows the user to Edit an Exercise Instance
  */
 public class ViewExerciseFragment extends BaseFragment implements ViewExerciseContract.View {
     private static final String TAG = ViewExerciseFragment.class.getSimpleName();
@@ -46,6 +46,11 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
         // Required empty public constructor
     }
 
+    /**
+     * Creates a new instance
+     * @param exerciseInstance - the exercise that is being edited
+     * @return - A new instance for the passed in exercise
+     */
     public static ViewExerciseFragment newInstance(ExerciseInstance exerciseInstance) {
         ViewExerciseFragment viewExerciseFragment = new ViewExerciseFragment();
         Bundle args = new Bundle();
@@ -63,14 +68,14 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Bundle args = getArguments();
+
         if(args != null) {
             mExerciseInstance = (ExerciseInstance) args.getSerializable(EXERCISE_KEY);
             try {
                 mOriginalExerciseInstance = (ExerciseInstance) mExerciseInstance.clone();
             } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
+                Log.wtf(TAG, e.getMessage());
             }
         }
 
@@ -91,7 +96,8 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
         return v;
     }
 
-    private void bindExerciseInstanceToView(ExerciseInstance exerciseInstance) {
+    @Override
+    public void bindExerciseInstanceToView(ExerciseInstance exerciseInstance) {
         mExerciseNameView.setText(exerciseInstance.getExercise().getName());
         mLevelView.setText(exerciseInstance.getExercise().getSkillLevelLevel());
         mNotesView.setText(exerciseInstance.getNotes());
@@ -115,7 +121,7 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
         try {
             mExerciseInstance = (ExerciseInstance) mOriginalExerciseInstance.clone();
         } catch (CloneNotSupportedException e) {
-            Log.e(TAG, e.getMessage());
+            Log.wtf(TAG, e.getMessage());
         }
 
         bindExerciseInstanceToView(mExerciseInstance);

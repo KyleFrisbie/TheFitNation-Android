@@ -43,6 +43,17 @@ public class ExercisesListFragment extends BaseFragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Log.i(TAG, "onHiddenChanged()");
+        if(mHasUpdatedData) {
+            mHasUpdatedData = false;
+            mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressed);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+    }
+
     public static ExercisesListFragment newInstance(List<ExerciseInstance> exerciseInstances, ExerciseSelectedCallback callback, OnEditExercisePressed onEditExercisePressed) {
         ExercisesListFragment  exercisesListFragment = new ExercisesListFragment();
 
@@ -88,11 +99,6 @@ public class ExercisesListFragment extends BaseFragment {
     public void onStart() {
         Log.i(TAG, "onStart()");
         super.onStart();
-        if(mHasUpdatedData) {
-            mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressed);
-            mRecyclerView.setAdapter(mAdapter);
-            mHasUpdatedData = false;
-        }
     }
 
     @Override
@@ -119,13 +125,7 @@ public class ExercisesListFragment extends BaseFragment {
 
     public void displayExercises( final List<ExerciseInstance> exercises) {
         mExercises = exercises;
-
-        if(getView() != null) {
-            mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressed);
-            mRecyclerView.setAdapter(mAdapter);
-        } else {
-            mHasUpdatedData = true;
-        }
+        mHasUpdatedData = true;
     }
 
     @Override
