@@ -48,18 +48,13 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         mPresenter.start();
     }
 
-    /**
-     * on facebook button pressed will launch do nothing so far
-     */
+    // TODO: add facebook integration
     @OnClick(R.id.facebook_login_button)
     public void onFacebookLoginButtonClicked() {
-        //empty methods that do nothing yet
         mPresenter.onFacebookLoginPressed();
     }
 
-    /**
-     * On google button pressed will do nothing
-     */
+    // TODO: add google integration
     @OnClick(R.id.google_login_button)
     public void onGoogleLoginButtonClicked() { mPresenter.onGoogleLoginPressed();}
 
@@ -68,8 +63,11 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
      */
     @OnClick(R.id.login_button)
     public void onLoginButtonClicked() {
-        mPresenter.onLoginPressed(mUsernameEditText.getText().toString(),
-                                  mPasswordEditText.getText().toString());
+        if(!mUsernameEditText.getText().toString().isEmpty()
+                && !mPasswordEditText.getText().toString().isEmpty()) {
+            mPresenter.onLoginPressed(mUsernameEditText.getText().toString(),
+                    mPasswordEditText.getText().toString());
+        }
     }
 
     /**
@@ -85,7 +83,12 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     public void onForgotLoginButtonClicked() { mPresenter.onForgotLoginButtonPressed(); }
 
     @Override
-    public void showProgress(String message) {
+    public void showSuccess() {
+
+    }
+
+    @Override
+    public void showProgress() {
     }
 
     /**
@@ -97,7 +100,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         Snackbar progressSnackBar = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
                 errorMessage, BaseTransientBottomBar.LENGTH_SHORT);
         progressSnackBar.show();
-    }
+                                                                          }
 
     @Override
     public void setPresenter(LoginContract.Presenter presenter) {

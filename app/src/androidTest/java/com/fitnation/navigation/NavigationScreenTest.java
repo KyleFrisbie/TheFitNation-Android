@@ -96,8 +96,6 @@ public class NavigationScreenTest extends InstrumentationTest{
         onView(withId(R.id.activity_login)).check(matches(isDisplayed()));
         onView(withId(R.id.login_button)).check(matches(isDisplayed()));
         onView(withId(R.id.signUp_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.facebook_login_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.google_login_button)).check(matches(isDisplayed()));
         onView(withId(R.id.email_editText)).check(matches(isDisplayed()));
         onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
         onView(withId(R.id.signUp_textView)).check(matches(isDisplayed()));

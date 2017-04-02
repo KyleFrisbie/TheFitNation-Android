@@ -9,8 +9,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.Factory.VolleyErrorMessage;
+import com.fitnation.base.BaseActivity;
 import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.networking.AuthToken;
+import com.fitnation.utils.NetworkUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,13 +25,16 @@ import static com.fitnation.login.LoginBaseActivity.VIEW_CONTAINER;
 /**
  * Presenter for the login screen. contains all the login logic for the login screen
  */
-public class LoginPresenter implements LoginContract.Presenter{
+public class LoginPresenter implements LoginContract.Presenter, LoginManagerContract.View{
     private LoginContract.View mView;
+    private LoginManagerContract.Manager mManager;
 
     public LoginPresenter (LoginContract.View view) { mView = view; }
 
+
     @Override
     public void onLoginPressed(final String userName, final String password) {
+
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
 
         // TODO: change over to the url selector class when that is implemented.
@@ -44,6 +49,7 @@ public class LoginPresenter implements LoginContract.Presenter{
                 storeTokens(response);
 
                 Intent mainActivityIntent = new Intent(mView.getBaseActivity(), NavigationActivity.class);
+                mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mView.getBaseActivity().startActivity(mainActivityIntent);
 
             }
@@ -65,6 +71,9 @@ public class LoginPresenter implements LoginContract.Presenter{
                 params.put("client_secret", "my-secret-token-to-change-in-production");
                 params.put("client_id", "TheFitNationapp");
                 params.put("submit", "login");
+
+                // TODO: Use NetworkUtils class instead
+
                 String bodyString = convertToUrlEncodedPostBody(params);
                 return bodyString.getBytes();
             }
@@ -133,9 +142,11 @@ public class LoginPresenter implements LoginContract.Presenter{
         mView.showAuthError(volleyErrorMessage.GetErrorMessage(mView.getBaseActivity()));
     }
 
+    // TODO: Implement facebook login
     @Override
     public void onFacebookLoginPressed() {    }
 
+    // TODO: Implement google Login
     @Override
     public void onGoogleLoginPressed() {    }
 
@@ -164,7 +175,6 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     @Override
     public void start() {
-
     }
 
     @Override
@@ -173,4 +183,23 @@ public class LoginPresenter implements LoginContract.Presenter{
     }
 
 
+    @Override
+    public void setPresenter(LoginManagerContract.Manager presenter) {
+        mManager = presenter;
+    }
+
+    @Override
+    public BaseActivity getBaseActivity() {
+        return mView.getBaseActivity();
+    }
+
+    @Override
+    public void successfulResponse() {
+
+    }
+
+    @Override
+    public void errorResponse() {
+
+    }
 }

@@ -8,6 +8,7 @@ import com.fitnation.base.BaseView;
  */
 public interface ResetLoginContract {
     interface View extends BaseView<Presenter> {
+        void showSuccess();
         void showProgress(String message);
         void showAuthError(String errorMessage);
     }

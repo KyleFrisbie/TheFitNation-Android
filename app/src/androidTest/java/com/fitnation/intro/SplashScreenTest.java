@@ -28,6 +28,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class SplashScreenTest extends InstrumentationTest {
+    private final int DELAY_TIME = 500;
 
     @Rule
     public ActivityTestRule<SplashScreenActivity> mActivityRule = new ActivityTestRule<>(SplashScreenActivity.class);
@@ -38,21 +39,19 @@ public class SplashScreenTest extends InstrumentationTest {
     }
 
     @After
-    public void tearDown() { super.tearDown(mActivityRule.getActivity()); }
-
-    @Test
-    public void SplashScreenAppears() {
-
+    public void tearDown() {
+        super.tearDown(mActivityRule.getActivity());
     }
 
     @Test
+    public void SplashScreenAppears() {  }
+
+    @Test
     public void testLoginScreenLaunchedAfterDelay() {
-        SystemClock.sleep(500);
+        SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.activity_login)).check(matches(isDisplayed()));
         onView(withId(R.id.login_button)).check(matches(isDisplayed()));
         onView(withId(R.id.signUp_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.facebook_login_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.google_login_button)).check(matches(isDisplayed()));
         onView(withId(R.id.email_editText)).check(matches(isDisplayed()));
         onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
     }

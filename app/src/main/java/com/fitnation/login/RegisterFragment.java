@@ -52,10 +52,19 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
 
     @OnClick(R.id.register_button)
     public void onRegisterButtonPressed() {
-        mPresenter.onRegisterCreatePressed(mEmail.getText().toString().trim(),
-                mPassword.getText().toString().trim(),
-                userName.getText().toString().trim(),
-                "en");
+        if(!mEmail.getText().toString().isEmpty()
+                && !mPassword.getText().toString().isEmpty()
+                && !userName.getText().toString().isEmpty()) {
+            mPresenter.onRegisterCreatePressed(mEmail.getText().toString().trim(),
+                    mPassword.getText().toString().trim(),
+                    userName.getText().toString().trim(),
+                    "en");
+        }
+    }
+
+    @Override
+    public void showSuccess() {
+
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.Factory.VolleyErrorMessage;
+import com.fitnation.base.BaseActivity;
 
 import org.json.JSONObject;
 
@@ -18,14 +19,16 @@ import java.util.Map;
 /**
  * Presenter for register screen that contains all the business logic associated with the screen
  */
-public class RegisterPresenter implements RegisterContract.Presenter {
+public class RegisterPresenter implements RegisterContract.Presenter, RegisterManagerContract.View {
     private RegisterContract.View mView;
+    private RegisterManagerContract.Manager mManager;
 
     public RegisterPresenter (RegisterContract.View view){ mView = view; }
 
     @Override
     public void onRegisterCreatePressed(final String email, final String password, final String userName,
                                         final String language) {
+
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
 
         // TODO: convert to accept url class when it become available
@@ -74,6 +77,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
 
     }
 
+    // TODO: convert to a successResponse return
     /**
      * handles the json from the server
      */
@@ -103,6 +107,26 @@ public class RegisterPresenter implements RegisterContract.Presenter {
 
     @Override
     public void stop() {
+
+    }
+
+    @Override
+    public void setPresenter(RegisterManagerContract.Manager presenter) {
+        mManager = presenter;
+    }
+
+    @Override
+    public BaseActivity getBaseActivity() {
+        return mView.getBaseActivity();
+    }
+
+    @Override
+    public void successfulResponse() {
+
+    }
+
+    @Override
+    public void errorResponse() {
 
     }
 }

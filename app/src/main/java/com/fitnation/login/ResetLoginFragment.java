@@ -52,6 +52,11 @@ public class ResetLoginFragment extends BaseFragment implements ResetLoginContra
     }
 
     @Override
+    public void showSuccess() {
+
+    }
+
+    @Override
     public void showProgress(String message) {
         Snackbar progressSnackBar = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
                 message, BaseTransientBottomBar.LENGTH_SHORT);

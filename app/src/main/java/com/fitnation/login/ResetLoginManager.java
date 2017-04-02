@@ -1,6 +1,5 @@
 package com.fitnation.login;
 
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -8,23 +7,21 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.fitnation.Factory.VolleyErrorMessage;
-import com.fitnation.base.BaseActivity;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * contains the business logic for the view
+ * handles the email reset password request
  */
-public class ResetLoginPresenter implements ResetLoginContract.Presenter, ResetLoginManagerContract.View {
-    private ResetLoginContract.View mView;
-    private ResetLoginManagerContract.Manager mManager;
 
-    public ResetLoginPresenter(ResetLoginContract.View view) { mView = view; }
+public class ResetLoginManager implements ResetLoginManagerContract.Manager {
+    private ResetLoginManagerContract.View mView;
+    public ResetLoginManager(ResetLoginManagerContract.View view) {
+        mView = view;
+    }
 
-    @Override
-    public void onResetPasswordButtonPressed(final String email) {
+    public void resetPasswordRequest(final String email){
         RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
         // TODO: change to the url class when it is implemented
         String url = "http://the-fit-nation-dev.herokuapp.com/api/account/reset_password/init";
@@ -35,13 +32,13 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter, ResetL
             public void onResponse(String response) {
                 responseMessage(response);
             }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    if(error.networkResponse != null){
-                        errorResponseMessage(error);
-                    }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if(error.networkResponse != null){
+                    errorResponseMessage(error);
                 }
+            }
         }){
             @Override
             public byte[] getBody() throws AuthFailureError {
@@ -60,17 +57,16 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter, ResetL
         requestQueue.start();
     }
 
-    private void responseMessage(String message){
-        mView.showProgress(message);
+    private void responseMessage(String response) {
     }
 
     private void errorResponseMessage(VolleyError error){
-        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
-        mView.showAuthError(volleyErrorMessage.GetErrorMessage(mView.getBaseActivity()));
+
     }
 
     @Override
     public void onViewReady() {
+
     }
 
     @Override
@@ -80,25 +76,6 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter, ResetL
 
     @Override
     public void stop() {
-    }
-
-    @Override
-    public void setPresenter(ResetLoginManagerContract.Manager presenter) {
-        mManager = presenter;
-    }
-
-    @Override
-    public BaseActivity getBaseActivity() {
-        return null;
-    }
-
-    @Override
-    public void successfulResponse() {
-
-    }
-
-    @Override
-    public void errorResponse() {
 
     }
 }

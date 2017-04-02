@@ -28,6 +28,7 @@ import static org.hamcrest.Matchers.allOf;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class LoginScreenTest extends InstrumentationTest {
+    private final int DELAY_TIME = 500;
 
     @Rule
     public ActivityTestRule<LoginBaseActivity> mActivityRule = new ActivityTestRule<>(LoginBaseActivity.class);
@@ -49,7 +50,7 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.password_editText)).perform(typeText("Pa55w0rd"));
         pressBack();
         onView(withId(R.id.login_button)).perform(click());
-        SystemClock.sleep(500);
+        SystemClock.sleep(DELAY_TIME);
         onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("400: Bad Request Error")))
                 .check(matches(isDisplayed()));
     }
@@ -61,7 +62,7 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.password_editText)).perform(typeText("Pa55w0rd"));
         pressBack();
         onView(withId(R.id.login_button)).perform(click());
-        SystemClock.sleep(500);
+        SystemClock.sleep(DELAY_TIME);
         navigationScreenIsDisplayed();
     }
 
@@ -75,7 +76,7 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.userName_editText)).perform(typeText("android"));
         pressBack();
         onView(withId(R.id.register_button)).perform(click());
-        SystemClock.sleep(500);
+        SystemClock.sleep(DELAY_TIME);
         onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("400: Bad Request Error")))
                 .check(matches(isDisplayed()));
     }
@@ -88,7 +89,7 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.resetPassword_editText)).perform(typeText("bademail@badrequest.com"));
         pressBack();
         onView(withId(R.id.resetPassword_button)).perform(click());
-        SystemClock.sleep(500);
+        SystemClock.sleep(DELAY_TIME);
         onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("400: Bad Request Error")))
                 .check(matches(isDisplayed()));
     }
@@ -101,37 +102,23 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.resetPassword_editText)).perform(typeText("testemail@android.com"));
         pressBack();
         onView(withId(R.id.resetPassword_button)).perform(click());
-        SystemClock.sleep(500);
+        SystemClock.sleep(DELAY_TIME);
         onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("e-mail was sent")))
                 .check(matches(isDisplayed()));
     }
 
-    @Test
-    public void testGoogleSignInFlow(){
-        loginScreenIsDisplayed();
-        onView(withId(R.id.google_login_button)).perform(click());
-    }
-
-    @Test
-    public void testFacebookSignInFlow(){
-        loginScreenIsDisplayed();
-        onView(withId(R.id.facebook_login_button)).perform(click());
-    }
-
     public void navigationScreenIsDisplayed(){
-        SystemClock.sleep(500);
+        SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
         onView(withText(R.string.app_name)).check(matches(isDisplayed()));
         onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
     }
 
     public void loginScreenIsDisplayed() {
-        SystemClock.sleep(500);
+        SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.activity_login)).check(matches(isDisplayed()));
         onView(withId(R.id.login_button)).check(matches(isDisplayed()));
         onView(withId(R.id.signUp_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.facebook_login_button)).check(matches(isDisplayed()));
-        onView(withId(R.id.google_login_button)).check(matches(isDisplayed()));
         onView(withId(R.id.email_editText)).check(matches(isDisplayed()));
         onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
         onView(withId(R.id.signUp_textView)).check(matches(isDisplayed()));
@@ -139,7 +126,7 @@ public class LoginScreenTest extends InstrumentationTest {
     }
 
     public void registerScreenIsDisplayed(){
-        SystemClock.sleep(500);
+        SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.register_button)).check(matches(isDisplayed()));
         onView(withId(R.id.registerEmail_editText)).check(matches(isDisplayed()));
         onView(withId(R.id.registerPassword_editText)).check(matches(isDisplayed()));
@@ -147,7 +134,7 @@ public class LoginScreenTest extends InstrumentationTest {
     }
 
     public void forgotLoginScreenIsDisplayed(){
-        SystemClock.sleep(500);
+        SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.resetPassword_button)).check(matches(isDisplayed()));
         onView(withId(R.id.resetPassword_editText)).check(matches(isDisplayed()));
     }

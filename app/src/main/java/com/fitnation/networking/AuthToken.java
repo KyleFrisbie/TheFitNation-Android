@@ -7,26 +7,26 @@ public class AuthToken {
 
     private static AuthToken ourInstance;
 
-    public static AuthToken getInstance() {
+    public synchronized static AuthToken getInstance() {
         if(ourInstance == null){
             ourInstance = new AuthToken();
         }
         return ourInstance;
     }
 
-    public void setAccessToken(String accessToken) {
+    public synchronized void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
 
-    public void setRefreshToken(String refreshToken) {
+    public synchronized void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
 
-    public String getRefreshToken() {
+    public synchronized String getRefreshToken() {
         return refreshToken;
     }
 
-    public String getAccessToken() {
+    public synchronized String getAccessToken() {
         return accessToken;
     }
 
