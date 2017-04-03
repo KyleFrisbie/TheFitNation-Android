@@ -18,6 +18,7 @@ import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.exercise.callbacks.OnSetSelectedCallback;
 import com.fitnation.model.ExerciseInstance;
+import com.fitnation.navigation.NavigationActivity;
 
 import org.parceler.Parcels;
 
@@ -102,6 +103,13 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
         mNotesView.setText(exerciseInstance.getNotes());
         mAdapter = new SetAdapter(exerciseInstance.getExerciseInstanceSets(), callback);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        NavigationActivity navigationActivity = (NavigationActivity) getBaseActivity();
+        navigationActivity.displayBackArrow(true, "Edit");
     }
 
     @OnClick(R.id.add_set_button)

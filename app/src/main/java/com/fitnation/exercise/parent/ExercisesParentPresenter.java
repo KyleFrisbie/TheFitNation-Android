@@ -49,9 +49,8 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void onEditPressed(ExerciseInstance exercise) {
         mExerciseInstanceBeingEdited = exercise;
-        NavigationActivity navigationActivity = (NavigationActivity) mView.getBaseActivity();
         ViewExerciseFragment viewExerciseFragment = ViewExerciseFragment.newInstance(exercise);
-        navigationActivity.displayBackArrow(true, "Edit");
+
         viewExerciseFragment.setPresenter(new ViewExercisePresenter(exercise, viewExerciseFragment, this));
         mView.getBaseActivity().getSupportFragmentManager().beginTransaction().add(R.id.content_main_container, viewExerciseFragment).addToBackStack(null).commit();
     }
