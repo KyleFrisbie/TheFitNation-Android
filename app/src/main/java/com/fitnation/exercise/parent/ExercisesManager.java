@@ -152,7 +152,9 @@ public class ExercisesManager extends DataManager {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                WorkoutTemplate trueWorkoutTemplate = getWorkoutTemplate(workoutTemplate);
+                final Realm realm = Realm.getDefaultInstance();
+
+                WorkoutTemplate trueWorkoutTemplate = getWorkoutTemplate(workoutTemplate, realm);
                 WorkoutInstance workoutInstanceTemplate = new WorkoutInstance(name, 0f, 1, trueWorkoutTemplate, "");
                 RealmList<ExerciseInstance> selectedExercises = new RealmList<>();
 
@@ -166,6 +168,7 @@ public class ExercisesManager extends DataManager {
                     @Override
                     public void onError() {
                         Log.e(TAG, "WorkoutTemplate was not succesfully saved");
+                        realm.close();
                     }
 
                     @Override
@@ -181,7 +184,7 @@ public class ExercisesManager extends DataManager {
 
     }
 
-    private WorkoutTemplate getWorkoutTemplate(WorkoutTemplate workoutTemplate) {
+    private WorkoutTemplate getWorkoutTemplate(WorkoutTemplate workoutTemplate, Realm realm) {
         Log.i(TAG, "Determining workout template");
 
         if(workoutTemplate == null) {
@@ -194,7 +197,6 @@ public class ExercisesManager extends DataManager {
                 Log.i(TAG, "Looks like none exist, going to create a new workout template");
             } else {
                 Log.i(TAG, "We have at least one workout template in the DB");
-                Realm realm = Realm.getDefaultInstance();
                 RealmResults<WorkoutTemplate> query = realm.where(WorkoutTemplate.class).findAll();
                 if (query.size() == 0) {
                     Log.i(TAG, "No workout template's found in query, making a new one");
@@ -204,7 +206,6 @@ public class ExercisesManager extends DataManager {
                     Log.i(TAG, "Found the workout template");
                     workoutTemplate = query.first();
                 }
-                realm.close();
             }
 
         }

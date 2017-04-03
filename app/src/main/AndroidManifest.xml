@@ -12,7 +12,8 @@
         <activity
             android:name=".navigation.NavigationActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".intro.SplashScreenActivity"
             android:label="@string/app_name"
