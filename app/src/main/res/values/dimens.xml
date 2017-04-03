@@ -8,6 +8,7 @@
     <dimen name="green_top_bar_height">30dp</dimen>
     <dimen name="card_height">100dp</dimen>
     <dimen name="title_text_size">24sp</dimen>
-    <dimen name="font_normal">18dp</dimen>
+    <dimen name="font_normal">18sp</dimen>
+    <dimen name="font_small">14sp</dimen>
 
 </resources>

@@ -17,8 +17,16 @@
     </style>
 
     <style name="TextView" parent="AppTheme">
-
+        <item name="android:textSize">@dimen/font_normal</item>
+        <item name="android:textColorPrimary">@color/textColorDark</item>
+        <item name="android:textColor">@color/textColorDark</item>
     </style>
+
+    <style name="TextView.small" parent="TextView">
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+
+
 
     <style name="TextView.Actionable" parent="TextView">
         <item name="android:textColor">@color/actionable</item>

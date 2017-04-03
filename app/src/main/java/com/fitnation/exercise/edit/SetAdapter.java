@@ -65,7 +65,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     public void onBindViewHolder(SetAdapter.ViewHolder holder, int position) {
         final ExerciseInstanceSet set = mSets.get(position);
 
-        holder.setOrderView.setText(String.valueOf(set.getOrderNumber()));
+        holder.setOrderView.setText("Set " + String.valueOf(set.getOrderNumber()));
         holder.exerciseValueView.setText(String.valueOf(set.getEffortQuantity()));
         holder.repsValueView.setText(String.valueOf(set.getRepQuantityAsInt()));
         holder.restValueView.setText(String.valueOf(set.getRestTime()));

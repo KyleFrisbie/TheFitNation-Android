@@ -31,7 +31,8 @@
 
             <TextView
                 android:id="@+id/exercise_name"
-                style="@style/TextView.Actionable"
+                style="@style/TextView"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Bench Press"
@@ -45,7 +46,7 @@
 
             <TextView
                 android:id="@+id/sets_continued"
-                style="@style/TextView.Actionable"
+                style="@style/TextView.small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill"
@@ -61,7 +62,7 @@
 
             <TextView
                 android:id="@+id/set_one_reps"
-                style="@style/TextView.Actionable"
+                style="@style/TextView.small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="37dp"
@@ -74,6 +75,7 @@
 
 
             <TextView
+                android:labelFor="@+id/edit_exercise"
                 style="@style/TextView.Actionable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -106,7 +108,7 @@
 
             <TextView
                 android:id="@+id/set_one"
-                style="@style/TextView.Actionable"
+                style="@style/TextView.small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="32dp"
@@ -117,7 +119,7 @@
 
             <TextView
                 android:id="@+id/reps_continued"
-                style="@style/TextView.Actionable"
+                style="@style/TextView.small"
                 android:layout_width="11dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill"
