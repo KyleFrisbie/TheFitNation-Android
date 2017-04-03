@@ -122,7 +122,9 @@ public class ExercisesListFragment extends BaseFragment {
 
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setFocusable(false);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setNestedScrollingEnabled(false);
         mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressed);
         mRecyclerView.setAdapter(mAdapter);
 
