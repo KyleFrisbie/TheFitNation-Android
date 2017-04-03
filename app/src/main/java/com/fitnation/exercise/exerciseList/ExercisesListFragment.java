@@ -17,6 +17,8 @@ import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
 import com.fitnation.exercise.edit.ViewExerciseFragment;
 import com.fitnation.model.ExerciseInstance;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +62,7 @@ public class ExercisesListFragment extends BaseFragment {
         if(exerciseInstances != null && !exerciseInstances.isEmpty()) {
             Bundle bundle = new Bundle();
 
-            bundle.putSerializable(EXERCISE_LIST, new ArrayList<>(exerciseInstances));
+            bundle.putParcelable(EXERCISE_LIST, Parcels.wrap(exerciseInstances));
             exercisesListFragment.setArguments(bundle);
         }
 
@@ -86,6 +88,10 @@ public class ExercisesListFragment extends BaseFragment {
 
         if(bundle != null) {
             mExercises = (List<ExerciseInstance>) bundle.get(EXERCISE_LIST);
+        }
+
+        if(savedInstanceState != null) {
+            mExercises = Parcels.unwrap(savedInstanceState.getParcelable(EXERCISE_LIST));
         }
     }
 
@@ -126,8 +132,14 @@ public class ExercisesListFragment extends BaseFragment {
     public void displayExercises(final List<ExerciseInstance> exercises) {
         mExercises = exercises;
         if(getView() != null) {
-            mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressed);
-            mRecyclerView.setAdapter(mAdapter);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressed);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+            });
+
         } else {
             mHasUpdatedData = true;
         }
@@ -136,6 +148,20 @@ public class ExercisesListFragment extends BaseFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onViewCreated()");
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onViewStateRestored()");
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        Log.i(TAG, "onSaveInstanceState()");
+        outState.putParcelable(EXERCISE_LIST, Parcels.wrap(mExercises));
+        super.onSaveInstanceState(outState);
     }
 }

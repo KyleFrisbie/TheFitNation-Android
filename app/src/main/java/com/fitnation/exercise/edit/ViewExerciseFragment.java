@@ -2,6 +2,7 @@ package com.fitnation.exercise.edit;
 
 
 import android.os.Bundle;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -74,7 +75,7 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
         Bundle args = getArguments();
 
         if(args != null) {
-            mExerciseInstance = (ExerciseInstance) args.getSerializable(EXERCISE_KEY);
+            mExerciseInstance = Parcels.unwrap(args.getParcelable(EXERCISE_KEY));
         }
     }
 
