@@ -7,49 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/app_bar_navigation"
+    tools:showIn="@layout/root_app_bar_navigation"
     tools:context="com.fitnation.navigation.NavigationActivity">
-
-    <!--TODO Move this stuff into its own fragment, the home fragment-->
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/main_container"-->
-        <!--android:id="@+id/textView3" />-->
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--style="@style/FloatingActionButton"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--app:srcCompat="@android:drawable/ic_dialog_email"-->
-        <!--android:layout_marginLeft="@dimen/fab_margin"-->
-        <!--android:layout_marginRight="@dimen/fab_margin"-->
-        <!--android:layout_marginBottom="22dp"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_toEndOf="@+id/button2"-->
-        <!--android:layout_marginStart="17dp" />-->
-
-    <!--<Button-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:text="Trigger Key Metric"-->
-        <!--android:onClick="onKeyMetric"-->
-        <!--android:id="@+id/button2"-->
-        <!--android:layout_above="@+id/button"-->
-        <!--android:layout_toEndOf="@+id/textView3"-->
-        <!--android:layout_marginBottom="19dp" />-->
-
-
-    <!--<Button-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:text="Force Crash!"-->
-        <!--android:onClick="forceCrash"-->
-        <!--android:layout_gravity="bottom|center_horizontal"-->
-        <!--android:id="@+id/button"-->
-        <!--android:layout_alignBottom="@+id/fab"-->
-        <!--android:layout_alignStart="@+id/button2"-->
-        <!--android:layout_marginStart="10dp" />-->
 </RelativeLayout>
