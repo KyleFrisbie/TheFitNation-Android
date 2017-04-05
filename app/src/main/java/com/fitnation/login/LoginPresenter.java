@@ -9,11 +9,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.Factory.VolleyErrorMessage;
-import com.fitnation.base.BaseActivity;
 import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.utils.EnvironmentManager;
-import com.fitnation.utils.NetworkUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,9 +24,8 @@ import static com.fitnation.login.LoginBaseActivity.VIEW_CONTAINER;
 /**
  * Presenter for the login screen. contains all the login logic for the login screen
  */
-public class LoginPresenter implements LoginContract.Presenter, LoginManagerContract.View{
+public class LoginPresenter implements LoginContract.Presenter{
     private LoginContract.View mView;
-    private LoginManagerContract.Manager mManager;
 
     public LoginPresenter (LoginContract.View view) { mView = view; }
 
@@ -139,7 +136,7 @@ public class LoginPresenter implements LoginContract.Presenter, LoginManagerCont
      */
     private void errorResponseMessage(VolleyError error){
         VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
-        mView.showAuthError(volleyErrorMessage.GetErrorMessage(mView.getBaseActivity()));
+        mView.showAuthError(volleyErrorMessage.getErrorMessage(mView.getBaseActivity()));
     }
 
     // TODO: Implement facebook login
@@ -179,27 +176,6 @@ public class LoginPresenter implements LoginContract.Presenter, LoginManagerCont
 
     @Override
     public void stop() {
-
-    }
-
-
-    @Override
-    public void setPresenter(LoginManagerContract.Manager presenter) {
-        mManager = presenter;
-    }
-
-    @Override
-    public BaseActivity getBaseActivity() {
-        return mView.getBaseActivity();
-    }
-
-    @Override
-    public void successfulResponse() {
-
-    }
-
-    @Override
-    public void errorResponse() {
 
     }
 }

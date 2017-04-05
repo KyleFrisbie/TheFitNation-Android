@@ -68,29 +68,12 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     }
 
     @Override
-    public void showProgress(String message) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getBaseActivity()
-                .getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-        final Snackbar thanksMessage = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
-                "Welcome: Before you log in please verify your email", BaseTransientBottomBar.LENGTH_INDEFINITE);
-                thanksMessage.setAction("OK", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        thanksMessage.dismiss();
-                    }
-                });
-        thanksMessage.show();
+    public void showProgress() {
     }
 
     @Override
-    public void showAuthError(String errorMessage) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getBaseActivity()
-                .getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-        Snackbar progressSnackBar = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
-                errorMessage, BaseTransientBottomBar.LENGTH_SHORT);
-        progressSnackBar.show();
+    public void showAuthError(android.support.v7.app.AlertDialog.Builder errorDialog) {
+        errorDialog.show();
     }
 
     @Override

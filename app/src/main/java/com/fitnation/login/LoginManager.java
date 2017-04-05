@@ -8,6 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.base.BaseActivity;
 import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.utils.EnvironmentManager;
@@ -22,14 +23,10 @@ import java.util.Map;
  * Handles the login request
  */
 
-public class LoginManager implements LoginManagerContract.Manager{
-    private LoginManagerContract.View mView;
-    public LoginManager(LoginManagerContract.View view) {
-        mView = view;
-    }
+public class LoginManager {
 
-    public void requestToken(final String userName, final String password){
-        RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
+    public void requestToken(final BaseActivity activity, final String userName, final String password){
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
         String endpoint = "oauth/token";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
@@ -41,9 +38,9 @@ public class LoginManager implements LoginManagerContract.Manager{
 
                 storeTokens(response);
 
-                Intent mainActivityIntent = new Intent(mView.getBaseActivity(), NavigationActivity.class);
+                Intent mainActivityIntent = new Intent(activity, NavigationActivity.class);
                 mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mView.getBaseActivity().startActivity(mainActivityIntent);
+                activity.startActivity(mainActivityIntent);
 
             }
         },  new Response.ErrorListener() {
@@ -127,20 +124,5 @@ public class LoginManager implements LoginManagerContract.Manager{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public void onViewReady() {
-
-    }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-
     }
 }

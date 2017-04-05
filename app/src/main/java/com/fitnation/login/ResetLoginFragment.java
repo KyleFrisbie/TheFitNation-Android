@@ -1,6 +1,7 @@
 package com.fitnation.login;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
@@ -69,13 +70,8 @@ public class ResetLoginFragment extends BaseFragment implements ResetLoginContra
     }
 
     @Override
-    public void showAuthError(String errorMessage) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getBaseActivity()
-                .getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-        Snackbar progressSnackBar = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
-                errorMessage, BaseTransientBottomBar.LENGTH_SHORT);
-        progressSnackBar.show();
+    public void showAuthError(android.support.v7.app.AlertDialog.Builder errorDialog) {
+        errorDialog.show();
     }
 
     @Override

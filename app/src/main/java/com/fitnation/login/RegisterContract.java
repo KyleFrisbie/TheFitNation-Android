@@ -1,5 +1,7 @@
 package com.fitnation.login;
 
+import android.support.v7.app.AlertDialog;
+
 import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
 
@@ -9,8 +11,8 @@ import com.fitnation.base.BaseView;
 public interface RegisterContract {
     interface View extends BaseView<Presenter> {
         void showSuccess();
-        void showProgress(String message);
-        void showAuthError(String errorMessage);
+        void showProgress();
+        void showAuthError(AlertDialog.Builder errorDialog);
     }
 
     interface Presenter extends BasePresenter {

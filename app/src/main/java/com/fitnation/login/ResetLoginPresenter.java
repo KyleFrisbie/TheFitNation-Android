@@ -9,7 +9,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.Factory.VolleyErrorMessage;
-import com.fitnation.base.BaseActivity;
 import com.fitnation.utils.EnvironmentManager;
 
 import java.util.HashMap;
@@ -18,9 +17,8 @@ import java.util.Map;
 /**
  * contains the business logic for the view
  */
-public class ResetLoginPresenter implements ResetLoginContract.Presenter, ResetLoginManagerContract.View {
+public class ResetLoginPresenter implements ResetLoginContract.Presenter {
     private ResetLoginContract.View mView;
-    private ResetLoginManagerContract.Manager mManager;
 
     public ResetLoginPresenter(ResetLoginContract.View view) { mView = view; }
 
@@ -68,7 +66,8 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter, ResetL
 
     private void errorResponseMessage(VolleyError error){
         VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
-        mView.showAuthError(volleyErrorMessage.GetErrorMessage(mView.getBaseActivity()));
+        android.support.v7.app.AlertDialog.Builder builder = volleyErrorMessage.getErrorMessage(mView.getBaseActivity());
+        mView.showAuthError(builder);
     }
 
     @Override
@@ -82,25 +81,5 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter, ResetL
 
     @Override
     public void stop() {
-    }
-
-    @Override
-    public void setPresenter(ResetLoginManagerContract.Manager presenter) {
-        mManager = presenter;
-    }
-
-    @Override
-    public BaseActivity getBaseActivity() {
-        return null;
-    }
-
-    @Override
-    public void successfulResponse() {
-
-    }
-
-    @Override
-    public void errorResponse() {
-
     }
 }

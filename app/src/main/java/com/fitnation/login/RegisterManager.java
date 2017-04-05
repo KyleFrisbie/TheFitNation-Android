@@ -7,6 +7,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.base.BaseActivity;
 import com.fitnation.utils.EnvironmentManager;
 
 import org.json.JSONObject;
@@ -19,15 +20,11 @@ import java.util.Map;
  * Handles the register request
  */
 
-public class RegisterManager implements RegisterManagerContract.Manager{
-    private RegisterManagerContract.View mView;
-    public RegisterManager(RegisterManagerContract.View view) {
-        mView = view;
-    }
+public class RegisterManager {
 
-    public void requestRegistration(final String email, final String password, final String userName,
+    public void requestRegistration(BaseActivity activity, final String email, final String password, final String userName,
                                     final String language){
-        RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
         String endpoint = "api/register";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
@@ -81,21 +78,5 @@ public class RegisterManager implements RegisterManagerContract.Manager{
      * handles the json from the server
      */
     private void handleJsonResponse(){
-    }
-
-
-    @Override
-    public void onViewReady() {
-
-    }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
-
     }
 }

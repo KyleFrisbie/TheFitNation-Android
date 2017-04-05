@@ -1,5 +1,7 @@
 package com.fitnation.login;
 
+import android.app.Activity;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -7,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.base.BaseActivity;
 import com.fitnation.utils.EnvironmentManager;
 
 import java.util.HashMap;
@@ -17,14 +20,10 @@ import java.util.Map;
  * handles the email reset password request
  */
 
-public class ResetLoginManager implements ResetLoginManagerContract.Manager {
-    private ResetLoginManagerContract.View mView;
-    public ResetLoginManager(ResetLoginManagerContract.View view) {
-        mView = view;
-    }
+public class ResetLoginManager {
 
-    public void resetPasswordRequest(final String email){
-        RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
+    public void resetPasswordRequest(final String email, BaseActivity activity){
+        RequestQueue requestQueue = Volley.newRequestQueue(activity);
         String endpoint = "api/account/reset_password/init";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;;
 
@@ -64,21 +63,6 @@ public class ResetLoginManager implements ResetLoginManagerContract.Manager {
     }
 
     private void errorResponseMessage(VolleyError error){
-
-    }
-
-    @Override
-    public void onViewReady() {
-
-    }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void stop() {
 
     }
 }
