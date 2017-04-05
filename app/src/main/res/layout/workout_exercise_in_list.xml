@@ -52,12 +52,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill"
-                android:layout_marginBottom="0dp"
+                android:layout_marginBottom="-190dp"
                 android:text="..."
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="@+id/set_one"
-                app:layout_constraintRight_toRightOf="@+id/set_one" />
+                app:layout_constraintRight_toRightOf="@+id/set_one"
+                app:layout_constraintHorizontal_bias="0.333" />
 
             <TextView
                 android:id="@+id/set_one_reps"
