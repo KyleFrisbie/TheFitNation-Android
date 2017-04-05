@@ -18,6 +18,7 @@ public class JsonParser {
      */
     public static <T> List<T> convertJsonStringToList(String s, Class<T[]> clazz) {
         T[] arr = new Gson().fromJson(s, clazz);
+
         return Arrays.asList(arr);
     }
 
