@@ -35,7 +35,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     public void stop() {}
 
     String url;
-    String accessToken = "5d0ad065-4394-4e43-a26a-38c77852e36f";
+    String accessToken = "3578ace0-6de2-459f-8047-9b888ed1f947";
     UserDemographic userdemo;
     User user;
     private UserDemographicSingleton queue;

@@ -55,7 +55,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @BindView(R.id.lifterTypeSpinner) public Spinner mLifterTypeSpinner;
     @BindView(R.id.switchMeasurement) public TextView mSwitchMeasurementButton;
 
-    boolean unsavedChanges = false;
+    boolean unsavedChanges = true;
     final long MILLISECONDS_IN_YEAR = 31556952000L;
     final double INCH_PER_CM = 0.393701;
     final double CM_PER_INCH = 2.54;
@@ -128,8 +128,8 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         double heightFlt = 0;
         try {
             //Since weight/height may have in/cm text in their value.  We just want the num val
-            weightFlt = getWeightValue();
-            heightFlt = getHeightValue();
+            weightFlt = getNumValue(mWeightTextBox);
+            heightFlt = getNumValue(mHeightTextBox);
         } catch (NumberFormatException ex){
             Log.d("PROFILE",
                     "Failed to get numeric value from weight/height text box" + ex.toString());
@@ -151,46 +151,54 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
         unsavedChanges = true;
     }
-    private Float getWeightValue(){
-        String weightString[] = mWeightTextBox.getText().toString().trim().split("\\s+");
-        Log.i("PROFILE", "Weight is "+weightString[0]);
-        if (weightString[0] != null && !weightString[0].isEmpty()){
-            return Float.valueOf(weightString[0]);
-        } else {
-            return 0.0f;
-        }
 
-    }
 
-    private Float getHeightValue(){
-        String heightString[] = mHeightTextBox.getText().toString().trim().split("\\s+");
-        Log.i("PROFILE", "Height is "+heightString[0]);
-        if (heightString[0] != null && !heightString[0].isEmpty()){
-            return Float.valueOf(heightString[0]);
+    private Float getNumValue(EditText textBox){
+        String txt[] = textBox.getText().toString().trim().split("\\s+");
+        Log.i("PROFILE", "text num value is "+txt[0]);
+        if (txt[0] != null && !txt[0].isEmpty()){
+            return Float.valueOf(txt[0]);
         } else {
             return 0.0f;
         }
     }
 
     @OnFocusChange(R.id.weightEditText)
-    void weightFocusChanged(){
-        measurementsAddUnits();
+    void weightFocusChanged(View v, boolean focus){
+        if (focus) {
+            String txt = removeUnits(mWeightTextBox.getText().toString());
+            mWeightTextBox.setText(txt);
+        } else {
+            measurementsAddUnits();
+        }
     }
 
+
     @OnFocusChange(R.id.heightEditText)
-    void heightFocusChanged(){
-        measurementsAddUnits();
+    void heightFocusChanged(View v, boolean focus){
+        if (focus) {  //Get Focus, remove the alphabet characters
+            String txt = removeUnits(mHeightTextBox.getText().toString());
+            mHeightTextBox.setText(txt);
+        } else { //Lose Focus
+            measurementsAddUnits();
+        }
     }
+
+    private String removeUnits(String txt){
+        txt.replaceAll("[^\\d.]", "");
+        return txt;
+    }
+
 
     private void measurementsAddUnits(){
 
         if (mSwitchMeasurementButton.getText().toString().toLowerCase().contains("imperial")){
 
-            mWeightTextBox.setText(String.format("%.1f", getWeightValue())+ " kgs");
-            mHeightTextBox.setText(String.format("%.1f", getHeightValue())+ " cms");
+            mWeightTextBox.setText(String.format("%.1f", getNumValue(mWeightTextBox))+ " kgs");
+            mHeightTextBox.setText(String.format("%.1f", getNumValue(mHeightTextBox))+ " cms");
         } else {
-            mWeightTextBox.setText(String.format("%.1f", getWeightValue())+ " lbs");
-            mHeightTextBox.setText(String.format("%.1f", getHeightValue())+ " inches");
+            mWeightTextBox.setText(String.format("%.1f", getNumValue(mWeightTextBox))+ " lbs");
+            mHeightTextBox.setText(String.format("%.1f", getNumValue(mHeightTextBox))+ " inches");
         }
         unsavedChanges = true;
     }
@@ -232,8 +240,8 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         userdemo.setDateOfBirth(birthday.getTime());
         //Get/Set gender
         userdemo.setGender((mGenderSpinner.getSelectedItem().toString()));
-        userdemo.setHeight(getHeightValue().toString());
-        userdemo.setUserWeights(getWeightValue().toString());
+        userdemo.setHeight(getNumValue(mHeightTextBox).toString());
+        userdemo.setUserWeights(getNumValue(mWeightTextBox).toString());
         //Get/Set skill level
         userdemo.setSkillLevelLevel(mLifterTypeSpinner.getSelectedItem().toString());
 

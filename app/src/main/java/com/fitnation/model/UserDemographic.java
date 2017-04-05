@@ -184,7 +184,6 @@ public class UserDemographic extends RealmObject {
     public void setUserLogin(String userLogin) {this.userLogin = userLogin;}
 
 
-
     @Override
     public String toString() {
         return "UserDemographic{" +
