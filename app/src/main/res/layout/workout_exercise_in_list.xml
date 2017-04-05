@@ -32,7 +32,6 @@
             <TextView
                 android:id="@+id/exercise_name"
                 style="@style/TextView"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -53,13 +52,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill"
-                android:layout_marginBottom="-2dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
+                android:layout_marginBottom="0dp"
                 android:text="..."
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="@+id/set_one"
                 app:layout_constraintRight_toRightOf="@+id/set_one" />
 
@@ -94,13 +90,9 @@
                 android:layout_width="11dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill"
-                android:layout_marginBottom="-2dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
                 android:text="..."
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="@+id/set_one_reps"
                 app:layout_constraintRight_toRightOf="@+id/set_one_reps" />
 
