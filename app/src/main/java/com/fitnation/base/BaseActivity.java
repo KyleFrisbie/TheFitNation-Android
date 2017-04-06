@@ -26,7 +26,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public void stopProgress() {
         if(mProgress != null && mProgress.isShowing()) {
-            mProgress.hide();
+            mProgress.dismiss();
         }
     }
 }
