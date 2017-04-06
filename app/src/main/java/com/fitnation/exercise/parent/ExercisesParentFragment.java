@@ -125,7 +125,18 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
 
     @Override
     public void showProgress() {
+        BaseActivity baseActivity = getBaseActivity();
+        if(baseActivity != null) {
+            baseActivity.showProgress(null);
+        }
+    }
 
+    @Override
+    public void stopProgress() {
+        BaseActivity baseActivity = getBaseActivity();
+        if(baseActivity != null) {
+            baseActivity.stopProgress();
+        }
     }
 
     @Override

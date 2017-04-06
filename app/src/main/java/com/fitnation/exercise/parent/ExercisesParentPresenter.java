@@ -33,6 +33,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void onViewReady() {
         //get the exercises
+        mView.showProgress();
         mExerciseManager.getExercises(this);
     }
 
@@ -59,6 +60,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
 
     @Override
     public void onExercisesRetrieved(List<ExerciseInstance> exerciseList1, List<ExerciseInstance> exerciseList2, List<ExerciseInstance> exerciseList3) {
+        mView.stopProgress();
         mView.displayExercises(exerciseList1, exerciseList2, exerciseList3);
     }
 

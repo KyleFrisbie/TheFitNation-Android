@@ -112,7 +112,7 @@ public class ExercisesManager extends DataManager {
                     ) {
                         @Override
                         public Map<String, String> getHeaders() throws AuthFailureError {
-                            String authToken = "58f5e459-69c0-47eb-8b8a-d9610f3e9450";
+                            String authToken = "e871b75d-9360-4f4e-b8bb-5f0321d363df";
                             Map<String, String> mHeaders = new ArrayMap();
 
                             mHeaders.put("Authorization", "Bearer" + " " + authToken);
