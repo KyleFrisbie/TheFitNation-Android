@@ -29,4 +29,10 @@ public class BaseActivity extends AppCompatActivity {
             mProgress.dismiss();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopProgress();
+    }
 }
