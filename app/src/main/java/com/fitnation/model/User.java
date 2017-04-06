@@ -1,10 +1,12 @@
 package com.fitnation.model;
 
+import io.realm.RealmObject;
+
 /**
  * Created by Jeremy on 4/1/2017.
  */
 
-public class User {
+public class User extends RealmObject {
     private String login;
     private String email;
     private String imageUrl;

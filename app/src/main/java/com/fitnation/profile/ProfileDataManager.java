@@ -9,6 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.fitnation.base.DataManager;
 import com.fitnation.base.DataResult;
+import com.fitnation.model.User;
 import com.fitnation.model.UserDemographic;
 import com.fitnation.networking.JsonParser;
 import com.fitnation.base.FitNationApplication;
@@ -27,26 +28,40 @@ import org.json.JSONObject;
  * Created by Jeremy on 2/26/2017.
  */
 
-public class UserDataManager extends DataManager {
+public class ProfileDataManager extends DataManager {
 
 
-    public void SaveProfileData(final UserDemographic userDemographic){
+    public void SaveUserDemographicData(final UserDemographic userDemographic){
 
         //save data to local data store
         saveData(userDemographic, new DataResult() {
             @Override
             public void onSuccess() {
-
+                Log.i("REALM SAVE", "User Demographic Saved Successfully to Realm.");
             }
 
             @Override
             public void onError() {
-
+                Log.d("REALM SAVE", "Error saving User Demographic to Realm");
             }
         });
-
-
     }
 
+    public void SaveUserData(final User user){
 
+        //save data to local data store
+        saveData(user, new DataResult() {
+            @Override
+            public void onSuccess() {
+                Log.i("REALM SAVE", "User Saved Successfully to Realm.");
+            }
+
+            @Override
+            public void onError() {
+                Log.d("REALM SAVE", "Error saving User to Realm");
+            }
+        });
+    }
+    
 }
+

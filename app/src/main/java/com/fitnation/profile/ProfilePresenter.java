@@ -1,6 +1,5 @@
 package com.fitnation.profile;
 
-import android.app.Fragment;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -35,21 +34,21 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     public void stop() {}
 
     String url;
-    String accessToken = "3578ace0-6de2-459f-8047-9b888ed1f947";
+    String accessToken = "0252a67c-49fe-4237-a4d7-adffe6d5e66b";
     UserDemographic userdemo;
     User user;
     private UserDemographicSingleton queue;
 
     @Override
-    public void saveData(UserDemographic pUserDemo) {
-        final UserDemographic userDemo = pUserDemo;
-        UserDataManager userDataManager = new UserDataManager();
-        userDataManager.SaveProfileData(userDemo);
+    public void saveProfileData(ProfileFragment profile) {
+        ProfileDataManager userDataManager = new ProfileDataManager();
+        userDataManager.SaveUserDemographicData(profile.userdemo);
+        userDataManager.SaveUserData(profile.user);
+        final UserDemographic userDemo = profile.userdemo;
 
         //save data to web
         queue = UserDemographicSingleton.getInstance(mView.getBaseActivity());
         url = "https://the-fit-nation-dev.herokuapp.com/api/user-demographics/byLoggedInUser";
-
 
         String jString = JsonParser.convertPojoToJsonString(userDemo);
         JSONObject udjObj;
@@ -87,7 +86,10 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         queue.addToRequestQueue(jsonRequest);
     }
 
-
+    public void saveUserData(User user){
+        ProfileDataManager pdm = new ProfileDataManager();
+        pdm.SaveUserData(user);
+    }
 
     public void getUserDemographic(final ProfileFragment fragment){
 

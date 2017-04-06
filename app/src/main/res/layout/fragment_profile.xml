@@ -30,8 +30,10 @@
             android:layout_marginRight="25dp"
             android:layout_toEndOf="@+id/nameView"
             android:hint="@string/name"
+            android:inputType="textPersonName"
             android:lines="1"
             android:maxLines="1"
+            android:singleLine="true"
             android:textSize="18sp" />
 
         <!-- EMAIL -->
@@ -56,9 +58,10 @@
             android:layout_alignEnd="@+id/nameText"
             android:layout_alignStart="@+id/nameText"
             android:hint="@string/email"
-            android:textSize="18sp"
+            android:lines="1"
             android:maxLines="1"
-            android:lines="1"/>
+            android:singleLine="true"
+            android:textSize="18sp" />
 
         <!-- GENDER -->
         <TextView

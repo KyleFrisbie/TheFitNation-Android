@@ -1,6 +1,7 @@
 package com.fitnation.profile;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
@@ -33,8 +34,10 @@ public class ProfileActivity extends BaseActivity{
         if (!userDemoResults.isEmpty()){
             UserDemographic userdemo = userDemoResults.last();
             profileFragment.setDemographic(userdemo);
+
         } else {
             profileFragment.setDemographic(null);
+            Log.d("PROFILE", "Realm userdemographic is empty");
         }
 
         profileFragment.setPresenter(new ProfilePresenter(profileFragment));

@@ -26,8 +26,6 @@ import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.User;
 import com.fitnation.model.UserDemographic;
-import com.fitnation.model.enums.Gender;
-import com.fitnation.model.enums.SkillLevel;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
@@ -80,10 +78,8 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if (userdemo == null) {
-            mPresenter.getUserDemographic(this);
-        }
-        loadDemographics();
+
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, v);
@@ -117,7 +113,10 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         dateFragment = new DatePickerFragment();
         dateFragment.setFragment(this);
 
-
+        if (userdemo == null) {
+            mPresenter.getUserDemographic(this);
+        }
+        loadDemographics();
 
         mPresenter.start();
     }
@@ -185,8 +184,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     }
 
     private String removeUnits(String txt){
-        txt.replaceAll("[^\\d.]", "");
-        return txt;
+        return txt.replaceAll("[^\\d.]", "");
     }
 
 
@@ -236,8 +234,13 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         }
 
 
+        try {
+            userdemo.setDateOfBirth(birthday.getTime());
+        } catch (NullPointerException e){
+            userdemo.setDateOfBirth(Calendar.getInstance().getTime());
+            Log.d("PROFILE", e.toString());
+        }
 
-        userdemo.setDateOfBirth(birthday.getTime());
         //Get/Set gender
         userdemo.setGender((mGenderSpinner.getSelectedItem().toString()));
         userdemo.setHeight(getNumValue(mHeightTextBox).toString());
@@ -252,7 +255,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         }
 
         unsavedChanges = false;
-        mPresenter.saveData(userdemo);
+        mPresenter.saveProfileData(this);
     }
 
     public void loadDemographics(){
@@ -324,7 +327,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         }
     }
 
-    public void setDemographic(UserDemographic userDemo){ this.userdemo = userDemo; }
+    public void setDemographic(UserDemographic userDemo){ userdemo = userDemo; }
     public void setUser(User user){ this.user = user;}
 
     @Override
