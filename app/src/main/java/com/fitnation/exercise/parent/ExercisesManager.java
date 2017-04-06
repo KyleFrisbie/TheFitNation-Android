@@ -14,9 +14,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.base.DataManager;
 import com.fitnation.base.DataResult;
+import com.fitnation.exercise.callbacks.ExerciseInstanceRequestCallback;
 import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
 import com.fitnation.exercise.callbacks.WorkoutInstancePostCallback;
 import com.fitnation.exercise.callbacks.WorkoutTemplatePostCallback;
+import com.fitnation.exercise.parent.tasks.GetExerciseInstancesFromExercisesTask;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.PrimaryKeyFactory;
@@ -71,65 +73,39 @@ public class ExercisesManager extends DataManager {
             @Override
             public void run() {
                 if(mExerciseInstances == null) {
-                    // Instantiate the RequestQueue.
-                    String resourceRoute = "exercises";
-
-                    String url = EnvironmentManager.getInstance().getRequestUrl(resourceRoute);
-                    StringRequest getExercisesRequest = new StringRequest(Request.Method.GET, url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    List<Exercise> exercises = JsonParser.convertJsonStringToList(response, Exercise[].class);
-                                    List<ExerciseInstance> exerciseInstances = convertExercisesToInstances(exercises);
-                                    mExerciseInstances = exerciseInstances;
-                                    mExerciseInstancesTab1 = new ArrayList<ExerciseInstance>(exercises.size());
-                                    mExerciseInstancesTab2 = new ArrayList<ExerciseInstance>(exercises.size());
-                                    mExerciseInstancesTab3 = new ArrayList<ExerciseInstance>(exercises.size());
-
-                                    for (ExerciseInstance instance : exerciseInstances) {
-                                        ExerciseInstance copy1 = null;
-                                        ExerciseInstance copy2 = null;
-                                        ExerciseInstance copy3 = null;
-
-                                        copy1 = (ExerciseInstance) instance.clone();
-                                        copy2 = (ExerciseInstance) instance.clone();
-                                        copy3 = (ExerciseInstance) instance.clone();
-
-                                        mExerciseInstancesTab1.add(copy1);
-                                        mExerciseInstancesTab2.add(copy2);
-                                        mExerciseInstancesTab3.add(copy3);
-
-                                        mExerciseInstancesTab1 = filterExerciseBySkillLevel(mExerciseInstancesTab1, SkillLevel.BEGINNER);
-                                        mExerciseInstancesTab2 = filterExerciseBySkillLevel(mExerciseInstancesTab2, SkillLevel.INTERMEDIATE);
-                                        mExerciseInstancesTab3 = filterExerciseBySkillLevel(mExerciseInstancesTab3, SkillLevel.ADVANCED);
-                                    }
-                                    callback.onExercisesRetrieved(mExerciseInstancesTab1, mExerciseInstancesTab2, mExerciseInstancesTab3);
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e(TAG, error.toString());
-                                    callback.onError();
-                                }
-                            }
-                    ) {
+                    GetExerciseInstancesFromExercisesTask getExerciseInstancesTask = new GetExerciseInstancesFromExercisesTask(mAuthToken, mRequestQueue);
+                    getExerciseInstancesTask.getExerciseInstancesFromExercises(new ExerciseInstanceRequestCallback() {
                         @Override
-                        public Map<String, String> getHeaders() throws AuthFailureError {
-                            Map<String, String> mHeaders = new ArrayMap();
+                        public void onSuccess(List<ExerciseInstance> exerciseInstances) {
+                            mExerciseInstancesTab1 = new ArrayList<ExerciseInstance>(exerciseInstances.size());
+                            mExerciseInstancesTab2 = new ArrayList<ExerciseInstance>(exerciseInstances.size());
+                            mExerciseInstancesTab3 = new ArrayList<ExerciseInstance>(exerciseInstances.size());
 
-                            mHeaders.put("Authorization", "Bearer" + " " + mAuthToken);
-                            mHeaders.put("Content-Type", "application/json");
+                            for (ExerciseInstance instance : exerciseInstances) {
+                                ExerciseInstance copy1 = null;
+                                ExerciseInstance copy2 = null;
+                                ExerciseInstance copy3 = null;
 
-                            return mHeaders;
+                                copy1 = (ExerciseInstance) instance.clone();
+                                copy2 = (ExerciseInstance) instance.clone();
+                                copy3 = (ExerciseInstance) instance.clone();
+
+                                mExerciseInstancesTab1.add(copy1);
+                                mExerciseInstancesTab2.add(copy2);
+                                mExerciseInstancesTab3.add(copy3);
+
+                                mExerciseInstancesTab1 = filterExerciseBySkillLevel(mExerciseInstancesTab1, SkillLevel.BEGINNER);
+                                mExerciseInstancesTab2 = filterExerciseBySkillLevel(mExerciseInstancesTab2, SkillLevel.INTERMEDIATE);
+                                mExerciseInstancesTab3 = filterExerciseBySkillLevel(mExerciseInstancesTab3, SkillLevel.ADVANCED);
+                            }
+                            callback.onExercisesRetrieved(mExerciseInstancesTab1, mExerciseInstancesTab2, mExerciseInstancesTab3);
                         }
-                    };
 
-                    getExercisesRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
-
-                    mRequestQueue.add(getExercisesRequest);
-                } else {
-                    callback.onExercisesRetrieved(mExerciseInstancesTab1, mExerciseInstancesTab2, mExerciseInstancesTab3);
+                        @Override
+                        public void onFailure(String error) {
+                            callback.onError();
+                        }
+                    });
                 }
             }
         }).start();
@@ -328,16 +304,6 @@ public class ExercisesManager extends DataManager {
                 break;
         }
 
-    }
-
-    private List<ExerciseInstance> convertExercisesToInstances(List<Exercise> exercises) {
-        List<ExerciseInstance> exerciseInstances = new ArrayList<>(exercises.size());
-        for (Exercise exercise: exercises) {
-            ExerciseInstance instance = new ExerciseInstance(exercise);
-            exerciseInstances.add(instance);
-        }
-
-        return exerciseInstances;
     }
 
     public static List<ExerciseInstance> filterExerciseBySkillLevel(List<ExerciseInstance> exerciseInstances, String filter) {
