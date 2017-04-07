@@ -1,6 +1,8 @@
 package com.fitnation.login;
 
 
+import android.support.v7.app.AlertDialog;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,57 +19,17 @@ import java.util.Map;
 /**
  * contains the business logic for the view
  */
-public class ResetLoginPresenter implements ResetLoginContract.Presenter {
+public class ResetLoginPresenter implements ResetLoginContract.Presenter, ManagerContract.Presenter{
     private ResetLoginContract.View mView;
 
     public ResetLoginPresenter(ResetLoginContract.View view) { mView = view; }
 
     @Override
     public void onResetPasswordButtonPressed(final String email) {
-        RequestQueue requestQueue = Volley.newRequestQueue(mView.getBaseActivity());
-        String endpoint = "api/account/reset_password/init";
-        String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
-        StringRequest resetPasswordWithEmailRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
-        {
-            @Override
-            public void onResponse(String response) {
-                // TODO: convert to a successResponse return
-                responseMessage(response);
-            }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    if(error.networkResponse != null){
-                        errorResponseMessage(error);
-                    }
-                }
-        }){
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                return email.getBytes();
-            }
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
-                params.put("Accept", "text/plain");
-                return params;
-            }
-        };
+        ResetLoginManager resetLoginManager = new ResetLoginManager(mView.getBaseActivity(), this);
+        resetLoginManager.resetPasswordRequest(email);
 
-        requestQueue.add(resetPasswordWithEmailRequest);
-        requestQueue.start();
-    }
-
-    private void responseMessage(String message){
-        mView.showProgress(message);
-    }
-
-    private void errorResponseMessage(VolleyError error){
-        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
-        android.support.v7.app.AlertDialog.Builder builder = volleyErrorMessage.getErrorMessage(mView.getBaseActivity());
-        mView.showAuthError(builder);
     }
 
     @Override
@@ -81,5 +43,20 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter {
 
     @Override
     public void stop() {
+    }
+
+    @Override
+    public void showSuccess(AlertDialog.Builder successDialog) {
+        mView.showSuccess(successDialog);
+    }
+
+    @Override
+    public void showProgress() {
+        mView.showProgress();
+    }
+
+    @Override
+    public void showAuthError(AlertDialog.Builder errorDialog) {
+        mView.showAuthError(errorDialog);
     }
 }

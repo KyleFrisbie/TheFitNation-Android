@@ -55,18 +55,13 @@ public class ResetLoginFragment extends BaseFragment implements ResetLoginContra
     }
 
     @Override
-    public void showSuccess() {
-
+    public void showSuccess(android.support.v7.app.AlertDialog.Builder successDialog) {
+        successDialog.show();
     }
 
     @Override
-    public void showProgress(String message) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getBaseActivity()
-                .getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-        Snackbar progressSnackBar = Snackbar.make(getBaseActivity().findViewById(R.id.activity_login),
-                message, BaseTransientBottomBar.LENGTH_SHORT);
-        progressSnackBar.show();
+    public void showProgress() {
+
     }
 
     @Override

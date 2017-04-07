@@ -8,12 +8,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.navigation.NavigationActivity;
-import com.fitnation.networking.AuthToken;
 import com.fitnation.utils.EnvironmentManager;
+import com.fitnation.utils.NetworkUtils;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -24,9 +24,16 @@ import java.util.Map;
  */
 
 public class LoginManager {
+    private ManagerContract.Presenter mPresenter;
+    private BaseActivity mActivity;
 
-    public void requestToken(final BaseActivity activity, final String userName, final String password){
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+    public LoginManager(BaseActivity activity, ManagerContract.Presenter presenter) {
+        this.mActivity = activity;
+        mPresenter = presenter;
+    }
+
+    public void requestToken(final String userName, final String password){
+        RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
         String endpoint = "oauth/token";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
@@ -35,12 +42,11 @@ public class LoginManager {
         {
             @Override
             public void onResponse(JSONObject response) {
+                NetworkUtils.getInstance().storeTokens(response);
 
-                storeTokens(response);
-
-                Intent mainActivityIntent = new Intent(activity, NavigationActivity.class);
+                Intent mainActivityIntent = new Intent(mActivity, NavigationActivity.class);
                 mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                activity.startActivity(mainActivityIntent);
+                mActivity.startActivity(mainActivityIntent);
 
             }
         },  new Response.ErrorListener() {
@@ -62,10 +68,7 @@ public class LoginManager {
                 params.put("client_id", "TheFitNationapp");
                 params.put("submit", "login");
 
-                // TODO: Use NetworkUtils class instead
-
-                String bodyString = convertToUrlEncodedPostBody(params);
-                return bodyString.getBytes();
+                return NetworkUtils.getInstance().convertToUrlEncodedPostBody(params).getBytes();
             }
 
             @Override
@@ -79,50 +82,7 @@ public class LoginManager {
     }
 
     private void errorResponseMessage(VolleyError error) {
-    }
-
-    /**
-     * Converts a hashmap of values to url encoded form for requests.
-     * @param params Hashmap to be converted
-     * @return String containing the converted hashmap
-     */
-    private String convertToUrlEncodedPostBody(Map<String, String> params){
-        StringBuilder sbPost = new StringBuilder();
-        if(params != null) {
-            int count = 0;
-            for (String key : params.keySet()) {
-                if (params.get(key) != null) {
-                    if(count != 0) {
-                        sbPost.append("&");
-                    }
-                    sbPost.append(key);
-                    sbPost.append("=");
-                    sbPost.append(params.get(key));
-                    count++;
-                }
-            }
-        }
-        return sbPost.toString();
-    }
-
-    /**
-     * Stores the json response token from the server to a local singleton for universal access
-     * @param response The Json object from the server
-     */
-    private void storeTokens(JSONObject response){
-        String accessToken;
-        String refreshToken;
-
-        try {
-
-            accessToken = response.getString("access_token");
-            refreshToken = response.getString("refresh_token");
-
-            AuthToken.getInstance().setAccessToken(accessToken);
-            AuthToken.getInstance().setRefreshToken(refreshToken);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
+        mPresenter.showAuthError(volleyErrorMessage.getErrorMessage(mActivity));
     }
 }

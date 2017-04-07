@@ -63,8 +63,8 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     }
 
     @Override
-    public void showSuccess() {
-
+    public void showSuccess(android.support.v7.app.AlertDialog.Builder successDialog) {
+        successDialog.show();
     }
 
     @Override

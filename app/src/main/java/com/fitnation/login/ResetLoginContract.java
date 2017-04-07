@@ -10,8 +10,8 @@ import com.fitnation.base.BaseView;
  */
 public interface ResetLoginContract {
     interface View extends BaseView<Presenter> {
-        void showSuccess();
-        void showProgress(String message);
+        void showSuccess(android.support.v7.app.AlertDialog.Builder successDialog);
+        void showProgress();
         void showAuthError(android.support.v7.app.AlertDialog.Builder errorDialog);
     }
 

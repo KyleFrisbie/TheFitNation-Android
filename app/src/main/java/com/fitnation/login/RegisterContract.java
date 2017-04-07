@@ -10,7 +10,7 @@ import com.fitnation.base.BaseView;
  */
 public interface RegisterContract {
     interface View extends BaseView<Presenter> {
-        void showSuccess();
+        void showSuccess(AlertDialog.Builder successDialog);
         void showProgress();
         void showAuthError(AlertDialog.Builder errorDialog);
     }
