@@ -23,6 +23,9 @@ import com.android.volley.toolbox.*;
 
 import org.json.JSONObject;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
+
 
 /**
  * Created by Jeremy on 2/26/2017.
@@ -47,6 +50,14 @@ public class ProfileDataManager extends DataManager {
         });
     }
 
+    public static UserDemographic getLocalUserDemographic(){
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<UserDemographic> userDemoResults = realm.where(UserDemographic.class).findAll();
+        if (!userDemoResults.isEmpty()) return userDemoResults.last();
+        Log.i("PROFILE", "Realm Result empty for UserDemographic");
+        return new UserDemographic();
+    }
+
     public void SaveUserData(final User user){
 
         //save data to local data store
@@ -61,6 +72,16 @@ public class ProfileDataManager extends DataManager {
                 Log.d("REALM SAVE", "Error saving User to Realm");
             }
         });
+    }
+
+    public static User getLocalUser(){
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<User> userResults =
+                realm.where(User.class).findAll();
+
+        if (!userResults.isEmpty()) return userResults.last();
+        Log.i("PROFILE", "Realm Result empty for User");
+        return new User();
     }
     
 }

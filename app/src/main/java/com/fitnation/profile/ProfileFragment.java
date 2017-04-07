@@ -112,11 +112,15 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         super.onStart();
         dateFragment = new DatePickerFragment();
         dateFragment.setFragment(this);
+        mPresenter = new ProfilePresenter(this);
 
-        if (userdemo == null) {
-            mPresenter.getUserDemographic(this);
-        }
+        userdemo = ProfileDataManager.getLocalUserDemographic();
+        user = ProfileDataManager.getLocalUser();
+        /*if (userdemo.) {
+            mPresenter.getProfileData(this);
+        }*/
         loadDemographics();
+        loadUser();
 
         mPresenter.start();
     }
@@ -254,6 +258,13 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             userdemo.setUnitOfMeasure("Imperial");
         }
 
+        //USER
+        try {
+            user.setEmail(mEmailTextBox.getText().toString());
+        } catch (Exception ex) {
+            Log.d("PROFILE", ex.toString());
+        }
+
         unsavedChanges = false;
         mPresenter.saveProfileData(this);
     }
@@ -313,6 +324,12 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
         } catch (Exception e){
             Log.d("PROFILE", e.toString());
+        }
+
+        try {
+            mEmailTextBox.setText(user.getEmail());
+        } catch (Exception ex) {
+            Log.d("PROFILE", ex.toString());
         }
 
     }

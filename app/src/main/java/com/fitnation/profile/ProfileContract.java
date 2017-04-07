@@ -14,7 +14,7 @@ public interface ProfileContract {
     interface Presenter extends BasePresenter {
         void saveProfileData(ProfileFragment profile);
 
-        void getUserDemographic(ProfileFragment fragment);
+        void getProfileData(ProfileFragment fragment);
     }
 }
 

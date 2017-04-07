@@ -91,12 +91,11 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         pdm.SaveUserData(user);
     }
 
-    public void getUserDemographic(final ProfileFragment fragment){
+    public void getProfileData(final ProfileFragment fragment){
 
         queue = UserDemographicSingleton.getInstance(mView.getBaseActivity());
-        String id = "3154";
+        String id = "3154";  //User Demographic ID
         url = "https://the-fit-nation-dev.herokuapp.com/api/user-demographics/"+id;
-
 
 
         //USERDEMOGRAPHIC
@@ -115,6 +114,8 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                fragment.setUser(new User());
+                fragment.setDemographic(new UserDemographic());
                 Log.d("GET", error.toString());
             }
         }) {
