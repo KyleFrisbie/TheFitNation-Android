@@ -1,4 +1,4 @@
-package com.fitnation.managers;
+package com.fitnation.networking.tasks;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -15,25 +15,28 @@ import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.utils.EnvironmentManager;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * handles the email reset password request
+ * Handles the register request
  */
 
-public class ResetLoginManager {
-    private ManagerContract.Presenter mPresenter;
+public class RegisterUserTask {
     private BaseActivity mActivity;
+    private TaskContract.Presenter mPresenter;
 
-    public ResetLoginManager( BaseActivity mActivity, ManagerContract.Presenter presenter) {
+    public RegisterUserTask(BaseActivity activity, TaskContract.Presenter presenter) {
+        this.mActivity = activity;
         this.mPresenter = presenter;
-        this.mActivity = mActivity;
     }
 
-    public void resetPasswordRequest(final String email){
+    public void requestRegistration(final String email, final String password, final String userName,
+                                    final String language){
         RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-        String endpoint = "api/account/reset_password/init";
+        String endpoint = "api/register";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
         ProgressDialog progressDialog = new ProgressDialog(mActivity);
@@ -42,14 +45,15 @@ public class ResetLoginManager {
         progressDialog.setIndeterminate(true);
         mPresenter.showProgress(progressDialog);
 
-        StringRequest resetPasswordWithEmailRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
+        StringRequest jsonObjectPost = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
         {
             @Override
             public void onResponse(String response) {
                 mPresenter.stopProgress();
-                successfulResponse(response);
+                handleJsonResponse();
+
             }
-        }, new Response.ErrorListener() {
+        },  new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 try{
@@ -61,28 +65,45 @@ public class ResetLoginManager {
                     noResponseError();
                 }
             }
-        }){
+        }
+        ){
             @Override
-            public byte[] getBody() throws AuthFailureError {
-                return email.getBytes();
+            public byte[] getBody() {
+                Map<String, String> map = new HashMap<>();
+                map.put("email", email);
+                map.put("langKey", language);
+                map.put("login", userName);
+                map.put("password", password);
+
+                JSONObject jsonObject = new JSONObject(map);
+                return jsonObject.toString().getBytes();
             }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/json");
-                params.put("Accept", "text/plain");
                 return params;
             }
+
         };
 
-        requestQueue.add(resetPasswordWithEmailRequest);
+        requestQueue.add(jsonObjectPost);
         requestQueue.start();
     }
 
-    private void successfulResponse(String response) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mActivity);
-        alertDialog.setTitle("Success");
-        alertDialog.setMessage(response);
+    private void errorResponseMessage(VolleyError error) {
+        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
+        mPresenter.showAuthError(volleyErrorMessage.getErrorMessage(mActivity));
+    }
+
+    /**
+     * returns the successful registration alert dialog which informs user to activate email
+     */
+    private void handleJsonResponse(){
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(mActivity);
+        alertDialog.setTitle("Success!");
+        alertDialog.setMessage("Welcome to the Fit Nation! To complete the regestration process please confirm your email");
         alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -91,11 +112,6 @@ public class ResetLoginManager {
         });
         alertDialog.create();
         mPresenter.showSuccess(alertDialog);
-    }
-
-    private void errorResponseMessage(VolleyError error){
-        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
-        mPresenter.showAuthError(volleyErrorMessage.getErrorMessage(mActivity));
     }
 
     private void noResponseError(){

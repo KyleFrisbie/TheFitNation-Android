@@ -1,4 +1,4 @@
-package com.fitnation.managers;
+package com.fitnation.networking.tasks;
 
 import android.content.Context;
 
@@ -17,7 +17,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RefreshAccessManager {
+public class RefreshAuthTokenTask {
     private String refreshToken;
     private boolean isRefreshSuccessful;
 

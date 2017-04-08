@@ -1,9 +1,8 @@
-package com.fitnation.managers;
+package com.fitnation.networking.tasks;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 
 import com.android.volley.Request;
@@ -27,11 +26,11 @@ import java.util.Map;
  * Handles the login request
  */
 
-public class LoginManager {
-    private ManagerContract.Presenter mPresenter;
+public class GetAuthTokenTask {
+    private TaskContract.Presenter mPresenter;
     private BaseActivity mActivity;
 
-    public LoginManager(BaseActivity activity, ManagerContract.Presenter presenter) {
+    public GetAuthTokenTask(BaseActivity activity, TaskContract.Presenter presenter) {
         this.mActivity = activity;
         mPresenter = presenter;
     }

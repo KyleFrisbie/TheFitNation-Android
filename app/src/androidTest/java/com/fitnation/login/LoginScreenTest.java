@@ -4,15 +4,30 @@ import android.os.SystemClock;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.test.mock.MockContentProvider;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
+import com.fitnation.utils.Environment;
+import com.fitnation.utils.EnvironmentManager;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+
+import java.io.IOException;
+
+import okhttp3.HttpUrl;
+import okhttp3.mockwebserver.Dispatcher;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
@@ -22,7 +37,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
+
 
 // TODO: create mock objects for volley responses from server
 @RunWith(AndroidJUnit4.class)
@@ -43,11 +58,56 @@ public class LoginScreenTest extends InstrumentationTest {
         super.tearDown(mActivityRule.getActivity());
     }
 
+    @BeforeClass
+    public static void mockServerForSuccess() throws IOException {
+        final MockWebServer mockWebServer = new MockWebServer();
+        final Dispatcher dispatcher = new Dispatcher() {
+            @Override
+            public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
+                if(request.getPath().equals("/oauth/token")){
+                    if(request.getBody().toString().contains("androidtest") ||
+                            request.getBody().toString().contains("Pa55w0rd")){
+                        return new MockResponse().setResponseCode(200).setBody("{\n" +
+                                "  \"access_token\": \"2185a8f2-8c21-4b78-a271-5429a3138f49\",\n" +
+                                "  \"token_type\": \"bearer\",\n" +
+                                "  \"refresh_token\": \"93bcd68d-6b0e-49fd-a3a7-819866794bab\",\n" +
+                                "  \"expires_in\": 1799,\n" +
+                                "  \"scope\": \"read write\"\n" +
+                                "}");
+                    }else{
+                        return new MockResponse().setResponseCode(400).setBody("{\n" +
+                                "  \"error\": \"invalid_grant\",\n" +
+                                "  \"error_description\": \"Bad credentials\"\n" +
+                                "}");
+                    }
+                }else if(request.getPath().equals("/api/account/reset_password/init")){
+                    if(request.getBody().toString().contains("testemail@android.com")){
+                        return new MockResponse().setResponseCode(200).setBody("e-mail was sent");
+                    }else{
+                        return new MockResponse().setResponseCode(400).setBody("e-mail address not registered");
+                    }
+                }else if(request.getPath().equals("/api/register")){
+                    if(request.getBody().toString().contains("testemail@android.com")){
+                        return new MockResponse().setResponseCode(201).setBody("");
+                    }else{
+                        return new MockResponse().setResponseCode(400).setBody("login already in use");
+                    }
+                }else{
+                    return new MockResponse().setResponseCode(404);
+                }
+            }
+        };
+        mockWebServer.setDispatcher(dispatcher);
+        mockWebServer.start();
+        Environment environment = new Environment(mockWebServer.url("").toString());
+        EnvironmentManager.getInstance().setEnvironment(environment);
+    }
+
     @Test
     public void testLoginFlowFor400Error() {
         loginScreenIsDisplayed();
-        onView(withId(R.id.email_editText)).perform(typeText("name@email.com"));
-        onView(withId(R.id.password_editText)).perform(typeText("Pa55w0rd"));
+        onView(withId(R.id.email_editText)).perform(typeText("bad@email.com"));
+        onView(withId(R.id.password_editText)).perform(typeText("fsafsafa"));
         pressBack();
         onView(withId(R.id.login_button)).perform(click());
         SystemClock.sleep(DELAY_TIME);
@@ -71,9 +131,9 @@ public class LoginScreenTest extends InstrumentationTest {
         loginScreenIsDisplayed();
         onView(withId(R.id.signUp_button)).perform(click());
         registerScreenIsDisplayed();
-        onView(withId(R.id.registerEmail_editText)).perform(typeText("testemail@android.com"));
+        onView(withId(R.id.registerEmail_editText)).perform(typeText("bad@email.com"));
         onView(withId(R.id.registerPassword_editText)).perform(typeText("Pa55w0rd"));
-        onView(withId(R.id.userName_editText)).perform(typeText("android"));
+        onView(withId(R.id.userName_editText)).perform(typeText("bad"));
         pressBack();
         onView(withId(R.id.register_button)).perform(click());
         SystemClock.sleep(DELAY_TIME);
@@ -86,7 +146,7 @@ public class LoginScreenTest extends InstrumentationTest {
         loginScreenIsDisplayed();
         onView(withId(R.id.forgot_login_button)).perform(click());
         forgotLoginScreenIsDisplayed();
-        onView(withId(R.id.resetPassword_editText)).perform(typeText("bademail@badrequest.com"));
+        onView(withId(R.id.resetPassword_editText)).perform(typeText("bad@email.com"));
         pressBack();
         onView(withId(R.id.resetPassword_button)).perform(click());
         SystemClock.sleep(DELAY_TIME);

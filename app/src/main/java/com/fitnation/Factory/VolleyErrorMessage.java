@@ -2,13 +2,11 @@ package com.fitnation.Factory;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.view.View;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
-import com.fitnation.managers.RefreshAccessManager;
+import com.fitnation.networking.tasks.RefreshAuthTokenTask;
 
 // TODO: impliment snackbar selectively based on code response
 /**
@@ -158,16 +156,16 @@ public class VolleyErrorMessage {
                 builder = generateAlertDialog(context, title, message, true);
                 break;
             case 401:
-                RefreshAccessManager refreshAccessToken = new RefreshAccessManager();
+                RefreshAuthTokenTask refreshAccessToken = new RefreshAuthTokenTask();
                 if (refreshAccessToken.refresh(context)) {
-                    builder = generateAlertDialog(context, "Access Refreshed", message, false);
                     message = "Authorization has been refreshed";
+                    builder = generateAlertDialog(context, "Access Refreshed", message, false);
                 } else {
                     if(message.isEmpty()){
+                        message = "401: Unauthorized";
+                        title = "Error";
+                        builder = generateAlertDialog(context, title, message, true);
                     }
-                    message = "401: Unauthorized";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
                 }
                 break;
             case 402:

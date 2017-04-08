@@ -3,15 +3,15 @@ package com.fitnation.login;
 import android.app.ProgressDialog;
 import android.support.v7.app.AlertDialog;
 
-import com.fitnation.managers.LoginManager;
-import com.fitnation.managers.ManagerContract;
+import com.fitnation.networking.tasks.GetAuthTokenTask;
+import com.fitnation.networking.tasks.TaskContract;
 
 import static com.fitnation.login.LoginBaseActivity.VIEW_CONTAINER;
 
 /**
  * Presenter for the login screen. contains all the login logic for the login screen
  */
-public class LoginPresenter implements LoginContract.Presenter, ManagerContract.Presenter{
+public class LoginPresenter implements LoginContract.Presenter, TaskContract.Presenter{
     private LoginContract.View mView;
 
     public LoginPresenter (LoginContract.View view) { mView = view; }
@@ -20,8 +20,8 @@ public class LoginPresenter implements LoginContract.Presenter, ManagerContract.
     @Override
     public void onLoginPressed(final String userName, final String password) {
 
-        LoginManager loginManager = new LoginManager(mView.getBaseActivity(), this);
-        loginManager.requestToken(userName, password);
+        GetAuthTokenTask getAuthTokenTask = new GetAuthTokenTask(mView.getBaseActivity(), this);
+        getAuthTokenTask.requestToken(userName, password);
 
     }
 

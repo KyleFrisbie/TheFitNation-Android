@@ -4,13 +4,13 @@ package com.fitnation.login;
 import android.app.ProgressDialog;
 import android.support.v7.app.AlertDialog;
 
-import com.fitnation.managers.ManagerContract;
-import com.fitnation.managers.ResetLoginManager;
+import com.fitnation.networking.tasks.TaskContract;
+import com.fitnation.networking.tasks.EmailResetPasswordTask;
 
 /**
  * contains the business logic for the view
  */
-public class ResetLoginPresenter implements ResetLoginContract.Presenter, ManagerContract.Presenter{
+public class ResetLoginPresenter implements ResetLoginContract.Presenter, TaskContract.Presenter{
     private ResetLoginContract.View mView;
 
     public ResetLoginPresenter(ResetLoginContract.View view) { mView = view; }
@@ -18,8 +18,8 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter, Manage
     @Override
     public void onResetPasswordButtonPressed(final String email) {
 
-        ResetLoginManager resetLoginManager = new ResetLoginManager(mView.getBaseActivity(), this);
-        resetLoginManager.resetPasswordRequest(email);
+        EmailResetPasswordTask emailResetPasswordTask = new EmailResetPasswordTask(mView.getBaseActivity(), this);
+        emailResetPasswordTask.resetPasswordRequest(email);
 
     }
 
