@@ -1,5 +1,6 @@
 package com.fitnation.navigation;
 
+
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -118,9 +119,11 @@ public class NavigationActivity extends BaseActivity
         } else if (id == R.id.nav_workout_regimens) {
 
         } else if (id == R.id.nav_my_profile) {
-            getSupportFragmentManager().addOnBackStackChangedListener(null);
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_container, ProfileFragment.newInstance()).commit();
-
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.content_main_container, ProfileFragment.newInstance())
+                    .addToBackStack(null)
+                    .commit();
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
