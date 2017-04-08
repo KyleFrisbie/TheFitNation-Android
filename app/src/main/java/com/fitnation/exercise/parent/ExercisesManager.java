@@ -42,7 +42,7 @@ import io.realm.RealmResults;
  */
 public class ExercisesManager extends DataManager {
     private static final String TAG = ExercisesManager.class.getSimpleName();
-    private static final String mAuthToken = "";
+    private static final String mAuthToken = "b8112650-4270-4da6-be87-1ef503673f77";
     private RequestQueue mRequestQueue;
     private List<ExerciseInstance> mSelectedExercises;
     private List<ExerciseInstance> mExerciseInstances;
@@ -77,6 +77,7 @@ public class ExercisesManager extends DataManager {
                     getExerciseInstancesTask.getExerciseInstancesFromExercises(new ExerciseInstanceRequestCallback() {
                         @Override
                         public void onSuccess(List<ExerciseInstance> exerciseInstances) {
+                            mExerciseInstances = exerciseInstances;
                             mExerciseInstancesTab1 = new ArrayList<ExerciseInstance>(exerciseInstances.size());
                             mExerciseInstancesTab2 = new ArrayList<ExerciseInstance>(exerciseInstances.size());
                             mExerciseInstancesTab3 = new ArrayList<ExerciseInstance>(exerciseInstances.size());
