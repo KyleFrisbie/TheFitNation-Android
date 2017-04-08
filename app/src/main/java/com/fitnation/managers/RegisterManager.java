@@ -56,10 +56,12 @@ public class RegisterManager {
         },  new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                mPresenter.stopProgress();
-                if(error.networkResponse != null) {
+                try{
+                    int code = error.networkResponse.statusCode;
                     errorResponseMessage(error);
-                }else{
+                    mPresenter.stopProgress();
+                }catch(NullPointerException nullPointer){
+                    mPresenter.stopProgress();
                     noResponseError();
                 }
             }
@@ -123,5 +125,6 @@ public class RegisterManager {
             }
         });
         noResponseDialog.create();
+        mPresenter.showAuthError(noResponseDialog);
     }
 }

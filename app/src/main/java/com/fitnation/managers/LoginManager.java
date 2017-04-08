@@ -3,6 +3,7 @@ package com.fitnation.managers;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 
 import com.android.volley.Request;
@@ -62,10 +63,12 @@ public class LoginManager {
         },  new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                mPresenter.stopProgress();
-                if(error.networkResponse != null){
+                try{
+                    int code = error.networkResponse.statusCode;
                     errorResponseMessage(error);
-                }else{
+                    mPresenter.stopProgress();
+                }catch(NullPointerException nullPointer){
+                    mPresenter.stopProgress();
                     noResponseError();
                 }
             }
@@ -110,5 +113,6 @@ public class LoginManager {
             }
         });
         noResponseDialog.create();
+        mPresenter.showAuthError(noResponseDialog);
     }
 }

@@ -52,10 +52,12 @@ public class ResetLoginManager {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                mPresenter.stopProgress();
-                if(error.networkResponse != null){
+                try{
+                    int code = error.networkResponse.statusCode;
                     errorResponseMessage(error);
-                }else{
+                    mPresenter.stopProgress();
+                }catch(NullPointerException nullPointer){
+                    mPresenter.stopProgress();
                     noResponseError();
                 }
             }
@@ -107,5 +109,6 @@ public class ResetLoginManager {
             }
         });
         noResponseDialog.create();
+        mPresenter.showAuthError(noResponseDialog);
     }
 }

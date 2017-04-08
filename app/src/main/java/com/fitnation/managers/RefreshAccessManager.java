@@ -44,7 +44,7 @@ public class RefreshAccessManager {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    isRefreshSuccessful = true;
+                    isRefreshSuccessful = false;
                 }
             }) {
                 @Override
