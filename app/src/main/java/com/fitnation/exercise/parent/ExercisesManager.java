@@ -195,37 +195,17 @@ public class ExercisesManager extends DataManager {
             @Override
             public void run() {
                 PostWorkoutTemplateTask postWorkoutTemplateTask = new PostWorkoutTemplateTask(mAuthToken, mRequestQueue);
-                postWorkoutTemplateTask.postWorkoutTemplate(template, new WorkoutTemplatePostCallback() {
-                    @Override
-                    public void onSuccess(WorkoutTemplate updatedTemplate) {
-                        //TODO save to db
-                    }
-
-                    @Override
-                    public void onFailure(String error) {
-                        //TODO display error to user
-                    }
-                });
+                postWorkoutTemplateTask.postWorkoutTemplate(template, callback);
             }
         }).start();
     }
 
-    private void postWorkoutInstanceToWeb(final WorkoutInstance workoutInstance) {
+    private void postWorkoutInstanceToWeb(final WorkoutInstance workoutInstance, final WorkoutInstancePostCallback callback) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 PostWorkoutInstanceTask postWorkoutInstanceTask = new PostWorkoutInstanceTask(mAuthToken, mRequestQueue);
-                postWorkoutInstanceTask.postWorkoutInstance(workoutInstance, new WorkoutInstancePostCallback() {
-                    @Override
-                    public void onSuccess(WorkoutInstance updatedWorkoutInstance) {
-                        //TODO save to db
-                    }
-
-                    @Override
-                    public void onFailure(String error) {
-                        //TODO display  error to user
-                    }
-                });
+                postWorkoutInstanceTask.postWorkoutInstance(workoutInstance, callback);
             }
         }).start();
     }
