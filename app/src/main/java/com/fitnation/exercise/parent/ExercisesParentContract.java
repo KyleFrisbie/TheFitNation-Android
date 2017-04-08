@@ -1,8 +1,8 @@
 package com.fitnation.exercise.parent;
 
-import android.app.AlertDialog;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 
 import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
@@ -22,6 +22,8 @@ public interface ExercisesParentContract {
         void displayUpdatedExercises(List<ExerciseInstance> exerciseListTab1, List<ExerciseInstance> exerciseListTab2, List<ExerciseInstance> exerciseListTab3);
         void promptUserToSave(DialogFragment alertDialog);
         int getSelectedTab();
+        void showSuccess(AlertDialog alertDialog);
+        void showFailure(AlertDialog alertDialog);
     }
 
     interface Presenter extends BasePresenter {

@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -192,6 +193,16 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
         }
 
         return selected;
+    }
+
+    @Override
+    public void showSuccess(AlertDialog alertDialog) {
+        alertDialog.show();
+    }
+
+    @Override
+    public void showFailure(AlertDialog alertDialog) {
+        alertDialog.show();
     }
 
     @Override
