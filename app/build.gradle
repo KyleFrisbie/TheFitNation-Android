@@ -90,6 +90,9 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
+    //Picasso for image resizing inside imageviews
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
     //Volley for network communications
     compile 'com.android.volley:volley:1.0.0'
 

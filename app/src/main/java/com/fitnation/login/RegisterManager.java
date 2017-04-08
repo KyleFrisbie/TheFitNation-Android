@@ -1,5 +1,6 @@
 package com.fitnation.login;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 
 import com.android.volley.AuthFailureError;
@@ -37,17 +38,24 @@ public class RegisterManager {
         String endpoint = "api/register";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
+        ProgressDialog progressDialog = new ProgressDialog(mActivity);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setIndeterminate(true);
+        mPresenter.showProgress(progressDialog);
+
         StringRequest jsonObjectPost = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
         {
             @Override
             public void onResponse(String response) {
-
+                mPresenter.stopProgress();
                 handleJsonResponse();
 
             }
         },  new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                mPresenter.stopProgress();
                 if(error.networkResponse != null) {
                     errorResponseMessage(error);
                 }

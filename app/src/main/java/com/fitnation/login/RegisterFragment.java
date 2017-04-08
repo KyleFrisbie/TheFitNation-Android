@@ -2,6 +2,7 @@ package com.fitnation.login;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.BaseTransientBottomBar;
@@ -11,9 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
+
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +25,7 @@ import butterknife.OnClick;
 
 public class RegisterFragment extends BaseFragment implements RegisterContract.View{
     private RegisterContract.Presenter mPresenter;
+    private ProgressDialog mProgressDialog;
 
     @BindView(R.id.registerEmail_editText) public EditText mEmail;
     @BindView(R.id.registerPassword_editText) public EditText mPassword;
@@ -39,6 +44,8 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_register, container, false);
+        ImageView imageView = (ImageView) v.findViewById(R.id.register_background_imageView);
+        Picasso.with(getBaseActivity()).load(R.drawable.login_background_2).into(imageView);
         ButterKnife.bind(this, v);
 
         return v;
@@ -68,7 +75,14 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     }
 
     @Override
-    public void showProgress() {
+    public void showProgress(ProgressDialog progressDialog) {
+        mProgressDialog = progressDialog;
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void stopProgress() {
+        mProgressDialog.dismiss();
     }
 
     @Override

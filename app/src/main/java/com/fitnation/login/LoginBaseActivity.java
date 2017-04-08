@@ -1,12 +1,16 @@
 package com.fitnation.login;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
 import com.crashlytics.android.answers.CustomEvent;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 /**
  * The base login activity to hold all of the fragments

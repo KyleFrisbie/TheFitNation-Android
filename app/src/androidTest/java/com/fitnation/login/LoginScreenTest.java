@@ -46,7 +46,7 @@ public class LoginScreenTest extends InstrumentationTest {
     @Test
     public void testLoginFlowFor400Error() {
         loginScreenIsDisplayed();
-        onView(withId(R.id.email_editText)).perform(typeText("badusername@email.com"));
+        onView(withId(R.id.email_editText)).perform(typeText("name@email.com"));
         onView(withId(R.id.password_editText)).perform(typeText("Pa55w0rd"));
         pressBack();
         onView(withId(R.id.login_button)).perform(click());
@@ -103,8 +103,8 @@ public class LoginScreenTest extends InstrumentationTest {
         pressBack();
         onView(withId(R.id.resetPassword_button)).perform(click());
         SystemClock.sleep(DELAY_TIME);
-        onView(allOf(withId(android.support.design.R.id.snackbar_text), withText("e-mail was sent")))
-                .check(matches(isDisplayed()));
+        onView((withText("Success"))).check(matches(isDisplayed()));
+        onView((withText("OK"))).perform(click());
     }
 
     public void navigationScreenIsDisplayed(){

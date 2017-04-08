@@ -1,5 +1,6 @@
 package com.fitnation.login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 
 import com.android.volley.Request;
@@ -37,11 +38,18 @@ public class LoginManager {
         String endpoint = "oauth/token";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
+        ProgressDialog progressDialog = new ProgressDialog(mActivity);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setIndeterminate(true);
+        mPresenter.showProgress(progressDialog);
+
         JsonObjectRequest jsonObjectPost = new JsonObjectRequest(Request.Method.POST,
                 url, null, new Response.Listener<JSONObject>()
         {
             @Override
             public void onResponse(JSONObject response) {
+                mPresenter.stopProgress();
                 NetworkUtils.getInstance().storeTokens(response);
 
                 Intent mainActivityIntent = new Intent(mActivity, NavigationActivity.class);
@@ -52,6 +60,7 @@ public class LoginManager {
         },  new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                mPresenter.stopProgress();
                 if(error.networkResponse != null){
                     errorResponseMessage(error);
                 }

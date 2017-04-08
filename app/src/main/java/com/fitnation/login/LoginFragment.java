@@ -1,6 +1,7 @@
 package com.fitnation.login;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
@@ -10,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
+
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +27,7 @@ import butterknife.OnClick;
  */
 public class LoginFragment extends BaseFragment implements LoginContract.View {
     private LoginContract.Presenter mPresenter;
+    private ProgressDialog mProgressDialog;
 
     @BindView(R.id.email_editText) public EditText mUsernameEditText;
     @BindView(R.id.password_editText) public EditText mPasswordEditText;
@@ -40,6 +45,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_login, container, false);
+        ImageView imageView = (ImageView) v.findViewById(R.id.login_background_imageView);
+        Picasso.with(getBaseActivity()).load(R.drawable.login_background_1).into(imageView);
         ButterKnife.bind(this, v);
 
         return v;
@@ -91,7 +98,14 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     }
 
     @Override
-    public void showProgress() {
+    public void showProgress(ProgressDialog progressDialog) {
+        mProgressDialog = progressDialog;
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void stopProgress() {
+        mProgressDialog.dismiss();
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.fitnation.login;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AlertDialog;
 
 import com.android.volley.AuthFailureError;
@@ -54,8 +55,13 @@ public class RegisterPresenter implements RegisterContract.Presenter, ManagerCon
     }
 
     @Override
-    public void showProgress() {
-        mView.showProgress();
+    public void showProgress(ProgressDialog progressDialog) {
+        mView.showProgress(progressDialog);
+    }
+
+    @Override
+    public void stopProgress() {
+        mView.stopProgress();
     }
 
     @Override

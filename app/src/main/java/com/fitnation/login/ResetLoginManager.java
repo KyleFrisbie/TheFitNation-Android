@@ -1,5 +1,6 @@
 package com.fitnation.login;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
@@ -33,17 +34,25 @@ public class ResetLoginManager {
     public void resetPasswordRequest(final String email){
         RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
         String endpoint = "api/account/reset_password/init";
-        String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;;
+        String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
+
+        ProgressDialog progressDialog = new ProgressDialog(mActivity);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setIndeterminate(true);
+        mPresenter.showProgress(progressDialog);
 
         StringRequest resetPasswordWithEmailRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
         {
             @Override
             public void onResponse(String response) {
+                mPresenter.stopProgress();
                 successfulResponse(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                mPresenter.stopProgress();
                 if(error.networkResponse != null){
                     errorResponseMessage(error);
                 }

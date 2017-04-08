@@ -1,6 +1,7 @@
 package com.fitnation.login;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 
 import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
@@ -11,7 +12,8 @@ import com.fitnation.base.BaseView;
 public interface ResetLoginContract {
     interface View extends BaseView<Presenter> {
         void showSuccess(android.support.v7.app.AlertDialog.Builder successDialog);
-        void showProgress();
+        void showProgress(ProgressDialog progressDialog);
+        void stopProgress();
         void showAuthError(android.support.v7.app.AlertDialog.Builder errorDialog);
     }
 

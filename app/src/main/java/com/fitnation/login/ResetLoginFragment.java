@@ -2,6 +2,7 @@ package com.fitnation.login;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
@@ -10,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,8 +24,8 @@ import butterknife.OnClick;
 
 public class ResetLoginFragment extends BaseFragment implements ResetLoginContract.View{
     private ResetLoginContract.Presenter mPresenter;
+    private ProgressDialog mProgressDialog;
 
-    String email;
     @BindView(R.id.resetPassword_editText) public EditText mResetPasswordEditText;
 
     public ResetLoginFragment() {
@@ -37,6 +40,8 @@ public class ResetLoginFragment extends BaseFragment implements ResetLoginContra
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_reset_login, container, false);
+        ImageView imageView = (ImageView) v.findViewById(R.id.reset_password_background_imageView);
+        Picasso.with(getBaseActivity()).load(R.drawable.login_background_3).into(imageView);
         ButterKnife.bind(this, v);
 
         return v;
@@ -50,8 +55,9 @@ public class ResetLoginFragment extends BaseFragment implements ResetLoginContra
 
     @OnClick(R.id.resetPassword_button)
     public void onResetPasswordButtonPressed() {
-        email = mResetPasswordEditText.getText().toString();
-        mPresenter.onResetPasswordButtonPressed(email);
+        if(!mResetPasswordEditText.getText().toString().isEmpty()) {
+            mPresenter.onResetPasswordButtonPressed(mResetPasswordEditText.getText().toString());
+        }
     }
 
     @Override
@@ -60,8 +66,14 @@ public class ResetLoginFragment extends BaseFragment implements ResetLoginContra
     }
 
     @Override
-    public void showProgress() {
+    public void showProgress(ProgressDialog progressDialog) {
+        mProgressDialog = progressDialog;
+        mProgressDialog.show();
+    }
 
+    @Override
+    public void stopProgress() {
+        mProgressDialog.dismiss();
     }
 
     @Override

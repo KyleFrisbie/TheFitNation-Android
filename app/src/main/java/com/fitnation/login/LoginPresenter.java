@@ -1,5 +1,6 @@
 package com.fitnation.login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
@@ -86,8 +87,13 @@ public class LoginPresenter implements LoginContract.Presenter, ManagerContract.
     }
 
     @Override
-    public void showProgress() {
-        mView.showProgress();
+    public void showProgress(ProgressDialog progressDialog) {
+        mView.showProgress(progressDialog);
+    }
+
+    @Override
+    public void stopProgress() {
+        mView.stopProgress();
     }
 
     @Override
