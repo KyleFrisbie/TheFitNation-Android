@@ -8,6 +8,7 @@ import com.fitnation.R;
 import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
 import com.fitnation.exercise.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.exercise.callbacks.SaveDialogCallback;
+import com.fitnation.exercise.callbacks.SaveWorkoutCallback;
 import com.fitnation.exercise.edit.ViewExerciseFragment;
 import com.fitnation.exercise.edit.ViewExercisePresenter;
 import com.fitnation.model.ExerciseInstance;
@@ -90,7 +91,17 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void onSaveRequested(String name) {
         Log.i(TAG, "User requested to save workout with name: " + name);
-        mExerciseManager.createWorkoutAndSave(name, null);
+        mExerciseManager.createWorkoutAndSave(name, new SaveWorkoutCallback() {
+            @Override
+            public void onSuccess() {
+                //TODO notify view
+            }
+
+            @Override
+            public void onFailure(String error) {
+                //TODO notify view
+            }
+        });
     }
 
     //----------------------------------OnExerciseUpdatedCallback----------------------------------//

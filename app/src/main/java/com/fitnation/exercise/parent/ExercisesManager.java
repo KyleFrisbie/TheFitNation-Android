@@ -16,6 +16,7 @@ import com.fitnation.base.DataManager;
 import com.fitnation.base.DataResult;
 import com.fitnation.exercise.callbacks.ExerciseInstanceRequestCallback;
 import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
+import com.fitnation.exercise.callbacks.SaveWorkoutCallback;
 import com.fitnation.exercise.callbacks.WorkoutInstancePostCallback;
 import com.fitnation.exercise.callbacks.WorkoutTemplatePostCallback;
 import com.fitnation.exercise.parent.tasks.GetExerciseInstancesFromExercisesTask;
@@ -130,36 +131,120 @@ public class ExercisesManager extends DataManager {
      * Creates a workout out of the currently selected exercises and saves it under the given name
      * @param name - The name of the workout
      */
-    public void createWorkoutAndSave(final String name, final WorkoutTemplate workoutTemplate) {
+    public void createWorkoutAndSave(final String name, final SaveWorkoutCallback saveWorkoutCallback) {
+        final WorkoutTemplate workoutTemplate = new WorkoutTemplate();
+        workoutTemplate.setName("Individual Workout's");
+        addSkillLevelToWorkout(workoutTemplate);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final Realm realm = Realm.getDefaultInstance();
-
-                WorkoutTemplate trueWorkoutTemplate = getWorkoutTemplate(workoutTemplate, realm);
-                WorkoutInstance workoutInstanceTemplate = new WorkoutInstance(name, 0f, 1, trueWorkoutTemplate, "");
-                RealmList<ExerciseInstance> selectedExercises = new RealmList<>();
-
-                for (ExerciseInstance exerciseInstance : mSelectedExercises) {
-                    selectedExercises.add(exerciseInstance);
-                }
-
-                workoutInstanceTemplate.setExercises(selectedExercises);
-                workoutInstanceTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutInstance.class));
-                saveData(trueWorkoutTemplate, new DataResult() {
+                postWorkoutTemplateToWeb(workoutTemplate, new WorkoutTemplatePostCallback() {
                     @Override
-                    public void onError() {
-                        Log.e(TAG, "WorkoutTemplate was not succesfully saved");
-                        realm.close();
+                    public void onSuccess(final WorkoutTemplate updatedTemplate) {
+                        WorkoutInstance workoutInstanceTemplate = new WorkoutInstance(name, 0f, 1, updatedTemplate, "");
+                        RealmList<ExerciseInstance> selectedExercises = new RealmList<>();
+
+                        for (ExerciseInstance exerciseInstance : mSelectedExercises) {
+                            selectedExercises.add(exerciseInstance);
+                        }
+
+                        workoutInstanceTemplate.setExercises(selectedExercises);
+                        workoutInstanceTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutInstance.class));
+                        postWorkoutInstanceToWeb(workoutInstanceTemplate, new WorkoutInstancePostCallback() {
+                            @Override
+                            public void onSuccess(WorkoutInstance updatedWorkoutInstance) {
+                                updatedTemplate.addWorkoutInstance(updatedWorkoutInstance);
+                                saveWorkoutToDatabase(updatedTemplate);
+                                saveWorkoutCallback.onSuccess();
+                            }
+
+                            @Override
+                            public void onFailure(String error) {
+                                saveWorkoutCallback.onFailure("Unable to save individual Workout Instances. Error: " + error );
+                            }
+                        });
                     }
 
                     @Override
-                    public void onSuccess() {
-                        Log.e(TAG, "WorkoutTemplate was succesfully saved");
+                    public void onFailure(String error) {
+                        saveWorkoutCallback.onFailure("Unable to save Workout Template Error: " + error );
                     }
                 });
             }
         }).start();
+    }
+
+    private void addSkillLevelToWorkout(WorkoutTemplate workoutTemplate) {
+        int begginerCount = 0;
+        int intermediateCount = 0;
+        int advancedCount= 0;
+        long beginnerSkillLevelId = 0;
+        long intermediateSkillLevelId = 0;
+        long advancedSkillLevelId = 0;
+
+        for (ExerciseInstance exerciseInstance : mSelectedExercises) {
+            Exercise exercise = exerciseInstance.getExercise();
+            String skillLevel = exercise.getSkillLevelLevel();
+
+            switch(skillLevel) {
+                case SkillLevel.BEGINNER:
+                    begginerCount++;
+                    if(beginnerSkillLevelId == 0) {
+                        beginnerSkillLevelId = exercise.getSkillLevelId();
+                    }
+                    break;
+                case SkillLevel.INTERMEDIATE:
+                    intermediateCount++;
+                    if(intermediateSkillLevelId == 0) {
+                        intermediateSkillLevelId = exercise.getSkillLevelId();
+                    }
+                    break;
+                case SkillLevel.ADVANCED:
+                    advancedCount++;
+                    if(advancedSkillLevelId == 0) {
+                        advancedSkillLevelId = exercise.getSkillLevelId();
+                    }
+                    break;
+            }
+        }
+
+        if ( begginerCount > intermediateCount && begginerCount > advancedCount ) {
+            workoutTemplate.setSkillLevelLevel(SkillLevel.BEGINNER);
+            workoutTemplate.setSkillLevelId(beginnerSkillLevelId);
+        } else if ( intermediateCount > begginerCount && intermediateCount > advancedCount ) {
+            workoutTemplate.setSkillLevelLevel(SkillLevel.INTERMEDIATE);
+            workoutTemplate.setSkillLevelId(intermediateSkillLevelId);
+        } else if ( advancedCount > begginerCount && advancedCount > intermediateCount ) {
+            workoutTemplate.setSkillLevelLevel(SkillLevel.ADVANCED);
+            workoutTemplate.setSkillLevelId(advancedSkillLevelId);
+        } else {
+            if(intermediateSkillLevelId != 0) {
+                workoutTemplate.setSkillLevelLevel(SkillLevel.INTERMEDIATE);
+                workoutTemplate.setSkillLevelId(intermediateSkillLevelId);
+            } else {
+                workoutTemplate.setSkillLevelLevel(SkillLevel.ADVANCED);
+                workoutTemplate.setSkillLevelId(advancedSkillLevelId);
+            }
+        }
+    }
+
+    private void saveWorkoutToDatabase(WorkoutTemplate workoutTemplate) {
+        final Realm realm = Realm.getDefaultInstance();
+
+        WorkoutTemplate trueWorkoutTemplate = getWorkoutTemplate(workoutTemplate, realm);
+
+        saveData(trueWorkoutTemplate, new DataResult() {
+            @Override
+            public void onError() {
+                Log.e(TAG, "WorkoutTemplate was not succesfully saved");
+                realm.close();
+            }
+
+            @Override
+            public void onSuccess() {
+                Log.e(TAG, "WorkoutTemplate was succesfully saved");
+            }
+        });
     }
 
     private WorkoutTemplate getWorkoutTemplate(WorkoutTemplate workoutTemplate, Realm realm) {

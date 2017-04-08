@@ -1,5 +1,7 @@
 package com.fitnation.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,6 +14,7 @@ import io.realm.annotations.PrimaryKey;
  */
 public class WorkoutInstance extends RealmObject {
     @PrimaryKey
+    @Expose(serialize = false)
     private Long androidId;
     private Long id;
     private String name;
@@ -21,8 +24,7 @@ public class WorkoutInstance extends RealmObject {
     private Integer orderNumber;
     private Long workoutTemplateId;
     private String workoutTemplateName;
-    private RealmList<UserWorkoutInstance> userWorkoutInstances;
-    private RealmList<ExerciseInstance> exerciseInstances ;
+    private RealmList<ExerciseInstance> exerciseInstances;
     private String notes;
 
     public WorkoutInstance() {

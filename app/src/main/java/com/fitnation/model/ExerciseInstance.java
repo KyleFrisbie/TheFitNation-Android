@@ -29,6 +29,7 @@ public class ExerciseInstance extends RealmObject implements Cloneable {
     private Exercise exercise;
     private Unit repUnit;
     private Unit effortUnit;
+
     private boolean selected;
 
     public ExerciseInstance() {
