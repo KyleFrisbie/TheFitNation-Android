@@ -19,14 +19,16 @@ import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
 import com.fitnation.exercise.callbacks.WorkoutInstancePostCallback;
 import com.fitnation.exercise.callbacks.WorkoutTemplatePostCallback;
 import com.fitnation.exercise.parent.tasks.GetExerciseInstancesFromExercisesTask;
+import com.fitnation.exercise.parent.tasks.PostWorkoutInstanceTask;
+import com.fitnation.exercise.parent.tasks.PostWorkoutTemplateTask;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.PrimaryKeyFactory;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.model.enums.SkillLevel;
-import com.fitnation.networking.EnvironmentManager;
 import com.fitnation.networking.JsonParser;
+import com.fitnation.utils.EnvironmentManager;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ import io.realm.RealmResults;
  */
 public class ExercisesManager extends DataManager {
     private static final String TAG = ExercisesManager.class.getSimpleName();
-    private static final String mAuthToken = "b8112650-4270-4da6-be87-1ef503673f77";
+    private static final String mAuthToken = "77328153-29c5-4688-b0dc-fa752a343c18";
     private RequestQueue mRequestQueue;
     private List<ExerciseInstance> mSelectedExercises;
     private List<ExerciseInstance> mExerciseInstances;
@@ -189,101 +191,43 @@ public class ExercisesManager extends DataManager {
     }
 
     private void postWorkoutTemplateToWeb(final WorkoutTemplate template, final WorkoutTemplatePostCallback callback) {
-        final String resourceRoute = "workout-templates";
-        String url = EnvironmentManager.getInstance().getRequestUrl(resourceRoute);
-        final StringRequest postWorkoutTemplate = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        WorkoutTemplate updatedTemplate = JsonParser.convertJsonStringToPojo(response, WorkoutTemplate.class);
-                        callback.onSuccess(updatedTemplate);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, error.toString());
-                        callback.onFailure(error.getMessage());
-                    }
-                }
-        ) {
+        new Thread(new Runnable() {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> mHeaders = new ArrayMap();
+            public void run() {
+                PostWorkoutTemplateTask postWorkoutTemplateTask = new PostWorkoutTemplateTask(mAuthToken, mRequestQueue);
+                postWorkoutTemplateTask.postWorkoutTemplate(template, new WorkoutTemplatePostCallback() {
+                    @Override
+                    public void onSuccess(WorkoutTemplate updatedTemplate) {
+                        //TODO save to db
+                    }
 
-                mHeaders.put("Authorization", "Bearer" + " " + mAuthToken);
-                mHeaders.put("Content-Type", "application/json");
-
-                return mHeaders;
+                    @Override
+                    public void onFailure(String error) {
+                        //TODO display error to user
+                    }
+                });
             }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                String json = JsonParser.convertPojoToJsonString(template);
-                byte[] postBody = null;
-                try
-                {
-                    postBody = json.toString().getBytes("utf-8");
-                } catch (UnsupportedEncodingException e)
-                {
-                    Log.e(TAG, e.getMessage());
-                }
-                return postBody;
-            }
-        };
-
-        postWorkoutTemplate.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
-
-        mRequestQueue.add(postWorkoutTemplate);
+        }).start();
     }
 
-    private void postWorkoutInstanceToWeb(final WorkoutInstance workoutInstance, final WorkoutInstancePostCallback callback) {
-        final String resourceRoute = "workout-instances";
-        String url = EnvironmentManager.getInstance().getRequestUrl(resourceRoute);
-        final StringRequest postWorkoutInstance = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        WorkoutInstance updatedInstance = JsonParser.convertJsonStringToPojo(response, WorkoutInstance.class);
-                        callback.onSuccess(updatedInstance);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, error.toString());
-                        callback.onFailure(error.getMessage());
-                    }
-                }
-        ) {
+    private void postWorkoutInstanceToWeb(final WorkoutInstance workoutInstance) {
+        new Thread(new Runnable() {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> mHeaders = new ArrayMap();
+            public void run() {
+                PostWorkoutInstanceTask postWorkoutInstanceTask = new PostWorkoutInstanceTask(mAuthToken, mRequestQueue);
+                postWorkoutInstanceTask.postWorkoutInstance(workoutInstance, new WorkoutInstancePostCallback() {
+                    @Override
+                    public void onSuccess(WorkoutInstance updatedWorkoutInstance) {
+                        //TODO save to db
+                    }
 
-                mHeaders.put("Authorization", "Bearer" + " " + mAuthToken);
-                mHeaders.put("Content-Type", "application/json");
-
-                return mHeaders;
+                    @Override
+                    public void onFailure(String error) {
+                        //TODO display  error to user
+                    }
+                });
             }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                String json = JsonParser.convertPojoToJsonString(workoutInstance);
-                byte[] postBody = null;
-                try
-                {
-                    postBody = json.toString().getBytes("utf-8");
-                } catch (UnsupportedEncodingException e)
-                {
-                    Log.e(TAG, e.getMessage());
-                }
-                return postBody;
-            }
-        };
-
-        postWorkoutInstance.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
-
-        mRequestQueue.add(postWorkoutInstance);
+        }).start();
     }
 
     public void updateExerciseList(ExerciseInstance original, ExerciseInstance updated, int tab) {

@@ -16,8 +16,8 @@ import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.enums.SkillLevel;
-import com.fitnation.networking.EnvironmentManager;
 import com.fitnation.networking.JsonParser;
+import com.fitnation.utils.EnvironmentManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +26,8 @@ import java.util.Map;
 /**
  * Gets ExerciseInstances from the available Exercises
  */
-public class GetExerciseInstancesFromExercisesTask {
+public class GetExerciseInstancesFromExercisesTask extends NetworkTask{
     private static final String TAG = GetExerciseInstancesFromExercisesTask.class.getSimpleName();
-    private static String mAuthToken;
-    private RequestQueue mRequestQueue;
 
     /**
      * Constructor
@@ -37,13 +35,12 @@ public class GetExerciseInstancesFromExercisesTask {
      * @param requestQueue - request queue to be used
      */
     public GetExerciseInstancesFromExercisesTask(String authToken, RequestQueue requestQueue) {
-        mAuthToken = authToken;
-        mRequestQueue = requestQueue;
+        super(authToken, requestQueue);
     }
 
     public void getExerciseInstancesFromExercises(final ExerciseInstanceRequestCallback callback) {
         String resourceRoute = "exercises";
-        String url = EnvironmentManager.getInstance().getRequestUrl(resourceRoute);
+        String url = EnvironmentManager.getInstance().getCurrentEnvironment().getApiUrl() + resourceRoute;
 
         StringRequest getExercisesRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
