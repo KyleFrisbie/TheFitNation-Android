@@ -1,8 +1,8 @@
 package com.fitnation.model;
 
-import com.fitnation.model.enums.SkillLevel;
 import com.google.gson.annotations.Expose;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -20,9 +20,13 @@ public class WorkoutTemplate extends RealmObject {
     private Long id;
     private String name;
     private String notes;
-    private Date createdOn;
-    private Date lastUpdated;
-    private Boolean isPrivate;
+    private String createdOn;
+    private String lastUpdated;
+    @Expose(serialize = false)
+    private Date createdOnObj;
+    @Expose(serialize = false)
+    private Date lastUpdatedObj;
+    private boolean isPrivate;
     private String userDemographicId;
     private Long skillLevelId;
     private String skillLevelLevel;
@@ -30,13 +34,20 @@ public class WorkoutTemplate extends RealmObject {
     private RealmList<WorkoutInstance> workoutInstances;
 
     public WorkoutTemplate() {
-        createdOn = new Date();
-        lastUpdated = new Date();
+        createdOnObj = new Date();
+        lastUpdatedObj = new Date();
         workoutInstances = new RealmList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+        createdOn = dateFormat.format(createdOnObj);
+        lastUpdated = dateFormat.format(lastUpdatedObj);
     }
 
     public void addWorkoutInstance(WorkoutInstance workoutInstance) {
         workoutInstances.add(workoutInstance);
+    }
+
+    public String getNotes() {
+        return notes;
     }
 
     public RealmList<WorkoutInstance> getWorkoutInstances() {
@@ -100,7 +111,7 @@ public class WorkoutTemplate extends RealmObject {
         return "WorkoutTemplate{" +
             "id=" + id +
             ", name='" + name + "'" +
-            ", createdOn='" + createdOn.toString() + "'" +
+            ", createdOnObj='" + createdOnObj.toString() + "'" +
             ", isPrivate='" + isPrivate + "'" +
             '}';
     }

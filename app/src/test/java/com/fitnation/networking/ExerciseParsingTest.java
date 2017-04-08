@@ -51,7 +51,7 @@ public class ExerciseParsingTest {
 
     @Test
     public void convertPojoToJsonString() throws Exception {
-        InputStream in = this.getClass().getClassLoader().getResourceAsStream("exercise.json");
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream("exercise-post.json");
         String json = FileUtils.readTextFile(in);
         json = json.replace("\r", "");
         String actual = JsonParser.convertPojoToJsonString(getExercise());

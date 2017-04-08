@@ -96,7 +96,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
         mExerciseManager.createWorkoutAndSave(name, new SaveWorkoutCallback() {
             @Override
             public void onSuccess() {
-                mView.showSuccess(ExerciseAlertDialogFactory.getSuccess(mView.getBaseActivity().getApplicationContext(), new DialogInterface.OnClickListener() {
+                mView.showSuccess(ExerciseAlertDialogFactory.getSuccess(mView.getBaseActivity(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -108,7 +108,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
 
             @Override
             public void onFailure(String error) {
-                mView.showFailure(ExerciseAlertDialogFactory.getErrorDialog(error, mView.getBaseActivity().getApplicationContext()));
+                mView.showFailure(ExerciseAlertDialogFactory.getErrorDialog(error, mView.getBaseActivity()));
             }
         });
     }

@@ -45,7 +45,7 @@ import io.realm.RealmResults;
  */
 public class ExercisesManager extends DataManager {
     private static final String TAG = ExercisesManager.class.getSimpleName();
-    private static final String mAuthToken = "77328153-29c5-4688-b0dc-fa752a343c18";
+    private static final String mAuthToken = "1ef61e72-4f5b-48ab-8565-960361e2e9ac";
     private RequestQueue mRequestQueue;
     private List<ExerciseInstance> mSelectedExercises;
     private List<ExerciseInstance> mExerciseInstances;
