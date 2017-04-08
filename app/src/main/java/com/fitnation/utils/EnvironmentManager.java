@@ -2,7 +2,6 @@ package com.fitnation.utils;
 
 import com.fitnation.BuildConfig;
 
-// TODO: get interface working for connecting to presenter
 /**
  * Handles Environment switching
  */

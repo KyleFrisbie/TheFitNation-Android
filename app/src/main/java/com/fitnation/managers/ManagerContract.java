@@ -1,13 +1,12 @@
-package com.fitnation.login;
+package com.fitnation.managers;
 
 import android.app.ProgressDialog;
 import android.support.v7.app.AlertDialog;
 
-import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BasePresenter;
 
 /**
- * Created by Erik on 4/7/2017.
+ * Common interface for all managers to return information to presenters.
  */
 
 public interface ManagerContract {

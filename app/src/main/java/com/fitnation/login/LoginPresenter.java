@@ -1,26 +1,10 @@
 package com.fitnation.login;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.fitnation.Factory.VolleyErrorMessage;
-import com.fitnation.base.BaseActivity;
-import com.fitnation.navigation.NavigationActivity;
-import com.fitnation.networking.AuthToken;
-import com.fitnation.utils.EnvironmentManager;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.fitnation.managers.LoginManager;
+import com.fitnation.managers.ManagerContract;
 
 import static com.fitnation.login.LoginBaseActivity.VIEW_CONTAINER;
 

@@ -1,7 +1,9 @@
-package com.fitnation.login;
+package com.fitnation.managers;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -63,6 +65,8 @@ public class LoginManager {
                 mPresenter.stopProgress();
                 if(error.networkResponse != null){
                     errorResponseMessage(error);
+                }else{
+                    noResponseError();
                 }
             }
         }){
@@ -93,5 +97,18 @@ public class LoginManager {
     private void errorResponseMessage(VolleyError error) {
         VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
         mPresenter.showAuthError(volleyErrorMessage.getErrorMessage(mActivity));
+    }
+
+    private void noResponseError(){
+        AlertDialog.Builder noResponseDialog = new AlertDialog.Builder(mActivity);
+        noResponseDialog.setTitle("No Response");
+        noResponseDialog.setMessage("Attempted to connect to the server but did not recieve a response. Please try again");
+        noResponseDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        noResponseDialog.create();
     }
 }

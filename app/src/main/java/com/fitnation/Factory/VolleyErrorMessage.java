@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
-import com.fitnation.networking.RefreshAccessToken;
+import com.fitnation.managers.RefreshAccessManager;
 
 // TODO: impliment snackbar selectively based on code response
 /**
@@ -158,7 +158,7 @@ public class VolleyErrorMessage {
                 builder = generateAlertDialog(context, title, message, true);
                 break;
             case 401:
-                RefreshAccessToken refreshAccessToken = new RefreshAccessToken();
+                RefreshAccessManager refreshAccessToken = new RefreshAccessManager();
                 if (refreshAccessToken.refresh(context)) {
                     builder = generateAlertDialog(context, "Access Refreshed", message, false);
                     message = "Authorization has been refreshed";

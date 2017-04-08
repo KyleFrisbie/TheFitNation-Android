@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-// TODO: either fix implementation or figure out how to use utils
 /**
  * Holds all the utilities for network communications
  */

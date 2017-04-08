@@ -4,18 +4,8 @@ package com.fitnation.login;
 import android.app.ProgressDialog;
 import android.support.v7.app.AlertDialog;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.fitnation.Factory.VolleyErrorMessage;
-import com.fitnation.utils.EnvironmentManager;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.fitnation.managers.ManagerContract;
+import com.fitnation.managers.ResetLoginManager;
 
 /**
  * contains the business logic for the view
