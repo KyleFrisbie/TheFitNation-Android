@@ -18,8 +18,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * A single Exercise
  */
-
-public class Exercise extends RealmObject implements Serializable {
+public class Exercise extends RealmObject {
     @PrimaryKey
     @Expose(serialize = false)
     private Long androidId;
