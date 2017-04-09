@@ -1,17 +1,10 @@
 package com.fitnation.login;
 
-import android.app.Instrumentation;
-import android.content.pm.InstrumentationInfo;
 import android.os.SystemClock;
-import android.support.annotation.UiThread;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.mock.MockContentProvider;
 
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
-import com.crashlytics.android.Crashlytics;
 import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
 import com.fitnation.utils.Environment;
@@ -27,8 +20,6 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
-import io.fabric.sdk.android.Fabric;
-import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -159,6 +150,21 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.register_button)).perform(click());
         SystemClock.sleep(DELAY_TIME);
         onView((withText("Error"))).check(matches(isDisplayed()));
+        onView((withText("OK"))).perform(click());
+    }
+
+    @Test
+    public void testSignUpFlowForSuccess(){
+        loginScreenIsDisplayed();
+        onView(withId(R.id.signUp_button)).perform(click());
+        registerScreenIsDisplayed();
+        onView(withId(R.id.registerEmail_editText)).perform(typeText("testemail@android.com"));
+        onView(withId(R.id.registerPassword_editText)).perform(typeText("Pa55w0rd"));
+        onView(withId(R.id.userName_editText)).perform(typeText("androidtest"));
+        pressBack();
+        onView(withId(R.id.register_button)).perform(click());
+        SystemClock.sleep(DELAY_TIME);
+        onView((withText("Success!"))).check(matches(isDisplayed()));
         onView((withText("OK"))).perform(click());
     }
 
