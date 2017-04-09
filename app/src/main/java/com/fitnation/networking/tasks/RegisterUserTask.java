@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.Factory.FactoryContract;
 import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.utils.EnvironmentManager;
@@ -24,7 +25,7 @@ import java.util.Map;
  * Handles the register request
  */
 
-public class RegisterUserTask {
+public class RegisterUserTask implements FactoryContract.FactoryReturn{
     private BaseActivity mActivity;
     private TaskContract.Presenter mPresenter;
 
@@ -93,8 +94,13 @@ public class RegisterUserTask {
     }
 
     private void errorResponseMessage(VolleyError error) {
-        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
-        mPresenter.showAuthError(volleyErrorMessage.getErrorMessage(mActivity));
+        if(error.networkResponse.statusCode != 401) {
+            VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
+            mPresenter.showAuthError(volleyErrorMessage.getErrorMessage(mActivity));
+        }else{
+            VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
+            volleyErrorMessage.getErrorMessage(mActivity);
+        }
     }
 
     /**
@@ -126,5 +132,15 @@ public class RegisterUserTask {
         });
         noResponseDialog.create();
         mPresenter.showAuthError(noResponseDialog);
+    }
+
+    @Override
+    public void showSuccessDialog(AlertDialog.Builder alertDialog) {
+        mPresenter.showSuccess(alertDialog);
+    }
+
+    @Override
+    public void showErrorDialog(AlertDialog.Builder alertDialog) {
+        mPresenter.showAuthError(alertDialog);
     }
 }

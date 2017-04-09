@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.Factory.FactoryContract;
 import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.navigation.NavigationActivity;
@@ -26,7 +27,7 @@ import java.util.Map;
  * Handles the login request
  */
 
-public class GetAuthTokenTask {
+public class GetAuthTokenTask implements FactoryContract.FactoryReturn{
     private TaskContract.Presenter mPresenter;
     private BaseActivity mActivity;
 
@@ -97,8 +98,13 @@ public class GetAuthTokenTask {
     }
 
     private void errorResponseMessage(VolleyError error) {
-        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
-        mPresenter.showAuthError(volleyErrorMessage.getErrorMessage(mActivity));
+        if(error.networkResponse.statusCode != 401) {
+            VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
+            mPresenter.showAuthError(volleyErrorMessage.getErrorMessage(mActivity));
+        }else {
+            VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
+            volleyErrorMessage.getErrorMessage(mActivity);
+        }
     }
 
     private void noResponseError(){
@@ -113,5 +119,15 @@ public class GetAuthTokenTask {
         });
         noResponseDialog.create();
         mPresenter.showAuthError(noResponseDialog);
+    }
+
+    @Override
+    public void showSuccessDialog(AlertDialog.Builder alertDialog) {
+        mPresenter.showSuccess(alertDialog);
+    }
+
+    @Override
+    public void showErrorDialog(AlertDialog.Builder alertDialog) {
+        mPresenter.showAuthError(alertDialog);
     }
 }

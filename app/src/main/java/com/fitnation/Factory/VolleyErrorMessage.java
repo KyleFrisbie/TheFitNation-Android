@@ -7,12 +7,15 @@ import android.support.v7.app.AlertDialog;
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 import com.fitnation.networking.tasks.RefreshAuthTokenTask;
+import com.fitnation.networking.tasks.TaskContract;
 
 /**
  * A factory for generating alert dialog messages for HTTP response codes from the server.
  */
-public class VolleyErrorMessage {
+public class VolleyErrorMessage implements TaskContract.Factory{
+    private FactoryContract.FactoryReturn mFactoryReturn;
     private VolleyError volleyError;
+    private Context context;
 
     /**
      * Constructor: Sets the error message retrieved from the server
@@ -22,11 +25,17 @@ public class VolleyErrorMessage {
         this.volleyError = volleyError;
     }
 
+    public VolleyErrorMessage(VolleyError volleyError, FactoryContract.FactoryReturn factoryReturn){
+        this.volleyError = volleyError;
+        this.mFactoryReturn = factoryReturn;
+    }
+
     /**
      * Retrieves an error message based on the response code from the server.
      * @return String response message indication error number and type.
      */
     public AlertDialog.Builder getErrorMessage(Context context){
+        this.context = context;
         return GenerateErrorMessage(volleyError.networkResponse, context);
     }
 
@@ -41,17 +50,8 @@ public class VolleyErrorMessage {
         //check for special 401 error case from volley
         if(volleyError.getMessage() != null) {
             if (volleyError.getMessage().equalsIgnoreCase("java.io.IOException: No authentication challenges found")) {
-                RefreshAuthTokenTask refreshAccessToken = new RefreshAuthTokenTask();
-                if (refreshAccessToken.refresh(context)) {
-                    message = "Authorization has been refreshed";
-                    builder = generateAlertDialog(context, "Access Refreshed", message, false);
-                } else {
-                    if (message.isEmpty()) {
-                        message = "401: Unauthorized";
-                        title = "Error";
-                        builder = generateAlertDialog(context, title, message, true);
-                    }
-                }
+                RefreshAuthTokenTask refreshAccessToken = new RefreshAuthTokenTask(this);
+                refreshAccessToken.refresh(context);
             }
         }
 
@@ -172,15 +172,8 @@ public class VolleyErrorMessage {
                 builder = generateAlertDialog(context, title, message, true);
                 break;
             case 401:
-                RefreshAuthTokenTask refreshAccessToken = new RefreshAuthTokenTask();
-                if (refreshAccessToken.refresh(context)) {
-                    message = "Authorization has been refreshed";
-                    builder = generateAlertDialog(context, "Access Refreshed", message, false);
-                } else {
-                    message = "401: Unauthorized";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
-                }
+                RefreshAuthTokenTask refreshAccessToken = new RefreshAuthTokenTask(this);
+                refreshAccessToken.refresh(context);
                 break;
             case 402:
                 message = "402: Payment Required";
@@ -395,5 +388,16 @@ public class VolleyErrorMessage {
         }
         alertDialog.create();
         return alertDialog;
+    }
+
+    @Override
+    public void didRequestWork(boolean requestWorked) {
+        if (requestWorked) {
+            AlertDialog.Builder builder = generateAlertDialog(context, "Access Refreshed", "Authorization has been refreshed", false);
+            mFactoryReturn.showSuccessDialog(builder);
+        } else {
+            AlertDialog.Builder builder = generateAlertDialog(context, "Error", "401: Unauthorized", true);
+            mFactoryReturn.showErrorDialog(builder);
+        }
     }
 }

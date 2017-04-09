@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.Factory.FactoryContract;
 import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.utils.EnvironmentManager;
@@ -22,7 +23,7 @@ import java.util.Map;
  * handles the email reset password request
  */
 
-public class EmailResetPasswordTask {
+public class EmailResetPasswordTask implements FactoryContract.FactoryReturn{
     private TaskContract.Presenter mPresenter;
     private BaseActivity mActivity;
 
@@ -94,14 +95,19 @@ public class EmailResetPasswordTask {
     }
 
     private void errorResponseMessage(VolleyError error){
-        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
-        mPresenter.showAuthError(volleyErrorMessage.getErrorMessage(mActivity));
+        if(error.networkResponse.statusCode != 401) {
+            VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
+            mPresenter.showAuthError(volleyErrorMessage.getErrorMessage(mActivity));
+        }else{
+            VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error, this);
+            volleyErrorMessage.getErrorMessage(mActivity);
+        }
     }
 
     private void noResponseError(){
         AlertDialog.Builder noResponseDialog = new AlertDialog.Builder(mActivity);
         noResponseDialog.setTitle("No Response");
-        noResponseDialog.setMessage("Attempted to connect to the server but did not recieve a response. Please try again");
+        noResponseDialog.setMessage("Attempted to connect to the server but did not receive a response. Please try again");
         noResponseDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -110,5 +116,15 @@ public class EmailResetPasswordTask {
         });
         noResponseDialog.create();
         mPresenter.showAuthError(noResponseDialog);
+    }
+
+    @Override
+    public void showSuccessDialog(AlertDialog.Builder alertDialog) {
+        mPresenter.showSuccess(alertDialog);
+    }
+
+    @Override
+    public void showErrorDialog(AlertDialog.Builder alertDialog) {
+        mPresenter.showAuthError(alertDialog);
     }
 }

@@ -16,4 +16,8 @@ public interface TaskContract {
         void stopProgress();
         void showAuthError(AlertDialog.Builder errorDialog);
     }
+
+    interface Factory {
+        void didRequestWork(boolean requestWorked);
+    }
 }

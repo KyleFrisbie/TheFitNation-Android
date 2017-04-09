@@ -8,6 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.Factory.FactoryContract;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.utils.EnvironmentManager;
 import com.fitnation.utils.NetworkUtils;
@@ -18,10 +19,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RefreshAuthTokenTask {
+    private TaskContract.Factory mFactory;
     private String refreshToken;
-    private boolean isRefreshSuccessful;
+    
+    public RefreshAuthTokenTask(TaskContract.Factory factory){
+        this.mFactory = factory;
+    }
 
-    public boolean refresh(Context context){
+    public void refresh(Context context){
         boolean tokenExists = false;
 
         if(AuthToken.getInstance().getRefreshToken() != null){
@@ -38,13 +43,13 @@ public class RefreshAuthTokenTask {
                     url, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    isRefreshSuccessful = true;
+                    mFactory.didRequestWork(true);
                     NetworkUtils.getInstance().storeTokens(response);
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    isRefreshSuccessful = false;
+                    mFactory.didRequestWork(false);
                 }
             }) {
                 @Override
@@ -66,11 +71,10 @@ public class RefreshAuthTokenTask {
                 }
             };
 
-
             requestQueue.add(jsonObjectPost);
             requestQueue.start();
+        }else{
+            mFactory.didRequestWork(false);
         }
-
-        return isRefreshSuccessful;
     }
 }
