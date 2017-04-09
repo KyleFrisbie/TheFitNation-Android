@@ -65,10 +65,10 @@ public class JsonParserTest {
         bicepCurl.setMuscles(musclesList);
 
         InputStream in = this.getClass().getClassLoader().getResourceAsStream("exercise.json");
-        String json = FileUtils.readTextFile(in);
+        String json = FileUtils.readTextFile(in).replaceAll("\\s+", "");
 
-        String actual = JsonParser.convertPojoToJsonString(bicepCurl);
+        String actual = JsonParser.convertPojoToJsonString(bicepCurl).replaceAll("\\s+", "");
 
-        assertEquals(json, actual);
+        assertEquals(actual, json);
     }
 }
