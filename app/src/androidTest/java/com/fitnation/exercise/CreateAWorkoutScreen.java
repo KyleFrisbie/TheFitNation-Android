@@ -90,5 +90,10 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         onView(withText(R.string.advanced)).check(matches(isDisplayed()));
     }
 
+    //TODO test able to select exercises on multiple tabs
+    //TODO test able to view intermediate & advanced tab
+    //TODO test able to launch edit screen & edit an exercise. Changed are reflected on back pressed
+    //TODO in EditExerciseScreenTest edit screen fully. Add set, remove set, edit all values
+    //TODO test
 
 }
