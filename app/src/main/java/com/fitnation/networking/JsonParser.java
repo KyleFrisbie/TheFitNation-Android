@@ -69,7 +69,7 @@ public class JsonParser {
                     public boolean shouldSkipClass(Class<?> aClass) {
                         return false;
                     }
-                }).setPrettyPrinting().create();
+                }).create();
 
         return gson.toJson(obj);
     }
