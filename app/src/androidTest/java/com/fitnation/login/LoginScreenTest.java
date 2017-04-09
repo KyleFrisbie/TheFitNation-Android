@@ -64,36 +64,45 @@ public class LoginScreenTest extends InstrumentationTest {
         final Dispatcher dispatcher = new Dispatcher() {
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
-                if(request.getPath().equals("/oauth/token")){
-                    if(request.getBody().toString().contains("androidtest") ||
-                            request.getBody().toString().contains("Pa55w0rd")){
-                        return new MockResponse().setResponseCode(200).setBody("{\n" +
-                                "  \"access_token\": \"2185a8f2-8c21-4b78-a271-5429a3138f49\",\n" +
-                                "  \"token_type\": \"bearer\",\n" +
-                                "  \"refresh_token\": \"93bcd68d-6b0e-49fd-a3a7-819866794bab\",\n" +
-                                "  \"expires_in\": 1799,\n" +
-                                "  \"scope\": \"read write\"\n" +
-                                "}");
-                    }else{
-                        return new MockResponse().setResponseCode(400).setBody("{\n" +
-                                "  \"error\": \"invalid_grant\",\n" +
-                                "  \"error_description\": \"Bad credentials\"\n" +
-                                "}");
-                    }
-                }else if(request.getPath().equals("/api/account/reset_password/init")){
-                    if(request.getBody().toString().contains("testemail@android.com")){
-                        return new MockResponse().setResponseCode(200).setBody("e-mail was sent");
-                    }else{
-                        return new MockResponse().setResponseCode(400).setBody("e-mail address not registered");
-                    }
-                }else if(request.getPath().equals("/api/register")){
-                    if(request.getBody().toString().contains("testemail@android.com")){
-                        return new MockResponse().setResponseCode(201).setBody("");
-                    }else{
-                        return new MockResponse().setResponseCode(400).setBody("login already in use");
-                    }
-                }else{
-                    return new MockResponse().setResponseCode(404);
+                switch (request.getPath()) {
+                    case "/oauth/token":
+                        if (request.getBody().toString().contains("androidtest") ||
+                                request.getBody().toString().contains("Pa55w0rd")) {
+                            return new MockResponse().setResponseCode(200).setBody("{\n" +
+                                    "  \"access_token\": \"2185a8f2-8c21-4b78-a271-5429a3138f49\",\n" +
+                                    "  \"token_type\": \"bearer\",\n" +
+                                    "  \"refresh_token\": \"93bcd68d-6b0e-49fd-a3a7-819866794bab\",\n" +
+                                    "  \"expires_in\": 1799,\n" +
+                                    "  \"scope\": \"read write\"\n" +
+                                    "}");
+                        } else if (request.getBody().toString().contains("93bcd68d-6b0e-49fd-a3a7-819866794bab")) {
+                            return new MockResponse().setResponseCode(200).setBody("{\n" +
+                                    "  \"access_token\": \"2185a8f2-8c21-4b78-a271-5429a3138f49\",\n" +
+                                    "  \"token_type\": \"bearer\",\n" +
+                                    "  \"refresh_token\": \"93bcd68d-6b0e-49fd-a3a7-819866794bab\",\n" +
+                                    "  \"expires_in\": 1799,\n" +
+                                    "  \"scope\": \"read write\"\n" +
+                                    "}");
+                        } else {
+                            return new MockResponse().setResponseCode(400).setBody("{\n" +
+                                    "  \"error\": \"invalid_grant\",\n" +
+                                    "  \"error_description\": \"Bad credentials\"\n" +
+                                    "}");
+                        }
+                    case "/api/account/reset_password/init":
+                        if (request.getBody().toString().contains("testemail@android.com")) {
+                            return new MockResponse().setResponseCode(200).setBody("e-mail was sent");
+                        } else {
+                            return new MockResponse().setResponseCode(400).setBody("e-mail address not registered");
+                        }
+                    case "/api/register":
+                        if (request.getBody().toString().contains("testemail@android.com")) {
+                            return new MockResponse().setResponseCode(201).setBody("");
+                        } else {
+                            return new MockResponse().setResponseCode(400).setBody("login already in use");
+                        }
+                    default:
+                        return new MockResponse().setResponseCode(404);
                 }
             }
         };
