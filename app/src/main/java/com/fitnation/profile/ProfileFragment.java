@@ -85,7 +85,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
 
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+        View v = inflater.inflate(R.layout.profile_fragment, container, false);
         ButterKnife.bind(this, v);
 
         v.setOnKeyListener(new View.OnKeyListener() {

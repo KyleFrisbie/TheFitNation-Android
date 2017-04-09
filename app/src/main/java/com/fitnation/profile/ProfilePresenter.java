@@ -60,7 +60,6 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         saveUserWeightData(weight);
         saveUserDemographicData(userdemo);
 
-
     }
 
     public void saveUserDemographicData(UserDemographic userdemo){

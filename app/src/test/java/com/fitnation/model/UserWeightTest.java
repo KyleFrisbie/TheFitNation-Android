@@ -16,8 +16,8 @@ public class UserWeightTest {
     public void testSetUp() throws Exception {
         mUserWeight = new UserWeight();
         mUserWeightClone = new UserWeight();
-        mUserWeight.setId(10L);
-        mUserWeightClone.setId(10L);
+        mUserWeight.setUserDemographicId(10L);
+        mUserWeightClone.setUserDemographicId(10L);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class UserWeightTest {
     public void testHashCode() throws Exception {
         UserWeight userExercise = new UserWeight();
 
-        userExercise.setId(20L);
+        userExercise.setUserDemographicId(20L);
 
         assertEquals(mUserWeight.hashCode(), mUserWeightClone.hashCode());
         assertNotEquals(mUserWeight.hashCode(), userExercise.hashCode());
