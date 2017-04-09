@@ -35,7 +35,7 @@ public class ResetLoginFragment extends BaseFragment implements ResetLoginContra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_reset_login, container, false);
+        View v = inflater.inflate(R.layout.login_reset_password_fragment, container, false);
         ImageView imageView = (ImageView) v.findViewById(R.id.reset_password_background_imageView);
         Picasso.with(getBaseActivity()).load(R.drawable.login_background_3).into(imageView);
         ButterKnife.bind(this, v);

@@ -40,7 +40,7 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_login, container, false);
+        View v = inflater.inflate(R.layout.login_login_fragment, container, false);
         ImageView imageView = (ImageView) v.findViewById(R.id.login_background_imageView);
         Picasso.with(getBaseActivity()).load(R.drawable.login_background_1).into(imageView);
         ButterKnife.bind(this, v);

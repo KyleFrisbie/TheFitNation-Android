@@ -37,7 +37,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_register, container, false);
+        View v = inflater.inflate(R.layout.login_register_fragment, container, false);
         ImageView imageView = (ImageView) v.findViewById(R.id.register_background_imageView);
         Picasso.with(getBaseActivity()).load(R.drawable.login_background_2).into(imageView);
         ButterKnife.bind(this, v);

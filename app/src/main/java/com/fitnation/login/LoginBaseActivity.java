@@ -21,7 +21,7 @@ public class LoginBaseActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_base_activity);
         launchLoginFragment();
         if(!Fabric.isInitialized()) {
             Fabric.with(this, new Crashlytics());
