@@ -35,41 +35,49 @@ public class PostWorkoutTemplateTask extends NetworkTask{
     public void postWorkoutTemplate(final WorkoutTemplate workoutTemplate, final WorkoutTemplatePostCallback callback) {
         final String resourceRoute = "workout-templates";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getApiUrl() + resourceRoute;
-        String json = JsonParser.convertPojoToJsonString(workoutTemplate);
-        JSONObject jsonObject;
-
-        try {
-            jsonObject = new JSONObject(json);
-            Log.i("JSON", json);
-        } catch (org.json.JSONException e) {
-            Log.d("JSON", "Failed to convert User Demographic to JSON String");
-            jsonObject = new JSONObject();
-        }
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                WorkoutTemplate updatedTemplate = JsonParser.convertJsonStringToPojo(response.toString(), WorkoutTemplate.class);
-                callback.onSuccess(updatedTemplate);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                callback.onFailure(error.toString());
-            }
-        }) {
+        final StringRequest postWorkoutTemplate = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        WorkoutTemplate updatedTemplate = JsonParser.convertJsonStringToPojo(response, WorkoutTemplate.class);
+                        callback.onSuccess(updatedTemplate);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(TAG, error.toString());
+                        callback.onFailure(error.getMessage());
+                    }
+                }
+        ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
-                params.put("Accept", "application/json");
-                params.put("Authorization", "Bearer "+ mAuthToken);
+                Map<String, String> mHeaders = new ArrayMap();
 
-                return params;
+                mHeaders.put("Authorization", "Bearer" + " " + mAuthToken);
+                mHeaders.put("Content-Type", "application/json");
+
+                return mHeaders;
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                String json = JsonParser.convertPojoToJsonString(workoutTemplate);
+                byte[] postBody = null;
+                try
+                {
+                    postBody = json.toString().getBytes("utf-8");
+                } catch (UnsupportedEncodingException e)
+                {
+                    Log.e(TAG, e.getMessage());
+                }
+                return postBody;
             }
         };
 
-        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
+        postWorkoutTemplate.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
 
-        mRequestQueue.add(jsonRequest);
+        mRequestQueue.add(postWorkoutTemplate);
     }
 }
