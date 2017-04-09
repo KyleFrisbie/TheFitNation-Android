@@ -37,6 +37,7 @@ public abstract class DataManager {
                     realm.beginTransaction();
                     realm.copyToRealmOrUpdate(data);
                     realm.commitTransaction();
+                    realm.close();
                 } catch (Exception e) {
                     Log.e(TAG, e.getMessage());
                     resultCallback.onError();

@@ -1,5 +1,7 @@
 package com.fitnation.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,20 +14,25 @@ import io.realm.annotations.PrimaryKey;
 public class UserWeight extends RealmObject {
     @PrimaryKey
     private Long androidId;
-    private Long id;
-    private Date weightDate;
+    private Long userDemographicId;
+    private String weightDate;
     private Float weight;
 
     public UserWeight() {
-        weightDate = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        weightDate = dateFormat.format(new Date());
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserDemographicId(Long id) {
+        this.userDemographicId = id;
     }
 
     public void setWeight(Float weight){
         this.weight = weight;
+    }
+
+    public String getWeightDate(){
+        return weightDate;
     }
 
     @Override
@@ -37,25 +44,28 @@ public class UserWeight extends RealmObject {
             return false;
         }
         UserWeight userWeight = (UserWeight) o;
-        if (userWeight.id == null || id == null) {
+        if (userWeight.userDemographicId == null || userDemographicId == null) {
             return false;
         }
-        return Objects.equals(id, userWeight.id);
+        return Objects.equals(userDemographicId, userWeight.userDemographicId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(userDemographicId);
     }
 
-    public Float getWeight() { return weight; }
+    public Float getWeight() {
+        return weight;
+    }
 
     @Override
     public String toString() {
         return "UserWeight{" +
-            "id=" + id +
+            "id=" + userDemographicId +
             ", weightDate='" + weightDate.toString() + "'" +
             ", weight='" + weight + "'" +
             '}';
     }
+    
 }

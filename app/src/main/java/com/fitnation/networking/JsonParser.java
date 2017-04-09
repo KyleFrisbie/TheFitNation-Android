@@ -48,22 +48,4 @@ public class JsonParser {
         return gson.toJson(obj);
     }
 
-    public static Map<String, String> convertPojoToJsonMap(Object obj){
-        String jString = convertPojoToJsonString(obj);
-        Log.d("JSONPARSER", jString);
-        return simpleJsonStringToMap(jString);
-    }
-
-    private static Map<String, String> simpleJsonStringToMap(String jString){
-        jString.replaceAll("(\\{|\\}|\")", "");
-        String [] jArray = jString.split("\\,");
-        Map<String, String> jMap = new HashMap<String, String>();
-
-        for(String i: jArray){
-            String[] pair = i.split(":");
-            jMap.put(pair[0].trim(), pair[1].trim());
-        }
-
-        return jMap;
-    }
 }

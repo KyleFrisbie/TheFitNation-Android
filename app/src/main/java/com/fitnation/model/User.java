@@ -1,14 +1,26 @@
 package com.fitnation.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by Jeremy on 4/1/2017.
  */
 
-public class User {
+public class User extends RealmObject {
+    @PrimaryKey
+    private Long androidId;
+    private Long id;
     private String login;
     private String email;
     private String imageUrl;
     private boolean activated;
+    private String firstName;
+    private String lastName;
+
+    public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
 
     public String getImageUrl() {
         return imageUrl;
@@ -42,4 +54,11 @@ public class User {
         this.activated = activated;
     }
 
+    public String getFirstName() { return firstName; }
+
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    public String getLastName() { return lastName; }
+
+    public void setLastName(String lastName) { this.lastName = lastName; }
 }

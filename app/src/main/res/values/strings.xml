@@ -45,8 +45,8 @@
     <string name="birthdayField">Birthday:</string>
     <string name="unitOfMeasure">Unit of Measure</string>
     <string name="age">Age</string>
-    <string name="switchMeasureMetrics">Switch to Metrics</string>
-    <string name="switchMeasureImperial">Switch to Imperial</string>
+    <string name="switchMeasureToMetric">Switch to Metric</string>
+    <string name="switchMeasureToImperial">Switch to Imperial</string>
 
     <string name="login">Login</string>
     <string name="login_screen">Login Fragment</string>

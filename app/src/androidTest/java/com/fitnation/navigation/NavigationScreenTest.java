@@ -39,17 +39,4 @@ public class NavigationScreenTest extends InstrumentationTest{
         super.tearDown(mActivityRule.getActivity());
     }
 
-    @Test
-    public void navigationActivityDisplayed() {
-        onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
-        onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
-        onView(withId(R.id.content_navigation)).check(matches(isDisplayed()));
-        onView(withText(R.string.main_container)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void onNavDrawerOpenedAllMenuItemsDisplayed() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
-    }
 }
