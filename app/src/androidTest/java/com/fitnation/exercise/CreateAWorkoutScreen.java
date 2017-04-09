@@ -3,6 +3,7 @@ package com.fitnation.exercise;
 import android.os.SystemClock;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.DrawerActions;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -89,17 +90,26 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         onView(withText(R.string.build_workout)).check(matches(isDisplayed()));
         onView(withText(R.string.build_workout)).perform(click());
 
-        //CreateWorkoutFragment's launched
+        verifyCreateWorkoutScreenVisible();
+        testTabsWork();
+//        RecyclerViewActions.actionOnItemAtPosition(0, onView(withText("Edit")).perform(click()));
+    }
+
+    private void verifyCreateWorkoutScreenVisible() {
         onView(withId(R.id.tabs)).check(matches(isDisplayed()));
         onView(withText(R.string.beginner)).check(matches(isDisplayed()));
         onView(withText(R.string.intermediate)).check(matches(isDisplayed()));
         onView(withText(R.string.advanced)).check(matches(isDisplayed()));
     }
 
+    private void testTabsWork() {
+        onView(withText(R.string.intermediate)).perform(click());
+        onView(withText(R.string.beginner)).perform(click());
+        onView(withText(R.string.advanced)).perform(click());
+    }
+
     //TODO test able to select exercises on multiple tabs
-    //TODO test able to view intermediate & advanced tab
     //TODO test able to launch edit screen & edit an exercise. Changed are reflected on back pressed
     //TODO in EditExerciseScreenTest edit screen fully. Add set, remove set, edit all values
-    //TODO test
 
 }
