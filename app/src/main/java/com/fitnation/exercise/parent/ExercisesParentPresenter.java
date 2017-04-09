@@ -93,13 +93,16 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void onSaveRequested(String name) {
         Log.i(TAG, "User requested to save workout with name: " + name);
+        mView.showProgress();
         mExerciseManager.createWorkoutAndSave(name, new SaveWorkoutCallback() {
             @Override
             public void onSuccess() {
+                mView.stopProgress();
                 mView.showSuccess(ExerciseAlertDialogFactory.getSuccess(mView.getBaseActivity(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
+
                         //TODO clear back stack, launch Fragment for viewing created workouts
                     }
                 }));
@@ -108,6 +111,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
 
             @Override
             public void onFailure(String error) {
+                mView.stopProgress();
                 mView.showFailure(ExerciseAlertDialogFactory.getErrorDialog(error, mView.getBaseActivity()));
             }
         });
