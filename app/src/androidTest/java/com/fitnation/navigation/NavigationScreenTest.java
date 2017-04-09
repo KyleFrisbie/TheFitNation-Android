@@ -1,5 +1,7 @@
 package com.fitnation.navigation;
 
+import android.os.SystemClock;
+import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -21,6 +23,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -37,6 +40,19 @@ public class NavigationScreenTest extends InstrumentationTest{
     @After
     public void tearDown() {
         super.tearDown(mActivityRule.getActivity());
+    }
+
+    @Test
+    public void navigationActivityDisplayed() {
+        onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
+        onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
+        onView(withId(R.id.content_main_container)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void onNavDrawerOpenedAllMenuItemsDisplayed() {
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
     }
 
 }
