@@ -1,5 +1,6 @@
 package com.fitnation.exercise;
 
+import android.os.SystemClock;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.filters.LargeTest;
@@ -28,6 +29,7 @@ import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -55,7 +57,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
     @Test
     public void testCreateWorkoutScreenLaunchedOkay() throws Exception {
         final String URL_TO_MOCK = "/api/exercises";
-        InputStream in = this.getClass().getClassLoader().getResourceAsStream("exercise.json");
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream("exercises.json");
         final String json = FileUtils.readTextFile(in);
         MockWebServer server = new MockWebServer();
         final Dispatcher dispatcher = new Dispatcher() {
@@ -77,10 +79,11 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         String url = baseUrl.url().toString();
         EnvironmentManager.getInstance().setEnvironment(new Environment(baseUrl.url().toString()));
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
         onView(withText(R.string.build_workout)).check(matches(isDisplayed()));
-        onView(withText(R.string.build_workout)).perform(ViewActions.click());
+        onView(withText(R.string.build_workout)).perform(click());
 
-//        SystemClock.sleep(1000);
+        SystemClock.sleep(1000);
         onView(withId(R.id.tabs)).check(matches(isDisplayed()));
         onView(withText(R.string.beginner)).check(matches(isDisplayed()));
         onView(withText(R.string.intermediate)).check(matches(isDisplayed()));
