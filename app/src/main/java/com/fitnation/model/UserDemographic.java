@@ -152,8 +152,7 @@ public class UserDemographic extends RealmObject {
     }
 
     public Float getUserWeight() {
-        Float userWeight = userWeights.last().getWeight();
-        return userWeight;
+        return Float.valueOf(userWeights.last().getWeight());
     }
 
     public void setSkillLevelLevel(String skillLevel) {

@@ -11,6 +11,7 @@ import com.fitnation.base.DataManager;
 import com.fitnation.base.DataResult;
 import com.fitnation.model.User;
 import com.fitnation.model.UserDemographic;
+import com.fitnation.model.UserWeight;
 import com.fitnation.networking.JsonParser;
 import com.fitnation.base.FitNationApplication;
 
@@ -53,9 +54,10 @@ public class ProfileDataManager extends DataManager {
     public static UserDemographic getLocalUserDemographic(){
         Realm realm = Realm.getDefaultInstance();
         RealmResults<UserDemographic> userDemoResults = realm.where(UserDemographic.class).findAll();
+        realm.close();
         if (!userDemoResults.isEmpty()) return userDemoResults.last();
         Log.i("PROFILE", "Realm Result empty for UserDemographic");
-        return new UserDemographic();
+        return null;
     }
 
     public void SaveUserData(final User user){
@@ -74,14 +76,42 @@ public class ProfileDataManager extends DataManager {
         });
     }
 
+
+
     public static User getLocalUser(){
         Realm realm = Realm.getDefaultInstance();
         RealmResults<User> userResults =
                 realm.where(User.class).findAll();
-
+        realm.close();
         if (!userResults.isEmpty()) return userResults.last();
         Log.i("PROFILE", "Realm Result empty for User");
-        return new User();
+        return null;
+    }
+
+    public void SaveWeightData(final UserWeight weight){
+
+        //save data to local data store
+        saveData(weight, new DataResult() {
+            @Override
+            public void onSuccess() {
+                Log.i("REALM SAVE", "Weight Saved Successfully to Realm.");
+            }
+
+            @Override
+            public void onError() {
+                Log.d("REALM SAVE", "Error saving Weight to Realm");
+            }
+        });
+    }
+
+    public static UserWeight getLocalUserWeight(){
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<UserWeight> weightResults =
+                realm.where(UserWeight.class).findAll();
+        realm.close();
+        if (!weightResults.isEmpty()) return weightResults.last();
+        Log.i("PROFILE", "Realm Result empty for UserWeight");
+        return null;
     }
     
 }

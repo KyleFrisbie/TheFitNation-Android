@@ -165,7 +165,7 @@
             android:layout_alignBaseline="@+id/weightEditText"
             android:layout_alignBottom="@+id/weightEditText"
             android:layout_alignEnd="@+id/ageText"
-            android:text="@string/switchMeasureMetrics"
+            android:text="@string/switchMeasureToMetric"
             android:textAlignment="textEnd"
             android:textSize="18sp" />
 

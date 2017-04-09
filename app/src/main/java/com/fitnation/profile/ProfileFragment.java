@@ -26,6 +26,7 @@ import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.User;
 import com.fitnation.model.UserDemographic;
+import com.fitnation.model.UserWeight;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
@@ -59,12 +60,15 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     final double CM_PER_INCH = 2.54;
     final double LBS_PER_KG = 2.20462;
     final double KG_PER_LB = 0.453592;
+    Long userDemoId = 0L;
     Calendar birthday;
     UserDemographic userdemo;
+    UserWeight userWeight;
     User user;
     DatePickerFragment dateFragment;
     ArrayAdapter<CharSequence> genderAdapter;
     ArrayAdapter<CharSequence> lifterTypeAdapter;
+
 
     public ProfileFragment() {
         // Empty constructor
@@ -115,11 +119,15 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mPresenter = new ProfilePresenter(this);
 
         userdemo = ProfileDataManager.getLocalUserDemographic();
+        userWeight = ProfileDataManager.getLocalUserWeight();
         user = ProfileDataManager.getLocalUser();
-        /*if (userdemo.) {
+        userDemoId = userdemo.getId();
+
+        if (userdemo==null) {
             mPresenter.getProfileData(this);
-        }*/
+        }
         loadDemographics();
+        loadUserWeight();
         loadUser();
 
         mPresenter.start();
@@ -137,17 +145,17 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             Log.d("PROFILE",
                     "Failed to get numeric value from weight/height text box" + ex.toString());
         }
-        // if mSwitchMeasurement says Switch to Metric
-        if (mSwitchMeasurementButton.getText().toString().toLowerCase().contains("metric")){
-            mSwitchMeasurementButton.setText(getString(R.string.switchMeasureImperial));
-            weightFlt = (weightFlt * KG_PER_LB);  //lb to kg
-            heightFlt = (heightFlt * CM_PER_INCH); //cm to inch
+        // if mSwitchMeasurement says Switch to Metric it's in Imperial
+        if (isImperial()){
+            mSwitchMeasurementButton.setText(getString(R.string.switchMeasureToImperial));
+            weightFlt = lbsToKgs(weightFlt);  //lb to kg
+            heightFlt = inchToCM(heightFlt); //inch to cm
             mWeightTextBox.setText(String.format("%.1f", weightFlt)+ " kgs");
             mHeightTextBox.setText(String.format("%.1f", heightFlt)+ " cms");
         } else {
-            mSwitchMeasurementButton.setText(getString(R.string.switchMeasureMetrics));
-            weightFlt = (weightFlt * LBS_PER_KG);  //kgs to lbs
-            heightFlt = (heightFlt * INCH_PER_CM); //cm to inch
+            mSwitchMeasurementButton.setText(getString(R.string.switchMeasureToMetric));
+            weightFlt = kgsToLbs(weightFlt);  //kgs to lbs
+            heightFlt = cmToInch(heightFlt); //cm to inch
             mWeightTextBox.setText(String.format("%.1f", weightFlt) + " lbs");
             mHeightTextBox.setText(String.format("%.1f", heightFlt) + " inches");
         }
@@ -155,10 +163,14 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         unsavedChanges = true;
     }
 
+    /* WEIGHT AND HEIGHT CONVERSIONS */
+    private double lbsToKgs(double lbs){ return lbs * KG_PER_LB; }
+    private double kgsToLbs(double kgs){ return kgs * LBS_PER_KG;}
+    private double cmToInch(double cm) { return cm * INCH_PER_CM;}
+    private double inchToCM(double in) { return in * CM_PER_INCH;}
 
     private Float getNumValue(EditText textBox){
         String txt[] = textBox.getText().toString().trim().split("\\s+");
-        Log.i("PROFILE", "text num value is "+txt[0]);
         if (txt[0] != null && !txt[0].isEmpty()){
             return Float.valueOf(txt[0]);
         } else {
@@ -194,13 +206,12 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     private void measurementsAddUnits(){
 
-        if (mSwitchMeasurementButton.getText().toString().toLowerCase().contains("imperial")){
-
-            mWeightTextBox.setText(String.format("%.1f", getNumValue(mWeightTextBox))+ " kgs");
-            mHeightTextBox.setText(String.format("%.1f", getNumValue(mHeightTextBox))+ " cms");
-        } else {
+        if (isImperial()){
             mWeightTextBox.setText(String.format("%.1f", getNumValue(mWeightTextBox))+ " lbs");
             mHeightTextBox.setText(String.format("%.1f", getNumValue(mHeightTextBox))+ " inches");
+        } else {
+            mWeightTextBox.setText(String.format("%.1f", getNumValue(mWeightTextBox))+ " kgs");
+            mHeightTextBox.setText(String.format("%.1f", getNumValue(mHeightTextBox))+ " cms");
         }
         unsavedChanges = true;
     }
@@ -223,6 +234,9 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public void onSaveClicked() {
         if (!unsavedChanges) return; //if nothing has been changed dont save again
         userdemo = new UserDemographic();
+        userWeight = new UserWeight();
+        userWeight.setUserDemographicId(userDemoId);
+
         try {
             userdemo.setFirstName(mNameTextBox.getText().toString().split("\\s+")[0]);
         } catch (ArrayIndexOutOfBoundsException ex) {
@@ -247,15 +261,24 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
         //Get/Set gender
         userdemo.setGender((mGenderSpinner.getSelectedItem().toString()));
-        userdemo.setHeight(getNumValue(mHeightTextBox).toString());
-        userdemo.setUserWeights(getNumValue(mWeightTextBox).toString());
+
         //Get/Set skill level
         userdemo.setSkillLevelLevel(mLifterTypeSpinner.getSelectedItem().toString());
 
-        if (mSwitchMeasurementButton.getText().toString().toLowerCase().contains("metric")){
-            userdemo.setUnitOfMeasure("Metric");
-        } else {
+        double height = getNumValue(mHeightTextBox);
+        double weight = getNumValue(mWeightTextBox);
+        if (isImperial()){
             userdemo.setUnitOfMeasure("Imperial");
+            userdemo.setHeight(getNumValue(mHeightTextBox).toString());
+            userdemo.setUserWeights(getNumValue(mWeightTextBox).toString());
+            userWeight.setWeight(new Float(weight));
+        } else { //METRIC MEASUREMENTS
+            userdemo.setUnitOfMeasure("Metric");
+            //WE ONLY WANT TO SAVE VALUES AS IMPERIAL UNITS SO CONVERT FROM METRIC
+            height = cmToInch(height);
+            weight = kgsToLbs(weight);
+            userdemo.setHeight(Double.valueOf(height).toString());
+            userWeight.setWeight(new Float(weight));
         }
 
         //USER
@@ -273,19 +296,22 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         if (userdemo==null) return;
 
         try {
-            String first = userdemo.getFirstName();
-            String last = userdemo.getLastName();
-            if (first != null && last != null)
-                mNameTextBox.setText(first + " " + last);
+            if (userdemo.getSkillLevelLevel().toLowerCase().contains("imperial")){
+                mSwitchMeasurementButton.setText(R.string.switchMeasureToMetric);
+            } else {
+                mSwitchMeasurementButton.setText(R.string.switchMeasureToImperial);
+            }
+
         } catch (Exception e){
             Log.d("PROFILE", e.toString());
-        } try {
-            mWeightTextBox.setText(userdemo.getUserWeight().toString());
-        } catch (Exception e){
-            Log.d("PROFILE", e.toString());
-            System.out.println(e.toString());
-        } try {
-            mHeightTextBox.setText(userdemo.getHeight().toString());
+        }
+
+        try {
+            if (isImperial()) {
+                mHeightTextBox.setText(userdemo.getHeight().toString());
+            } else { //CONVERT SAVED INCHES TO CM
+                mHeightTextBox.setText(String.valueOf(inchToCM(userdemo.getHeight())));
+            }
         } catch (Exception e){
             Log.d("PROFILE", e.toString());
         } try {
@@ -314,28 +340,25 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         }
 
         try {
-            String unitType = userdemo.getUnitOfMeasure();
-            //if weightType is pounds set check, else unchecked
-            if (unitType.toLowerCase().contains("imperial")) {
-                mSwitchMeasurementButton.setText(R.string.switchMeasureImperial);
-            } else {
-                mSwitchMeasurementButton.setText(R.string.switchMeasureMetrics);
-            }
-
-        } catch (Exception e){
-            Log.d("PROFILE", e.toString());
-        }
-
-        try {
             mEmailTextBox.setText(user.getEmail());
         } catch (Exception ex) {
             Log.d("PROFILE", ex.toString());
         }
-
+        measurementsAddUnits();
+        unsavedChanges = true;
     }
 
     public void loadUser(){
         if (user==null) return;
+
+        try {
+            String first = user.getFirstName();
+            String last = user.getLastName();
+            if (first != null && last != null)
+                mNameTextBox.setText(first + " " + last);
+        } catch (Exception e){
+            Log.d("PROFILE", e.toString());
+        }
 
         try{
             mEmailTextBox.setText(user.getEmail());
@@ -344,16 +367,40 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         }
     }
 
+    public void loadUserWeight(){
+        if (userWeight==null) {
+            Log.d("PROFILE", "Attempted to load Null UserWeight to profile");
+            return;
+        }
+        try {
+            if (isImperial()) {
+                mWeightTextBox.setText(userWeight.getWeight().toString());
+            } else {
+                mWeightTextBox.setText(String.valueOf(lbsToKgs(userWeight.getWeight())));
+            }
+
+        } catch (Exception e) {
+            Log.d("PROFILE", e.getMessage());
+        }
+        measurementsAddUnits();
+        unsavedChanges = true;
+    }
+
+    /*
+    * If the text in switchMeasurementButton contains 'Switch to Metric'
+    * then we are using imperial units;
+     */
+    private boolean isImperial(){
+        return (mSwitchMeasurementButton
+                .getText().toString()
+                .toLowerCase().contains("metric"));
+    }
+
     public void setDemographic(UserDemographic userDemo){ userdemo = userDemo; }
     public void setUser(User user){ this.user = user;}
+    public void setUserWeight(UserWeight weight){ this.userWeight = weight; }
 
-    @Override
-    public void setPresenter(ProfileContract.Presenter presenter){ mPresenter = presenter;}
 
-    @Override
-    public BaseActivity getBaseActivity() {
-        return (BaseActivity) getActivity();
-    }
 
 
     @Override
@@ -389,6 +436,12 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         return 0;
     }
 
+    @Override
+    public void setPresenter(ProfileContract.Presenter presenter){ mPresenter = presenter;}
 
+    @Override
+    public BaseActivity getBaseActivity() {
+        return (BaseActivity) getActivity();
+    }
 
 }

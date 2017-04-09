@@ -15,6 +15,8 @@ public class User extends RealmObject {
     private String email;
     private String imageUrl;
     private boolean activated;
+    private String firstName;
+    private String lastName;
 
     public Long getId() { return id; }
 
@@ -52,4 +54,11 @@ public class User extends RealmObject {
         this.activated = activated;
     }
 
+    public String getFirstName() { return firstName; }
+
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    public String getLastName() { return lastName; }
+
+    public void setLastName(String lastName) { this.lastName = lastName; }
 }

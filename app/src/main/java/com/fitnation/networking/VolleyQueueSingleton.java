@@ -1,31 +1,28 @@
-package com.fitnation.profile;
+package com.fitnation.networking;
 
 import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 /**
  * Created by Jeremy on 3/18/2017.
  */
 
-public class UserDemographicSingleton {
-    private static UserDemographicSingleton mInstance;
+public class VolleyQueueSingleton {
+    private static VolleyQueueSingleton mInstance;
     private RequestQueue mRequestQueue;
     private static Context mCtx;
 
-    private UserDemographicSingleton(Context context) {
+    private VolleyQueueSingleton(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
-
-
     }
 
-    public static synchronized UserDemographicSingleton getInstance(Context context) {
+    public static synchronized VolleyQueueSingleton getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new UserDemographicSingleton(context);
+            mInstance = new VolleyQueueSingleton(context);
         }
         return mInstance;
     }
