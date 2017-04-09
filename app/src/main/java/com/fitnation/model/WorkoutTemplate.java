@@ -38,8 +38,13 @@ public class WorkoutTemplate extends RealmObject {
         lastUpdatedObj = new Date();
         workoutInstances = new RealmList<>();
         SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-        createdOn = dateFormat.format(createdOnObj);
-        lastUpdated = dateFormat.format(lastUpdatedObj);
+        if(createdOnObj != null) {
+            createdOn = dateFormat.format(createdOnObj);
+        }
+
+        if(lastUpdatedObj != null) {
+            lastUpdated = dateFormat.format(lastUpdatedObj);
+        }
     }
 
     public void addWorkoutInstance(WorkoutInstance workoutInstance) {

@@ -26,16 +26,24 @@ public class ExerciseInstance extends RealmObject implements Cloneable {
 
     private Long id;
     private Long androidId;
+    private Long exerciseId;
+    private Long repUnitId;
+    private Long effortUnitId;
+    private String exerciseName;
     private String notes;
-    private RealmList<ExerciseInstanceSet> exerciseInstanceSets;
+    private String repUnitName;
+    private String effortUnitName;
     @Expose(serialize = false)
     private Exercise exercise;
-    private Long exerciseId;
-    private String exerciseName;
+    @Expose(serialize = false)
     private Unit repUnit;
+    @Expose(serialize = false)
     private Unit effortUnit;
-
+    @Expose(serialize = false)
     private boolean selected;
+    private RealmList<ExerciseInstanceSet> exerciseInstanceSets;
+
+
 
     public ExerciseInstance() {
 
@@ -47,11 +55,25 @@ public class ExerciseInstance extends RealmObject implements Cloneable {
      */
     public ExerciseInstance(Exercise exercise) {
         this.exercise = exercise;
+        exerciseId = exercise.getId();
+        exerciseName = exercise.getName();
         exerciseInstanceSets = new RealmList<>();
         exerciseInstanceSets.add(new ExerciseInstanceSet(this, 1, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
         exerciseInstanceSets.add(new ExerciseInstanceSet(this, 2, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
         exerciseInstanceSets.add(new ExerciseInstanceSet(this, 3, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
         exerciseInstanceSets.add(new ExerciseInstanceSet(this, 4, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
+    }
+
+    public void setEffortUnit(Unit effortUnit) {
+        this.effortUnit = effortUnit;
+        effortUnitId = effortUnit.getId();
+        effortUnitName = effortUnit.getName();
+    }
+
+    public void setRepUnit(Unit repUnit) {
+        this.repUnit = repUnit;
+        repUnitId = repUnit.getId();
+        repUnitName = repUnit.getName();
     }
 
     public void setSelected(boolean selected) {

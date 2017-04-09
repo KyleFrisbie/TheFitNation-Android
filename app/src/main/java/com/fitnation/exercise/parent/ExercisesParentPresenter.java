@@ -69,7 +69,8 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
 
     @Override
     public void onError() {
-
+        //TODO re-authenticate user
+        mView.stopProgress();
     }
 
     @Override

@@ -13,8 +13,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.exercise.callbacks.ExerciseInstanceRequestCallback;
 import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
+import com.fitnation.exercise.callbacks.GetSkillLevelsCallback;
+import com.fitnation.exercise.callbacks.GetUnitsTaskCallback;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
+import com.fitnation.model.Unit;
 import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.networking.JsonParser;
 import com.fitnation.utils.EnvironmentManager;
@@ -26,7 +29,7 @@ import java.util.Map;
 /**
  * Gets ExerciseInstances from the available Exercises
  */
-public class GetExerciseInstancesFromExercisesTask extends NetworkTask{
+public class GetExerciseInstancesFromExercisesTask extends NetworkTask {
     private static final String TAG = GetExerciseInstancesFromExercisesTask.class.getSimpleName();
 
     /**
@@ -46,10 +49,38 @@ public class GetExerciseInstancesFromExercisesTask extends NetworkTask{
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        List<Exercise> exercises = JsonParser.convertJsonStringToList(response, Exercise[].class);
-                        List<ExerciseInstance> exerciseInstances = convertExercisesToInstances(exercises);
+                        final List<Exercise> exercises = JsonParser.convertJsonStringToList(response, Exercise[].class);
+                        final List<ExerciseInstance> exerciseInstances = convertExercisesToInstances(exercises);
+                        GetUnitsTask getUnitsTask = new GetUnitsTask(mAuthToken, mRequestQueue);
+                        getUnitsTask.getUnits(new GetUnitsTaskCallback() {
+                            @Override
+                            public void onSuccess(List<Unit> units) {
+                                Unit effortUnit = null;
+                                Unit repUnit = null;
 
-                        callback.onSuccess(exerciseInstances);
+                                for (Unit unit :units) {
+                                    if(unit.getName().equals(Unit.DEFAULT_EFFORT_UNIT)) {
+                                        effortUnit = unit;
+                                    } else if (unit.getName().equals(Unit.DEFAULT_REPS_UNIT)) {
+                                        repUnit = unit;
+                                    }
+                                }
+
+
+                                for (ExerciseInstance exerciseInstance : exerciseInstances) {
+                                    exerciseInstance.setEffortUnit(effortUnit);
+                                    exerciseInstance.setRepUnit(repUnit);
+                                }
+
+                                callback.onSuccess(exerciseInstances);
+                            }
+
+                            @Override
+                            public void onFailure(String error) {
+                                Log.e(TAG, error.toString());
+                                callback.onFailure(error);
+                            }
+                        });
                     }
                 },
                 new Response.ErrorListener() {

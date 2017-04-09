@@ -45,7 +45,7 @@ import io.realm.RealmResults;
  */
 public class ExercisesManager extends DataManager {
     private static final String TAG = ExercisesManager.class.getSimpleName();
-    private static final String mAuthToken = "716fc773-ab79-4add-b41b-5a28bbbea2ed";
+    private static final String mAuthToken = "de07a7fc-16de-4955-a659-c2c205c3a9ee";
     private RequestQueue mRequestQueue;
     private List<ExerciseInstance> mSelectedExercises;
     private List<ExerciseInstance> mExerciseInstances;
@@ -132,8 +132,7 @@ public class ExercisesManager extends DataManager {
      * @param name - The name of the workout
      */
     public void createWorkoutAndSave(final String name, final SaveWorkoutCallback saveWorkoutCallback) {
-        final WorkoutTemplate workoutTemplate = new WorkoutTemplate();
-        workoutTemplate.setName("Individual Workout's");
+        final WorkoutTemplate workoutTemplate = getWorkoutTemplate();
         addSkillLevelToWorkout(workoutTemplate);
         new Thread(new Runnable() {
             @Override
@@ -141,21 +140,20 @@ public class ExercisesManager extends DataManager {
                 postWorkoutTemplateToWeb(workoutTemplate, new WorkoutTemplatePostCallback() {
                     @Override
                     public void onSuccess(final WorkoutTemplate updatedTemplate) {
-                        WorkoutInstance workoutInstanceTemplate = new WorkoutInstance(name, 0f, 1, updatedTemplate, "");
+                        WorkoutInstance workoutInstance = new WorkoutInstance(name, 0f, 1, updatedTemplate, "");
                         RealmList<ExerciseInstance> selectedExercises = new RealmList<>();
 
                         for (ExerciseInstance exerciseInstance : mSelectedExercises) {
                             selectedExercises.add(exerciseInstance);
                         }
 
-                        workoutInstanceTemplate.setExercises(selectedExercises);
-                        workoutInstanceTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutInstance.class));
-                        postWorkoutInstanceToWeb(workoutInstanceTemplate, new WorkoutInstancePostCallback() {
+                        workoutInstance.setExercises(selectedExercises);
+                        workoutInstance.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutInstance.class));
+                        postWorkoutInstanceToWeb(workoutInstance, new WorkoutInstancePostCallback() {
                             @Override
                             public void onSuccess(WorkoutInstance updatedWorkoutInstance) {
                                 updatedTemplate.addWorkoutInstance(updatedWorkoutInstance);
-                                saveWorkoutToDatabase(updatedTemplate);
-                                saveWorkoutCallback.onSuccess();
+                                saveWorkoutToDatabase(updatedTemplate, saveWorkoutCallback);
                             }
 
                             @Override
@@ -208,7 +206,7 @@ public class ExercisesManager extends DataManager {
             }
         }
 
-        if ( begginerCount > intermediateCount && begginerCount > advancedCount ) {
+        if (begginerCount > intermediateCount && begginerCount > advancedCount) {
             workoutTemplate.setSkillLevelLevel(SkillLevel.BEGINNER);
             workoutTemplate.setSkillLevelId(beginnerSkillLevelId);
         } else if ( intermediateCount > begginerCount && intermediateCount > advancedCount ) {
@@ -228,49 +226,48 @@ public class ExercisesManager extends DataManager {
         }
     }
 
-    private void saveWorkoutToDatabase(WorkoutTemplate workoutTemplate) {
-        final Realm realm = Realm.getDefaultInstance();
-
-        WorkoutTemplate trueWorkoutTemplate = getWorkoutTemplate(workoutTemplate, realm);
-
-        saveData(trueWorkoutTemplate, new DataResult() {
+    private void saveWorkoutToDatabase(WorkoutTemplate workoutTemplate, final SaveWorkoutCallback callback) {
+        saveData(workoutTemplate, new DataResult() {
             @Override
             public void onError() {
                 Log.e(TAG, "WorkoutTemplate was not succesfully saved");
-                realm.close();
+                callback.onFailure("Unable to save to local data store.");
             }
 
             @Override
             public void onSuccess() {
+                callback.onSuccess();
                 Log.e(TAG, "WorkoutTemplate was succesfully saved");
             }
         });
     }
 
-    private WorkoutTemplate getWorkoutTemplate(WorkoutTemplate workoutTemplate, Realm realm) {
+    private WorkoutTemplate getWorkoutTemplate() {
+        Realm realm = Realm.getDefaultInstance();
+        WorkoutTemplate workoutTemplate = null;
         Log.i(TAG, "Determining workout template");
+        Log.i(TAG, "Workout template was not given, so going to see if one exists");
+        Long androidKey = PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class);
 
-        if(workoutTemplate == null) {
-            Log.i(TAG, "Workout template was not given, so going to see if one exists");
-            Long androidKey = PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class);
-
-            if (androidKey == 1) {
+        if (androidKey == 1) {
+            workoutTemplate = new WorkoutTemplate();
+            workoutTemplate.setName("Individual Workout's");
+            workoutTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class));
+            Log.i(TAG, "Looks like none exist, going to create a new workout template");
+        } else {
+            Log.i(TAG, "We have at least one workout template in the DB");
+            RealmResults<WorkoutTemplate> query = realm.where(WorkoutTemplate.class).findAll();
+            if (query.size() == 0) {
+                Log.i(TAG, "No workout template's found in query, making a new one");
                 workoutTemplate = new WorkoutTemplate();
+                workoutTemplate.setName("Individual Workout's");
                 workoutTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class));
-                Log.i(TAG, "Looks like none exist, going to create a new workout template");
             } else {
-                Log.i(TAG, "We have at least one workout template in the DB");
-                RealmResults<WorkoutTemplate> query = realm.where(WorkoutTemplate.class).findAll();
-                if (query.size() == 0) {
-                    Log.i(TAG, "No workout template's found in query, making a new one");
-                    workoutTemplate = new WorkoutTemplate();
-                    workoutTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class));
-                } else {
-                    Log.i(TAG, "Found the workout template");
-                    workoutTemplate = query.first();
-                }
+                Log.i(TAG, "Found the workout template");
+                workoutTemplate = query.first();
             }
         }
+
 
         return workoutTemplate;
     }

@@ -7,7 +7,16 @@ import io.realm.RealmObject;
  */
 
 public class Unit extends RealmObject {
+    public static final String DEFAULT_REPS_UNIT = "Reps";
+    public static final String DEFAULT_EFFORT_UNIT = "Pounds";
     private Long id;
     private String name;
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
