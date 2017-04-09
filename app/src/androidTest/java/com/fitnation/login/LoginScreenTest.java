@@ -1,6 +1,9 @@
 package com.fitnation.login;
 
+import android.app.Instrumentation;
+import android.content.pm.InstrumentationInfo;
 import android.os.SystemClock;
+import android.support.annotation.UiThread;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -8,6 +11,7 @@ import android.test.mock.MockContentProvider;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.crashlytics.android.Crashlytics;
 import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
 import com.fitnation.utils.Environment;
@@ -23,6 +27,7 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
+import io.fabric.sdk.android.Fabric;
 import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
@@ -38,8 +43,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
-
-// TODO: create mock objects for volley responses from server
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class LoginScreenTest extends InstrumentationTest {
@@ -61,11 +64,14 @@ public class LoginScreenTest extends InstrumentationTest {
     @BeforeClass
     public static void mockServerForSuccess() throws IOException {
         final MockWebServer mockWebServer = new MockWebServer();
+
         final Dispatcher dispatcher = new Dispatcher() {
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
                 switch (request.getPath()) {
+
                     case "/oauth/token":
+
                         if (request.getBody().toString().contains("androidtest") ||
                                 request.getBody().toString().contains("Pa55w0rd")) {
                             return new MockResponse().setResponseCode(200).setBody("{\n" +
@@ -89,19 +95,25 @@ public class LoginScreenTest extends InstrumentationTest {
                                     "  \"error_description\": \"Bad credentials\"\n" +
                                     "}");
                         }
+
                     case "/api/account/reset_password/init":
+
                         if (request.getBody().toString().contains("testemail@android.com")) {
                             return new MockResponse().setResponseCode(200).setBody("e-mail was sent");
                         } else {
                             return new MockResponse().setResponseCode(400).setBody("e-mail address not registered");
                         }
+
                     case "/api/register":
+
                         if (request.getBody().toString().contains("testemail@android.com")) {
                             return new MockResponse().setResponseCode(201).setBody("");
                         } else {
                             return new MockResponse().setResponseCode(400).setBody("login already in use");
                         }
+
                     default:
+
                         return new MockResponse().setResponseCode(404);
                 }
             }

@@ -8,7 +8,6 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 import com.fitnation.networking.tasks.RefreshAuthTokenTask;
 
-// TODO: impliment snackbar selectively based on code response
 /**
  * A factory for generating alert dialog messages for HTTP response codes from the server.
  */
