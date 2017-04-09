@@ -2,6 +2,7 @@ package com.fitnation.model;
 
 import com.google.gson.annotations.Expose;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -18,8 +19,12 @@ public class WorkoutInstance extends RealmObject {
     private Long androidId;
     private Long id;
     private String name;
-    private Date createdOn;
-    private Date lastUpdated;
+    private String createdOn;
+    private String lastUpdated;
+    @Expose(serialize = false)
+    private Date createdOnObj;
+    @Expose(serialize = false)
+    private Date lastUpdatedObj;
     private Float restBetweenInstances;
     private Integer orderNumber;
     private Long workoutTemplateId;
@@ -28,19 +33,25 @@ public class WorkoutInstance extends RealmObject {
     private String notes;
 
     public WorkoutInstance() {
-        createdOn = new Date();
-        lastUpdated = new Date();
+        createdOnObj = new Date();
+        lastUpdatedObj = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+        createdOn = dateFormat.format(createdOnObj);
+        lastUpdated = dateFormat.format(lastUpdatedObj);
     }
 
     public WorkoutInstance(String name, Float restBetweenInstances, Integer orderNumber, WorkoutTemplate workoutTemplate, String notes) {
-        createdOn = new Date();
-        lastUpdated = new Date();
+        createdOnObj = new Date();
+        lastUpdatedObj = new Date();
         this.name = name;
         this.restBetweenInstances = restBetweenInstances;
         this.orderNumber = orderNumber;
         this.workoutTemplateId = workoutTemplate.getId();
         this.workoutTemplateName = workoutTemplate.getName();
         this.notes = notes;
+        SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+        createdOn = dateFormat.format(createdOnObj);
+        lastUpdated = dateFormat.format(lastUpdatedObj);
     }
 
     public void setAndroidId(Long androidId) {

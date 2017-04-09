@@ -2,10 +2,7 @@ package com.fitnation.model;
 
 import org.parceler.Parcel;
 
-import java.util.List;
-
 import io.realm.ExerciseInstanceSetRealmProxy;
-import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
@@ -18,7 +15,7 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
     private Long id;
     private Long androidId;
     private Integer orderNumber;
-    private Float repQuantity;
+    private Float reqQuantity;
     private Float effortQuantity;
     private Float restTime;
     private Long exerciseInstanceId;
@@ -34,7 +31,7 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
     public ExerciseInstanceSet(ExerciseInstance exerciseInstance, Integer orderNumber, Float reqQuantity, Float effortQuantity, Float restTime) {
         this.exerciseInstanceId = exerciseInstance.getId();
         this.orderNumber = orderNumber;
-        this.repQuantity = reqQuantity;
+        this.reqQuantity = reqQuantity;
         this.effortQuantity = effortQuantity;
         this.restTime = restTime;
     }
@@ -47,7 +44,7 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
     public ExerciseInstanceSet(ExerciseInstance exerciseInstance, Integer orderNumber) {
         this.exerciseInstanceId = exerciseInstance.getId();
         this.orderNumber = orderNumber;
-        repQuantity = ExerciseInstance.REPS_DEFAULT;
+        reqQuantity = ExerciseInstance.REPS_DEFAULT;
         effortQuantity = ExerciseInstance.EFFORT_DEFAULT;
         restTime = ExerciseInstance.REST_TIME_DEFAULT;
     }
@@ -56,8 +53,8 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
         //required default constructor
     }
 
-    public void setRepQuantity(Float repQuantity) {
-        this.repQuantity = repQuantity;
+    public void setReqQuantity(Float reqQuantity) {
+        this.reqQuantity = reqQuantity;
     }
 
     public Long getId() {
@@ -80,12 +77,12 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
         return restTime;
     }
 
-    public Float getRepQuantity() {
-        return repQuantity;
+    public Float getReqQuantity() {
+        return reqQuantity;
     }
 
     public int getRepQuantityAsInt() {
-        return Math.round(repQuantity);
+        return Math.round(reqQuantity);
     }
 
     public void setRestTime(Float restTime) {
@@ -117,7 +114,7 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
             return false;
         if (orderNumber != null ? !orderNumber.equals(that.orderNumber) : that.orderNumber != null)
             return false;
-        if (repQuantity != null ? !repQuantity.equals(that.repQuantity) : that.repQuantity != null)
+        if (reqQuantity != null ? !reqQuantity.equals(that.reqQuantity) : that.reqQuantity != null)
             return false;
         if (effortQuantity != null ? !effortQuantity.equals(that.effortQuantity) : that.effortQuantity != null)
             return false;
@@ -134,7 +131,7 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (androidId != null ? androidId.hashCode() : 0);
         result = 31 * result + (orderNumber != null ? orderNumber.hashCode() : 0);
-        result = 31 * result + (repQuantity != null ? repQuantity.hashCode() : 0);
+        result = 31 * result + (reqQuantity != null ? reqQuantity.hashCode() : 0);
         result = 31 * result + (effortQuantity != null ? effortQuantity.hashCode() : 0);
         result = 31 * result + (restTime != null ? restTime.hashCode() : 0);
         result = 31 * result + (exerciseInstanceId != null ? exerciseInstanceId.hashCode() : 0);

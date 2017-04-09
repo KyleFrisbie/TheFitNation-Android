@@ -57,6 +57,7 @@ public class PostWorkoutTemplateTask extends NetworkTask{
 
                 mHeaders.put("Authorization", "Bearer" + " " + mAuthToken);
                 mHeaders.put("Content-Type", "application/json");
+                mHeaders.put("Accept", "application/json");
 
                 return mHeaders;
             }

@@ -92,7 +92,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
             public void afterTextChanged(Editable editable) {
                 try {
                     Float newAmount = Float.valueOf(editable.toString());
-                    set.setRepQuantity(newAmount);
+                    set.setReqQuantity(newAmount);
                 } catch (NumberFormatException e) {
                     Log.e(TAG, e.getMessage());
                 }
