@@ -8,8 +8,8 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        app:cardUseCompatPadding="true"
-        android:layout_height="@dimen/card_height">
+        android:layout_height="@dimen/card_height"
+        app:cardUseCompatPadding="true">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -21,20 +21,22 @@
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/add_exercise_box"
+                style="@style/CheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-11dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/CheckBox"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/exercise_name"
                 style="@style/TextView"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:maxWidth="120dp"
                 android:text="Bench Press"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -50,61 +52,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill"
-                android:layout_marginBottom="-2dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
+                android:layout_marginBottom="-190dp"
                 android:text="..."
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="@+id/set_one"
-                app:layout_constraintRight_toRightOf="@+id/set_one" />
+                app:layout_constraintRight_toRightOf="@+id/set_one"
+                app:layout_constraintHorizontal_bias="0.333" />
 
             <TextView
                 android:id="@+id/set_one_reps"
                 style="@style/TextView.small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="37dp"
                 android:text="8"
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/edit_exercise"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"></TextView>
-
-
-            <TextView
-                android:labelFor="@+id/edit_exercise"
-                style="@style/TextView.Actionable"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginTop="8dp"
-                android:text="Edit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintLeft_toLeftOf="@+id/edit_exercise"
-                app:layout_constraintRight_toRightOf="@+id/edit_exercise"
-                app:layout_constraintTop_toBottomOf="@+id/edit_exercise"
-                tools:layout_conversion_absoluteHeight="16dp"
-                tools:layout_conversion_absoluteWidth="24dp"
-                tools:layout_conversion_absoluteX="371dp"
-                tools:layout_conversion_absoluteY="65dp" />
-
-            <ImageView
-                android:id="@+id/edit_exercise"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="0dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/edit_exercise" />
+                app:layout_constraintRight_toLeftOf="@+id/edit_exercise"
+                android:layout_marginRight="37dp"></TextView>
+
 
             <TextView
                 android:id="@+id/set_one"
@@ -123,15 +91,59 @@
                 android:layout_width="11dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill"
-                android:layout_marginBottom="-2dp"
-                android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp"
                 android:text="..."
                 android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="@+id/set_one_reps"
                 app:layout_constraintRight_toRightOf="@+id/set_one_reps" />
+
+            <View
+                android:id="@+id/edit_exercise_surface_view"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="0dp"
+                app:layout_constraintLeft_toLeftOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="@+id/edit_exercise"
+                android:layout_marginRight="0dp"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="0dp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                android:layout_marginBottom="0dp" />
+
+            <ImageView
+                android:id="@+id/edit_exercise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/edit_exercise" />
+
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/TextView.Actionable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="8dp"
+                android:labelFor="@+id/edit_exercise"
+                android:text="Edit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toLeftOf="@+id/edit_exercise"
+                app:layout_constraintRight_toRightOf="@+id/edit_exercise"
+                app:layout_constraintTop_toBottomOf="@+id/edit_exercise"
+                tools:layout_conversion_absoluteHeight="16dp"
+                tools:layout_conversion_absoluteWidth="24dp"
+                tools:layout_conversion_absoluteX="371dp"
+                tools:layout_conversion_absoluteY="65dp" />
 
 
         </android.support.constraint.ConstraintLayout>

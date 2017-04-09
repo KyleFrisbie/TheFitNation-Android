@@ -48,7 +48,7 @@ public class UserExerciseInstanceSet extends RealmObject {
         this.exerciseInstanceSetId = exerciseInstanceSet.getId();
         this.userExerciseInstance = exerciseInstance;
         this.orderNumber = exerciseInstanceSet.getOrderNumber();
-        this.repQuantity = exerciseInstanceSet.getRepQuantity();
+        this.repQuantity = exerciseInstanceSet.getReqQuantity();
         this.effortQuantity = exerciseInstanceSet.getEffortQuantity();
         this.restTime = exerciseInstanceSet.getRestTime();
         this.notes = ""; //TODO implement this field down the road for custom notes per set

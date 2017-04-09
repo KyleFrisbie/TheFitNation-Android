@@ -14,16 +14,24 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.base.DataManager;
 import com.fitnation.base.DataResult;
+import com.fitnation.exercise.callbacks.ExerciseInstanceRequestCallback;
 import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
+import com.fitnation.exercise.callbacks.SaveWorkoutCallback;
+import com.fitnation.exercise.callbacks.WorkoutInstancePostCallback;
+import com.fitnation.exercise.callbacks.WorkoutTemplatePostCallback;
+import com.fitnation.exercise.parent.tasks.GetExerciseInstancesFromExercisesTask;
+import com.fitnation.exercise.parent.tasks.PostWorkoutInstanceTask;
+import com.fitnation.exercise.parent.tasks.PostWorkoutTemplateTask;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.PrimaryKeyFactory;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.model.enums.SkillLevel;
-import com.fitnation.networking.EnvironmentManager;
 import com.fitnation.networking.JsonParser;
+import com.fitnation.utils.EnvironmentManager;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +45,7 @@ import io.realm.RealmResults;
  */
 public class ExercisesManager extends DataManager {
     private static final String TAG = ExercisesManager.class.getSimpleName();
+    private static final String mAuthToken = "3196b68e-ba77-4073-8dd7-1c6dd479ffbd";
     private RequestQueue mRequestQueue;
     private List<ExerciseInstance> mSelectedExercises;
     private List<ExerciseInstance> mExerciseInstances;
@@ -67,66 +76,40 @@ public class ExercisesManager extends DataManager {
             @Override
             public void run() {
                 if(mExerciseInstances == null) {
-                    // Instantiate the RequestQueue.
-                    String resourceRoute = "exercises";
-
-                    String url = EnvironmentManager.getInstance().getRequestUrl(resourceRoute);
-                    StringRequest getExercisesRequest = new StringRequest(Request.Method.GET, url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    List<Exercise> exercises = JsonParser.convertJsonStringToList(response, Exercise[].class);
-                                    List<ExerciseInstance> exerciseInstances = convertExercisesToInstances(exercises);
-                                    mExerciseInstances = exerciseInstances;
-                                    mExerciseInstancesTab1 = new ArrayList<ExerciseInstance>(exercises.size());
-                                    mExerciseInstancesTab2 = new ArrayList<ExerciseInstance>(exercises.size());
-                                    mExerciseInstancesTab3 = new ArrayList<ExerciseInstance>(exercises.size());
-
-                                    for (ExerciseInstance instance : exerciseInstances) {
-                                        ExerciseInstance copy1 = null;
-                                        ExerciseInstance copy2 = null;
-                                        ExerciseInstance copy3 = null;
-
-                                        copy1 = (ExerciseInstance) instance.clone();
-                                        copy2 = (ExerciseInstance) instance.clone();
-                                        copy3 = (ExerciseInstance) instance.clone();
-
-                                        mExerciseInstancesTab1.add(copy1);
-                                        mExerciseInstancesTab2.add(copy2);
-                                        mExerciseInstancesTab3.add(copy3);
-
-                                        mExerciseInstancesTab1 = filterExerciseBySkillLevel(mExerciseInstancesTab1, SkillLevel.BEGINNER);
-                                        mExerciseInstancesTab2 = filterExerciseBySkillLevel(mExerciseInstancesTab2, SkillLevel.INTERMEDIATE);
-                                        mExerciseInstancesTab3 = filterExerciseBySkillLevel(mExerciseInstancesTab3, SkillLevel.ADVANCED);
-                                    }
-                                    callback.onExercisesRetrieved(mExerciseInstancesTab1, mExerciseInstancesTab2, mExerciseInstancesTab3);
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.e(TAG, error.toString());
-                                    callback.onError();
-                                }
-                            }
-                    ) {
+                    GetExerciseInstancesFromExercisesTask getExerciseInstancesTask = new GetExerciseInstancesFromExercisesTask(mAuthToken, mRequestQueue);
+                    getExerciseInstancesTask.getExerciseInstancesFromExercises(new ExerciseInstanceRequestCallback() {
                         @Override
-                        public Map<String, String> getHeaders() throws AuthFailureError {
-                            String authToken = "ea67c8d0-c1a8-4843-ac21-891b0720e49b";
-                            Map<String, String> mHeaders = new ArrayMap();
+                        public void onSuccess(List<ExerciseInstance> exerciseInstances) {
+                            mExerciseInstances = exerciseInstances;
+                            mExerciseInstancesTab1 = new ArrayList<ExerciseInstance>(exerciseInstances.size());
+                            mExerciseInstancesTab2 = new ArrayList<ExerciseInstance>(exerciseInstances.size());
+                            mExerciseInstancesTab3 = new ArrayList<ExerciseInstance>(exerciseInstances.size());
 
-                            mHeaders.put("Authorization", "Bearer" + " " + authToken);
-                            mHeaders.put("Content-Type", "application/json");
+                            for (ExerciseInstance instance : exerciseInstances) {
+                                ExerciseInstance copy1 = null;
+                                ExerciseInstance copy2 = null;
+                                ExerciseInstance copy3 = null;
 
-                            return mHeaders;
+                                copy1 = (ExerciseInstance) instance.clone();
+                                copy2 = (ExerciseInstance) instance.clone();
+                                copy3 = (ExerciseInstance) instance.clone();
+
+                                mExerciseInstancesTab1.add(copy1);
+                                mExerciseInstancesTab2.add(copy2);
+                                mExerciseInstancesTab3.add(copy3);
+
+                                mExerciseInstancesTab1 = filterExerciseBySkillLevel(mExerciseInstancesTab1, SkillLevel.BEGINNER);
+                                mExerciseInstancesTab2 = filterExerciseBySkillLevel(mExerciseInstancesTab2, SkillLevel.INTERMEDIATE);
+                                mExerciseInstancesTab3 = filterExerciseBySkillLevel(mExerciseInstancesTab3, SkillLevel.ADVANCED);
+                            }
+                            callback.onExercisesRetrieved(mExerciseInstancesTab1, mExerciseInstancesTab2, mExerciseInstancesTab3);
                         }
-                    };
 
-                    getExercisesRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
-
-                    mRequestQueue.add(getExercisesRequest);
-                } else {
-                    callback.onExercisesRetrieved(mExerciseInstancesTab1, mExerciseInstancesTab2, mExerciseInstancesTab3);
+                        @Override
+                        public void onFailure(String error) {
+                            callback.onError();
+                        }
+                    });
                 }
             }
         }).start();
@@ -148,40 +131,120 @@ public class ExercisesManager extends DataManager {
      * Creates a workout out of the currently selected exercises and saves it under the given name
      * @param name - The name of the workout
      */
-    public void createWorkoutAndSave(final String name, final WorkoutTemplate workoutTemplate) {
+    public void createWorkoutAndSave(final String name, final SaveWorkoutCallback saveWorkoutCallback) {
+        final WorkoutTemplate workoutTemplate = new WorkoutTemplate();
+        workoutTemplate.setName("Individual Workout's");
+        addSkillLevelToWorkout(workoutTemplate);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final Realm realm = Realm.getDefaultInstance();
-
-                WorkoutTemplate trueWorkoutTemplate = getWorkoutTemplate(workoutTemplate, realm);
-                WorkoutInstance workoutInstanceTemplate = new WorkoutInstance(name, 0f, 1, trueWorkoutTemplate, "");
-                RealmList<ExerciseInstance> selectedExercises = new RealmList<>();
-
-                for (ExerciseInstance exerciseInstance : mSelectedExercises) {
-                    selectedExercises.add(exerciseInstance);
-                }
-
-                workoutInstanceTemplate.setExercises(selectedExercises);
-                workoutInstanceTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutInstance.class));
-                saveData(trueWorkoutTemplate, new DataResult() {
+                postWorkoutTemplateToWeb(workoutTemplate, new WorkoutTemplatePostCallback() {
                     @Override
-                    public void onError() {
-                        Log.e(TAG, "WorkoutTemplate was not succesfully saved");
-                        realm.close();
+                    public void onSuccess(final WorkoutTemplate updatedTemplate) {
+                        WorkoutInstance workoutInstanceTemplate = new WorkoutInstance(name, 0f, 1, updatedTemplate, "");
+                        RealmList<ExerciseInstance> selectedExercises = new RealmList<>();
+
+                        for (ExerciseInstance exerciseInstance : mSelectedExercises) {
+                            selectedExercises.add(exerciseInstance);
+                        }
+
+                        workoutInstanceTemplate.setExercises(selectedExercises);
+                        workoutInstanceTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutInstance.class));
+                        postWorkoutInstanceToWeb(workoutInstanceTemplate, new WorkoutInstancePostCallback() {
+                            @Override
+                            public void onSuccess(WorkoutInstance updatedWorkoutInstance) {
+                                updatedTemplate.addWorkoutInstance(updatedWorkoutInstance);
+                                saveWorkoutToDatabase(updatedTemplate);
+                                saveWorkoutCallback.onSuccess();
+                            }
+
+                            @Override
+                            public void onFailure(String error) {
+                                saveWorkoutCallback.onFailure("Unable to save individual Workout Instances. ErrorCode: " + error );
+                            }
+                        });
                     }
 
                     @Override
-                    public void onSuccess() {
-                        Log.e(TAG, "WorkoutTemplate was succesfully saved");
+                    public void onFailure(String error) {
+                        saveWorkoutCallback.onFailure("Unable to save Workout Template Error: " + error );
                     }
                 });
             }
         }).start();
+    }
 
+    private void addSkillLevelToWorkout(WorkoutTemplate workoutTemplate) {
+        int begginerCount = 0;
+        int intermediateCount = 0;
+        int advancedCount= 0;
+        long beginnerSkillLevelId = 0;
+        long intermediateSkillLevelId = 0;
+        long advancedSkillLevelId = 0;
 
+        for (ExerciseInstance exerciseInstance : mSelectedExercises) {
+            Exercise exercise = exerciseInstance.getExercise();
+            String skillLevel = exercise.getSkillLevelLevel();
 
+            switch(skillLevel) {
+                case SkillLevel.BEGINNER:
+                    begginerCount++;
+                    if(beginnerSkillLevelId == 0) {
+                        beginnerSkillLevelId = exercise.getSkillLevelId();
+                    }
+                    break;
+                case SkillLevel.INTERMEDIATE:
+                    intermediateCount++;
+                    if(intermediateSkillLevelId == 0) {
+                        intermediateSkillLevelId = exercise.getSkillLevelId();
+                    }
+                    break;
+                case SkillLevel.ADVANCED:
+                    advancedCount++;
+                    if(advancedSkillLevelId == 0) {
+                        advancedSkillLevelId = exercise.getSkillLevelId();
+                    }
+                    break;
+            }
+        }
 
+        if ( begginerCount > intermediateCount && begginerCount > advancedCount ) {
+            workoutTemplate.setSkillLevelLevel(SkillLevel.BEGINNER);
+            workoutTemplate.setSkillLevelId(beginnerSkillLevelId);
+        } else if ( intermediateCount > begginerCount && intermediateCount > advancedCount ) {
+            workoutTemplate.setSkillLevelLevel(SkillLevel.INTERMEDIATE);
+            workoutTemplate.setSkillLevelId(intermediateSkillLevelId);
+        } else if ( advancedCount > begginerCount && advancedCount > intermediateCount ) {
+            workoutTemplate.setSkillLevelLevel(SkillLevel.ADVANCED);
+            workoutTemplate.setSkillLevelId(advancedSkillLevelId);
+        } else {
+            if(intermediateSkillLevelId != 0) {
+                workoutTemplate.setSkillLevelLevel(SkillLevel.INTERMEDIATE);
+                workoutTemplate.setSkillLevelId(intermediateSkillLevelId);
+            } else {
+                workoutTemplate.setSkillLevelLevel(SkillLevel.ADVANCED);
+                workoutTemplate.setSkillLevelId(advancedSkillLevelId);
+            }
+        }
+    }
+
+    private void saveWorkoutToDatabase(WorkoutTemplate workoutTemplate) {
+        final Realm realm = Realm.getDefaultInstance();
+
+        WorkoutTemplate trueWorkoutTemplate = getWorkoutTemplate(workoutTemplate, realm);
+
+        saveData(trueWorkoutTemplate, new DataResult() {
+            @Override
+            public void onError() {
+                Log.e(TAG, "WorkoutTemplate was not succesfully saved");
+                realm.close();
+            }
+
+            @Override
+            public void onSuccess() {
+                Log.e(TAG, "WorkoutTemplate was succesfully saved");
+            }
+        });
     }
 
     private WorkoutTemplate getWorkoutTemplate(WorkoutTemplate workoutTemplate, Realm realm) {
@@ -207,10 +270,29 @@ public class ExercisesManager extends DataManager {
                     workoutTemplate = query.first();
                 }
             }
-
         }
 
         return workoutTemplate;
+    }
+
+    private void postWorkoutTemplateToWeb(final WorkoutTemplate template, final WorkoutTemplatePostCallback callback) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                PostWorkoutTemplateTask postWorkoutTemplateTask = new PostWorkoutTemplateTask(mAuthToken, mRequestQueue);
+                postWorkoutTemplateTask.postWorkoutTemplate(template, callback);
+            }
+        }).start();
+    }
+
+    private void postWorkoutInstanceToWeb(final WorkoutInstance workoutInstance, final WorkoutInstancePostCallback callback) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                PostWorkoutInstanceTask postWorkoutInstanceTask = new PostWorkoutInstanceTask(mAuthToken, mRequestQueue);
+                postWorkoutInstanceTask.postWorkoutInstance(workoutInstance, callback);
+            }
+        }).start();
     }
 
     public void updateExerciseList(ExerciseInstance original, ExerciseInstance updated, int tab) {
@@ -232,16 +314,6 @@ public class ExercisesManager extends DataManager {
                 break;
         }
 
-    }
-
-    private List<ExerciseInstance> convertExercisesToInstances(List<Exercise> exercises) {
-        List<ExerciseInstance> exerciseInstances = new ArrayList<>(exercises.size());
-        for (Exercise exercise: exercises) {
-            ExerciseInstance instance = new ExerciseInstance(exercise);
-            exerciseInstances.add(instance);
-        }
-
-        return exerciseInstances;
     }
 
     public static List<ExerciseInstance> filterExerciseBySkillLevel(List<ExerciseInstance> exerciseInstances, String filter) {

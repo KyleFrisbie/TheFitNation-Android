@@ -1,6 +1,7 @@
 package com.fitnation.exercise.parent;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -8,6 +9,8 @@ import com.fitnation.R;
 import com.fitnation.exercise.callbacks.ExercisesRequestCallback;
 import com.fitnation.exercise.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.exercise.callbacks.SaveDialogCallback;
+import com.fitnation.exercise.callbacks.SaveWorkoutCallback;
+import com.fitnation.exercise.common.ExerciseAlertDialogFactory;
 import com.fitnation.exercise.edit.ViewExerciseFragment;
 import com.fitnation.exercise.edit.ViewExercisePresenter;
 import com.fitnation.model.ExerciseInstance;
@@ -33,6 +36,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void onViewReady() {
         //get the exercises
+        mView.showProgress();
         mExerciseManager.getExercises(this);
     }
 
@@ -59,6 +63,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
 
     @Override
     public void onExercisesRetrieved(List<ExerciseInstance> exerciseList1, List<ExerciseInstance> exerciseList2, List<ExerciseInstance> exerciseList3) {
+        mView.stopProgress();
         mView.displayExercises(exerciseList1, exerciseList2, exerciseList3);
     }
 
@@ -88,7 +93,28 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void onSaveRequested(String name) {
         Log.i(TAG, "User requested to save workout with name: " + name);
-        mExerciseManager.createWorkoutAndSave(name, null);
+        mView.showProgress();
+        mExerciseManager.createWorkoutAndSave(name, new SaveWorkoutCallback() {
+            @Override
+            public void onSuccess() {
+                mView.stopProgress();
+                mView.showSuccess(ExerciseAlertDialogFactory.getSuccess(mView.getBaseActivity(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+
+                        //TODO clear back stack, launch Fragment for viewing created workouts
+                    }
+                }));
+
+            }
+
+            @Override
+            public void onFailure(String error) {
+                mView.stopProgress();
+                mView.showFailure(ExerciseAlertDialogFactory.getErrorDialog(error, mView.getBaseActivity()));
+            }
+        });
     }
 
     //----------------------------------OnExerciseUpdatedCallback----------------------------------//

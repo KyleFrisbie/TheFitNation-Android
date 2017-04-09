@@ -1,6 +1,7 @@
 package com.fitnation.model;
 
 import com.fitnation.model.enums.SkillLevel;
+import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -20,13 +21,18 @@ import io.realm.annotations.PrimaryKey;
 
 public class Exercise extends RealmObject implements Serializable {
     @PrimaryKey
+    @Expose(serialize = false)
     private Long androidId;
     private Long id;
     private String name;
+    @Expose(serialize = false)
     private String imageUri;
     private String notes;
     private String skillLevelLevel;
+    private Long skillLevelId;
+    @Expose(serialize = false)
     private RealmList<Muscle> muscles;
+    @Expose(serialize = false)
     private String exerciseFamilyName;
 
     public Exercise() {
@@ -58,6 +64,14 @@ public class Exercise extends RealmObject implements Serializable {
 
     public String getSkillLevelLevel() {
         return skillLevelLevel;
+    }
+
+    public Long getSkillLevelId() {
+        return skillLevelId;
+    }
+
+    public void setSkillLevelId(Long skillLevelId) {
+        this.skillLevelId = skillLevelId;
     }
 
     public void setMuscles(RealmList<Muscle> muscles) {

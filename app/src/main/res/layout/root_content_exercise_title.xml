@@ -49,12 +49,12 @@
             style="@style/TextView.Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sets"
+            android:text="Set"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/textView11"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginRight="113dp"
-            app:layout_constraintVertical_bias="0.538" />
+            android:layout_marginRight="115dp"
+            app:layout_constraintVertical_bias="0.555" />
 
         <TextView
             android:id="@+id/textView11"

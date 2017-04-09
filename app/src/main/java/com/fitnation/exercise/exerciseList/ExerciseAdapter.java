@@ -2,11 +2,11 @@ package com.fitnation.exercise.exerciseList;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fitnation.R;
@@ -55,6 +55,9 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         int cutOff = 3;
         if(cutOff >= sets.size()) {
             cutOff = sets.size();
+            showEllipses(false, holder);
+        } else {
+            showEllipses(true, holder);
         }
 
         for (int i = 0; i < cutOff; i++) {
@@ -73,7 +76,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         holder.exerciseName.setText(exercise.getName());
         holder.setOne.setText(setText);
         holder.setOneReps.setText(repText);
-        holder.editExercise.setOnClickListener(new View.OnClickListener() {
+        holder.editExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mEditPressedCallback.onEditPressed(exerciseInstance);
@@ -108,11 +111,23 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         @BindView(R.id.exercise_name) TextView exerciseName;
         @BindView(R.id.set_one) TextView setOne;
         @BindView(R.id.set_one_reps) TextView setOneReps;
-        @BindView(R.id.edit_exercise) ImageView editExercise;
+        @BindView(R.id.edit_exercise_surface_view) View editExerciseButton;
+        @BindView(R.id.sets_continued) View setsContinued;
+        @BindView(R.id.reps_continued) View repsContinued;
 
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+    }
+
+    private void showEllipses(boolean show, ViewHolder holder) {
+        if(show) {
+            holder.setsContinued.setVisibility(View.VISIBLE);
+            holder.repsContinued.setVisibility(View.VISIBLE);
+        } else {
+            holder.setsContinued.setVisibility(View.INVISIBLE);
+            holder.repsContinued.setVisibility(View.INVISIBLE);
         }
     }
 }

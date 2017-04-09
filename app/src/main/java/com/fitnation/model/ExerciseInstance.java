@@ -2,6 +2,8 @@ package com.fitnation.model;
 
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
@@ -26,9 +28,13 @@ public class ExerciseInstance extends RealmObject implements Cloneable {
     private Long androidId;
     private String notes;
     private RealmList<ExerciseInstanceSet> exerciseInstanceSets;
+    @Expose(serialize = false)
     private Exercise exercise;
+    private Long exerciseId;
+    private String exerciseName;
     private Unit repUnit;
     private Unit effortUnit;
+
     private boolean selected;
 
     public ExerciseInstance() {
