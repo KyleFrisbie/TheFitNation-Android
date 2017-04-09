@@ -63,14 +63,8 @@ public class GetAuthTokenTask implements FactoryContract.FactoryReturn{
         },  new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                try{
-                    int code = error.networkResponse.statusCode;
-                    errorResponseMessage(error);
-                    mPresenter.stopProgress();
-                }catch(NullPointerException nullPointer){
-                    mPresenter.stopProgress();
-                    noResponseError();
-                }
+                mPresenter.stopProgress();
+                errorResponseMessage(error);
             }
         }){
             @Override
@@ -98,27 +92,8 @@ public class GetAuthTokenTask implements FactoryContract.FactoryReturn{
     }
 
     private void errorResponseMessage(VolleyError error) {
-        if(error.networkResponse.statusCode != 401) {
-            VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
-            mPresenter.showAuthError(volleyErrorMessage.getErrorMessage(mActivity));
-        }else {
-            VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(error);
-            volleyErrorMessage.getErrorMessage(mActivity);
-        }
-    }
-
-    private void noResponseError(){
-        AlertDialog.Builder noResponseDialog = new AlertDialog.Builder(mActivity);
-        noResponseDialog.setTitle("No Response");
-        noResponseDialog.setMessage("Attempted to connect to the server but did not recieve a response. Please try again");
-        noResponseDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        noResponseDialog.create();
-        mPresenter.showAuthError(noResponseDialog);
+        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(mActivity, this);
+        volleyErrorMessage.getErrorMessage(error);
     }
 
     @Override

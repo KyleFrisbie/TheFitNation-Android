@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
+import com.fitnation.Factory.FactoryContract;
 import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.base.InstrumentationTest;
 import com.fitnation.login.LoginBaseActivity;
@@ -28,9 +29,9 @@ import org.junit.runner.RunWith;
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class VolleyErrorMessageTest extends InstrumentationTest {
+public class VolleyErrorMessageTest extends InstrumentationTest{
     private VolleyErrorMessage mVolleyErrorMessage;
-    private AlertDialog.Builder builder = null;
+    private VolleyError mVolleyError;
 
     @Rule
     public ActivityTestRule<LoginBaseActivity> mActivityRule = new ActivityTestRule<>(LoginBaseActivity.class);
@@ -47,8 +48,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest {
 
     private void setUp(int responseCode){
         NetworkResponse mNetworkResponse = new NetworkResponse(responseCode, null, null, false);
-        VolleyError mVolleyError = new VolleyError(mNetworkResponse);
-        mVolleyErrorMessage = new VolleyErrorMessage(mVolleyError);
+        mVolleyError = new VolleyError(mNetworkResponse);
+        mVolleyErrorMessage = new VolleyErrorMessage(mActivityRule.getActivity());
         //builder = mVolleyErrorMessage.getErrorMessage(mActivityRule.getActivity());
     }
 
@@ -56,7 +57,7 @@ public class VolleyErrorMessageTest extends InstrumentationTest {
         return new Runnable() {
             @Override
             public void run() {
-                builder = mVolleyErrorMessage.getErrorMessage(mActivityRule.getActivity());
+                AlertDialog.Builder builder = mVolleyErrorMessage.getErrorMessage(mVolleyError);
                 builder.show();
             }
         };
@@ -65,15 +66,13 @@ public class VolleyErrorMessageTest extends InstrumentationTest {
     @Test
     public void testMessage100(){
         int responseCode = 100;
+
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
         onView((withText("Error"))).check(matches(isDisplayed()));
         onView((withText("OK"))).perform(click());
 
-        mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
     }
 
     @Test
