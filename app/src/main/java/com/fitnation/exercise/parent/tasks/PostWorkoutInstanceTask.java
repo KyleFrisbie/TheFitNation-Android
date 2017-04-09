@@ -50,7 +50,7 @@ public class PostWorkoutInstanceTask extends NetworkTask {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e(TAG, error.toString());
-                        callback.onFailure(error.getMessage());
+                        callback.onFailure(String.valueOf(error.networkResponse.statusCode));
                     }
                 }
         ) {

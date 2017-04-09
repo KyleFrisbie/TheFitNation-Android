@@ -112,6 +112,12 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
         navigationActivity.displayBackArrow(true, "Edit");
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((NavigationActivity) getActivity()).displayBackArrow(false, "Build A Workout");
+    }
+
     @OnClick(R.id.add_set_button)
     public void onAddSetClicked() {
         mPresenter.onAddSetClicked();

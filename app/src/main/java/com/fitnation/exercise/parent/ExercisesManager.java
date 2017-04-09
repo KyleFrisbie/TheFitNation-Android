@@ -45,7 +45,7 @@ import io.realm.RealmResults;
  */
 public class ExercisesManager extends DataManager {
     private static final String TAG = ExercisesManager.class.getSimpleName();
-    private static final String mAuthToken = "9e2d538c-bc86-4d0e-8116-d2c6c4eb5bbe";
+    private static final String mAuthToken = "3196b68e-ba77-4073-8dd7-1c6dd479ffbd";
     private RequestQueue mRequestQueue;
     private List<ExerciseInstance> mSelectedExercises;
     private List<ExerciseInstance> mExerciseInstances;
@@ -160,7 +160,7 @@ public class ExercisesManager extends DataManager {
 
                             @Override
                             public void onFailure(String error) {
-                                saveWorkoutCallback.onFailure("Unable to save individual Workout Instances. Error: " + error );
+                                saveWorkoutCallback.onFailure("Unable to save individual Workout Instances. ErrorCode: " + error );
                             }
                         });
                     }
