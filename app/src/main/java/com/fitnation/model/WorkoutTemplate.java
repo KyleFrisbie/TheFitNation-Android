@@ -13,7 +13,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * A WorkoutTemplate.
  */
-public class WorkoutTemplate extends RealmObject {
+public class WorkoutTemplate extends RealmObject implements Cloneable {
     @PrimaryKey
     @Expose(serialize = false)
     private Long androidId;
@@ -109,6 +109,11 @@ public class WorkoutTemplate extends RealmObject {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     @Override

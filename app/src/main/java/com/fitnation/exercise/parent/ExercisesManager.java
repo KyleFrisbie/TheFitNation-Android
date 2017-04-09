@@ -45,7 +45,7 @@ import io.realm.RealmResults;
  */
 public class ExercisesManager extends DataManager {
     private static final String TAG = ExercisesManager.class.getSimpleName();
-    private static final String mAuthToken = "de07a7fc-16de-4955-a659-c2c205c3a9ee";
+    private static final String mAuthToken = "75c42c58-01ee-437d-aa26-61caab8a9840";
     private RequestQueue mRequestQueue;
     private List<ExerciseInstance> mSelectedExercises;
     private List<ExerciseInstance> mExerciseInstances;
@@ -243,28 +243,39 @@ public class ExercisesManager extends DataManager {
     }
 
     private WorkoutTemplate getWorkoutTemplate() {
-        Realm realm = Realm.getDefaultInstance();
+        Realm realm = null;
         WorkoutTemplate workoutTemplate = null;
         Log.i(TAG, "Determining workout template");
         Log.i(TAG, "Workout template was not given, so going to see if one exists");
         Long androidKey = PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class);
 
-        if (androidKey == 1) {
-            workoutTemplate = new WorkoutTemplate();
-            workoutTemplate.setName("Individual Workout's");
-            workoutTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class));
-            Log.i(TAG, "Looks like none exist, going to create a new workout template");
-        } else {
-            Log.i(TAG, "We have at least one workout template in the DB");
-            RealmResults<WorkoutTemplate> query = realm.where(WorkoutTemplate.class).findAll();
-            if (query.size() == 0) {
-                Log.i(TAG, "No workout template's found in query, making a new one");
+        try {
+            realm = Realm.getDefaultInstance();
+
+            if (androidKey == 1) {
                 workoutTemplate = new WorkoutTemplate();
                 workoutTemplate.setName("Individual Workout's");
                 workoutTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class));
+                Log.i(TAG, "Looks like none exist, going to create a new workout template");
             } else {
-                Log.i(TAG, "Found the workout template");
-                workoutTemplate = query.first();
+                Log.i(TAG, "We have at least one workout template in the DB");
+                RealmResults<WorkoutTemplate> query = realm.where(WorkoutTemplate.class).findAll();
+                if (query.size() == 0) {
+                    Log.i(TAG, "No workout template's found in query, making a new one");
+                    workoutTemplate = new WorkoutTemplate();
+                    workoutTemplate.setName("Individual Workout's");
+                    workoutTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class));
+                } else {
+                    Log.i(TAG, "Found the workout template");
+                    workoutTemplate = query.first();
+                    workoutTemplate = realm.copyFromRealm(workoutTemplate);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(realm != null) {
+                realm.close();
             }
         }
 
