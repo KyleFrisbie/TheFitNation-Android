@@ -35,8 +35,25 @@ public class VolleyErrorMessage {
         String title;
         AlertDialog.Builder builder;
 
-        //initalize builder
-        builder = generateAlertDialog(context, "No response", "There was response from the server", false);
+        //initialize builder
+        builder = generateAlertDialog(context, "No response", "There was no response from the server", false);
+
+        //check for special 401 error case from volley
+        if(volleyError.getMessage() != null) {
+            if (volleyError.getMessage().equalsIgnoreCase("java.io.IOException: No authentication challenges found")) {
+                RefreshAuthTokenTask refreshAccessToken = new RefreshAuthTokenTask();
+                if (refreshAccessToken.refresh(context)) {
+                    message = "Authorization has been refreshed";
+                    builder = generateAlertDialog(context, "Access Refreshed", message, false);
+                } else {
+                    if (message.isEmpty()) {
+                        message = "401: Unauthorized";
+                        title = "Error";
+                        builder = generateAlertDialog(context, title, message, true);
+                    }
+                }
+            }
+        }
 
         switch (response.statusCode) {
             case 100:
@@ -160,11 +177,9 @@ public class VolleyErrorMessage {
                     message = "Authorization has been refreshed";
                     builder = generateAlertDialog(context, "Access Refreshed", message, false);
                 } else {
-                    if(message.isEmpty()){
-                        message = "401: Unauthorized";
-                        title = "Error";
-                        builder = generateAlertDialog(context, title, message, true);
-                    }
+                    message = "401: Unauthorized";
+                    title = "Error";
+                    builder = generateAlertDialog(context, title, message, true);
                 }
                 break;
             case 402:

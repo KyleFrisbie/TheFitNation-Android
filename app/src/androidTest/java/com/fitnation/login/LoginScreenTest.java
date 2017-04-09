@@ -83,7 +83,12 @@ public class LoginScreenTest extends InstrumentationTest {
 
                         if (request.getBody().toString().contains("testemail@android.com")) {
                             return new MockResponse().setResponseCode(200).setBody("e-mail was sent");
-                        } else {
+                        } else if(request.getBody().toString().contains("401errortest")){
+                            return new MockResponse().setResponseCode(401).setBody("{\n" +
+                                    "  \"error\": \"invalid_token\",\n" +
+                                    "  \"error_description\": \"Invalid access token: ac4cc37a-d3b2-428d-8660-069676a00976\"\n" +
+                                    "}");
+                        }else {
                             return new MockResponse().setResponseCode(400).setBody("e-mail address not registered");
                         }
 
@@ -111,7 +116,7 @@ public class LoginScreenTest extends InstrumentationTest {
     public void testLoginFlowFor400Error() {
         loginScreenIsDisplayed();
         onView(withId(R.id.email_editText)).perform(typeText("bad@email.com"));
-        onView(withId(R.id.password_editText)).perform(typeText("fsafsafa"));
+        onView(withId(R.id.password_editText)).perform(typeText("fsaf"));
         pressBack();
         onView(withId(R.id.login_button)).perform(click());
         SystemClock.sleep(DELAY_TIME);
@@ -166,6 +171,19 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.forgot_login_button)).perform(click());
         forgotLoginScreenIsDisplayed();
         onView(withId(R.id.resetPassword_editText)).perform(typeText("bad@email.com"));
+        pressBack();
+        onView(withId(R.id.resetPassword_button)).perform(click());
+        SystemClock.sleep(DELAY_TIME);
+        onView((withText("Error"))).check(matches(isDisplayed()));
+        onView((withText("OK"))).perform(click());
+    }
+
+    @Test
+    public void testForgotLoginFlowFor401Error(){
+        loginScreenIsDisplayed();
+        onView(withId(R.id.forgot_login_button)).perform(click());
+        forgotLoginScreenIsDisplayed();
+        onView(withId(R.id.resetPassword_editText)).perform(typeText("401errortest"));
         pressBack();
         onView(withId(R.id.resetPassword_button)).perform(click());
         SystemClock.sleep(DELAY_TIME);
