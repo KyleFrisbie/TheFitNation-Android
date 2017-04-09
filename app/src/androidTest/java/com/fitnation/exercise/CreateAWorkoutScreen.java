@@ -83,7 +83,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         onView(withText(R.string.build_workout)).check(matches(isDisplayed()));
         onView(withText(R.string.build_workout)).perform(click());
 
-        SystemClock.sleep(1000);
+        //CreateWorkoutFragment's launched
         onView(withId(R.id.tabs)).check(matches(isDisplayed()));
         onView(withText(R.string.beginner)).check(matches(isDisplayed()));
         onView(withText(R.string.intermediate)).check(matches(isDisplayed()));
