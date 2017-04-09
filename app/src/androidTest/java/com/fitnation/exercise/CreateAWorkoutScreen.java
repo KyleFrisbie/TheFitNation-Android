@@ -56,16 +56,22 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
 
     @Test
     public void testCreateWorkoutScreenLaunchedOkay() throws Exception {
-        final String URL_TO_MOCK = "/api/exercises";
-        InputStream in = this.getClass().getClassLoader().getResourceAsStream("exercises.json");
-        final String json = FileUtils.readTextFile(in);
+        final String exercisesUrl = "/api/exercises";
+        final String unitsUrl = "/api/units";
+        InputStream exercisesInputStream = this.getClass().getClassLoader().getResourceAsStream("exercises.json");
+        InputStream unitsInputStream = this.getClass().getClassLoader().getResourceAsStream("units.json");
+        final String exerciseJson = FileUtils.readTextFile(exercisesInputStream);
+        final String unitsJson = FileUtils.readTextFile(unitsInputStream);
         MockWebServer server = new MockWebServer();
         final Dispatcher dispatcher = new Dispatcher() {
 
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
-                if (request.getPath().equals(URL_TO_MOCK)){
-                    return new MockResponse().setBody(json);
+                if (request.getPath().equals(exercisesUrl)){
+                    return new MockResponse().setBody(exerciseJson);
+                }
+                else if (request.getPath().equals(unitsUrl)){
+                    return new MockResponse().setBody(unitsJson);
                 }
 
                 return new MockResponse().setResponseCode(404);
