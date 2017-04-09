@@ -28,10 +28,13 @@ import com.fitnation.model.User;
 import com.fitnation.model.UserDemographic;
 import com.fitnation.model.UserWeight;
 
+
 import butterknife.ButterKnife;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
+
+import static com.fitnation.utils.UnitConversion.*;
 
 /*
  * View / Fragment Class for Profile
@@ -56,10 +59,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     boolean unsavedChanges = true;
     final long MILLISECONDS_IN_YEAR = 31556952000L;
-    final double INCH_PER_CM = 0.393701;
-    final double CM_PER_INCH = 2.54;
-    final double LBS_PER_KG = 2.20462;
-    final double KG_PER_LB = 0.453592;
+
     Long userDemoId = 0L;
     Calendar birthday;
     UserDemographic userdemo;
@@ -164,10 +164,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     }
 
     /* WEIGHT AND HEIGHT CONVERSIONS */
-    private double lbsToKgs(double lbs){ return lbs * KG_PER_LB; }
-    private double kgsToLbs(double kgs){ return kgs * LBS_PER_KG;}
-    private double cmToInch(double cm) { return cm * INCH_PER_CM;}
-    private double inchToCM(double in) { return in * CM_PER_INCH;}
+
 
     private Float getNumValue(EditText textBox){
         String txt[] = textBox.getText().toString().trim().split("\\s+");
