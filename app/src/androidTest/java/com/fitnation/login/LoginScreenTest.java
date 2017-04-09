@@ -72,14 +72,6 @@ public class LoginScreenTest extends InstrumentationTest {
                                     "  \"expires_in\": 1799,\n" +
                                     "  \"scope\": \"read write\"\n" +
                                     "}");
-                        } else if (request.getBody().toString().contains("93bcd68d-6b0e-49fd-a3a7-819866794bab")) {
-                            return new MockResponse().setResponseCode(200).setBody("{\n" +
-                                    "  \"access_token\": \"2185a8f2-8c21-4b78-a271-5429a3138f49\",\n" +
-                                    "  \"token_type\": \"bearer\",\n" +
-                                    "  \"refresh_token\": \"93bcd68d-6b0e-49fd-a3a7-819866794bab\",\n" +
-                                    "  \"expires_in\": 1799,\n" +
-                                    "  \"scope\": \"read write\"\n" +
-                                    "}");
                         } else {
                             return new MockResponse().setResponseCode(400).setBody("{\n" +
                                     "  \"error\": \"invalid_grant\",\n" +
