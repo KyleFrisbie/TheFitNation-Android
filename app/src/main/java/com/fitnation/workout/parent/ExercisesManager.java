@@ -17,7 +17,7 @@ import com.fitnation.workout.parent.tasks.PostWorkoutInstanceTask;
 import com.fitnation.workout.parent.tasks.PostWorkoutTemplateTask;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
-import com.fitnation.model.PrimaryKeyFactory;
+import com.fitnation.utils.PrimaryKeyFactory;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.model.enums.SkillLevel;

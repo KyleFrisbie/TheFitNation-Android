@@ -1,4 +1,4 @@
-package com.fitnation.model;
+package com.fitnation.utils;
 
 import android.util.Log;
 import java.util.HashMap;
@@ -7,7 +7,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmModel;
-import io.realm.RealmObject;
 import io.realm.RealmObjectSchema;
 import io.realm.RealmSchema;
 
