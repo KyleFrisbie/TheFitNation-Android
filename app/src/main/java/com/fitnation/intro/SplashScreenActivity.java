@@ -3,12 +3,9 @@ package com.fitnation.intro;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.crashlytics.android.Crashlytics;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.login.LoginBaseActivity;
-
-import io.fabric.sdk.android.Fabric;
 
 /**
  * SplashScreen for branding and app loading

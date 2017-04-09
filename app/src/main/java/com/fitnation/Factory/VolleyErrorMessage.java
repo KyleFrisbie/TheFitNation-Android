@@ -313,7 +313,7 @@ public class VolleyErrorMessage {
                 builder = generateAlertDialog(context, title, message, true);
                 break;
             case 501:
-                message = "501: Not Implimented";
+                message = "501: Not Implemented";
                 title = "Error";
                 builder = generateAlertDialog(context, title, message, true);
                 break;
