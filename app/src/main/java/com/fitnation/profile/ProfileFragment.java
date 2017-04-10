@@ -60,11 +60,11 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     boolean unsavedChanges = true;
     final long MILLISECONDS_IN_YEAR = 31556952000L;
 
-    Long userDemoId = 0L;
+    public Long userDemoId = 0L;
     Calendar birthday;
-    UserDemographic userdemo;
-    UserWeight userWeight;
-    User user;
+    public UserDemographic userdemo;
+    public UserWeight userWeight;
+    public User user;
     DatePickerFragment dateFragment;
     ArrayAdapter<CharSequence> genderAdapter;
     ArrayAdapter<CharSequence> lifterTypeAdapter;

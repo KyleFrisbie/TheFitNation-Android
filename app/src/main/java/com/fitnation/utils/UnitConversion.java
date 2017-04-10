@@ -1,7 +1,7 @@
 package com.fitnation.utils;
 
 /**
- * Created by J on 4/9/2017.
+ * Created by Jeremy on 4/9/2017.
  */
 
 public final class UnitConversion {
