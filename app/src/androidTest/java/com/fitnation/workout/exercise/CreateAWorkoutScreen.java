@@ -1,10 +1,15 @@
 package com.fitnation.workout.exercise;
 
 import android.os.SystemClock;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.UiDevice;
+import android.support.test.uiautomator.UiObject;
+import android.support.test.uiautomator.UiObjectNotFoundException;
+import android.support.test.uiautomator.UiSelector;
 
 import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
@@ -29,8 +34,10 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 
+import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -115,7 +122,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
     }
 
     @Test
-    public void testCanBuildAndSaveWorkout() {
+    public void testCanBuildAndSaveWorkout() throws Exception {
         onView(withRecyclerView(R.id.exercise_recycler_view)
                 .atPositionOnView(0, R.id.add_exercise_box))
                 .perform(click());
@@ -133,6 +140,16 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
                 .perform(click());
 
         onView(withId(R.id.exercise_list_action)).perform(click());
+        onView(withId(R.id.exercise_name_to_save)).perform(typeText("Arnolds Workout"));
+        closeSoftKeyboard();
+        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        UiObject dialog = uiDevice.findObject(new UiSelector().text("Name your workout:"));
+        if(dialog.waitForExists(5000)) {
+            UiObject button = uiDevice.findObject(new UiSelector().text("yes"));
+            if(button.exists()) {
+                button.click();
+            }
+        }
     }
 
     @Test
@@ -142,6 +159,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
                 .perform(click());
 
         onView(withId(R.id.exercise_name_edit)).check(matches(isDisplayed()));
+
     }
 
 
