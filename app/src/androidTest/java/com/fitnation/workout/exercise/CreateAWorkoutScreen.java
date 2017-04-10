@@ -59,20 +59,31 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         super.unlockScreen(mActivityRule.getActivity());
         final String exercisesUrl = "/api/exercises";
         final String unitsUrl = "/api/units";
+        final String workoutTemplatesUrl = "/api/workout-templates";
+        final String workoutInstancesUrl = "/api/workout-instances";
+
         InputStream exercisesInputStream = this.getClass().getClassLoader().getResourceAsStream("exercises.json");
         InputStream unitsInputStream = this.getClass().getClassLoader().getResourceAsStream("units.json");
+        InputStream workoutInstanceInputStream = this.getClass().getClassLoader().getResourceAsStream("workout-instance.json");
+        InputStream workoutTemplateInputStream = this.getClass().getClassLoader().getResourceAsStream("workout-template.json");
+
         final String exerciseJson = FileUtils.readTextFile(exercisesInputStream);
         final String unitsJson = FileUtils.readTextFile(unitsInputStream);
+        final String workoutInstanceJson = FileUtils.readTextFile(workoutInstanceInputStream);
+        final String workoutTemplateJson = FileUtils.readTextFile(workoutTemplateInputStream);
         MockWebServer server = new MockWebServer();
         final Dispatcher dispatcher = new Dispatcher() {
 
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
-                if (request.getPath().equals(exercisesUrl)){
+                if (request.getPath().equals(exercisesUrl)&& request.getMethod().equalsIgnoreCase("GET")){
                     return new MockResponse().setBody(exerciseJson);
-                }
-                else if (request.getPath().equals(unitsUrl)){
+                } else if (request.getPath().equals(unitsUrl) && request.getMethod().equalsIgnoreCase("GET")){
                     return new MockResponse().setBody(unitsJson);
+                } else if (request.getPath().equals(workoutTemplatesUrl) && request.getMethod().equalsIgnoreCase("PUT")) {
+                    return new MockResponse().setBody(workoutTemplateJson);
+                } else if (request.getPath().equals(workoutInstancesUrl) && request.getMethod().equalsIgnoreCase("POST")) {
+                    return new MockResponse().setBody(workoutInstanceJson);
                 }
 
                 return new MockResponse().setResponseCode(404);
@@ -145,10 +156,22 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject dialog = uiDevice.findObject(new UiSelector().text("Name your workout:"));
         if(dialog.waitForExists(5000)) {
-            UiObject button = uiDevice.findObject(new UiSelector().text("yes"));
+            UiObject button = uiDevice.findObject(new UiSelector().text("SAVE"));
             if(button.exists()) {
                 button.click();
             }
+        } else {
+            throw new Exception();
+        }
+
+        UiObject successDialog = uiDevice.findObject(new UiSelector().text("Success"));
+        if(successDialog.waitForExists(5000)) {
+            UiObject button = uiDevice.findObject(new UiSelector().text("OK"));
+            if(button.exists()) {
+                button.click();
+            }
+        } else {
+            throw new Exception();
         }
     }
 
