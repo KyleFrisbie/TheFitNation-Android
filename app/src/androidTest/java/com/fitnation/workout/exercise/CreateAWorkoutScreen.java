@@ -37,6 +37,7 @@ import okhttp3.mockwebserver.RecordedRequest;
 import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -130,18 +131,22 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
     public void testCanBuildAndSaveWorkout() throws Exception {
         onView(withRecyclerView(R.id.exercise_recycler_view)
                 .atPositionOnView(0, R.id.add_exercise_box))
+                .perform(scrollTo())
                 .perform(click());
 
         onView(withRecyclerView(R.id.exercise_recycler_view)
                 .atPositionOnView(1, R.id.add_exercise_box))
+                .perform(scrollTo())
                 .perform(click());
 
         onView(withRecyclerView(R.id.exercise_recycler_view)
                 .atPositionOnView(2, R.id.add_exercise_box))
+                .perform(scrollTo())
                 .perform(click());
 
         onView(withRecyclerView(R.id.exercise_recycler_view)
                 .atPositionOnView(3, R.id.add_exercise_box))
+                .perform(scrollTo())
                 .perform(click());
 
         onView(withId(R.id.exercise_list_action)).perform(click());
