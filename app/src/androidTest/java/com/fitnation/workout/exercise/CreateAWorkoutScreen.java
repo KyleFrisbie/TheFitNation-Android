@@ -104,6 +104,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
         onView(withText(R.string.build_workout)).check(matches(isDisplayed()));
         onView(withText(R.string.build_workout)).perform(click());
+        SystemClock.sleep(2000);
     }
 
     @After
@@ -115,9 +116,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
     public void testCreateWorkoutScreenLaunchedOkay() throws Exception {
 
 
-        verifyCreateWorkoutScreenVisible();
-        testTabsWork();
-//        RecyclerViewActions.actionOnItemAtPosition(0, onView(withText("Edit")).perform(click()));
+        verifyCreateWorkoutScreenVisible();;
     }
 
     private void verifyCreateWorkoutScreenVisible() {
@@ -125,11 +124,6 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         onView(withText(R.string.beginner)).check(matches(isDisplayed()));
         onView(withText(R.string.intermediate)).check(matches(isDisplayed()));
         onView(withText(R.string.advanced)).check(matches(isDisplayed()));
-    }
-
-    private void testTabsWork() {
-        onView(withText(R.string.intermediate)).perform(click());
-        onView(withText(R.string.advanced)).perform(click());
     }
 
     @Test
