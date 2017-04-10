@@ -374,7 +374,7 @@ public class VolleyErrorMessage implements TaskContract.Factory{
             }else{
                 return builder;
             }
-        }else if(volleyError.networkResponse.statusCode != 401) {
+        }else {
             AlertDialog.Builder noResponseBuilder = generateAlertDialog(context, "No Response",
                     "There was no response from the server. Please make sure that you are connected to the internet.", false);
             mFactoryReturn.showErrorDialog(noResponseBuilder);

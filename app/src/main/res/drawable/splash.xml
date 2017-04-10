@@ -7,7 +7,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/fitnation_logo_loading_scren"/>
     </item>
 
 </layer-list>

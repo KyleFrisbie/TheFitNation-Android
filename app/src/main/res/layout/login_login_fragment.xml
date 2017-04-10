@@ -25,7 +25,7 @@
         android:id="@+id/logo_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher"
+        app:srcCompat="@mipmap/fit_nation_login_logo"
         android:contentDescription="@string/fit_nation_logo"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"

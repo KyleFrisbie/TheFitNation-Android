@@ -52,13 +52,12 @@ public class GetAuthTokenTask implements FactoryContract.FactoryReturn{
         {
             @Override
             public void onResponse(JSONObject response) {
-                mPresenter.stopProgress();
                 NetworkUtils.getInstance().storeTokens(response);
 
+                mPresenter.stopProgress();
                 Intent mainActivityIntent = new Intent(mActivity, NavigationActivity.class);
-                mainActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mActivity.startActivity(mainActivityIntent);
-
+                mActivity.finish();
             }
         },  new Response.ErrorListener() {
             @Override
