@@ -14,6 +14,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.Factory.FactoryCallback;
 import com.fitnation.Factory.VolleyErrorMessage;
+import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.utils.EnvironmentManager;
 
@@ -49,7 +50,7 @@ public class EmailResetPasswordTask implements FactoryCallback.FactoryReturn{
 
         ProgressDialog progressDialog = new ProgressDialog(mActivity);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage(mActivity.getString(R.string.progress_message));
         progressDialog.setIndeterminate(true);
         mPresenter.showProgress(progressDialog);
 
@@ -91,9 +92,9 @@ public class EmailResetPasswordTask implements FactoryCallback.FactoryReturn{
      */
     private void successfulResponse(String response) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mActivity);
-        alertDialog.setTitle("Success");
+        alertDialog.setTitle(R.string.email_success_title);
         alertDialog.setMessage(response);
-        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(R.string.alert_dialog_ok_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

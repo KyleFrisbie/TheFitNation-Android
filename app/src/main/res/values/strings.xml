@@ -181,4 +181,9 @@
     <string name="volley_message_508">508: Loop Detected</string>
     <string name="volley_message_510">510: Not Extended</string>
     <string name="volley_message_511">511: Network Authentication Required</string>
+
+    <string name="register_success_title">Success!</string>
+    <string name="register_success_message">Welcome to the Fit Nation! To complete the regestration process please confirm your email</string>
+    <string name="progress_message">Please wait...</string>
+    <string name="email_success_title">Success</string>
 </resources>

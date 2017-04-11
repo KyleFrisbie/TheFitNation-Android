@@ -13,6 +13,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.Factory.FactoryCallback;
 import com.fitnation.Factory.VolleyErrorMessage;
+import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.utils.EnvironmentManager;
@@ -53,7 +54,7 @@ public class GetAuthTokenTask implements FactoryCallback.FactoryReturn{
 
         ProgressDialog progressDialog = new ProgressDialog(mActivity);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage(mActivity.getString(R.string.progress_message));
         progressDialog.setIndeterminate(true);
         mPresenter.showProgress(progressDialog);
 
