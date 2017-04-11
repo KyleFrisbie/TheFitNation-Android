@@ -4,34 +4,23 @@ import android.app.ProgressDialog;
 import android.support.v7.app.AlertDialog;
 
 import com.fitnation.networking.tasks.GetAuthTokenTask;
-import com.fitnation.networking.tasks.TaskContract;
+import com.fitnation.networking.tasks.TaskCallback;
 
 import static com.fitnation.login.LoginBaseActivity.VIEW_CONTAINER;
 
 /**
  * Presenter for the login screen. contains all the login logic for the login screen
  */
-public class LoginPresenter implements LoginContract.Presenter, TaskContract.Presenter{
+public class LoginPresenter implements LoginContract.Presenter, TaskCallback.Presenter{
     private LoginContract.View mView;
 
     public LoginPresenter (LoginContract.View view) { mView = view; }
 
-
     @Override
     public void onLoginPressed(final String userName, final String password) {
-
         GetAuthTokenTask getAuthTokenTask = new GetAuthTokenTask(mView.getBaseActivity(), this);
         getAuthTokenTask.requestToken(userName, password);
-
     }
-
-    // TODO: Implement facebook login
-    @Override
-    public void onFacebookLoginPressed() {    }
-
-    // TODO: Implement google Login
-    @Override
-    public void onGoogleLoginPressed() {    }
 
     @Override
     public void onForgotLoginButtonPressed() {
@@ -51,6 +40,16 @@ public class LoginPresenter implements LoginContract.Presenter, TaskContract.Pre
                 .replace(VIEW_CONTAINER, registerFragment).commit();
     }
 
+    // TODO: Implement facebook login
+    @Override
+    public void onFacebookLoginPressed() {    }
+
+    // TODO: Implement google Login
+    @Override
+    public void onGoogleLoginPressed() {    }
+
+    /*---------------------------------------LoginContract---------------------------------------*/
+
     @Override
     public void onViewReady() {
 
@@ -65,10 +64,10 @@ public class LoginPresenter implements LoginContract.Presenter, TaskContract.Pre
 
     }
 
-    @Override
-    public void showSuccess(AlertDialog.Builder successDialog) {
+    /*----------------------------------------TaskCallback----------------------------------------*/
 
-    }
+    @Override
+    public void showSuccess(AlertDialog.Builder successDialog) { }
 
     @Override
     public void showProgress(ProgressDialog progressDialog) {

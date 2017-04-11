@@ -2,13 +2,13 @@ package com.fitnation.networking.tasks;
 
 import android.content.Context;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.fitnation.Factory.FactoryContract;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.utils.EnvironmentManager;
 import com.fitnation.utils.NetworkUtils;
@@ -19,10 +19,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RefreshAuthTokenTask {
-    private TaskContract.Factory mFactory;
+    private TaskCallback.Factory mFactory;
     private String refreshToken;
     
-    public RefreshAuthTokenTask(TaskContract.Factory factory){
+    public RefreshAuthTokenTask(TaskCallback.Factory factory){
         this.mFactory = factory;
     }
 
@@ -71,6 +71,7 @@ public class RefreshAuthTokenTask {
                 }
             };
 
+            jsonObjectPost.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
             requestQueue.add(jsonObjectPost);
             requestQueue.start();
         }else{

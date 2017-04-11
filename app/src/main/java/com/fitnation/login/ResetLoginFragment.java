@@ -56,6 +56,8 @@ public class ResetLoginFragment extends BaseFragment implements ResetLoginContra
         }
     }
 
+    /*-------------------------------------ResetLoginContract-------------------------------------*/
+
     @Override
     public void showSuccess(android.support.v7.app.AlertDialog.Builder successDialog) {
         successDialog.show();
@@ -76,6 +78,8 @@ public class ResetLoginFragment extends BaseFragment implements ResetLoginContra
     public void showAuthError(android.support.v7.app.AlertDialog.Builder errorDialog) {
         errorDialog.show();
     }
+
+    /*----------------------------------------BaseFragment----------------------------------------*/
 
     @Override
     public void setPresenter(ResetLoginContract.Presenter presenter) { mPresenter = presenter; }

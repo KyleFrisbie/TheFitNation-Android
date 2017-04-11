@@ -88,6 +88,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     @OnClick(R.id.forgot_login_button)
     public void onForgotLoginButtonClicked() { mPresenter.onForgotLoginButtonPressed(); }
 
+    /*---------------------------------------LoginContract---------------------------------------*/
+
     @Override
     public void showSuccess() {
 
@@ -104,14 +106,12 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         mProgressDialog.dismiss();
     }
 
-    /**
-     * Displayed an Alert Dialog for the return error
-     * @param errorDialog the error Alert Dialog which which displays the http error
-     */
     @Override
     public void showAuthError(AlertDialog.Builder errorDialog) {
         errorDialog.show();
     }
+
+    /*----------------------------------------BaseFragment----------------------------------------*/
 
     @Override
     public void setPresenter(LoginContract.Presenter presenter) {

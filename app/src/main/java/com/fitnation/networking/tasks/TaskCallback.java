@@ -9,7 +9,7 @@ import com.fitnation.base.BasePresenter;
  * Common interface for all managers to return information to presenters.
  */
 
-public interface TaskContract {
+public interface TaskCallback {
     interface Presenter extends BasePresenter {
         void showSuccess(AlertDialog.Builder successDialog);
         void showProgress(ProgressDialog progressDialog);

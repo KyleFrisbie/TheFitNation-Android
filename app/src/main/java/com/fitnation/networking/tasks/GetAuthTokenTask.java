@@ -1,17 +1,17 @@
 package com.fitnation.networking.tasks;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.fitnation.Factory.FactoryContract;
+import com.fitnation.Factory.FactoryCallback;
 import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.navigation.NavigationActivity;
@@ -27,11 +27,11 @@ import java.util.Map;
  * Handles the login request
  */
 
-public class GetAuthTokenTask implements FactoryContract.FactoryReturn{
-    private TaskContract.Presenter mPresenter;
+public class GetAuthTokenTask implements FactoryCallback.FactoryReturn{
+    private TaskCallback.Presenter mPresenter;
     private BaseActivity mActivity;
 
-    public GetAuthTokenTask(BaseActivity activity, TaskContract.Presenter presenter) {
+    public GetAuthTokenTask(BaseActivity activity, TaskCallback.Presenter presenter) {
         this.mActivity = activity;
         mPresenter = presenter;
     }
@@ -86,6 +86,7 @@ public class GetAuthTokenTask implements FactoryContract.FactoryReturn{
             }
         };
 
+        jsonObjectPost.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
         requestQueue.add(jsonObjectPost);
         requestQueue.start();
     }

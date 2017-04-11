@@ -4,13 +4,13 @@ package com.fitnation.login;
 import android.app.ProgressDialog;
 import android.support.v7.app.AlertDialog;
 
-import com.fitnation.networking.tasks.TaskContract;
+import com.fitnation.networking.tasks.TaskCallback;
 import com.fitnation.networking.tasks.EmailResetPasswordTask;
 
 /**
  * contains the business logic for the view
  */
-public class ResetLoginPresenter implements ResetLoginContract.Presenter, TaskContract.Presenter{
+public class ResetLoginPresenter implements ResetLoginContract.Presenter, TaskCallback.Presenter{
     private ResetLoginContract.View mView;
 
     public ResetLoginPresenter(ResetLoginContract.View view) { mView = view; }
@@ -22,6 +22,8 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter, TaskCo
         emailResetPasswordTask.resetPasswordRequest(email);
 
     }
+
+    /*-------------------------------------ResetLoginContract-------------------------------------*/
 
     @Override
     public void onViewReady() {
@@ -35,6 +37,8 @@ public class ResetLoginPresenter implements ResetLoginContract.Presenter, TaskCo
     @Override
     public void stop() {
     }
+
+    /*----------------------------------------TaskCallback----------------------------------------*/
 
     @Override
     public void showSuccess(AlertDialog.Builder successDialog) {

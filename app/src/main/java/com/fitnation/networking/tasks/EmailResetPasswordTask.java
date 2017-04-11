@@ -5,13 +5,14 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.fitnation.Factory.FactoryContract;
+import com.fitnation.Factory.FactoryCallback;
 import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.utils.EnvironmentManager;
@@ -23,11 +24,11 @@ import java.util.Map;
  * handles the email reset password request
  */
 
-public class EmailResetPasswordTask implements FactoryContract.FactoryReturn{
-    private TaskContract.Presenter mPresenter;
+public class EmailResetPasswordTask implements FactoryCallback.FactoryReturn{
+    private TaskCallback.Presenter mPresenter;
     private BaseActivity mActivity;
 
-    public EmailResetPasswordTask(BaseActivity mActivity, TaskContract.Presenter presenter) {
+    public EmailResetPasswordTask(BaseActivity mActivity, TaskCallback.Presenter presenter) {
         this.mPresenter = presenter;
         this.mActivity = mActivity;
     }
@@ -70,6 +71,7 @@ public class EmailResetPasswordTask implements FactoryContract.FactoryReturn{
             }
         };
 
+        resetPasswordWithEmailRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
         requestQueue.add(resetPasswordWithEmailRequest);
         requestQueue.start();
     }

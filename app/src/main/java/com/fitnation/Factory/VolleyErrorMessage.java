@@ -4,28 +4,29 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
+import com.fitnation.R;
 import com.fitnation.networking.tasks.RefreshAuthTokenTask;
-import com.fitnation.networking.tasks.TaskContract;
+import com.fitnation.networking.tasks.TaskCallback;
 
 /**
  * A factory for generating alert dialog messages for HTTP response codes from the server.
  */
-public class VolleyErrorMessage implements TaskContract.Factory{
-    private FactoryContract.FactoryReturn mFactoryReturn;
+public class VolleyErrorMessage implements TaskCallback.Factory{
+    private FactoryCallback.FactoryReturn mFactoryReturn;
     private Context context;
 
     public VolleyErrorMessage(Context context){
         this.context = context;
     }
 
-    public VolleyErrorMessage(Context context, FactoryContract.FactoryReturn factoryReturn){
+    public VolleyErrorMessage(Context context, FactoryCallback.FactoryReturn factoryReturn){
         this.context = context;
         this.mFactoryReturn = factoryReturn;
     }
 
     public AlertDialog.Builder getErrorMessage(VolleyError volleyError) {
+        boolean messageAlreadyCreated = false;
         boolean noNullPointer;
         String message;
         String title;
@@ -45,6 +46,7 @@ public class VolleyErrorMessage implements TaskContract.Factory{
                     RefreshAuthTokenTask refreshAccessToken = new RefreshAuthTokenTask(this);
                     refreshAccessToken.refresh(context);
                     noNullPointer = false;
+                    messageAlreadyCreated = true;
                 }
             }else if(volleyError.networkResponse.statusCode == 401){
                 RefreshAuthTokenTask refreshAccessToken = new RefreshAuthTokenTask(this);
@@ -59,314 +61,314 @@ public class VolleyErrorMessage implements TaskContract.Factory{
         if (noNullPointer) {
             switch (volleyError.networkResponse.statusCode) {
                 case 100:
-                    message = "100: Continue";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_100),
+                            context.getString(R.string.volley_message_100), true);
                     break;
                 case 101:
-                    message = "101: Switching Protocols";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_101),
+                            context.getString(R.string.volley_message_101), true);
                     break;
                 case 102:
-                    message = "102: Processing";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_102),
+                            context.getString(R.string.volley_message_102), true);
                     break;
                 case 200:
-                    message = "200: Success";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_200),
+                            context.getString(R.string.volley_message_200), true);
                     break;
                 case 201:
-                    message = "201: Created";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_201),
+                            context.getString(R.string.volley_message_201), true);
                     break;
                 case 202:
-                    message = "202: Accepted";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_202),
+                            context.getString(R.string.volley_message_202), true);
                     break;
                 case 203:
-                    message = "203: Non-Authoritative Information";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_203),
+                            context.getString(R.string.volley_message_203), true);
                     break;
                 case 204:
-                    message = "204: No Content";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_204),
+                            context.getString(R.string.volley_message_204), true);
                     break;
                 case 205:
-                    message = "205: Reset Content";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_205),
+                            context.getString(R.string.volley_message_205), true);
                     break;
                 case 206:
-                    message = "206: Partial Content";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_206),
+                            context.getString(R.string.volley_message_206), true);
                     break;
                 case 207:
-                    message = "207: Multi-Status";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_207),
+                            context.getString(R.string.volley_message_207), true);
                     break;
                 case 208:
-                    message = "208: Already Reported";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_208),
+                            context.getString(R.string.volley_message_208), true);
                     break;
                 case 226:
-                    message = "226: IM used";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_226),
+                            context.getString(R.string.volley_message_226), true);
                     break;
                 case 300:
-                    message = "300 Multiple choices";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_300),
+                            context.getString(R.string.volley_message_300), true);
                     break;
                 case 301:
-                    message = "301: Moved Permanently";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_301),
+                            context.getString(R.string.volley_message_301), true);
                     break;
                 case 302:
-                    message = "302: Found";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_302),
+                            context.getString(R.string.volley_message_302), true);
                     break;
                 case 303:
-                    message = "303: See Other";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_303),
+                            context.getString(R.string.volley_message_303), true);
                     break;
                 case 304:
-                    message = "304: Modified";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_304),
+                            context.getString(R.string.volley_message_304), true);
                     break;
                 case 305:
-                    message = "305: Use Proxy";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_305),
+                            context.getString(R.string.volley_message_305), true);
                     break;
                 case 306:
-                    message = "306: Switch Proxy";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_306),
+                            context.getString(R.string.volley_message_306), true);
                     break;
                 case 307:
-                    message = "307: Temporary Redirect";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_307),
+                            context.getString(R.string.volley_message_307), true);
                     break;
                 case 308:
-                    message = "308: Permanent Redirect";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_308),
+                            context.getString(R.string.volley_message_308), true);
                     break;
                 case 400:
-                    message = "400: Bad Request";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_400),
+                            context.getString(R.string.volley_message_400), true);
                     break;
                 case 402:
-                    message = "402: Payment Required";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_402),
+                            context.getString(R.string.volley_message_402), true);
                     break;
                 case 403:
-                    message = "403: Forbidden";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_403),
+                            context.getString(R.string.volley_message_403), true);
                     break;
                 case 404:
-                    message = "404: Not Found";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_404),
+                            context.getString(R.string.volley_message_404), true);
                     break;
                 case 405:
-                    message = "405: Method Not Allowed";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_405),
+                            context.getString(R.string.volley_message_405), true);
                     break;
                 case 406:
-                    message = "406: Not Acceptable";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_406),
+                            context.getString(R.string.volley_message_406), true);
                     break;
                 case 407:
-                    message = "407: Proxy Authentication Required";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_407),
+                            context.getString(R.string.volley_message_407), true);
                     break;
                 case 408:
-                    message = "408: Request Time-Out";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_408),
+                            context.getString(R.string.volley_message_408), true);
                     break;
                 case 409:
-                    message = "409: Conflict";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_409),
+                            context.getString(R.string.volley_message_409), true);
                     break;
                 case 410:
-                    message = "410: Gone";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_410),
+                            context.getString(R.string.volley_message_410), true);
                     break;
                 case 411:
-                    message = "411: Length Required";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_411),
+                            context.getString(R.string.volley_message_411), true);
                     break;
                 case 412:
-                    message = "412: Precondition Failed";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_412),
+                            context.getString(R.string.volley_message_412), true);
                     break;
                 case 413:
-                    message = "413: Payload To Large";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_413),
+                            context.getString(R.string.volley_message_413), true);
                     break;
                 case 414:
-                    message = "414: URI Too Long";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_414),
+                            context.getString(R.string.volley_message_414), true);
                     break;
                 case 415:
-                    message = "415: Unsupported Media Type";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_415),
+                            context.getString(R.string.volley_message_415), true);
                     break;
                 case 416:
-                    message = "416: Range Not Satisfiable";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_416),
+                            context.getString(R.string.volley_message_416), true);
                     break;
                 case 417:
-                    message = "417: Expectation Failed";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_417),
+                            context.getString(R.string.volley_message_417), true);
                     break;
                 case 418:
-                    message = "418: I'm a Teapot";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_418),
+                            context.getString(R.string.volley_message_418), true);
                     break;
                 case 421:
-                    message = "421: Misdirect Request";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_421),
+                            context.getString(R.string.volley_message_421), true);
                     break;
                 case 422:
-                    message = "422: Unprocessable Entity";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_422),
+                            context.getString(R.string.volley_message_422), true);
                     break;
                 case 423:
-                    message = "423: Locked";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_423),
+                            context.getString(R.string.volley_message_423), true);
                     break;
                 case 424:
-                    message = "424: Failed Dependency";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_424),
+                            context.getString(R.string.volley_message_424), true);
                     break;
                 case 426:
-                    message = "426: Upgrade Required";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_426),
+                            context.getString(R.string.volley_message_426), true);
                     break;
                 case 428:
-                    message = "428: Precondition Required";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_428),
+                            context.getString(R.string.volley_message_428), true);
                     break;
                 case 429:
-                    message = "429: Too Many Requests";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_429),
+                            context.getString(R.string.volley_message_429), true);
                     break;
                 case 431:
-                    message = "431: Request Header Fields Too Large";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_431),
+                            context.getString(R.string.volley_message_431), true);
                     break;
                 case 451:
-                    message = "451: Unavailable for Legal Reasons";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_451),
+                            context.getString(R.string.volley_message_451), true);
                     break;
                 case 498:
-                    message = "498: Invalid Token";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_498),
+                            context.getString(R.string.volley_message_498), true);
                     break;
                 case 499:
-                    message = "499: Token Required";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_499),
+                            context.getString(R.string.volley_message_499), true);
                     break;
                 case 500:
-                    message = "500: Internal Server";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_500),
+                            context.getString(R.string.volley_message_500), true);
                     break;
                 case 501:
-                    message = "501: Not Implemented";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_501),
+                            context.getString(R.string.volley_message_501), true);
                     break;
                 case 502:
-                    message = "502: Bad Gateway";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_502),
+                            context.getString(R.string.volley_message_502), true);
                     break;
                 case 503:
-                    message = "503: Service Unavailable";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_503),
+                            context.getString(R.string.volley_message_503), true);
                     break;
                 case 504:
-                    message = "504: Gateway Time-out";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_504),
+                            context.getString(R.string.volley_message_504), true);
                     break;
                 case 505:
-                    message = "505: HTTP Version Not Supported";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_505),
+                            context.getString(R.string.volley_message_505), true);
                     break;
                 case 506:
-                    message = "506: Variant Also Negotiates";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_506),
+                            context.getString(R.string.volley_message_506), true);
                     break;
                 case 507:
-                    message = "507: Insufficient Storage ";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_507),
+                            context.getString(R.string.volley_message_507), true);
                     break;
                 case 508:
-                    message = "508: Loop Detected";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_508),
+                            context.getString(R.string.volley_message_508), true);
                     break;
                 case 510:
-                    message = "510: Not Extended";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_510),
+                            context.getString(R.string.volley_message_510), true);
                     break;
                 case 511:
-                    message = "511: Network Authentication Required";
-                    title = "Error";
-                    builder = generateAlertDialog(context, title, message, true);
+                    builder = generateAlertDialog(context,
+                            context.getString(R.string.volley_title_511),
+                            context.getString(R.string.volley_message_511), true);
                     break;
             }
             if(mFactoryReturn != null) {
@@ -374,9 +376,10 @@ public class VolleyErrorMessage implements TaskContract.Factory{
             }else{
                 return builder;
             }
-        }else {
-            AlertDialog.Builder noResponseBuilder = generateAlertDialog(context, "No Response",
-                    "There was no response from the server. Please make sure that you are connected to the internet.", false);
+        }else if(!messageAlreadyCreated){
+            AlertDialog.Builder noResponseBuilder = generateAlertDialog(context,
+                    context.getString(R.string.volley_title_no_response),
+                    context.getString(R.string.volley_message_no_response), false);
             mFactoryReturn.showErrorDialog(noResponseBuilder);
         }
         return builder;
@@ -387,7 +390,7 @@ public class VolleyErrorMessage implements TaskContract.Factory{
         alertDialog.setTitle(title);
         alertDialog.setMessage(message);
         if(button) {
-            alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            alertDialog.setPositiveButton(context.getString(R.string.alert_dialog_ok_button), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -401,10 +404,14 @@ public class VolleyErrorMessage implements TaskContract.Factory{
     @Override
     public void didRequestWork(boolean requestWorked) {
         if (requestWorked) {
-            AlertDialog.Builder builder = generateAlertDialog(context, "Access Refreshed", "Authorization has been refreshed", false);
+            AlertDialog.Builder builder = generateAlertDialog(context,
+                    context.getString(R.string.volley_title_access_refreshed),
+                    context.getString(R.string.volley_message_access_refreshed), false);
             mFactoryReturn.showSuccessDialog(builder);
         } else {
-            AlertDialog.Builder builder = generateAlertDialog(context, "Error", "401: Unauthorized", true);
+            AlertDialog.Builder builder = generateAlertDialog(context,
+                    context.getString(R.string.volley_title_401),
+                    context.getString(R.string.volley_message_401), true);
             mFactoryReturn.showErrorDialog(builder);
         }
     }

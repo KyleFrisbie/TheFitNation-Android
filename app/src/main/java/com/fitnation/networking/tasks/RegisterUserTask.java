@@ -5,13 +5,14 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.fitnation.Factory.FactoryContract;
+import com.fitnation.Factory.FactoryCallback;
 import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.utils.EnvironmentManager;
@@ -25,11 +26,11 @@ import java.util.Map;
  * Handles the register request
  */
 
-public class RegisterUserTask implements FactoryContract.FactoryReturn{
+public class RegisterUserTask implements FactoryCallback.FactoryReturn{
     private BaseActivity mActivity;
-    private TaskContract.Presenter mPresenter;
+    private TaskCallback.Presenter mPresenter;
 
-    public RegisterUserTask(BaseActivity activity, TaskContract.Presenter presenter) {
+    public RegisterUserTask(BaseActivity activity, TaskCallback.Presenter presenter) {
         this.mActivity = activity;
         this.mPresenter = presenter;
     }
@@ -83,6 +84,7 @@ public class RegisterUserTask implements FactoryContract.FactoryReturn{
 
         };
 
+        jsonObjectPost.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
         requestQueue.add(jsonObjectPost);
         requestQueue.start();
     }

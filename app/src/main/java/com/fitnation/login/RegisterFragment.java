@@ -53,8 +53,7 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
 
     @OnClick(R.id.register_button)
     public void onRegisterButtonPressed() {
-        if(!mEmail.getText().toString().isEmpty()
-                && !mPassword.getText().toString().isEmpty()
+        if(!mEmail.getText().toString().isEmpty() && !mPassword.getText().toString().isEmpty()
                 && !userName.getText().toString().isEmpty()) {
             mPresenter.onRegisterCreatePressed(mEmail.getText().toString().trim(),
                     mPassword.getText().toString().trim(),
@@ -62,6 +61,8 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
                     "en");
         }
     }
+
+    /*--------------------------------------RegisterCallback--------------------------------------*/
 
     @Override
     public void showSuccess(android.support.v7.app.AlertDialog.Builder successDialog) {
@@ -83,6 +84,8 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     public void showAuthError(android.support.v7.app.AlertDialog.Builder errorDialog) {
         errorDialog.show();
     }
+
+    /*----------------------------------------BaseFragment----------------------------------------*/
 
     @Override
     public void setPresenter(RegisterContract.Presenter presenter) { mPresenter = presenter; }
