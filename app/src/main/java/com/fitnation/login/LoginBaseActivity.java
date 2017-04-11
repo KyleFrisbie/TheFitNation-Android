@@ -23,18 +23,9 @@ public class LoginBaseActivity extends BaseActivity {
 
         setContentView(R.layout.login_base_activity);
         launchLoginFragment();
-        if(!Fabric.isInitialized()) {
+        if (!Fabric.isInitialized()) {
             Fabric.with(this, new Crashlytics());
         }
-        onKeyMetric();
-
-        // TODO: Use your own attributes to track content views in your app
-        Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentName("Workout")
-                .putContentType("Video")
-                .putContentId("1234")
-                .putCustomAttribute("Favorites Count", 20)
-                .putCustomAttribute("Screen Orientation", "Landscape"));
     }
 
     /**
@@ -45,14 +36,5 @@ public class LoginBaseActivity extends BaseActivity {
         loginFragment.setPresenter(new LoginPresenter(loginFragment));
         getSupportFragmentManager().beginTransaction()
                 .replace(VIEW_CONTAINER, loginFragment).commit();
-    }
-
-    // TODO: Move this method and use your own event name to track your key metrics
-    public void onKeyMetric() {
-        // TODO: Use your own string attributes to track common values over time
-        // TODO: Use your own number attributes to track median value over time
-        Answers.getInstance().logCustom(new CustomEvent("Login Screen")
-                .putCustomAttribute("Category", "Activity")
-                .putCustomAttribute("Length", 350));
     }
 }
