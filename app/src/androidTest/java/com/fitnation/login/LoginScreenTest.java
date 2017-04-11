@@ -4,6 +4,7 @@ import android.os.SystemClock;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
@@ -40,6 +41,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class LoginScreenTest extends InstrumentationTest {
     private final int DELAY_TIME = 500;
 
+
     @Rule
     public ActivityTestRule<LoginBaseActivity> mActivityRule = new ActivityTestRule<>(LoginBaseActivity.class);
 
@@ -56,54 +58,57 @@ public class LoginScreenTest extends InstrumentationTest {
     @BeforeClass
     public static void mockServerForSuccess() throws IOException {
         final MockWebServer mockWebServer = new MockWebServer();
+        final String ACCESS_TOKEN = "2185a8f2-8c21-4b78-a271-5429a3138f49";
+        final String REFRESH_TOKEN = "93bcd68d-6b0e-49fd-a3a7-819866794bab";
+        final String JSON_AUTH_SUCCESS = "{\n" +
+                "  \"access_token\": \"" + ACCESS_TOKEN + "\",\n" +
+                "  \"token_type\": \"bearer\",\n" +
+                "  \"refresh_token\": \"" + REFRESH_TOKEN + "\",\n" +
+                "  \"expires_in\": 1799,\n" +
+                "  \"scope\": \"read write\"\n" +
+                "}";
+        final String JSON_AUTH_FAILURE = "{\n" +
+                "  \"error\": \"invalid_grant\",\n" +
+                "  \"error_description\": \"Bad credentials\"\n" +
+                "}";
+        final String JSON_401 = "{\n" +
+                "  \"error\": \"invalid_token\",\n" +
+                "  \"error_description\": \"Invalid access token: ac4cc37a-d3b2-428d-8660-069676a00976\"\n" +
+                "}";
 
         final Dispatcher dispatcher = new Dispatcher() {
+            String body;
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
                 switch (request.getPath()) {
 
                     case "/oauth/token":
+                        body = request.getBody().readUtf8();
 
-                        if (request.getBody().toString().contains("androidtest") ||
-                                request.getBody().toString().contains("Pa55w0rd")) {
-                            return new MockResponse().setResponseCode(200).setBody("{\n" +
-                                    "  \"access_token\": \"2185a8f2-8c21-4b78-a271-5429a3138f49\",\n" +
-                                    "  \"token_type\": \"bearer\",\n" +
-                                    "  \"refresh_token\": \"93bcd68d-6b0e-49fd-a3a7-819866794bab\",\n" +
-                                    "  \"expires_in\": 1799,\n" +
-                                    "  \"scope\": \"read write\"\n" +
-                                    "}");
-                        } else if(request.getBody().toString().contains("93bcd68d-6b0e-49fd-a3a7-819866794bab")){
-                            return new MockResponse().setResponseCode(200).setBody("{\n" +
-                                    "  \"access_token\": \"2185a8f2-8c21-4b78-a271-5429a3138f49\",\n" +
-                                    "  \"token_type\": \"bearer\",\n" +
-                                    "  \"refresh_token\": \"93bcd68d-6b0e-49fd-a3a7-819866794bab\",\n" +
-                                    "  \"expires_in\": 1799,\n" +
-                                    "  \"scope\": \"read write\"\n" +
-                                    "}");
+                        if (body.contains("androidtest") && body.contains("Pa55w0rd")) {
+                            return new MockResponse().setResponseCode(200).setBody(JSON_AUTH_SUCCESS);
+                        } else if(body.contains(REFRESH_TOKEN)){
+                            return new MockResponse().setResponseCode(200).setBody(JSON_AUTH_SUCCESS);
                         }else {
-                            return new MockResponse().setResponseCode(400).setBody("{\n" +
-                                    "  \"error\": \"invalid_grant\",\n" +
-                                    "  \"error_description\": \"Bad credentials\"\n" +
-                                    "}");
+                            return new MockResponse().setResponseCode(400).setBody(JSON_AUTH_FAILURE);
                         }
 
                     case "/api/account/reset_password/init":
+                        body = request.getBody().readUtf8();
 
-                        if (request.getBody().toString().contains("testemail@android.com")) {
+                        if (body.contains("testemail@android.com")) {
                             return new MockResponse().setResponseCode(200).setBody("e-mail was sent");
-                        } else if(request.getBody().toString().contains("401errortest")){
-                            return new MockResponse().setResponseCode(401).setBody("{\n" +
-                                    "  \"error\": \"invalid_token\",\n" +
-                                    "  \"error_description\": \"Invalid access token: ac4cc37a-d3b2-428d-8660-069676a00976\"\n" +
-                                    "}");
+                        } else if(body.contains("401errortest")){
+                            return new MockResponse().setResponseCode(401).setBody(JSON_401);
                         }else {
                             return new MockResponse().setResponseCode(400).setBody("e-mail address not registered");
                         }
 
                     case "/api/register":
+                        body = request.getBody().readUtf8();
 
-                        if (request.getBody().toString().contains("testemail@android.com")) {
+                        if (body.contains("testemail@android.com") && body.contains("testemail@android.com")
+                                && body.contains("Pa55w0rd")) {
                             return new MockResponse().setResponseCode(201).setBody("");
                         } else {
                             return new MockResponse().setResponseCode(400).setBody("login already in use");
@@ -120,6 +125,19 @@ public class LoginScreenTest extends InstrumentationTest {
         Environment environment = new Environment(mockWebServer.url("").toString());
         EnvironmentManager.getInstance().setEnvironment(environment);
         SystemClock.sleep(500);
+    }
+
+    @Test
+    public void testScreenNavigation() {
+        loginScreenIsDisplayed();
+        onView(withId(R.id.forgot_login_button)).perform(click());
+        forgotLoginScreenIsDisplayed();
+        pressBack();
+        loginScreenIsDisplayed();
+        onView(withId(R.id.signUp_button)).perform(click());
+        registerScreenIsDisplayed();
+        pressBack();
+        loginScreenIsDisplayed();
     }
 
     @Test
@@ -189,8 +207,8 @@ public class LoginScreenTest extends InstrumentationTest {
     }
 
     @Test
-    public void testForgotLoginFlowFor401Error(){
-        AuthToken.getInstance().setRefreshToken("93bcd68d-6b0e-49fd-a3a7-819866794bab");
+    public void testForgotLoginFlowFor401ErrorFailure(){
+        AuthToken.getInstance().setRefreshToken("fhdsjafhkdjsalfhasdl");
         loginScreenIsDisplayed();
         onView(withId(R.id.forgot_login_button)).perform(click());
         forgotLoginScreenIsDisplayed();
@@ -200,6 +218,19 @@ public class LoginScreenTest extends InstrumentationTest {
         SystemClock.sleep(DELAY_TIME);
         onView((withText("Error"))).check(matches(isDisplayed()));
         onView((withText("OK"))).perform(click());
+    }
+
+    @Test
+    public void testForgotLoginFlowFor401ErrorSuccess(){
+        AuthToken.getInstance().setRefreshToken("93bcd68d-6b0e-49fd-a3a7-819866794bab");
+        loginScreenIsDisplayed();
+        onView(withId(R.id.forgot_login_button)).perform(click());
+        forgotLoginScreenIsDisplayed();
+        onView(withId(R.id.resetPassword_editText)).perform(typeText("401errortest"));
+        pressBack();
+        onView(withId(R.id.resetPassword_button)).perform(click());
+        SystemClock.sleep(DELAY_TIME);
+        onView((withText("Access Refreshed"))).check(matches(isDisplayed()));
     }
 
     @Test

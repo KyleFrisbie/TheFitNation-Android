@@ -1,6 +1,7 @@
 package com.fitnation.networking.tasks;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -21,6 +22,7 @@ import java.util.Map;
 public class RefreshAuthTokenTask {
     private TaskCallback.Factory mFactory;
     private String refreshToken;
+    private String TAG = "Refresh Auth Token: ";
     
     public RefreshAuthTokenTask(TaskCallback.Factory factory){
         this.mFactory = factory;
@@ -37,7 +39,7 @@ public class RefreshAuthTokenTask {
         if(tokenExists) {
             RequestQueue requestQueue = Volley.newRequestQueue(context);
 
-            String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + "/oauth/token";
+            String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + "oauth/token";
 
             JsonObjectRequest jsonObjectPost = new JsonObjectRequest(Request.Method.POST,
                     url, null, new Response.Listener<JSONObject>() {
@@ -50,6 +52,7 @@ public class RefreshAuthTokenTask {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     mFactory.didRequestWork(false);
+                    Log.d(TAG, "onErrorResponse: " + AuthToken.getInstance().getRefreshToken());
                 }
             }) {
                 @Override
@@ -62,6 +65,7 @@ public class RefreshAuthTokenTask {
                     params.put("client_id", "TheFitNationapp");
                     params.put("submit", "login");
 
+                    Log.d(TAG, "getBody: " + NetworkUtils.getInstance().convertToUrlEncodedPostBody(params));
                     return NetworkUtils.getInstance().convertToUrlEncodedPostBody(params).getBytes();
                 }
 

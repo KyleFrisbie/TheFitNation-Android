@@ -25,6 +25,11 @@ public class VolleyErrorMessage implements TaskCallback.Factory{
         this.mFactoryReturn = factoryReturn;
     }
 
+    /**
+     *
+     * @param volleyError The error received from volley requests
+     * @return special return for testing purposes should not be used instead callback should be used
+     */
     public AlertDialog.Builder getErrorMessage(VolleyError volleyError) {
         boolean messageAlreadyCreated = false;
         boolean noNullPointer;
@@ -52,8 +57,8 @@ public class VolleyErrorMessage implements TaskCallback.Factory{
                 RefreshAuthTokenTask refreshAccessToken = new RefreshAuthTokenTask(this);
                 refreshAccessToken.refresh(context);
                 noNullPointer = false;
+                messageAlreadyCreated = true;
             }
-
         } catch (NullPointerException nullPointer) {
             noNullPointer = false;
         }
@@ -374,6 +379,7 @@ public class VolleyErrorMessage implements TaskCallback.Factory{
             if(mFactoryReturn != null) {
                 mFactoryReturn.showErrorDialog(builder);
             }else{
+                //return just for testing purposes
                 return builder;
             }
         }else if(!messageAlreadyCreated){
