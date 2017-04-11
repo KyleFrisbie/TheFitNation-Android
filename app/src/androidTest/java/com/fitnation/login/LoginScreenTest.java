@@ -130,12 +130,15 @@ public class LoginScreenTest extends InstrumentationTest {
     @Test
     public void testScreenNavigation() {
         loginScreenIsDisplayed();
+        onView(withId(R.id.login_button)).perform(click());
         onView(withId(R.id.forgot_login_button)).perform(click());
         forgotLoginScreenIsDisplayed();
+        onView(withId(R.id.resetPassword_button)).perform(click());
         pressBack();
         loginScreenIsDisplayed();
         onView(withId(R.id.signUp_button)).perform(click());
         registerScreenIsDisplayed();
+        onView(withId(R.id.register_button)).perform(click());
         pressBack();
         loginScreenIsDisplayed();
     }
