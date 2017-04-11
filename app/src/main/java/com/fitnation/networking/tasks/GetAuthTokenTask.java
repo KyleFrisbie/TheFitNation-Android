@@ -31,11 +31,21 @@ public class GetAuthTokenTask implements FactoryCallback.FactoryReturn{
     private TaskCallback.Presenter mPresenter;
     private BaseActivity mActivity;
 
+    /**
+     * Constructor
+     * @param activity The base calling activity
+     * @param presenter The interface to be used
+     */
     public GetAuthTokenTask(BaseActivity activity, TaskCallback.Presenter presenter) {
         this.mActivity = activity;
         mPresenter = presenter;
     }
 
+    /**
+     * Request to the server to obtain and auth token by username and password
+     * @param userName The username input
+     * @param password The password input
+     */
     public void requestToken(final String userName, final String password){
         RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
         String endpoint = "oauth/token";
@@ -91,10 +101,16 @@ public class GetAuthTokenTask implements FactoryCallback.FactoryReturn{
         requestQueue.start();
     }
 
+    /**
+     * Error response to be generated from volleyErrorFactory
+     * @param error Volleys error object
+     */
     private void errorResponseMessage(VolleyError error) {
         VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(mActivity, this);
         volleyErrorMessage.getErrorMessage(error);
     }
+
+    /*--------------------------------------FactoryCallback--------------------------------------*/
 
     @Override
     public void showSuccessDialog(AlertDialog.Builder alertDialog) {

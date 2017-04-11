@@ -54,13 +54,11 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         mPresenter.start();
     }
 
-    // TODO: add facebook integration
     @OnClick(R.id.facebook_login_button)
     public void onFacebookLoginButtonClicked() {
         mPresenter.onFacebookLoginPressed();
     }
 
-    // TODO: add google integration
     @OnClick(R.id.google_login_button)
     public void onGoogleLoginButtonClicked() { mPresenter.onGoogleLoginPressed();}
 

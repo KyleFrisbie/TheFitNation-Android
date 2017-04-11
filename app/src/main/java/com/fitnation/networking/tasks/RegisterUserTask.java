@@ -30,11 +30,24 @@ public class RegisterUserTask implements FactoryCallback.FactoryReturn{
     private BaseActivity mActivity;
     private TaskCallback.Presenter mPresenter;
 
+    /**
+     * Constructor
+     * @param activity The base calling activity
+     * @param presenter The interface to be used
+     */
     public RegisterUserTask(BaseActivity activity, TaskCallback.Presenter presenter) {
         this.mActivity = activity;
         this.mPresenter = presenter;
     }
 
+    /**
+     * Request to the server to register a new user account
+     * @param email The email entered
+     * @param password The password entered
+     * @param userName The username entered
+     * @param language The language which by default is english for now
+     */
+     // TODO: allow for different languages
     public void requestRegistration(final String email, final String password, final String userName,
                                     final String language){
         RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
@@ -89,6 +102,10 @@ public class RegisterUserTask implements FactoryCallback.FactoryReturn{
         requestQueue.start();
     }
 
+    /**
+     * Error response to be generated from volleyErrorFactory
+     * @param error Volleys error object
+     */
     private void errorResponseMessage(VolleyError error) {
         VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(mActivity, this);
         volleyErrorMessage.getErrorMessage(error);
@@ -110,6 +127,8 @@ public class RegisterUserTask implements FactoryCallback.FactoryReturn{
         alertDialog.create();
         mPresenter.showSuccess(alertDialog);
     }
+
+    /*--------------------------------------FactoryCallback--------------------------------------*/
 
     @Override
     public void showSuccessDialog(AlertDialog.Builder alertDialog) {

@@ -23,11 +23,19 @@ public class RefreshAuthTokenTask {
     private TaskCallback.Factory mFactory;
     private String refreshToken;
     private String TAG = "Refresh Auth Token: ";
-    
+
+    /**
+     * Constructor
+     * @param factory The calling factory for 401 error response
+     */
     public RefreshAuthTokenTask(TaskCallback.Factory factory){
         this.mFactory = factory;
     }
 
+    /**
+     * Request to the server to refresh the users access token with the refresh token if there is one
+     * @param context The base calling activity
+     */
     public void refresh(Context context){
         boolean tokenExists = false;
 

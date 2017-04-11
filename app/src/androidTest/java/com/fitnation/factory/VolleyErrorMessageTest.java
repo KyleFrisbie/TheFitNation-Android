@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
 import com.fitnation.Factory.VolleyErrorMessage;
+import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
 import com.fitnation.login.LoginBaseActivity;
 
@@ -49,7 +50,6 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         NetworkResponse mNetworkResponse = new NetworkResponse(responseCode, null, null, false);
         mVolleyError = new VolleyError(mNetworkResponse);
         mVolleyErrorMessage = new VolleyErrorMessage(mActivityRule.getActivity());
-        //builder = mVolleyErrorMessage.getErrorMessage(mActivityRule.getActivity());
     }
 
     private Runnable createRunnableAlert(){
@@ -57,7 +57,9 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
             @Override
             public void run() {
                 AlertDialog.Builder builder = mVolleyErrorMessage.getErrorMessage(mVolleyError);
-                builder.show();
+                if(builder != null) {
+                    builder.show();
+                }
             }
         };
     }
@@ -69,8 +71,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_100))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
 
     }
 
@@ -81,8 +83,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_101))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -92,8 +94,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_102))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -103,8 +105,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_200))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -114,8 +116,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_201))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -125,8 +127,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_202))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -136,8 +138,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_203))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -147,8 +149,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_204))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -158,8 +160,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_205))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -169,8 +171,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_206))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -180,8 +182,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_207))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -191,8 +193,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_208))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -202,8 +204,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_226))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -213,8 +215,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_300))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -224,8 +226,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_301))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -235,8 +237,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_302))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -246,8 +248,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_303))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -257,8 +259,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_304))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -268,8 +270,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_305))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -279,8 +281,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_306))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -290,8 +292,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_307))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -301,8 +303,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_308))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -312,8 +314,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_400))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -323,8 +325,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_402))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -334,8 +336,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_403))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -345,8 +347,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_404))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -356,8 +358,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_405))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -367,8 +369,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_406))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -378,8 +380,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_407))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -389,8 +391,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_408))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -400,8 +402,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_409))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -411,8 +413,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_410))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -422,8 +424,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_411))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
     @Test
     public void testMessage412(){
@@ -432,8 +434,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_412))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
     @Test
     public void testMessage413(){
@@ -442,8 +444,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_413))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -453,8 +455,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_414))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -464,8 +466,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_415))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -475,8 +477,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_416))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -486,8 +488,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_417))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -497,8 +499,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_418))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -508,8 +510,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_421))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -519,8 +521,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_422))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -530,8 +532,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_423))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -541,8 +543,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_424))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -552,8 +554,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_426))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -563,8 +565,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_428))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -574,8 +576,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_429))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -585,8 +587,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_431))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -596,8 +598,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_451))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -607,8 +609,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_498))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -618,8 +620,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_499))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -629,8 +631,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_500))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -640,8 +642,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_501))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -651,8 +653,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_502))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -662,8 +664,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_503))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -673,8 +675,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_504))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -684,8 +686,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_505))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -695,8 +697,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_506))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -706,8 +708,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_507))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -717,8 +719,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_508))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -728,8 +730,8 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_510))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 
     @Test
@@ -739,7 +741,7 @@ public class VolleyErrorMessageTest extends InstrumentationTest{
         setUp(responseCode);
 
         mActivityRule.getActivity().runOnUiThread(createRunnableAlert());
-        onView((withText("Error"))).check(matches(isDisplayed()));
-        onView((withText("OK"))).perform(click());
+        onView((withText(R.string.volley_title_511))).check(matches(isDisplayed()));
+        onView((withText(R.string.alert_dialog_ok_button))).perform(click());
     }
 }

@@ -7,6 +7,10 @@ public class AuthToken {
 
     private static AuthToken ourInstance;
 
+    /**
+     * The singleton instance
+     * @return Instance of AuthToken
+     */
     public synchronized static AuthToken getInstance() {
         if(ourInstance == null){
             ourInstance = new AuthToken();

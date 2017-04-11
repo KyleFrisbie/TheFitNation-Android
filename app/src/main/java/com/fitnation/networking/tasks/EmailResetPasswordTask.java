@@ -28,11 +28,20 @@ public class EmailResetPasswordTask implements FactoryCallback.FactoryReturn{
     private TaskCallback.Presenter mPresenter;
     private BaseActivity mActivity;
 
-    public EmailResetPasswordTask(BaseActivity mActivity, TaskCallback.Presenter presenter) {
+    /**
+     * Constructor
+     * @param activity The base calling activity
+     * @param presenter The interface to be used
+     */
+    public EmailResetPasswordTask(BaseActivity activity, TaskCallback.Presenter presenter) {
         this.mPresenter = presenter;
-        this.mActivity = mActivity;
+        this.mActivity = activity;
     }
 
+    /**
+     * Request to the server to reset a users password by an email address
+     * @param email The email associated with the account
+     */
     public void resetPasswordRequest(final String email){
         RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
         String endpoint = "api/account/reset_password/init";
@@ -76,6 +85,10 @@ public class EmailResetPasswordTask implements FactoryCallback.FactoryReturn{
         requestQueue.start();
     }
 
+    /**
+     * Shows a success alert dialog indicating to user that an email has been sent
+     * @param response The response from the server
+     */
     private void successfulResponse(String response) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mActivity);
         alertDialog.setTitle("Success");
@@ -90,10 +103,16 @@ public class EmailResetPasswordTask implements FactoryCallback.FactoryReturn{
         mPresenter.showSuccess(alertDialog);
     }
 
+    /**
+     * Error response to be generated from volleyErrorFactory
+     * @param error Volleys error object
+     */
     private void errorResponseMessage(VolleyError error){
         VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(mActivity, this);
         volleyErrorMessage.getErrorMessage(error);
     }
+
+    /*--------------------------------------FactoryCallback--------------------------------------*/
 
     @Override
     public void showSuccessDialog(AlertDialog.Builder alertDialog) {

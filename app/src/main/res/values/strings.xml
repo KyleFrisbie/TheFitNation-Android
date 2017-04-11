@@ -45,13 +45,13 @@
     <string name="volley_title_no_response">No Response</string>
     <string name="volley_message_no_response">There was no response from the server. Please make sure that you are connected to the internet</string>
 
-    <string name="volley_title_100">Error</string>
+    <string name="volley_title_100">Success</string>
     <string name="volley_title_101">Error</string>
     <string name="volley_title_102">Error</string>
 
-    <string name="volley_title_200">Error</string>
-    <string name="volley_title_201">Error</string>
-    <string name="volley_title_202">Error</string>
+    <string name="volley_title_200">Success</string>
+    <string name="volley_title_201">Success</string>
+    <string name="volley_title_202">Success</string>
     <string name="volley_title_203">Error</string>
     <string name="volley_title_204">Error</string>
     <string name="volley_title_205">Error</string>
