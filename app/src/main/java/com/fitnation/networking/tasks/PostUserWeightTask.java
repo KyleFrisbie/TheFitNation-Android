@@ -15,6 +15,7 @@ import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.JsonParser;
 import com.fitnation.networking.VolleyQueueSingleton;
 import com.fitnation.profile.ProfileFragment;
+import com.fitnation.profile.ProfilePresenter;
 import com.fitnation.utils.Environment;
 import com.fitnation.utils.EnvironmentManager;
 
@@ -38,11 +39,11 @@ public class PostUserWeightTask {
     static String url;
 
 
-    public void postUserWeight(UserWeight weight, ProfileFragment fragment) {
+    public static void postUserWeight(UserWeight weight, ProfilePresenter presenter) {
         //save data to web
-        queue = Volley.newRequestQueue(fragment.getBaseActivity());
+        queue = Volley.newRequestQueue(presenter.getBaseActivity());
         env = EnvironmentManager.getInstance().getCurrentEnvironment();
-        String userDemographicId = fragment.userDemoId.toString();
+        String userDemographicId = presenter.userdemo.getId().toString();
         url = env.getApiUrl() + "user-weights/byLoggedInUser/" + userDemographicId;
 
 
@@ -63,6 +64,7 @@ public class PostUserWeightTask {
         JsonObjectRequest jsonWeightRequest = new JsonObjectRequest(Request.Method.POST, url, udjObj, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+
                 Log.i("POST", response.toString());
             }
         }, new Response.ErrorListener() {

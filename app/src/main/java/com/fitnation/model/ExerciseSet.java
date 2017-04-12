@@ -48,7 +48,7 @@ public class ExerciseSet extends RealmObject {
             "id=" + id +
             ", orderNumber='" + orderNumber + "'" +
             ", reps='" + reps + "'" +
-            ", weight='" + weight + "'" +
+            ", userWeight='" + weight + "'" +
             ", rest='" + rest + "'" +
             '}';
     }

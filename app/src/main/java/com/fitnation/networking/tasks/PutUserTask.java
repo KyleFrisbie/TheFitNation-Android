@@ -13,6 +13,7 @@ import com.fitnation.model.User;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.JsonParser;
 import com.fitnation.profile.ProfileFragment;
+import com.fitnation.profile.ProfilePresenter;
 import com.fitnation.utils.Environment;
 import com.fitnation.utils.EnvironmentManager;
 
@@ -29,9 +30,9 @@ public class PutUserTask {
 
     static User user;
 
-    public static void getUser(String loginId, final ProfileFragment fragment){
+    public static void getUser(String loginId, final ProfilePresenter presenter){
         //USER
-        RequestQueue queue = Volley.newRequestQueue(fragment.getBaseActivity());
+        RequestQueue queue = Volley.newRequestQueue(presenter.getBaseActivity());
         Environment env = EnvironmentManager.getInstance().getCurrentEnvironment();
         String url = env.getApiUrl()+"users/"+loginId;
         //final String authToken = AuthToken.getInstance().getAccessToken();
@@ -45,8 +46,7 @@ public class PutUserTask {
                     public void onResponse(JSONObject response) {
                         Log.i("GET", response.toString());
                         user = JsonParser.convertJsonStringToPojo(response.toString(), User.class);
-                        fragment.setUser(user);
-                        fragment.loadUser();
+                        presenter.setUser(user);
                     }
                 }, new Response.ErrorListener() {
                     @Override

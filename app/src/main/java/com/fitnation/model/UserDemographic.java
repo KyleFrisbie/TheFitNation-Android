@@ -4,9 +4,9 @@ import android.util.Log;
 
 import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.model.enums.UnitOfMeasure;
+import com.fitnation.networking.UserLogins;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -17,7 +17,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * Information about a user and their data
  */
-public class UserDemographic extends RealmObject {
+public class UserDemographic extends RealmObject implements Cloneable {
     @PrimaryKey
     private Long androidId;
     private Long id;
@@ -25,7 +25,6 @@ public class UserDemographic extends RealmObject {
     private String lastName;
     private String gender;
     private Float height;
-    private Integer skillLevelId;
     private String skillLevelLevel;
     private String unitOfMeasure;
     private Boolean isActive;
@@ -55,7 +54,7 @@ public class UserDemographic extends RealmObject {
         androidId = PrimaryKeyFactory.getInstance().nextKey(this.getClass());
     }
 
-    public void setId(Long id) {
+    public void setAndroidId(Long id) {
         androidId = id;
     }
 
@@ -63,8 +62,16 @@ public class UserDemographic extends RealmObject {
         return androidId;
     }
 
+    public void setId(Long id) {
+        UserLogins.getInstance().setUserDemographicId(id.toString());
+        this.id = id;
+    }
+
     public Long getId() {
-        return id;
+        if (!(id.equals("") || id==null)) {
+            UserLogins.getInstance().setUserDemographicId(String.valueOf(id));
+        }
+        return Long.parseLong(UserLogins.getInstance().getId());
     }
 
 
@@ -115,6 +122,8 @@ public class UserDemographic extends RealmObject {
         this.dateOfBirth = dateFormat.format(dateOfBirth);
     }
 
+    public void setDateOfBirth(String dob){ this.dateOfBirth = dob;}
+
     public String getDateOfBirth(){ return dateOfBirth; }
 
     public void setHeight(String pHeight){
@@ -142,7 +151,7 @@ public class UserDemographic extends RealmObject {
             uWeight.setWeight(weight);
             userWeights.add(uWeight);
         } catch (Exception e){
-            System.out.println("Invalid weight input");
+            System.out.println("Invalid userWeight input");
         }
 
     }
@@ -155,23 +164,14 @@ public class UserDemographic extends RealmObject {
         return Float.valueOf(userWeights.last().getWeight());
     }
 
-    public void setSkillLevelLevel(String skillLevel) {
-        if (skillLevel.contains("B")) { //beginner
-            skillLevelId = 1251;
-        }else if (skillLevel.contains("I")){ //intermediate
-            skillLevelId = 1252;
-        } else { //advanced
-            skillLevelId = 1253;
-        }
-        skillLevelLevel = skillLevel;
-    }
+    public void setSkillLevelLevel(String skillLevel) { skillLevelLevel = skillLevel; }
 
     public String getSkillLevelLevel(){
         return skillLevelLevel;
     }
 
-    public void setUnitOfMeasure(String pUnit){
-        unitOfMeasure = pUnit;
+    public void setUnitOfMeasure(String unit){
+        unitOfMeasure = unit;
     }
 
     public String getUnitOfMeasure(){
@@ -182,6 +182,17 @@ public class UserDemographic extends RealmObject {
 
     public void setUserLogin(String userLogin) {this.userLogin = userLogin;}
 
+    public Object clone() {
+        UserDemographic clone = null;
+
+        try {
+            clone = (UserDemographic) super.clone();
+        } catch (CloneNotSupportedException ex) {
+            Log.d("USERDEMOGRAPHIC", ex.toString());
+        }
+
+        return clone;
+    }
 
     @Override
     public String toString() {

@@ -1,5 +1,7 @@
 package com.fitnation.model;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,7 +11,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * A single User weight instance
+ * A single User userWeight instance
  */
 public class UserWeight extends RealmObject {
     @PrimaryKey
@@ -59,12 +61,24 @@ public class UserWeight extends RealmObject {
         return weight;
     }
 
+    public Object clone() {
+        UserWeight clone = null;
+
+        try {
+            clone = (UserWeight) super.clone();
+        } catch (CloneNotSupportedException ex) {
+            Log.d("USERDEMOGRAPHIC", ex.toString());
+        }
+
+        return clone;
+    }
+
     @Override
     public String toString() {
         return "UserWeight{" +
             "id=" + userDemographicId +
             ", weightDate='" + weightDate.toString() + "'" +
-            ", weight='" + weight + "'" +
+            ", userWeight='" + weight + "'" +
             '}';
     }
     

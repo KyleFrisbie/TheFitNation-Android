@@ -7,8 +7,10 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.fitnation.base.BaseActivity;
 import com.fitnation.base.DataManager;
 import com.fitnation.base.DataResult;
+import com.fitnation.model.ProfileInstance;
 import com.fitnation.model.User;
 import com.fitnation.model.UserDemographic;
 import com.fitnation.model.UserWeight;
@@ -34,6 +36,16 @@ import io.realm.RealmResults;
 
 public class ProfileDataManager extends DataManager {
 
+
+    public static ProfileInstance getLocalProfileData(){
+        ProfileInstance profileInstance = new ProfileInstance();
+
+        profileInstance.addUserDemographicInfo(getLocalUserDemographic());
+        profileInstance.addWeight(getLocalUserWeight());
+        profileInstance.addUserInfo(getLocalUser());
+
+        return profileInstance;
+    }
 
     public void SaveUserDemographicData(final UserDemographic userDemographic){
 
@@ -76,8 +88,6 @@ public class ProfileDataManager extends DataManager {
         });
     }
 
-
-
     public static User getLocalUser(){
         Realm realm = Realm.getDefaultInstance();
         RealmResults<User> userResults =
@@ -113,6 +123,7 @@ public class ProfileDataManager extends DataManager {
         Log.i("PROFILE", "Realm Result empty for UserWeight");
         return null;
     }
-    
+
+
 }
 

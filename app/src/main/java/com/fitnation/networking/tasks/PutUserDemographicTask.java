@@ -27,7 +27,7 @@ import java.util.Map;
  * Created by Jeremy on 4/9/2017.
  */
 
-public class PostUserDemographicTask {
+public class PutUserDemographicTask {
 
     static EnvironmentManager em;
     static Environment env;
@@ -40,7 +40,7 @@ public class PostUserDemographicTask {
         //save data to web
         queue = Volley.newRequestQueue(context);
         env = EnvironmentManager.getInstance().getCurrentEnvironment();
-        url = env.getApiUrl()+"user-demographics/byLoggedInUser";
+        url = env.getApiUrl()+"user-demographics";
         //final String authToken = AuthToken.getInstance().getAccessToken();
         //TODO CHANGE THIS TO PREVIOUS COMMENTED OUT LINE
         final String authToken = AuthToken.getHardToken();
@@ -58,6 +58,7 @@ public class PostUserDemographicTask {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.PUT, url, udjObj, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                UserDemographic ud = JsonParser.convertJsonStringToPojo(response.toString(), UserDemographic.class);
                 Log.i("PUT", response.toString());
             }
         }, new Response.ErrorListener() {
@@ -79,46 +80,6 @@ public class PostUserDemographicTask {
 
         Log.d("JSON REQUEST", jsonRequest.toString());
         queue.add(jsonRequest);
-    }
-
-    public void getUserDemographic(final ProfileFragment fragment, String userDemographicId){
-
-        queue = Volley.newRequestQueue(fragment.getBaseActivity());
-        userDemographicId = "3154";  //User Demographic ID
-
-        //USERDEMOGRAPHIC
-        JsonObjectRequest jsonRequestUserDemo =
-                new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i("GET", response.toString());
-                        userdemo = JsonParser.convertJsonStringToPojo(response.toString(), UserDemographic.class);
-                        fragment.setDemographic(userdemo);
-                        fragment.loadDemographics();
-                        GetUserTask.getUser(userdemo.getUserLogin(), fragment);
-                        GetUserWeightTask.getUserWeight(fragment);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        fragment.setUser(new User());
-                        fragment.setDemographic(new UserDemographic());
-                        Log.d("GET", error.toString());
-                    }
-                }) {
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-
-                        HashMap<String, String> params = new HashMap<String, String>();
-                        params.put("Content-Type", "application/json");
-                        params.put("Accept", "application/json");
-                        params.put("Authorization", "Bearer "+accessToken);
-                        return params;
-                    }
-                };
-
-        queue.add(jsonRequestUserDemo);
     }
 
 }

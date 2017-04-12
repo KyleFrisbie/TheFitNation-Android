@@ -1,5 +1,7 @@
 package com.fitnation.model;
 
+import android.util.Log;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -61,4 +63,16 @@ public class User extends RealmObject {
     public String getLastName() { return lastName; }
 
     public void setLastName(String lastName) { this.lastName = lastName; }
+
+    public Object clone() {
+        User clone = null;
+
+        try {
+            clone = (User) super.clone();
+        } catch (CloneNotSupportedException ex) {
+            Log.d("USERDEMOGRAPHIC", ex.toString());
+        }
+
+        return clone;
+    }
 }

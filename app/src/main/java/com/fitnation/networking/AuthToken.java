@@ -31,8 +31,10 @@ public class AuthToken {
     }
 
     //TODO: DELETE THIS AFTER MERGING WITH STORMPATH
+    //HARD CODED TOKEN
     public static String getHardToken(){
-        return "";
+
+        return "3b931042-14a2-45f5-bd02-f513744a02da";
     }
 
     private AuthToken() {
