@@ -11,7 +11,8 @@ import com.fitnation.base.BaseView;
  */
 public interface LoginContract {
     interface View extends BaseView<Presenter> {
-        void showSuccess();
+        void loginSuccess();
+        void showSuccess(AlertDialog.Builder successDialog);
         void showProgress(ProgressDialog progressDialog);
         void stopProgress();
         void showAuthError(AlertDialog.Builder errorDialog);

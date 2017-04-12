@@ -17,6 +17,14 @@ public interface TaskCallback {
         void showAuthError(AlertDialog.Builder errorDialog);
     }
 
+    interface AuthPresenter extends BasePresenter{
+        void loginSuccess();
+        void showSuccess(AlertDialog.Builder successDialog);
+        void showProgress(ProgressDialog progressDialog);
+        void stopProgress();
+        void showAuthError(AlertDialog.Builder errorDialog);
+    }
+
     interface Factory {
         void didRequestWork(boolean requestWorked);
     }

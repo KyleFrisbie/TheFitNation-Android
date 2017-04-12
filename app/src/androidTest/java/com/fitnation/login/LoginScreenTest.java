@@ -1,5 +1,6 @@
 package com.fitnation.login;
 
+import android.app.Instrumentation;
 import android.os.SystemClock;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -40,6 +41,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @LargeTest
 public class LoginScreenTest extends InstrumentationTest {
     private final int DELAY_TIME = 500;
+    Instrumentation instrumentation = new Instrumentation();
 
 
     @Rule
@@ -210,7 +212,7 @@ public class LoginScreenTest extends InstrumentationTest {
     }
 
     @Test
-    public void testForgotLoginFlowFor401ErrorFailure(){
+    public void testForgotLoginFlowFor401ErrorFailure() throws InterruptedException {
         AuthToken.getInstance().setRefreshToken("fhdsjafhkdjsalfhasdl");
         loginScreenIsDisplayed();
         onView(withId(R.id.forgot_login_button)).perform(click());
@@ -224,7 +226,7 @@ public class LoginScreenTest extends InstrumentationTest {
     }
 
     @Test
-    public void testForgotLoginFlowFor401ErrorSuccess(){
+    public void testForgotLoginFlowFor401ErrorSuccess() throws InterruptedException {
         AuthToken.getInstance().setRefreshToken("93bcd68d-6b0e-49fd-a3a7-819866794bab");
         loginScreenIsDisplayed();
         onView(withId(R.id.forgot_login_button)).perform(click());

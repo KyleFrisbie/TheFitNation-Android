@@ -164,6 +164,7 @@ public class VolleyErrorMessage implements TaskCallback.Factory{
                     RefreshAuthTokenTask refreshAccessToken = new RefreshAuthTokenTask(this);
                     refreshAccessToken.refresh(context);
                     builder = null;
+                    break;
                 case 402:
                     builder = generateAlertDialog(context,
                             context.getString(R.string.volley_title_402),
@@ -374,7 +375,7 @@ public class VolleyErrorMessage implements TaskCallback.Factory{
                 mFactoryReturn.showErrorDialog(noResponseBuilder);
             }
         }
-        if(mFactoryReturn != null){
+        if(mFactoryReturn != null && builder != null){
             mFactoryReturn.showErrorDialog(builder);
         }
         //for testing purposes only do not use as you should be using callback

@@ -29,7 +29,7 @@ import java.util.Map;
  */
 
 public class GetAuthTokenTask implements FactoryCallback.FactoryReturn{
-    private TaskCallback.Presenter mPresenter;
+    private TaskCallback.AuthPresenter mPresenter;
     private BaseActivity mActivity;
 
     /**
@@ -37,7 +37,7 @@ public class GetAuthTokenTask implements FactoryCallback.FactoryReturn{
      * @param activity The base calling activity
      * @param presenter The interface to be used
      */
-    public GetAuthTokenTask(BaseActivity activity, TaskCallback.Presenter presenter) {
+    public GetAuthTokenTask(BaseActivity activity, TaskCallback.AuthPresenter presenter) {
         this.mActivity = activity;
         mPresenter = presenter;
     }
@@ -66,9 +66,7 @@ public class GetAuthTokenTask implements FactoryCallback.FactoryReturn{
                 NetworkUtils.getInstance().storeTokens(response);
 
                 mPresenter.stopProgress();
-                Intent mainActivityIntent = new Intent(mActivity, NavigationActivity.class);
-                mActivity.startActivity(mainActivityIntent);
-                mActivity.finish();
+                mPresenter.loginSuccess();
             }
         },  new Response.ErrorListener() {
             @Override

@@ -1,8 +1,10 @@
 package com.fitnation.login;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
+import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.networking.tasks.GetAuthTokenTask;
 import com.fitnation.networking.tasks.TaskCallback;
 
@@ -11,7 +13,7 @@ import static com.fitnation.login.LoginBaseActivity.VIEW_CONTAINER;
 /**
  * Presenter for the login screen. contains all the login logic for the login screen
  */
-public class LoginPresenter implements LoginContract.Presenter, TaskCallback.Presenter{
+public class LoginPresenter implements LoginContract.Presenter, TaskCallback.AuthPresenter{
     private LoginContract.View mView;
 
     public LoginPresenter (LoginContract.View view) { mView = view; }
@@ -67,7 +69,14 @@ public class LoginPresenter implements LoginContract.Presenter, TaskCallback.Pre
     /*----------------------------------------TaskCallback----------------------------------------*/
 
     @Override
-    public void showSuccess(AlertDialog.Builder successDialog) { }
+    public void loginSuccess() {
+        mView.loginSuccess();
+    }
+
+    @Override
+    public void showSuccess(AlertDialog.Builder successDialog) {
+        mView.showSuccess(successDialog);
+    }
 
     @Override
     public void showProgress(ProgressDialog progressDialog) {

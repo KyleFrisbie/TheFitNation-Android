@@ -1,6 +1,7 @@
 package com.fitnation.login;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.navigation.NavigationActivity;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -89,8 +91,15 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     /*---------------------------------------LoginContract---------------------------------------*/
 
     @Override
-    public void showSuccess() {
+    public void loginSuccess() {
+        Intent homeScreenIntent = new Intent(getBaseActivity(), NavigationActivity.class);
+        getBaseActivity().startActivity(homeScreenIntent);
+        getBaseActivity().finish();
+    }
 
+    @Override
+    public void showSuccess(AlertDialog.Builder successDialog) {
+        successDialog.show();
     }
 
     @Override

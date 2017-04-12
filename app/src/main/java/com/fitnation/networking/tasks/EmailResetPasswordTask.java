@@ -117,7 +117,7 @@ public class EmailResetPasswordTask implements FactoryCallback.FactoryReturn{
 
     @Override
     public void showSuccessDialog(AlertDialog.Builder alertDialog) {
-        mPresenter.showSuccess(alertDialog);
+            mPresenter.showSuccess(alertDialog);
     }
 
     @Override
