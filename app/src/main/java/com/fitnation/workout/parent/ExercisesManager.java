@@ -7,6 +7,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.base.DataManager;
 import com.fitnation.base.DataResult;
+import com.fitnation.networking.AuthToken;
 import com.fitnation.workout.callbacks.ExerciseInstanceRequestCallback;
 import com.fitnation.workout.callbacks.ExercisesRequestCallback;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
@@ -34,7 +35,7 @@ import io.realm.RealmResults;
  */
 public class ExercisesManager extends DataManager {
     private static final String TAG = ExercisesManager.class.getSimpleName();
-    private static final String mAuthToken = "f3865bd2-8d36-4812-b55e-7b955130466f";
+    private static String mAuthToken;
     private RequestQueue mRequestQueue;
     private List<ExerciseInstance> mSelectedExercises;
     private List<ExerciseInstance> mExerciseInstances;
@@ -46,6 +47,7 @@ public class ExercisesManager extends DataManager {
     public ExercisesManager(Context context) {
         mRequestQueue = Volley.newRequestQueue(context);
         mSelectedExercises = new ArrayList<>();
+        mAuthToken = AuthToken.getInstance().getAccessToken();
     }
 
     public List<ExerciseInstance> getExercisesTab1() {
