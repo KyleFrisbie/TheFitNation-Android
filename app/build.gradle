@@ -32,7 +32,11 @@ android {
                 minifyEnabled false
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
+            lintOptions {
 
+                abortOnError false
+
+            }
             debug {
                 testCoverageEnabled true
                 testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -45,30 +49,44 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile 'com.android.support:support-annotations:25.1.0'
+    configurations.all {
+        resolutionStrategy.force 'com.android.support:support-annotations:25.3.0'
+        resolutionStrategy.force 'com.android.support:support-compat:25.3.0'
+    }
 
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile 'com.android.support:support-annotations:25.3.0'
     //Testing
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile 'com.android.support.test:runner:0.5'
     testCompile 'junit:junit:4.12'
+    testCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
     // Espresso-contrib for DatePicker, RecyclerView, Drawer actions, Accessibility checks, CountingIdlingResource
     androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.2') {
         exclude group: 'com.android.support', module: 'appcompat'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude module: 'recyclerview-v7'
     }
-    androidTestCompile 'com.android.support:recyclerview-v7:25.1.0'
-    androidTestCompile 'com.android.support:support-v4:25.1.0'
-    androidTestCompile 'com.android.support:appcompat-v7:25.1.0'
-    androidTestCompile 'com.android.support:design:25.1.0'
+    testCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
+    androidTestCompile 'com.android.support:recyclerview-v7:25.3.0'
+    androidTestCompile 'com.android.support:appcompat-v7:25.3.0'
+    androidTestCompile 'com.android.support:design:25.3.0'
+    androidTestCompile 'com.android.support:recyclerview-v7:25.3.0'
+    androidTestCompile 'com.android.support:support-v4:25.3.0'
+    androidTestCompile 'com.android.support:appcompat-v7:25.3.0'
+    androidTestCompile 'com.android.support:design:25.3.0'
 
     //Realm dataAdapters
     compile 'io.realm:android-adapters:1.4.0'
 
+    //added mockwebserver to standard compile so that I can separate server logic from each test
+    compile 'com.squareup.okhttp3:mockwebserver:3.6.0'
+
     //Design
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'com.android.support:design:25.3.0'
+    compile 'com.android.support:support-v4:25.3.0'
+    compile 'com.android.support:customtabs:25.3.0'
 
     //Gson for parsing json -> pojos
     compile 'com.google.code.gson:gson:2.8.0'
@@ -78,9 +96,17 @@ dependencies {
     //Butterknife for binding views
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    //Picasso for image resizing inside imageviews
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    //Volley for network communications
+    compile 'com.android.volley:volley:1.0.0'
+
     compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
         transitive = true;
     }
     
+
 }
 

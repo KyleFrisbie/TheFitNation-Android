@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.is;
 public class NavigationScreenTest extends InstrumentationTest{
 
     @Rule
-    public ActivityTestRule<NavigationActivity> mActivityRule = new ActivityTestRule(NavigationActivity.class);
+    public ActivityTestRule<NavigationActivity> mActivityRule = new ActivityTestRule<NavigationActivity>(NavigationActivity.class);
 
     @Before
     public void setUp() {
@@ -53,6 +53,55 @@ public class NavigationScreenTest extends InstrumentationTest{
     public void onNavDrawerOpenedAllMenuItemsDisplayed() {
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
+        onNavStartWorkoutPressed();
+        onNavMyWorkoutPressed();
+        onNavTrendsPressed();
+        onNavWorkoutRegimensPressed();
+        onNavMyProfilePressed();
+        onNavLogoutPressed();
+    }
+
+    public void onNavStartWorkoutPressed(){
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
+        onView(withText("Start Workout")).perform(click());
+    }
+
+    public void onNavMyWorkoutPressed(){
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
+        onView(withText("My Workouts")).perform(click());
+    }
+
+    public void onNavTrendsPressed(){
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
+        onView(withText("Trends")).perform(click());
+    }
+
+    public void onNavWorkoutRegimensPressed(){
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
+        onView(withText("Workout Regimens")).perform(click());
+    }
+
+    public void onNavMyProfilePressed(){
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
+        onView(withText("My Profile")).perform(click());
+    }
+
+    public void onNavLogoutPressed(){
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
+        onView(withText("Logout")).perform(click());
+        onView(withId(R.id.activity_login)).check(matches(isDisplayed()));
+        onView(withId(R.id.login_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.signUp_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.email_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
+        onView(withId(R.id.signUp_textView)).check(matches(isDisplayed()));
+        onView(withId(R.id.logo_imageView)).check(matches(isDisplayed()));
     }
 
 }

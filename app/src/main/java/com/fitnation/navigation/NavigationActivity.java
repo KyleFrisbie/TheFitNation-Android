@@ -2,6 +2,7 @@ package com.fitnation.navigation;
 
 
 import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
@@ -20,6 +21,7 @@ import com.fitnation.base.BaseActivity;
 import com.fitnation.profile.ProfileFragment;
 
 import java.util.List;
+import com.fitnation.login.LoginBaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +38,7 @@ public class NavigationActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.root_activity_navigation);
+        setContentView(R.layout.activity_navigation);
         ButterKnife.bind(this);
         setUpActionBar();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -71,19 +73,8 @@ public class NavigationActivity extends BaseActivity
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
-
         } else {
-            List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-            if (fragmentList != null) {
-
-            }
-            int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
-
-            if (backStackCount >= 1) {
-                getSupportFragmentManager().popBackStack();
-            } else {
-                super.onBackPressed();
-            }
+            super.onBackPressed();
         }
     }
 
@@ -124,11 +115,17 @@ public class NavigationActivity extends BaseActivity
                     .replace(R.id.content_main_container, ProfileFragment.newInstance())
                     .addToBackStack(null)
                     .commit();
+
+        } else if (id == R.id.nav_logout){
+            Intent loginIntent = new Intent(this, LoginBaseActivity.class);
+            startActivity(loginIntent);
+            finish();
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+}
 
     public void displayBackArrow(boolean show, String title) {
         if (title != null) {
