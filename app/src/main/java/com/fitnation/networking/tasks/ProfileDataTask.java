@@ -10,7 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.base.BaseActivity;
-import com.fitnation.model.ProfileInstance;
+import com.fitnation.profile.ProfileData;
 import com.fitnation.model.User;
 import com.fitnation.model.UserDemographic;
 import com.fitnation.model.UserWeight;
@@ -63,7 +63,7 @@ public final class ProfileDataTask{
         Environment env = EnvironmentManager.getInstance().getCurrentEnvironment();
         String userDemoId = "3154";
         String url = env.getApiUrl()+"user-demographics/" + userDemoId;
-        final ProfileInstance profileInstance = new ProfileInstance();
+        final ProfileData profileData = new ProfileData();
         //final String authToken = AuthToken.getInstance().getAccessToken();
         //TODO CHANGE THIS TO PREVIOUS COMMENTED OUT LINE
         final String authToken = AuthToken.getHardToken();

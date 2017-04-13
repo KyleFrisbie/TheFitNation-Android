@@ -1,30 +1,13 @@
 package com.fitnation.profile;
 
 
-import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.fitnation.base.BaseActivity;
 import com.fitnation.base.DataManager;
 import com.fitnation.base.DataResult;
-import com.fitnation.model.ProfileInstance;
 import com.fitnation.model.User;
 import com.fitnation.model.UserDemographic;
 import com.fitnation.model.UserWeight;
-import com.fitnation.networking.JsonParser;
-import com.fitnation.base.FitNationApplication;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.*;
-
-import org.json.JSONObject;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -37,14 +20,14 @@ import io.realm.RealmResults;
 public class ProfileDataManager extends DataManager {
 
 
-    public static ProfileInstance getLocalProfileData(){
-        ProfileInstance profileInstance = new ProfileInstance();
+    public static ProfileData getLocalProfileData(){
+        ProfileData profileData = new ProfileData();
 
-        profileInstance.addUserDemographicInfo(getLocalUserDemographic());
-        profileInstance.addWeight(getLocalUserWeight());
-        profileInstance.addUserInfo(getLocalUser());
+        profileData.addUserDemographicInfo(getLocalUserDemographic());
+        profileData.addWeight(getLocalUserWeight());
+        profileData.addUserInfo(getLocalUser());
 
-        return profileInstance;
+        return profileData;
     }
 
     public void SaveUserDemographicData(final UserDemographic userDemographic){

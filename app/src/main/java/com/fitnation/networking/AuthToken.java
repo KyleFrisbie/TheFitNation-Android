@@ -34,7 +34,7 @@ public class AuthToken {
     //HARD CODED TOKEN
     public static String getHardToken(){
 
-        return "3b931042-14a2-45f5-bd02-f513744a02da";
+        return "62026ba2-c233-4b14-8307-f545e8c8ca1c";
     }
 
     private AuthToken() {

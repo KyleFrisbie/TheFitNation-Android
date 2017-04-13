@@ -71,7 +71,7 @@ public class UserDemographic extends RealmObject implements Cloneable {
         if (!(id.equals("") || id==null)) {
             UserLogins.getInstance().setUserDemographicId(String.valueOf(id));
         }
-        return Long.parseLong(UserLogins.getInstance().getId());
+        return Long.parseLong(UserLogins.getInstance().getUserDemographicId());
     }
 
 

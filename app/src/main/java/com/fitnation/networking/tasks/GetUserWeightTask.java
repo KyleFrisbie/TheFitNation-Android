@@ -27,7 +27,7 @@ import java.util.Map;
  */
 
 public class GetUserWeightTask {
-
+    //TODO MAKE PRIVATE USE SETTERS/GETTERS
     static List<UserWeight> weightList;
     static UserWeight weight;
     static RequestQueue queue;

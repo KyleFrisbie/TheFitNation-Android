@@ -1,10 +1,14 @@
-package com.fitnation.model;
+package com.fitnation.profile;
+
+import com.fitnation.model.User;
+import com.fitnation.model.UserDemographic;
+import com.fitnation.model.UserWeight;
 
 /**
  * Created by Jeremy on 4/11/2017.
  */
 
-public class ProfileInstance {
+public class ProfileData {
 
     private String firstName;
     private String lastName;
@@ -19,11 +23,11 @@ public class ProfileInstance {
     boolean hasUser = false;
     boolean hasWeight = false;
 
-    public ProfileInstance() {
+    public ProfileData() {
 
     }
 
-    public ProfileInstance(UserDemographic userdemo, User user, UserWeight weight) {
+    public ProfileData(UserDemographic userdemo, User user, UserWeight weight) {
         addUserDemographicInfo(userdemo);
         addUserInfo(user);
         addWeight(weight);

@@ -24,7 +24,6 @@ import android.widget.TextView;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
-import com.fitnation.model.ProfileInstance;
 import com.fitnation.navigation.NavigationActivity;
 
 
@@ -61,7 +60,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     private ProfileContract.Presenter mPresenter;
 
-    ProfileInstance mProfile;
+    ProfileData mProfile;
 
 
     public ProfileFragment() {
@@ -161,7 +160,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     }
 
     @Override
-    public void bindExerciseInstanceToView(ProfileInstance pInstance){
+    public void bindExerciseInstanceToView(ProfileData pInstance){
         mProfile = pInstance;
 
         if (pInstance==null) {

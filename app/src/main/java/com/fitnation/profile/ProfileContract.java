@@ -8,9 +8,6 @@ import android.widget.TextView;
 
 import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
-import com.fitnation.login.LoginContract;
-import com.fitnation.model.ProfileInstance;
-import com.fitnation.model.UserDemographic;
 
 
 public interface ProfileContract {
@@ -18,7 +15,7 @@ public interface ProfileContract {
 
         FragmentManager getFragmentManager();
 
-        void bindExerciseInstanceToView(ProfileInstance pInstance);
+        void bindExerciseInstanceToView(ProfileData pInstance);
     }
 
     interface Presenter extends BasePresenter {

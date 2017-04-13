@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
-import com.fitnation.model.ProfileInstance;
 import com.fitnation.model.User;
 import com.fitnation.model.UserWeight;
 import com.fitnation.model.UserDemographic;
@@ -22,7 +21,7 @@ import static com.fitnation.utils.UnitConversion.*;
 
 public class ProfilePresenter implements ProfileContract.Presenter {
     private ProfileContract.View mView;
-    public ProfileInstance mProfile;
+    public ProfileData mProfile;
 
     DatePickerFragment dateFragment;
     Resources res;
@@ -228,13 +227,13 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     @Override
     public void saveProfileData() {
         //LOCAL DATE STORE
-        ProfileDataManager userDataManager = new ProfileDataManager();
+        ProfileDataManager profileDataManager = new ProfileDataManager();
 
-        userDataManager.SaveUserDemographicData(userdemo);
-        userDataManager.SaveUserData(user);
-        userDataManager.SaveWeightData(userWeight);
+        profileDataManager.SaveUserDemographicData(userdemo);
+        profileDataManager.SaveUserData(user);
+        profileDataManager.SaveWeightData(userWeight);
 
-        if (UserLogins.getInstance().getId() != null){
+        if (UserLogins.getInstance().getUserDemographicId() != null){
             ProfileDataTask pdt = new ProfileDataTask(getBaseActivity());
             pdt.saveProfileData(this);
         }

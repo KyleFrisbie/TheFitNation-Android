@@ -40,9 +40,10 @@ public class UserLogins {
         this.userdemographicId = id;
     }
 
-    public synchronized String getId(){
+    public synchronized String getUserDemographicId(){
         return userdemographicId;
     }
 
     private UserLogins(){}
 }
+
