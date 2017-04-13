@@ -26,5 +26,6 @@ public class SplashScreenActivity extends BaseActivity {
     private void launchLoginScreen() {
         final Intent loginIntent = new Intent(this, LoginBaseActivity.class);
         startActivity(loginIntent);
+        finish();
     }
 }

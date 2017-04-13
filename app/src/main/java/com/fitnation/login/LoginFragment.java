@@ -93,8 +93,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
         Intent homeScreenIntent = new Intent(getBaseActivity(), NavigationActivity.class);
         homeScreenIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         homeScreenIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        getBaseActivity().startActivity(homeScreenIntent);
         getBaseActivity().finish();
+        getBaseActivity().startActivity(homeScreenIntent);
     }
 
     @Override
