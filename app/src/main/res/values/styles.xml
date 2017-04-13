@@ -13,9 +13,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-    </style>
-
     <style name="TextView" parent="AppTheme">
         <item name="android:textSize">@dimen/font_normal</item>
         <item name="android:textColorPrimary">@color/textColorDark</item>
@@ -42,7 +39,11 @@
     <style name="TextView.Title" parent="TextView">
         <item name="android:textSize">@dimen/title_text_size</item>
     </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
     </style>
@@ -55,9 +56,4 @@
     <style name="FloatingActionButton" parent="AppTheme">
         <item name="backgroundTint">@color/actionable</item>
     </style>
-
-    <style name="CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="android:checkMarkTint">@color/actionable</item>
-    </style>
-
 </resources>

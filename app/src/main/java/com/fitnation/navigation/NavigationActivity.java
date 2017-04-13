@@ -1,5 +1,6 @@
 package com.fitnation.navigation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,7 @@ import com.fitnation.workout.parent.ExercisesParentFragment;
 import com.fitnation.model.enums.ExerciseAction;
 
 import java.util.List;
+import com.fitnation.login.LoginBaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -123,6 +125,10 @@ public class NavigationActivity extends BaseActivity
 
         } else if (id == R.id.nav_my_profile) {
 
+        } else if (id == R.id.nav_logout){
+            Intent loginIntent = new Intent(this, LoginBaseActivity.class);
+            startActivity(loginIntent);
+            finish();
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);

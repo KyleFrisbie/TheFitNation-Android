@@ -134,9 +134,14 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
 
     @Override
     public void stopProgress() {
-        BaseActivity baseActivity = getBaseActivity();
+        final BaseActivity baseActivity = getBaseActivity();
         if(baseActivity != null) {
-            baseActivity.stopProgress();
+            baseActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    baseActivity.stopProgress();
+                }
+            });
         }
     }
 
@@ -196,13 +201,23 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
     }
 
     @Override
-    public void showSuccess(AlertDialog alertDialog) {
-        alertDialog.show();
+    public void showSuccess(final AlertDialog alertDialog) {
+        getBaseActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                alertDialog.show();
+            }
+        });
     }
 
     @Override
-    public void showFailure(AlertDialog alertDialog) {
-        alertDialog.show();
+    public void showFailure(final AlertDialog alertDialog) {
+        getBaseActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                alertDialog.show();
+            }
+        });
     }
 
     @Override

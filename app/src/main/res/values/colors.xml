@@ -9,4 +9,7 @@
     <color name="textColor">#FFFFFF</color>
     <color name="textColorDark">#000000</color>
     <color name="accentGreen">#00e676</color>
+    <color name="loginEditText">#edffffff</color>
+    <color name="loginButtonText">#ffffff</color>
+    <color name="loginFooter">#a0ffffff</color>
 </resources>

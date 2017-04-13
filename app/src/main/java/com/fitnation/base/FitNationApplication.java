@@ -2,8 +2,10 @@ package com.fitnation.base;
 
 import android.app.Application;
 
+import com.crashlytics.android.Crashlytics;
 import com.fitnation.utils.PrimaryKeyFactory;
 
+import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 
 /**
@@ -15,5 +17,7 @@ public class FitNationApplication extends Application {
         super.onCreate();
         Realm.init(getApplicationContext());
         PrimaryKeyFactory.getInstance().initialize(Realm.getDefaultInstance());
+        Fabric.with(this, new Crashlytics());
+
     }
 }
