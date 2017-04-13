@@ -83,7 +83,6 @@ public class EmailResetPasswordTask implements FactoryCallback.FactoryReturn{
 
         resetPasswordWithEmailRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
         requestQueue.add(resetPasswordWithEmailRequest);
-        requestQueue.start();
     }
 
     /**

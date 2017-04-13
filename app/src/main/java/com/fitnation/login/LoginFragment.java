@@ -69,10 +69,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
      */
     @OnClick(R.id.login_button)
     public void onLoginButtonClicked() {
-        if(!mUsernameEditText.getText().toString().isEmpty()
-                && !mPasswordEditText.getText().toString().isEmpty()) {
-            mPresenter.onLoginPressed(mUsernameEditText.getText().toString(),
-                    mPasswordEditText.getText().toString());
+        if(!mUsernameEditText.getText().toString().isEmpty() && !mPasswordEditText.getText().toString().isEmpty()) {
+            mPresenter.onLoginPressed(mUsernameEditText.getText().toString(), mPasswordEditText.getText().toString());
         }
     }
 
@@ -93,6 +91,8 @@ public class LoginFragment extends BaseFragment implements LoginContract.View {
     @Override
     public void loginSuccess() {
         Intent homeScreenIntent = new Intent(getBaseActivity(), NavigationActivity.class);
+        homeScreenIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        homeScreenIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         getBaseActivity().startActivity(homeScreenIntent);
         getBaseActivity().finish();
     }

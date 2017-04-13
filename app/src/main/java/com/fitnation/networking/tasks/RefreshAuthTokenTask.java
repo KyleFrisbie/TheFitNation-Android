@@ -85,7 +85,6 @@ public class RefreshAuthTokenTask {
 
             jsonObjectPost.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
             requestQueue.add(jsonObjectPost);
-            requestQueue.start();
         }else{
             mFactory.didRequestWork(false);
         }

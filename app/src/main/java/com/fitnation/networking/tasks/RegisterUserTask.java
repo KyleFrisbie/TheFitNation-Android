@@ -100,7 +100,6 @@ public class RegisterUserTask implements FactoryCallback.FactoryReturn{
 
         jsonObjectPost.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
         requestQueue.add(jsonObjectPost);
-        requestQueue.start();
     }
 
     /**
