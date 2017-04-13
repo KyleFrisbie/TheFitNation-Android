@@ -28,10 +28,10 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     private OnSetSelectedCallback mOnSetSelectedCallback;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.exercise_value) EditText exerciseValueView;
-        @BindView(R.id.reps_value) EditText repsValueView;
-        @BindView(R.id.rest_value) EditText restValueView;
-        @BindView(R.id.set_order) TextView setOrderView;
+        @BindView(R.id.exercise_value) EditText mExerciseValueView;
+        @BindView(R.id.reps_value) EditText mRepsValueView;
+        @BindView(R.id.rest_value) EditText mRestValueView;
+        @BindView(R.id.set_order) TextView mSetOrderView;
         @BindView(R.id.root_set_in_list) ConstraintLayout mRootView;
 
         public ViewHolder(View view) {
@@ -63,10 +63,10 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     public void onBindViewHolder(SetAdapter.ViewHolder holder, int position) {
         final ExerciseInstanceSet set = mSets.get(position);
 
-        holder.setOrderView.setText("Set " + String.valueOf(set.getOrderNumber()));
-        holder.exerciseValueView.setText(String.valueOf(set.getEffortQuantity()));
-        holder.repsValueView.setText(String.valueOf(set.getRepQuantityAsInt()));
-        holder.restValueView.setText(String.valueOf(set.getRestTime()));
+        holder.mSetOrderView.setText("Set " + String.valueOf(set.getOrderNumber()));
+        holder.mExerciseValueView.setText(String.valueOf(set.getEffortQuantity()));
+        holder.mRepsValueView.setText(String.valueOf(set.getRepQuantityAsInt()));
+        holder.mRestValueView.setText(String.valueOf(set.getRestTime()));
 
         holder.mRootView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -77,7 +77,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
             }
         });
 
-        holder.repsValueView.addTextChangedListener(new TextWatcher() {
+        holder.mRepsValueView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -99,7 +99,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
             }
         });
 
-        holder.exerciseValueView.addTextChangedListener(new TextWatcher() {
+        holder.mExerciseValueView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -121,7 +121,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
             }
         });
 
-        holder.restValueView.addTextChangedListener(new TextWatcher() {
+        holder.mRestValueView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 

@@ -60,6 +60,11 @@ public class ExercisesManager extends DataManager {
         return mExerciseInstancesTab3;
     }
 
+    /**
+     * Gets each set of exercises for each individual tab. These objects have no references to one another,
+     * as a deep clone has been done before passing them in the callback.
+     * @param callback - Callback to be invoked upon success/failure
+     */
     public void getExercises(final ExercisesRequestCallback callback) {
         new Thread(new Runnable() {
             @Override
@@ -75,9 +80,9 @@ public class ExercisesManager extends DataManager {
                             mExerciseInstancesTab3 = new ArrayList<ExerciseInstance>(exerciseInstances.size());
 
                             for (ExerciseInstance instance : exerciseInstances) {
-                                ExerciseInstance copy1 = null;
-                                ExerciseInstance copy2 = null;
-                                ExerciseInstance copy3 = null;
+                                ExerciseInstance copy1;
+                                ExerciseInstance copy2;
+                                ExerciseInstance copy3;
 
                                 copy1 = (ExerciseInstance) instance.clone();
                                 copy2 = (ExerciseInstance) instance.clone();
@@ -129,15 +134,8 @@ public class ExercisesManager extends DataManager {
                 postWorkoutTemplateToWeb(workoutTemplate, new WorkoutTemplatePostCallback() {
                     @Override
                     public void onSuccess(final WorkoutTemplate updatedTemplate) {
-                        WorkoutInstance workoutInstance = new WorkoutInstance(name, 0f, 1, updatedTemplate, "");
-                        RealmList<ExerciseInstance> selectedExercises = new RealmList<>();
+                        WorkoutInstance workoutInstance = buildWorkoutInstance(updatedTemplate, name);
 
-                        for (ExerciseInstance exerciseInstance : mSelectedExercises) {
-                            selectedExercises.add(exerciseInstance);
-                        }
-
-                        workoutInstance.setExercises(selectedExercises);
-                        workoutInstance.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutInstance.class));
                         postWorkoutInstanceToWeb(workoutInstance, new WorkoutInstancePostCallback() {
                             @Override
                             public void onSuccess(WorkoutInstance updatedWorkoutInstance) {
@@ -161,8 +159,22 @@ public class ExercisesManager extends DataManager {
         }).start();
     }
 
+
+    private WorkoutInstance buildWorkoutInstance(WorkoutTemplate updatedTemplate, String name) {
+        WorkoutInstance workoutInstance = new WorkoutInstance(name, 0f, 1, updatedTemplate, "");
+        RealmList<ExerciseInstance> selectedExercises = new RealmList<>();
+
+        for (ExerciseInstance exerciseInstance : mSelectedExercises) {
+            selectedExercises.add(exerciseInstance);
+        }
+
+        workoutInstance.setExercises(selectedExercises);
+        workoutInstance.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutInstance.class));
+        return workoutInstance;
+    }
+
     private void addSkillLevelToWorkout(WorkoutTemplate workoutTemplate) {
-        int begginerCount = 0;
+        int beginnerCount = 0;
         int intermediateCount = 0;
         int advancedCount= 0;
         long beginnerSkillLevelId = 0;
@@ -175,7 +187,7 @@ public class ExercisesManager extends DataManager {
 
             switch(skillLevel) {
                 case SkillLevel.BEGINNER:
-                    begginerCount++;
+                    beginnerCount++;
                     if(beginnerSkillLevelId == 0) {
                         beginnerSkillLevelId = exercise.getSkillLevelId();
                     }
@@ -195,13 +207,13 @@ public class ExercisesManager extends DataManager {
             }
         }
 
-        if (begginerCount > intermediateCount && begginerCount > advancedCount) {
+        if (beginnerCount > intermediateCount && beginnerCount > advancedCount) {
             workoutTemplate.setSkillLevelLevel(SkillLevel.BEGINNER);
             workoutTemplate.setSkillLevelId(beginnerSkillLevelId);
-        } else if ( intermediateCount > begginerCount && intermediateCount > advancedCount ) {
+        } else if ( intermediateCount > beginnerCount && intermediateCount > advancedCount ) {
             workoutTemplate.setSkillLevelLevel(SkillLevel.INTERMEDIATE);
             workoutTemplate.setSkillLevelId(intermediateSkillLevelId);
-        } else if ( advancedCount > begginerCount && advancedCount > intermediateCount ) {
+        } else if ( advancedCount > beginnerCount && advancedCount > intermediateCount ) {
             workoutTemplate.setSkillLevelLevel(SkillLevel.ADVANCED);
             workoutTemplate.setSkillLevelId(advancedSkillLevelId);
         } else {

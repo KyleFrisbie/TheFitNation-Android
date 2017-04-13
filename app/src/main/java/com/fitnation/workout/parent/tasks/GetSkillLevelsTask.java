@@ -60,7 +60,7 @@ public class GetSkillLevelsTask extends NetworkTask{
             }
         };
 
-        getExercisesRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
+        getExercisesRequest.setRetryPolicy(new DefaultRetryPolicy(3000, 2, 1));
 
         mRequestQueue.add(getExercisesRequest);
     }

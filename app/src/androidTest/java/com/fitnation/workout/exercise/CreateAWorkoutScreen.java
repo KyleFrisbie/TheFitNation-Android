@@ -77,9 +77,9 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
 
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
-                if (request.getPath().equals(exercisesUrl)&& request.getMethod().equalsIgnoreCase("GET")){
+                if (request.getPath().equals(exercisesUrl) && request.getMethod().equalsIgnoreCase("GET")) {
                     return new MockResponse().setBody(exerciseJson);
-                } else if (request.getPath().equals(unitsUrl) && request.getMethod().equalsIgnoreCase("GET")){
+                } else if (request.getPath().equals(unitsUrl) && request.getMethod().equalsIgnoreCase("GET")) {
                     return new MockResponse().setBody(unitsJson);
                 } else if (request.getPath().equals(workoutTemplatesUrl) && request.getMethod().equalsIgnoreCase("PUT")) {
                     return new MockResponse().setBody(workoutTemplateJson);
@@ -105,7 +105,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
         onView(withText(R.string.build_workout)).check(matches(isDisplayed()));
         onView(withText(R.string.build_workout)).perform(click());
-        SystemClock.sleep(2000);
+        SystemClock.sleep(TEST_WAIT_TIME);
     }
 
     @After
@@ -117,7 +117,8 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
     public void testCreateWorkoutScreenLaunchedOkay() throws Exception {
 
 
-        verifyCreateWorkoutScreenVisible();;
+        verifyCreateWorkoutScreenVisible();
+        ;
     }
 
     private void verifyCreateWorkoutScreenVisible() {
@@ -154,9 +155,9 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         closeSoftKeyboard();
         UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject dialog = uiDevice.findObject(new UiSelector().text("Name your workout:"));
-        if(dialog.waitForExists(5000)) {
+        if (dialog.waitForExists(TEST_WAIT_TIME)) {
             UiObject button = uiDevice.findObject(new UiSelector().text("SAVE"));
-            if(button.exists()) {
+            if (button.exists()) {
                 button.click();
             }
         } else {
@@ -164,9 +165,9 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         }
 
         UiObject successDialog = uiDevice.findObject(new UiSelector().text("Success"));
-        if(successDialog.waitForExists(5000)) {
+        if (successDialog.waitForExists(TEST_WAIT_TIME)) {
             UiObject button = uiDevice.findObject(new UiSelector().text("OK"));
-            if(button.exists()) {
+            if (button.exists()) {
                 button.click();
             }
         } else {
@@ -183,9 +184,6 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         onView(withId(R.id.exercise_name_edit)).check(matches(isDisplayed()));
 
     }
-
-
-
 
 
     //TODO test able to launch edit screen & edit an exercise. Changed are reflected on back pressed

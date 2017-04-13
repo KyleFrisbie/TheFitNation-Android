@@ -1,17 +1,10 @@
 package com.fitnation.model;
 
-import com.fitnation.model.enums.SkillLevel;
 import com.google.gson.annotations.Expose;
 
-import java.io.Serializable;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.Objects;
 
-import io.realm.RealmCollection;
 import io.realm.RealmList;
-import io.realm.RealmModel;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -40,6 +33,7 @@ public class Exercise extends RealmObject {
 
     /**
      * Loaded Constructor
+     *
      * @param id
      * @param name
      * @param imageUri
@@ -55,7 +49,7 @@ public class Exercise extends RealmObject {
         this.notes = notes;
         this.skillLevelLevel = skillLevel;
         this.muscles = new RealmList<Muscle>();
-        for (Muscle muscle: muscles) {
+        for (Muscle muscle : muscles) {
             this.muscles.add(muscle);
         }
         this.exerciseFamilyName = exerciseFamilyName;
@@ -81,20 +75,20 @@ public class Exercise extends RealmObject {
         return notes;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
