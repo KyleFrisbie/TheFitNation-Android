@@ -86,7 +86,7 @@ public class EmailResetPasswordTask implements FactoryCallback.FactoryReturn{
     }
 
     /**
-     * Shows a success alert dialog indicating to user that an email has been sent
+     * Shows a success alert dialog indicating to mUser that an email has been sent
      * @param response The response from the server
      */
     private void successfulResponse(String response) {

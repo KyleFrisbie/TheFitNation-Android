@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Jeremy on 4/12/2017.
  */
 
-public interface GetUserDemographicsCallback {
+public interface UserDemographicsCallback {
     void onSuccess(UserDemographic userDemographic);
     void onFailure(String error);
 }

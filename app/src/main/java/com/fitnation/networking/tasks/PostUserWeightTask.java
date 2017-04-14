@@ -7,19 +7,15 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.model.UserWeight;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.JsonParser;
-import com.fitnation.networking.VolleyQueueSingleton;
-import com.fitnation.profile.ProfileFragment;
 import com.fitnation.profile.ProfilePresenter;
 import com.fitnation.utils.Environment;
 import com.fitnation.utils.EnvironmentManager;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -43,8 +39,8 @@ public class PostUserWeightTask {
         //save data to web
         queue = Volley.newRequestQueue(presenter.getBaseActivity());
         env = EnvironmentManager.getInstance().getCurrentEnvironment();
-        String userDemographicId = presenter.userdemo.getId().toString();
-        url = env.getApiUrl() + "user-weights/byLoggedInUser/" + userDemographicId;
+        String userDemographicId = presenter.mUserdemo.getId().toString();
+        url = env.getApiUrl() + "mUser-weights/byLoggedInUser/" + userDemographicId;
 
         final String authToken = AuthToken.getInstance().getAccessToken();
 

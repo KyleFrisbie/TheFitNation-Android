@@ -11,9 +11,9 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * A single User userWeight instance
+ * A single User mUserWeight instance
  */
-public class UserWeight extends RealmObject {
+public class UserWeight extends RealmObject implements Cloneable{
     @PrimaryKey
     private Long androidId;
     private Long userDemographicId;
@@ -78,7 +78,7 @@ public class UserWeight extends RealmObject {
         return "UserWeight{" +
             "id=" + userDemographicId +
             ", weightDate='" + weightDate.toString() + "'" +
-            ", userWeight='" + weight + "'" +
+            ", mUserWeight='" + weight + "'" +
             '}';
     }
     

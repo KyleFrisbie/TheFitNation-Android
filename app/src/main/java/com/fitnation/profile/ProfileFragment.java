@@ -164,7 +164,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mProfile = pInstance;
 
         if (pInstance==null) {
-            Log.d("PROFILE", "Failed to load demographic, user demographic is null.");
+            Log.d("PROFILE", "Failed to load demographic, mUser demographic is null.");
             return;
         }
 

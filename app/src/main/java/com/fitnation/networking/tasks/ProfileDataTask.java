@@ -45,16 +45,16 @@ public final class ProfileDataTask{
     Save all of the profile data to web
      */
     public void saveProfileData(ProfilePresenter profile){
-        UserDemographic userdemo = profile.userdemo;
-        UserWeight userWeight = profile.userWeight;
-        User user = profile.user;
+        UserDemographic userdemo = profile.mUserdemo;
+        UserWeight userWeight = profile.mUserWeight;
+        User user = profile.mUser;
 
         if(userdemo==null|| userWeight==null||user==null) {
             Log.d("PROFILE DATA", "Some profile data is null, not saving");
             return;
         }
 
-        PutUserDemographicTask.putUserDemographicData(userdemo, profile.getBaseActivity());
+
 
     }
 
@@ -77,8 +77,8 @@ public final class ProfileDataTask{
                         UserLogins.getInstance().setUserDemographicId(String.valueOf(userdemo.getId()));
                         presenter.setDemographic(userdemo);
                         presenter.mProfile.addUserDemographicInfo(userdemo);
-                        GetUserTask.getUser(userdemo.getUserLogin(), presenter);
-                        GetUserWeightTask.getUserWeight(presenter);
+                        //GetUserTask.getUser(userdemo.getUserLogin(), presenter);
+                        //GetUserWeightTask.getUserWeight(presenter);
                     }
                 }, new Response.ErrorListener() {
                     @Override

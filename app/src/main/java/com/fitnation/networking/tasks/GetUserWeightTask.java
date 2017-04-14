@@ -13,6 +13,8 @@ import com.fitnation.model.UserWeight;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.JsonParser;
 import com.fitnation.profile.ProfilePresenter;
+import com.fitnation.profile.callbacks.GetUserCallback;
+import com.fitnation.profile.callbacks.GetUserWeightCallback;
 import com.fitnation.utils.Environment;
 import com.fitnation.utils.EnvironmentManager;
 
@@ -26,19 +28,23 @@ import java.util.Map;
  * Created by J on 4/9/2017.
  */
 
-public class GetUserWeightTask {
-    //TODO MAKE PRIVATE USE SETTERS/GETTERS
-    static List<UserWeight> weightList;
-    static UserWeight weight;
-    static RequestQueue queue;
-    static Environment env;
-    static String url;
+public class GetUserWeightTask extends NetworkTask{
 
+    private List<UserWeight> weightList;
+    private UserWeight weight;
+    private RequestQueue queue;
+    private Environment env;
+    private String url;
 
-    public static void getUserWeight(final ProfilePresenter presenter){
+    private String TAG = GetUserWeightTask.class.getSimpleName();
+
+    public GetUserWeightTask(String authToken, RequestQueue queue){
+        super(authToken, queue);
+    }
+
+    public void getUserWeight(final GetUserWeightCallback callback){
         //WEIGHTS
 
-        queue = Volley.newRequestQueue(presenter.getBaseActivity());
         env = EnvironmentManager.getInstance().getCurrentEnvironment();
         url = env.getApiUrl()+"user-weights/byLoggedInUser/";
 
@@ -49,12 +55,10 @@ public class GetUserWeightTask {
 
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.i("GET", response.toString());
+                        Log.i(TAG, response.toString());
                         weightList = JsonParser.convertJsonStringToList(response.toString(), UserWeight[].class);
-                        weight = weightList.get(weightList.size()-1);
-                        presenter.mProfile.addWeight(weight);
-                        presenter.setUserWeight(weight);
-                        presenter.bindExerciseInstanceToView();
+                        callback.onSuccess(weightList);
+
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -73,7 +77,7 @@ public class GetUserWeightTask {
                     }
                 };
 
-        queue.add(jsonRequestWeights);
+        mRequestQueue.add(jsonRequestWeights);
     }
 
 }

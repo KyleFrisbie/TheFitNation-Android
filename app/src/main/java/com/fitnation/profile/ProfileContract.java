@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
+import com.fitnation.model.User;
+import com.fitnation.model.UserDemographic;
+import com.fitnation.model.UserWeight;
 
 
 public interface ProfileContract {
@@ -21,7 +24,7 @@ public interface ProfileContract {
     interface Presenter extends BasePresenter {
         void saveProfileData();
 
-        void getProfileData(ProfilePresenter presenter);
+        void getProfileData();
 
         void onSwitchMeasurementClicked
                 (EditText weightText, EditText heightText, TextView measurementText);
@@ -36,6 +39,10 @@ public interface ProfileContract {
 
         void onDateSet(DatePicker view, int year, int month,
                        int day, EditText dobText, EditText ageText);
+
+        void setDemographic(UserDemographic userDemo);
+        void setUser(User user);
+        void setUserWeight(UserWeight weight);
     }
 }
 

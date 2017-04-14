@@ -7,30 +7,49 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
+import com.fitnation.login.LoginFragment;
 import com.fitnation.model.User;
 import com.fitnation.model.UserWeight;
 import com.fitnation.model.UserDemographic;
+import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.UserLogins;
-import com.fitnation.networking.tasks.ProfileDataTask;
+import com.fitnation.networking.tasks.UserDemographicTask;
+import com.fitnation.networking.tasks.GetUserTask;
+import com.fitnation.networking.tasks.GetUserWeightTask;
+import com.fitnation.profile.callbacks.GetUserCallback;
+import com.fitnation.profile.callbacks.UserDemographicsCallback;
+import com.fitnation.profile.callbacks.GetUserWeightCallback;
 
 import java.util.Calendar;
+import java.util.List;
 
 import static com.fitnation.utils.UnitConversion.*;
 
 public class ProfilePresenter implements ProfileContract.Presenter {
+
     private ProfileContract.View mView;
     public ProfileData mProfile;
+    private ProfileDataManager mProfileDataManager;
 
     DatePickerFragment dateFragment;
     Resources res;
 
     final private String TAG = "PROFILE PRESENTER";
 
-    public UserDemographic userdemo;
-    public User user;
-    public UserWeight userWeight;
+    public UserDemographic mUserdemo;
+    public User mUser;
+    public UserWeight mUserWeight;
+
+    private boolean gotUserDemo = false;
+    private boolean gotUser = false;
+    private boolean gotWeight = false;
+
+    private RequestQueue mQueue;
+    private String mAuthToken;
 
     private boolean isImperial;
 
@@ -46,13 +65,14 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     @Override
     public void start() {
         res = mView.getBaseActivity().getResources();
-
-        mProfile = ProfileDataManager.getLocalProfileData();
+        mProfileDataManager = new ProfileDataManager(getBaseActivity());
+        mProfile = mProfileDataManager.getLocalProfileData();
+        mQueue = Volley.newRequestQueue(getBaseActivity());
+        mAuthToken = AuthToken.getInstance().getAccessToken();
 
         if (!mProfile.isFullProfile()) {
-            getProfileData(this);
+            getProfileData();
         }
-
     }
 
 
@@ -77,13 +97,99 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     @Override
-    public void stop() {}
+    public void getProfileData() {
+        getUserDemographicFromWeb();
+
+    }
 
 
-    @Override
-    public void getProfileData(ProfilePresenter presenter) {
-        ProfileDataTask pdt = new ProfileDataTask(getBaseActivity());
-        pdt.getProfileData(this);
+    private void getUserDemographicFromWeb(){
+        final UserDemographicTask getUserDemoTask =
+                new UserDemographicTask(mAuthToken, mQueue);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getUserDemoTask.getUserDemographicById(new UserDemographicsCallback() {
+                    @Override
+                    public void onSuccess(UserDemographic userDemographic) {
+                        setDemographic(userDemographic);
+                        gotUserDemo = true;
+                        getUserFromWeb();
+                        getUserWeightFromWeb();
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        Log.d(TAG, error.toString());
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void getUserFromWeb(){
+        final GetUserTask getUserTask =
+                new GetUserTask(mAuthToken, mQueue);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getUserTask.getUser(new GetUserCallback() {
+                    @Override
+                    public void onSuccess(User user) {
+                        setUser(user);
+                        gotUser = true;
+                        sendProfileDataToView();
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        Log.d(TAG, error);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void getUserWeightFromWeb(){
+        final GetUserWeightTask getWeightTask =
+                new GetUserWeightTask(mAuthToken, mQueue);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getWeightTask.getUserWeight(new GetUserWeightCallback() {
+                    @Override
+                    public void onSuccess(List<UserWeight> userWeightList) {
+                        List<UserWeight> weightList = userWeightList;
+                        if (weightList.size() > 0) {
+                            UserWeight weight = weightList.get(weightList.size() - 1);
+                            setUserWeight(weight);
+                            gotWeight = true;
+                            sendProfileDataToView();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        Log.d(TAG, error);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void sendProfileDataToView(){
+
+        if (gotUser && gotUserDemo && gotWeight){
+            ProfileData profileData = new ProfileData(mUserdemo, mUser, mUserWeight);
+            Log.i(TAG, "Setting new profile data loaded from web");
+            mView.bindExerciseInstanceToView(profileData);
+            gotUser = false;
+            gotUserDemo = false;
+            gotWeight = false;
+        }
     }
 
     @Override
@@ -92,12 +198,12 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         double weightFlt = 0;
         double heightFlt = 0;
         try {
-            //Since userWeight/height may have in/cm text in their value.  We just want the num val
+            //Since mUserWeight/height may have in/cm text in their value.  We just want the num val
             weightFlt = getNumValue(weightText);
             heightFlt = getNumValue(heightText);
         } catch (NumberFormatException ex){
             Log.d(TAG,
-                    "Failed to get numeric value from userWeight/height text box" + ex.toString());
+                    "Failed to get numeric value from mUserWeight/height text box" + ex.toString());
         }
 
         if (isImperial){
@@ -165,77 +271,89 @@ public class ProfilePresenter implements ProfileContract.Presenter {
              Spinner mGenderSpinner, Spinner mLifterTypeSpinner) {
 
 
-        userdemo = new UserDemographic();
-        userWeight = new UserWeight();
-        user = new User();
+        mUserdemo = (UserDemographic) mUserdemo.clone();
+        mUserWeight = (UserWeight) mUserWeight.clone();
+        mUser = new User();
 
 
         try {
-            user.setFirstName(mNameTextBox.getText().toString().split("\\s+")[0]);
+            mUser.setFirstName(mNameTextBox.getText().toString().split("\\s+")[0]);
         } catch (ArrayIndexOutOfBoundsException ex) {
-            user.setFirstName("");
+            mUser.setFirstName("");
             Log.d(TAG, "Name textbox empty or not enough elements" + ex.toString());
         }
 
         try {
-            user.setLastName(mNameTextBox.getText().toString().split("\\s+")[1]);
+            mUser.setLastName(mNameTextBox.getText().toString().split("\\s+")[1]);
         } catch (ArrayIndexOutOfBoundsException ex) {
-            user.setLastName("");
+            mUser.setLastName("");
             Log.d(TAG, "Name textbox empty or not enough elements" + ex.toString());
         }
 
 
         try {
-            userdemo.setDateOfBirth(mDobTextBox.getText().toString());
+            mUserdemo.setDateOfBirth(mDobTextBox.getText().toString());
         } catch (NullPointerException e){
-            userdemo.setDateOfBirth(Calendar.getInstance().getTime());
+            mUserdemo.setDateOfBirth(Calendar.getInstance().getTime());
             Log.d(TAG, e.toString());
         }
 
         //Get/Set gender
-        userdemo.setGender((mGenderSpinner.getSelectedItem().toString()));
+        mUserdemo.setGender((mGenderSpinner.getSelectedItem().toString()));
 
         //Get/Set skill level
-        userdemo.setSkillLevelLevel(mLifterTypeSpinner.getSelectedItem().toString());
+        mUserdemo.setSkillLevelLevel(mLifterTypeSpinner.getSelectedItem().toString());
 
         double height = getNumValue(mHeightTextBox);
         double weight = getNumValue(mWeightTextBox);
         if (isImperial){
-            userdemo.setUnitOfMeasure("Imperial");
-            userdemo.setHeight(getNumValue(mHeightTextBox).toString());
-            userdemo.setUserWeights(getNumValue(mWeightTextBox).toString());
-            userWeight.setWeight(new Float(weight));
+            mUserdemo.setUnitOfMeasure("Imperial");
+            mUserdemo.setHeight(getNumValue(mHeightTextBox).toString());
+            mUserdemo.setUserWeights(getNumValue(mWeightTextBox).toString());
+            mUserWeight.setWeight(new Float(weight));
         } else { //METRIC MEASUREMENTS
-            userdemo.setUnitOfMeasure("Metric");
+            mUserdemo.setUnitOfMeasure("Metric");
             //WE ONLY WANT TO SAVE VALUES AS IMPERIAL UNITS SO CONVERT FROM METRIC
             height = cmToInch(height);
             weight = kgsToLbs(weight);
-            userdemo.setHeight(Double.valueOf(height).toString());
-            userWeight.setWeight(new Float(weight));
+            mUserdemo.setHeight(Double.valueOf(height).toString());
+            mUserWeight.setWeight(new Float(weight));
         }
 
         //USER
         try {
-            user.setEmail(mEmailTextBox.getText().toString());
+            mUser.setEmail(mEmailTextBox.getText().toString());
         } catch (Exception ex) {
             Log.d(TAG, ex.toString());
         }
 
         saveProfileData();
     }
+    //------------------------SaveProfileCallback-----------------------------------//
 
     @Override
     public void saveProfileData() {
         //LOCAL DATE STORE
-        ProfileDataManager profileDataManager = new ProfileDataManager();
 
-        profileDataManager.SaveUserDemographicData(userdemo);
-        profileDataManager.SaveUserData(user);
-        profileDataManager.SaveWeightData(userWeight);
+        mProfileDataManager.SaveUserDemographicData(mUserdemo);
+        mProfileDataManager.SaveUserData(mUser);
+        mProfileDataManager.SaveWeightData(mUserWeight);
 
         if (UserLogins.getInstance().getUserDemographicId() != null){
-            ProfileDataTask pdt = new ProfileDataTask(getBaseActivity());
-            pdt.saveProfileData(this);
+            UserDemographicTask userDemographicTask = new UserDemographicTask(mAuthToken, mQueue);
+
+            userDemographicTask.putUserDemographicData(mUserdemo,
+                    new UserDemographicsCallback() {
+                        @Override
+                        public void onSuccess(UserDemographic userDemographic) {
+
+                        }
+
+                        @Override
+                        public void onFailure(String error) {
+                            Log.d(TAG, error.toString());
+                        }
+                    });
         }
     }
 
@@ -247,8 +365,10 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         return mView.getBaseActivity();
     }
 
-    public void setDemographic(UserDemographic userDemo){ userdemo = userDemo; }
-    public void setUser(User user){ this.user = user; }
-    public void setUserWeight(UserWeight weight){ this.userWeight = weight; }
+    public void setDemographic(UserDemographic userDemo){ mUserdemo = userDemo; }
+    public void setUser(User user){ this.mUser = user; }
+    public void setUserWeight(UserWeight weight){ this.mUserWeight = weight; }
 
+    @Override
+    public void stop() {}
 }

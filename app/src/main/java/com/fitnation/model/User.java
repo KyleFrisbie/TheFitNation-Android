@@ -9,7 +9,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by Jeremy on 4/1/2017.
  */
 
-public class User extends RealmObject {
+public class User extends RealmObject implements Cloneable{
     @PrimaryKey
     private Long androidId;
     private Long id;

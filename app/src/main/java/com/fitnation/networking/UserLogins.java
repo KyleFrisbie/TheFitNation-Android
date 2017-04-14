@@ -36,11 +36,11 @@ public class UserLogins {
         UserLogins.userLogin = userLogin;
     }
 
-    public synchronized void setUserDemographicId(String id){
-        this.userdemographicId = id;
+    public synchronized static void setUserDemographicId(String id){
+        userdemographicId = id;
     }
 
-    public synchronized String getUserDemographicId(){
+    public synchronized static String getUserDemographicId(){
         return userdemographicId;
     }
 

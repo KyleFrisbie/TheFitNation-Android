@@ -1,8 +1,13 @@
 package com.fitnation.profile;
 
 
+import android.content.Context;
 import android.util.Log;
 
+
+import com.android.volley.RequestQueue;
+import com.fitnation.base.BaseActivity;
+import com.android.volley.toolbox.Volley;
 import com.fitnation.base.DataManager;
 import com.fitnation.base.DataResult;
 import com.fitnation.model.User;
@@ -18,6 +23,13 @@ import io.realm.RealmResults;
  */
 
 public class ProfileDataManager extends DataManager {
+
+    RequestQueue mRequestQueue;
+
+    public ProfileDataManager(Context context){
+        mRequestQueue = Volley.newRequestQueue(context);
+
+    }
 
 
     public static ProfileData getLocalProfileData(){

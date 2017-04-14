@@ -15,12 +15,13 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Information about a user and their data
+ * Information about a mUser and their data
  */
 public class UserDemographic extends RealmObject implements Cloneable {
     @PrimaryKey
     private Long androidId;
-    private Long id;
+    private Long id;  //userDemographicId
+    private Long userId; //user Id
     private String firstName;
     private String lastName;
     private String gender;
@@ -151,7 +152,7 @@ public class UserDemographic extends RealmObject implements Cloneable {
             uWeight.setWeight(weight);
             userWeights.add(uWeight);
         } catch (Exception e){
-            System.out.println("Invalid userWeight input");
+            System.out.println("Invalid mUserWeight input");
         }
 
     }
@@ -207,5 +208,13 @@ public class UserDemographic extends RealmObject implements Cloneable {
             ", unit_of_measure='" +  unitOfMeasure + "'" +
             ", is_active='" + isActive + "'" +
             '}';
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

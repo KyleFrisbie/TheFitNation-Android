@@ -8,13 +8,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.model.User;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.JsonParser;
+import com.fitnation.networking.UserLogins;
 import com.fitnation.networking.VolleyQueueSingleton;
 import com.fitnation.profile.ProfileFragment;
 import com.fitnation.profile.ProfilePresenter;
+import com.fitnation.profile.callbacks.GetUserCallback;
 import com.fitnation.utils.Environment;
 import com.fitnation.utils.EnvironmentManager;
 
@@ -27,14 +30,16 @@ import java.util.Map;
  * Created by J on 4/9/2017.
  */
 
-public class GetUserTask {
+public class GetUserTask extends NetworkTask{
 
-    static User user;
+    public GetUserTask(String authToken, RequestQueue queue){
+        super(authToken, queue);
+    }
 
-    public static void getUser(String loginId, final ProfilePresenter presenter){
+    public void getUser(final GetUserCallback callback){
         //USER
-        RequestQueue queue = Volley.newRequestQueue(presenter.getBaseActivity());
         Environment env = EnvironmentManager.getInstance().getCurrentEnvironment();
+        String loginId = UserLogins.getUserLogin();
         String url = env.getApiUrl()+"users/"+loginId;
         final String authToken = AuthToken.getInstance().getAccessToken();
 
@@ -44,15 +49,13 @@ public class GetUserTask {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.i("GET", response.toString());
-                        user = JsonParser.convertJsonStringToPojo(response.toString(), User.class);
-                        presenter.setUser(user);
-                        presenter.mProfile.addUserInfo(user);
-                        presenter.bindExerciseInstanceToView();
+                        User user = JsonParser.convertJsonStringToPojo(response.toString(), User.class);
+                        callback.onSuccess(user);
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("GET", error.toString());
+                        callback.onFailure(error.toString());
                     }
                 }) {
                     @Override
@@ -66,7 +69,7 @@ public class GetUserTask {
                     }
                 };
 
-        queue.add(jsonRequestUser);
+        mRequestQueue.add(jsonRequestUser);
     }
 
 
