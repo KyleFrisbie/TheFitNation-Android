@@ -130,6 +130,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
 
     @Test
     public void testCanBuildAndSaveWorkout() throws Exception {
+        final long dialogWaitTime = 10000;
         onView(withRecyclerView(R.id.exercise_recycler_view)
                 .atPositionOnView(0, R.id.add_exercise_box))
                 .perform(scrollTo())
@@ -155,7 +156,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         closeSoftKeyboard();
         UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         UiObject dialog = uiDevice.findObject(new UiSelector().text("Name your workout:"));
-        if (dialog.waitForExists(TEST_WAIT_TIME)) {
+        if (dialog.waitForExists(dialogWaitTime)) {
             UiObject button = uiDevice.findObject(new UiSelector().text("SAVE"));
             if (button.exists()) {
                 button.click();
