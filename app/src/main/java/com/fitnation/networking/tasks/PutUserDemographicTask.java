@@ -41,9 +41,7 @@ public class PutUserDemographicTask {
         queue = Volley.newRequestQueue(context);
         env = EnvironmentManager.getInstance().getCurrentEnvironment();
         url = env.getApiUrl()+"user-demographics";
-        //final String authToken = AuthToken.getInstance().getAccessToken();
-        //TODO CHANGE THIS TO PREVIOUS COMMENTED OUT LINE
-        final String authToken = AuthToken.getHardToken();
+        final String authToken = AuthToken.getInstance().getAccessToken();
 
         String jString = JsonParser.convertPojoToJsonString(userdemo);
         JSONObject udjObj;

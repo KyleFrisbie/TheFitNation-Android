@@ -46,10 +46,7 @@ public class PostUserWeightTask {
         String userDemographicId = presenter.userdemo.getId().toString();
         url = env.getApiUrl() + "user-weights/byLoggedInUser/" + userDemographicId;
 
-
-        //final String authToken = AuthToken.getInstance().getAccessToken();
-        //TODO CHANGE THIS TO PREVIOUS COMMENTED OUT LINE
-        final String authToken = AuthToken.getHardToken();
+        final String authToken = AuthToken.getInstance().getAccessToken();
 
         String jString = JsonParser.convertPojoToJsonString(weight);
         JSONObject udjObj;

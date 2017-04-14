@@ -64,9 +64,7 @@ public final class ProfileDataTask{
         String userDemoId = "3154";
         String url = env.getApiUrl()+"user-demographics/" + userDemoId;
         final ProfileData profileData = new ProfileData();
-        //final String authToken = AuthToken.getInstance().getAccessToken();
-        //TODO CHANGE THIS TO PREVIOUS COMMENTED OUT LINE
-        final String authToken = AuthToken.getHardToken();
+        final String authToken = AuthToken.getInstance().getAccessToken();
 
         //USERDEMOGRAPHIC
         JsonObjectRequest jsonRequestUserDemo =

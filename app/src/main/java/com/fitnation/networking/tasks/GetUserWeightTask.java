@@ -42,9 +42,7 @@ public class GetUserWeightTask {
         env = EnvironmentManager.getInstance().getCurrentEnvironment();
         url = env.getApiUrl()+"user-weights/byLoggedInUser/";
 
-        //final String authToken = AuthToken.getInstance().getAccessToken();
-        //TODO CHANGE THIS TO PREVIOUS COMMENTED OUT LINE
-        final String authToken = AuthToken.getHardToken();
+        final String authToken = AuthToken.getInstance().getAccessToken();
 
         JsonArrayRequest jsonRequestWeights =
                 new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {

@@ -36,9 +36,7 @@ public class GetUserTask {
         RequestQueue queue = Volley.newRequestQueue(presenter.getBaseActivity());
         Environment env = EnvironmentManager.getInstance().getCurrentEnvironment();
         String url = env.getApiUrl()+"users/"+loginId;
-        //final String authToken = AuthToken.getInstance().getAccessToken();
-        //TODO CHANGE THIS TO PREVIOUS COMMENTED OUT LINE
-        final String authToken = AuthToken.getHardToken();
+        final String authToken = AuthToken.getInstance().getAccessToken();
 
         JsonObjectRequest jsonRequestUser =
                 new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
