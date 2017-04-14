@@ -38,7 +38,7 @@ android {
 
             }
             debug {
-                testCoverageEnabled false
+                testCoverageEnabled true
                 testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
             }
         }
