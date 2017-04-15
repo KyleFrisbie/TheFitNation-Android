@@ -7,7 +7,7 @@ import com.fitnation.model.UserDemographic;
  * Created by Jeremy on 4/12/2017.
  */
 
-public interface GetUserCallback {
+public interface UserCallback {
     void onSuccess(User user);
     void onFailure(String error);
 }

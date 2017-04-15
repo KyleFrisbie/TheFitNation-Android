@@ -19,6 +19,7 @@ public class User extends RealmObject implements Cloneable{
     private boolean activated;
     private String firstName;
     private String lastName;
+    private String langKey = "en";
 
     public Long getId() { return id; }
 

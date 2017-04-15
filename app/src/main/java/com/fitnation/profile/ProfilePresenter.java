@@ -11,16 +11,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
-import com.fitnation.login.LoginFragment;
 import com.fitnation.model.User;
 import com.fitnation.model.UserWeight;
 import com.fitnation.model.UserDemographic;
 import com.fitnation.networking.AuthToken;
-import com.fitnation.networking.UserLogins;
 import com.fitnation.networking.tasks.UserDemographicTask;
-import com.fitnation.networking.tasks.GetUserTask;
-import com.fitnation.networking.tasks.GetUserWeightTask;
-import com.fitnation.profile.callbacks.GetUserCallback;
+import com.fitnation.networking.tasks.UserTask;
+import com.fitnation.networking.tasks.UserWeightTask;
+import com.fitnation.profile.callbacks.UserCallback;
 import com.fitnation.profile.callbacks.UserDemographicsCallback;
 import com.fitnation.profile.callbacks.GetUserWeightCallback;
 
@@ -129,13 +127,13 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     private void getUserFromWeb(){
-        final GetUserTask getUserTask =
-                new GetUserTask(mAuthToken, mQueue);
+        final UserTask getUserTask =
+                new UserTask(mAuthToken, mQueue);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                getUserTask.getUser(new GetUserCallback() {
+                getUserTask.getUser(new UserCallback() {
                     @Override
                     public void onSuccess(User user) {
                         setUser(user);
@@ -153,13 +151,13 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     private void getUserWeightFromWeb(){
-        final GetUserWeightTask getWeightTask =
-                new GetUserWeightTask(mAuthToken, mQueue);
+        final UserWeightTask getWeightTask =
+                new UserWeightTask(mAuthToken, mQueue);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                getWeightTask.getUserWeight(new GetUserWeightCallback() {
+                getWeightTask.getUserWeights(new GetUserWeightCallback() {
                     @Override
                     public void onSuccess(List<UserWeight> userWeightList) {
                         List<UserWeight> weightList = userWeightList;
@@ -205,7 +203,8 @@ public class ProfilePresenter implements ProfileContract.Presenter {
             Log.d(TAG,
                     "Failed to get numeric value from mUserWeight/height text box" + ex.toString());
         }
-
+        //if measurement text contains "Switch to Metric" then we're in Imperial measurements
+        isImperial = measurementText.getText().toString().toLowerCase().contains("metric");
         if (isImperial){
             measurementText.setText(res.getString(R.string.switchMeasureToImperial));
             isImperial = false;
@@ -302,10 +301,16 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         mUserdemo.setGender((mGenderSpinner.getSelectedItem().toString()));
 
         //Get/Set skill level
-        mUserdemo.setSkillLevelLevel(mLifterTypeSpinner.getSelectedItem().toString());
+        String skill = mLifterTypeSpinner.getSelectedItem().toString();
+        mUserdemo.setSkillLevelLevel(skill);
+        mUserdemo.setSkillLevelId(mProfileDataManager.getSkillLevelId(skill));
 
         double height = getNumValue(mHeightTextBox);
         double weight = getNumValue(mWeightTextBox);
+        //if measurement text contains "Switch to Metric" then we're in Imperial measurements
+        isImperial = mSwitchMeasurementButton.
+                getText().toString().
+                toLowerCase().contains("metric");
         if (isImperial){
             mUserdemo.setUnitOfMeasure("Imperial");
             mUserdemo.setHeight(getNumValue(mHeightTextBox).toString());
@@ -339,22 +344,9 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         mProfileDataManager.SaveUserData(mUser);
         mProfileDataManager.SaveWeightData(mUserWeight);
 
-        if (UserLogins.getInstance().getUserDemographicId() != null){
-            UserDemographicTask userDemographicTask = new UserDemographicTask(mAuthToken, mQueue);
-
-            userDemographicTask.putUserDemographicData(mUserdemo,
-                    new UserDemographicsCallback() {
-                        @Override
-                        public void onSuccess(UserDemographic userDemographic) {
-
-                        }
-
-                        @Override
-                        public void onFailure(String error) {
-                            Log.d(TAG, error.toString());
-                        }
-                    });
-        }
+        mProfileDataManager.saveUserDemographicToWeb(mUserdemo);
+        mProfileDataManager.saveUserToWeb(mUser);
+        mProfileDataManager.saveUserWeightToWeb(mUserWeight);
     }
 
     public void bindExerciseInstanceToView(){

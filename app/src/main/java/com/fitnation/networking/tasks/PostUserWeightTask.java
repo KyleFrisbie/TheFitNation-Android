@@ -26,7 +26,7 @@ import java.util.Map;
  * Created by J on 4/9/2017.
  */
 
-public class PostUserWeightTask {
+public class PostUserWeightTask extends NetworkTask{
 
     static List<UserWeight> weightList;
     static UserWeight weight;
@@ -35,48 +35,9 @@ public class PostUserWeightTask {
     static String url;
 
 
-    public static void postUserWeight(UserWeight weight, ProfilePresenter presenter) {
-        //save data to web
-        queue = Volley.newRequestQueue(presenter.getBaseActivity());
-        env = EnvironmentManager.getInstance().getCurrentEnvironment();
-        String userDemographicId = presenter.mUserdemo.getId().toString();
-        url = env.getApiUrl() + "mUser-weights/byLoggedInUser/" + userDemographicId;
-
-        final String authToken = AuthToken.getInstance().getAccessToken();
-
-        String jString = JsonParser.convertPojoToJsonString(weight);
-        JSONObject udjObj;
-        try {
-            udjObj = new JSONObject(jString);
-            Log.i("JSON", jString);
-        } catch (org.json.JSONException e) {
-            Log.d("JSON", "Failed to convert User Demographic to JSON String");
-            udjObj = new JSONObject();
-        }
-
-        JsonObjectRequest jsonWeightRequest = new JsonObjectRequest(Request.Method.POST, url, udjObj, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-                Log.i("POST", response.toString());
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("POST", error.toString());
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/json");
-                params.put("Accept", "application/json");
-                params.put("Authorization", "Bearer " + authToken);
-                return params;
-            }
-        };
-
-        queue.add(jsonWeightRequest);
+    PostUserWeightTask(String authToken, RequestQueue queue){
+        super(authToken, queue);
     }
+
+
 }

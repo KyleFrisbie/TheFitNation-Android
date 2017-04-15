@@ -16,6 +16,7 @@ import io.realm.annotations.PrimaryKey;
 public class UserWeight extends RealmObject implements Cloneable{
     @PrimaryKey
     private Long androidId;
+    private Long id;
     private Long userDemographicId;
     private String weightDate;
     private Float weight;

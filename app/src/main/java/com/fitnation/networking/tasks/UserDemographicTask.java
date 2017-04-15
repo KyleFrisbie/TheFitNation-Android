@@ -48,7 +48,7 @@ public class UserDemographicTask extends NetworkTask{
                         UserDemographic userdemo = JsonParser.convertJsonStringToPojo(response.toString(), UserDemographic.class);
                         UserLogins.setUserLogin(userdemo.getUserLogin());
                         UserLogins.setUserDemographicId(String.valueOf(userdemo.getId()));
-                        UserLogins.setUserId(userdemo.getUserId());
+                        UserLogins.setUserId(userdemo.getUserId().toString());
                         callback.onSuccess(userdemo);
                     }
                 }, new Response.ErrorListener() {

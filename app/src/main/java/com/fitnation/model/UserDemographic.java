@@ -27,10 +27,12 @@ public class UserDemographic extends RealmObject implements Cloneable {
     private String gender;
     private Float height;
     private String skillLevelLevel;
+    private Long skillLevelId;
     private String unitOfMeasure;
     private Boolean isActive;
     private RealmList<Gym> gyms;
     private RealmList<UserWeight> userWeights;
+    private Long user_weight_id;
     private WorkoutLog workoutLog;
     private RealmList<WorkoutTemplate> workoutTemplates;
     private String dateOfBirth;
@@ -216,5 +218,13 @@ public class UserDemographic extends RealmObject implements Cloneable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getSkillLevelId() {
+        return skillLevelId;
+    }
+
+    public void setSkillLevelId(Long skillLevelId) {
+        this.skillLevelId = skillLevelId;
     }
 }
