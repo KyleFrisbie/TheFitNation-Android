@@ -163,6 +163,10 @@ public class ExercisesManager extends DataManager {
         }).start();
     }
 
+    public boolean atLeastOneExerciseSelected() {
+        return mSelectedExercises.size() >= 1;
+    }
+
 
     private WorkoutInstance buildWorkoutInstance(WorkoutTemplate updatedTemplate, String name) {
         WorkoutInstance workoutInstance = new WorkoutInstance(name, 0f, 1, updatedTemplate, "");

@@ -23,6 +23,7 @@ public interface ExercisesParentContract {
         int getSelectedTab();
         void showSuccess(AlertDialog alertDialog);
         void showFailure(AlertDialog alertDialog);
+        void setSaveButtonEnabled(boolean shouldEnable);
     }
 
     interface Presenter extends BasePresenter {

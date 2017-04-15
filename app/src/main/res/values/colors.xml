@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00a8c2</color>
     <color name="colorAccent">#00b8d4</color>
     <color name="actionable">#00b8d4</color>
+    <color name="disabled">#bdbdbd</color>
     <color name="defaultBackground">#FFFFFF</color>
     <color name="statusBar">@color/colorPrimary</color>
     <color name="textColor">#FFFFFF</color>

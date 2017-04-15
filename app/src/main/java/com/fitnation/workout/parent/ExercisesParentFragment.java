@@ -221,6 +221,11 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
     }
 
     @Override
+    public void setSaveButtonEnabled(boolean shouldEnable) {
+        mActionButton.setEnabled(shouldEnable);
+    }
+
+    @Override
     public void onExerciseSelected(ExerciseInstance exerciseInstance, boolean isSelected) {
         mPresenter.onExerciseSelected(exerciseInstance, isSelected);
     }

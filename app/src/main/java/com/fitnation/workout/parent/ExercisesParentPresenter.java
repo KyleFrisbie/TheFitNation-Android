@@ -68,7 +68,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
 
     @Override
     public void onError() {
-        //TODO re-authenticate user
+        //TODO re-authenticate user if 401
         mView.stopProgress();
     }
 
@@ -86,6 +86,11 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void onExerciseSelected(ExerciseInstance exerciseInstance, boolean isSelected) {
         mExerciseManager.exerciseInstanceSelected(exerciseInstance, isSelected);
+        if(mExerciseManager.atLeastOneExerciseSelected()) {
+            mView.setSaveButtonEnabled(true);
+        } else {
+            mView.setSaveButtonEnabled(false);
+        }
     }
 
     //----------------------------------SaveDialogCallback----------------------------------//
@@ -93,28 +98,32 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void onSaveRequested(String name) {
         Log.i(TAG, "User requested to save workout with name: " + name);
-        mView.showProgress();
-        mExerciseManager.createWorkoutAndSave(name, new SaveWorkoutCallback() {
-            @Override
-            public void onSuccess() {
-                mView.stopProgress();
-                mView.showSuccess(ExerciseAlertDialogFactory.getSuccess(mView.getBaseActivity(), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
+        if(name != null && !name.isEmpty()) {
+            mView.showProgress();
+            mExerciseManager.createWorkoutAndSave(name, new SaveWorkoutCallback() {
+                @Override
+                public void onSuccess() {
+                    mView.stopProgress();
+                    mView.showSuccess(ExerciseAlertDialogFactory.getSuccess(mView.getBaseActivity(), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
 
-                        //TODO clear back stack, launch Fragment for viewing created workouts
-                    }
-                }));
+                            //TODO clear back stack, launch Fragment for viewing created workouts
+                        }
+                    }));
 
-            }
+                }
 
-            @Override
-            public void onFailure(String error) {
-                mView.stopProgress();
-                mView.showFailure(ExerciseAlertDialogFactory.getErrorDialog(error, mView.getBaseActivity()));
-            }
-        });
+                @Override
+                public void onFailure(String error) {
+                    mView.stopProgress();
+                    mView.showFailure(ExerciseAlertDialogFactory.getErrorDialog(error, mView.getBaseActivity()));
+                }
+            });
+        } else {
+            mView.showFailure(ExerciseAlertDialogFactory.getErrorDialog("A Workout name must be provided", mView.getBaseActivity()));
+        }
     }
 
     //----------------------------------OnExerciseUpdatedCallback----------------------------------//
