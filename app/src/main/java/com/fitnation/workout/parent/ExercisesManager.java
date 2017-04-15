@@ -106,6 +106,8 @@ public class ExercisesManager extends DataManager {
                             callback.onError();
                         }
                     });
+                } else {
+                    callback.onExercisesRetrieved(mExerciseInstancesTab1, mExerciseInstancesTab2, mExerciseInstancesTab3);
                 }
             }
         }).start();
@@ -147,7 +149,7 @@ public class ExercisesManager extends DataManager {
 
                             @Override
                             public void onFailure(String error) {
-                                saveWorkoutCallback.onFailure("Unable to save individual Workout Instances. ErrorCode: " + error );
+                                saveWorkoutCallback.onFailure("Unable to save individual Workout Instances. ErrorCode: " + error);
                             }
                         });
                     }
