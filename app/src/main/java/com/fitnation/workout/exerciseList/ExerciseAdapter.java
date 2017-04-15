@@ -9,6 +9,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.fitnation.R;
+import com.fitnation.model.ExerciseSetView;
+import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
@@ -24,7 +26,7 @@ import butterknife.ButterKnife;
  * Adapter for displaying some ExerciseInstance's
  */
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHolder> {
-    private List<ExerciseInstance> mExercises;
+    private List<ExerciseView> mExercises;
     private ExerciseSelectedCallback mSelectedExercisesCallback;
     private OnEditExercisePressedCallback mEditPressedCallback;
 
@@ -33,7 +35,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
      * @param exercises - exercises to be shown
      * @param callback - notified when an exercise is selected/unselected
      */
-    public ExerciseAdapter(List<ExerciseInstance> exercises, ExerciseSelectedCallback callback, OnEditExercisePressedCallback onEditExercisePressedCallback) {
+    public ExerciseAdapter(List<ExerciseView> exercises, ExerciseSelectedCallback callback, OnEditExercisePressedCallback onEditExercisePressedCallback) {
         mExercises = exercises;
         mSelectedExercisesCallback = callback;
         mEditPressedCallback = onEditExercisePressedCallback;
@@ -47,9 +49,8 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final ExerciseInstance exerciseInstance = mExercises.get(position);
-        final Exercise exercise = exerciseInstance.getExercise();
-        List<ExerciseInstanceSet> sets = exerciseInstance.getExerciseInstanceSets();
+        final ExerciseView exerciseInstance = mExercises.get(position);
+        List<ExerciseSetView> sets = exerciseInstance.getExerciseSetView();
         String setText = "";
         String repText = "";
         int cutOff = 3;
@@ -61,7 +62,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         }
 
         for (int i = 0; i < cutOff; i++) {
-            ExerciseInstanceSet set = sets.get(i);
+            ExerciseSetView set = sets.get(i);
 
             if(i == 0) {
                 setText = String.valueOf(set.getOrderNumber());
@@ -73,7 +74,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         }
 
         holder.addExerciseBox.setChecked(exerciseInstance.isSelected());
-        holder.exerciseName.setText(exercise.getName());
+        holder.exerciseName.setText(exerciseInstance.getName());
         holder.setOne.setText(setText);
         holder.setOneReps.setText(repText);
         holder.editExerciseButton.setOnClickListener(new View.OnClickListener() {

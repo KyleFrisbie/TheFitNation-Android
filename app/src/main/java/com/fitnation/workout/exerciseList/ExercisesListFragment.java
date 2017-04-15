@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
@@ -29,7 +30,7 @@ import butterknife.ButterKnife;
 public class ExercisesListFragment extends BaseFragment {
     private static final String TAG = ExercisesListFragment.class.getSimpleName();
     private static final String EXERCISE_LIST = "EXERCISE_LIST";
-    private List<ExerciseInstance> mExercises;
+    private List<ExerciseView> mExercises;
     @BindView(R.id.exercise_recycler_view)
     public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -54,7 +55,7 @@ public class ExercisesListFragment extends BaseFragment {
         }
     }
 
-    public static ExercisesListFragment newInstance(List<ExerciseInstance> exerciseInstances, ExerciseSelectedCallback callback, OnEditExercisePressedCallback onEditExercisePressedCallback) {
+    public static ExercisesListFragment newInstance(List<ExerciseView> exerciseInstances, ExerciseSelectedCallback callback, OnEditExercisePressedCallback onEditExercisePressedCallback) {
         ExercisesListFragment  exercisesListFragment = new ExercisesListFragment();
 
         if(exerciseInstances != null && !exerciseInstances.isEmpty()) {
@@ -85,7 +86,7 @@ public class ExercisesListFragment extends BaseFragment {
         Bundle bundle = getArguments();
 
         if(bundle != null) {
-            mExercises = (List<ExerciseInstance>) bundle.get(EXERCISE_LIST);
+            mExercises = (List<ExerciseView>) bundle.get(EXERCISE_LIST);
         }
 
         if(savedInstanceState != null) {
@@ -129,7 +130,7 @@ public class ExercisesListFragment extends BaseFragment {
         return v;
     }
 
-    public void displayExercises(final List<ExerciseInstance> exercises) {
+    public void displayExercises(final List<ExerciseView> exercises) {
         mExercises = exercises;
         if(getView() != null) {
             getActivity().runOnUiThread(new Runnable() {

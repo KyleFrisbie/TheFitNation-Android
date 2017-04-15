@@ -10,15 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.fitnation.R;
-import com.fitnation.model.ExerciseInstance;
-import com.fitnation.model.UserExercise;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.workout.exerciseList.ExercisesListFragment;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +52,7 @@ public class EditWorkoutFragment extends Fragment {
         ButterKnife.bind(this, v);
 
 
-        ExercisesListFragment exercisesListFragment = ExercisesListFragment.newInstance(mUserWorkoutInstance, null, null);
+        ExercisesListFragment exercisesListFragment = ExercisesListFragment.newInstance(mUserWorkoutInstance.getExerciseViews(), null, null);
         getFragmentManager().beginTransaction().add(R.id.edit_workout_container, exercisesListFragment).commit();
 
         mFirstLabelHeader.setText(R.string.completed);

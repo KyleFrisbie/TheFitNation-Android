@@ -3,7 +3,9 @@ package com.fitnation.model;
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import io.realm.RealmList;
@@ -38,6 +40,10 @@ public class UserWorkoutInstance extends RealmObject {
         this.userExerciseInstances = userExerciseInstances;
     }
 
+    public RealmList<UserExerciseInstance> getUserExerciseInstances() {
+        return userExerciseInstances;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -56,6 +62,15 @@ public class UserWorkoutInstance extends RealmObject {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public List<ExerciseView> getExerciseViews() {
+        List<ExerciseView> exerciseViews = new ArrayList<>(userExerciseInstances.size());
+        for (UserExerciseInstance exercise : userExerciseInstances) {
+            exerciseViews.add(exercise);
+        }
+
+        return exerciseViews;
     }
 
     @Override

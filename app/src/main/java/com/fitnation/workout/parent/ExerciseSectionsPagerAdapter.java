@@ -48,9 +48,9 @@ public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
     }
 
     public void refresh(List<ExerciseInstance> exerciseListTab1, List<ExerciseInstance> exerciseListTab2, List<ExerciseInstance> exerciseListTab3) {
-        mFragmentTab1.displayExercises(exerciseListTab1);
-        mFragmentTab2.displayExercises(exerciseListTab2);
-        mFragmentTab3.displayExercises(exerciseListTab3);
+        mFragmentTab1.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(exerciseListTab1));
+        mFragmentTab2.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(exerciseListTab2));
+        mFragmentTab3.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(exerciseListTab3));
     }
 
     @Override
@@ -66,13 +66,13 @@ public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
         switch (position) {
             case 0:
-                mFragmentTab1 = ExercisesListFragment.newInstance(mExerciseListTab1, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+                mFragmentTab1 = ExercisesListFragment.newInstance(ExerciseInstance.convertExercisesToExerciseViews(mExerciseListTab1), mExerciseSelectedCallback, mOnEditExercisePressedCallback);
                 return mFragmentTab1;
             case 1:
-                mFragmentTab2 = ExercisesListFragment.newInstance(mExerciseListTab2, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+                mFragmentTab2 = ExercisesListFragment.newInstance(ExerciseInstance.convertExercisesToExerciseViews(mExerciseListTab2), mExerciseSelectedCallback, mOnEditExercisePressedCallback);
                 return mFragmentTab2;
             case 2:
-                mFragmentTab3 = ExercisesListFragment.newInstance(mExerciseListTab3, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+                mFragmentTab3 = ExercisesListFragment.newInstance(ExerciseInstance.convertExercisesToExerciseViews(mExerciseListTab3), mExerciseSelectedCallback, mOnEditExercisePressedCallback);
                 return mFragmentTab3;
             default:
                 return null;

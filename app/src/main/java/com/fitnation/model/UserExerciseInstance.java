@@ -1,12 +1,14 @@
 package com.fitnation.model;
 
+import java.util.List;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
  * Created by Ryan on 3/22/2017.
  */
-public class UserExerciseInstance extends RealmObject{
+public class UserExerciseInstance extends RealmObject implements ExerciseView{
     private Long id;
     private Long userWorkoutInstanceId;
     private Long exerciseInstanceId;
@@ -46,4 +48,28 @@ public class UserExerciseInstance extends RealmObject{
         //Required default constructor
     }
 
+    @Override
+    public List<ExerciseSetView> getExerciseSetView() {
+        return null;
+    }
+
+    @Override
+    public boolean isSelected() {
+        return false;
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public void setSelected(boolean checked) {
+
+    }
+
+    @Override
+    public Long getId() {
+        return null;
+    }
 }

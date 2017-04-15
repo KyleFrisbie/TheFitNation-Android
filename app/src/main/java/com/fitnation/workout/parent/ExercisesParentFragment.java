@@ -17,6 +17,7 @@ import android.widget.Button;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.exerciseList.ExercisesListFragment;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
@@ -173,9 +174,9 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
 
         mSectionsPagerAdapter.setExerciseData(tabOneExercises, tabTwoExercises, tabThreeExercises);
 
-        beginnerFragment.displayExercises(tabOneExercises);
-        intermediatFragment.displayExercises(tabTwoExercises);
-        advancedFragment.displayExercises(tabThreeExercises);
+        beginnerFragment.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(tabOneExercises));
+        intermediatFragment.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(tabTwoExercises));
+        advancedFragment.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(tabThreeExercises));
     }
 
     @Override
@@ -226,12 +227,13 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
     }
 
     @Override
-    public void onExerciseSelected(ExerciseInstance exerciseInstance, boolean isSelected) {
+    public void onExerciseSelected(ExerciseView exerciseView, boolean isSelected) {
+        ExerciseInstance exerciseInstance = (ExerciseInstance) exerciseView;
         mPresenter.onExerciseSelected(exerciseInstance, isSelected);
     }
 
     @Override
-    public void onEditPressed(ExerciseInstance exercise) {
-        mPresenter.onEditPressed(exercise);
+    public void onEditPressed(ExerciseView exercise) {
+        mPresenter.onEditPressed((ExerciseInstance) exercise);
     }
 }

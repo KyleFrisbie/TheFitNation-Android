@@ -9,6 +9,7 @@ import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,7 +21,7 @@ import io.realm.RealmObject;
  * Created by Ryan on 3/21/2017.
  */
 @Parcel(implementations = { ExerciseInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { ExerciseInstance.class })
-public class ExerciseInstance extends RealmObject implements Cloneable, Comparable {
+public class ExerciseInstance extends RealmObject implements Cloneable, Comparable, ExerciseView {
     public static final Float REPS_DEFAULT = 8f;
     public static final Float EFFORT_DEFAULT = 20f;
     public static final Float REST_TIME_DEFAULT = 30f;
@@ -43,7 +44,6 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
     @Expose(serialize = false)
     private boolean selected;
     private RealmList<ExerciseInstanceSet> exerciseInstanceSets;
-
 
 
     public ExerciseInstance() {
@@ -81,8 +81,37 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
         this.selected = selected;
     }
 
+    @Override
+    public List<ExerciseSetView> getExerciseSetView() {
+        List<ExerciseSetView> exerciseSetView = new ArrayList<>();
+        for (ExerciseInstanceSet set : exerciseInstanceSets) {
+            exerciseSetView.add(set);
+        }
+
+        return exerciseSetView;
+    }
+
+    public static List<ExerciseView> convertExercisesToExerciseViews(List<ExerciseInstance> exerciseInstances) {
+        List<ExerciseView> exerciseViews = null;
+
+        if(exerciseInstances != null) {
+            exerciseViews = new ArrayList<>();
+            for (ExerciseInstance exerciseInstance :
+                    exerciseInstances) {
+                exerciseViews.add(exerciseInstance);
+            }
+        }
+
+        return exerciseViews;
+    }
+
     public boolean isSelected() {
         return selected;
+    }
+
+    @Override
+    public String getName() {
+        return exerciseName;
     }
 
     public RealmList<ExerciseInstanceSet> getExerciseInstanceSets() {

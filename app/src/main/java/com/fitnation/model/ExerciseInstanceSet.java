@@ -11,7 +11,7 @@ import io.realm.RealmObject;
 @Parcel(implementations = { ExerciseInstanceSetRealmProxy.class },
         value = Parcel.Serialization.BEAN,
         analyze = { ExerciseInstanceSet.class })
-public class ExerciseInstanceSet extends RealmObject implements Cloneable{
+public class ExerciseInstanceSet extends RealmObject implements Cloneable, ExerciseSetView{
     private Long id;
     private Long androidId;
     private Integer orderNumber;
@@ -85,7 +85,7 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
         return reqQuantity;
     }
 
-    public int getRepQuantityAsInt() {
+    public Integer getRepQuantityAsInt() {
         return Math.round(reqQuantity);
     }
 
