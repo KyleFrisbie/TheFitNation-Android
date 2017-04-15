@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.fitnation.login.RegisterFragment"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/textColorDark">
+
+    <ImageView
+        android:id="@+id/register_background_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/background_image"/>
+
+    <EditText
+        android:id="@+id/registerEmail_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/registerPassword_editText"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/login_vertical_margin"
+        android:layout_marginLeft="@dimen/login_blocks_horizontal_margin"
+        android:layout_marginRight="@dimen/login_blocks_horizontal_margin"
+        android:background="@color/loginEditText"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:padding="6dp" />
+
+    <EditText
+        android:id="@+id/registerPassword_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/userName_editText"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/login_vertical_margin"
+        android:layout_marginRight="@dimen/login_blocks_horizontal_margin"
+        android:layout_marginLeft="@dimen/login_blocks_horizontal_margin"
+        android:background="@color/loginEditText"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:padding="6dp" />
+
+    <EditText
+        android:id="@+id/userName_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/first_name_editText"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/login_vertical_margin"
+        android:layout_marginLeft="@dimen/login_blocks_horizontal_margin"
+        android:layout_marginRight="@dimen/login_blocks_horizontal_margin"
+        android:background="@color/loginEditText"
+        android:ems="10"
+        android:hint="@string/username"
+        android:inputType="textPersonName"
+        android:padding="6dp" />
+
+    <EditText
+        android:id="@+id/first_name_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/first_name"
+        android:inputType="textPersonName"
+        android:layout_above="@+id/last_name_editText"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/login_vertical_margin"
+        android:layout_marginLeft="@dimen/login_blocks_horizontal_margin"
+        android:layout_marginRight="@dimen/login_blocks_horizontal_margin"
+        android:background="@color/loginEditText"
+        android:padding="6dp"/>
+
+    <EditText
+        android:id="@+id/last_name_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="@string/last_name"
+        android:inputType="textPersonName"
+        android:layout_above="@+id/register_button"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/login_vertical_margin"
+        android:layout_marginLeft="@dimen/login_blocks_horizontal_margin"
+        android:layout_marginRight="@dimen/login_blocks_horizontal_margin"
+        android:background="@color/loginEditText"
+        android:padding="6dp" />
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:background="@color/actionable"
+        android:text="@string/register"
+        android:textColor="@color/loginButtonText"
+        android:layout_centerVertical="true"
+        android:layout_alignEnd="@id/last_name_editText"
+        android:layout_alignStart="@id/last_name_editText"/>
+
+</RelativeLayout>
