@@ -189,11 +189,11 @@
             android:layout_alignBottom="@+id/heightView"
             android:layout_alignEnd="@+id/weightEditText"
             android:layout_alignStart="@+id/weightEditText"
-            android:inputType="number"
             android:hint="@string/height"
-            android:textSize="18sp"
+            android:inputType="numberDecimal"
             android:lines="1"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:textSize="18sp" />
 
         <!-- LIFTER TYPE -->
         <TextView

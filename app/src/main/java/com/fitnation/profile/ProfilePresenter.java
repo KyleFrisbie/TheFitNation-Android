@@ -206,6 +206,8 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
                             setUserWeight(weight);
                             gotWeight = true;
                             sendProfileDataToView();
+                        } else {
+                            Log.i(TAG, "Weight list attained from server is empty");
                         }
                     }
 
@@ -349,8 +351,9 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
         double height = getNumValue(mHeightTextBox);
         double weight = getNumValue(mWeightTextBox);
         //if measurement text contains "Switch to Metric" then we're in Imperial measurements
-        isImperial = mProfile.getUnitOfMeasure().toString().
-                toLowerCase().equals("Imperial");
+        isImperial = mSwitchMeasurementButton
+                .getText().toString()
+                .toLowerCase().contains("metric");
         if (isImperial){
             mUserdemo.setUnitOfMeasure("Imperial");
             Log.i(TAG, "Setting measurement to Imperial");

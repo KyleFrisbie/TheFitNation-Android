@@ -65,6 +65,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     ProfileData mProfile;
 
+    private final String TAG = ProfileFragment.class.getSimpleName();
 
     public ProfileFragment() {
         // Empty constructor
@@ -266,7 +267,8 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     }
 
     private boolean isImperial(){
-        return (mProfile.getUnitOfMeasure().contains("imperial"));
+        Log.i(TAG, mProfile.getUnitOfMeasure());
+        return (mProfile.getUnitOfMeasure().toLowerCase().contains("imperial"));
     }
 
 }

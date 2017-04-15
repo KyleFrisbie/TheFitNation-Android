@@ -73,7 +73,7 @@ public class UserDemographicTask extends NetworkTask{
 
     public void putUserDemographicData(UserDemographic userdemo, UserDemographicsCallback callback){
         //save data to web
-        String resourceRoute = "/user-demographics";
+        String resourceRoute = "user-demographics";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment()
                 .getApiUrl()+resourceRoute;
         final String authToken = AuthToken.getInstance().getAccessToken();
@@ -82,7 +82,7 @@ public class UserDemographicTask extends NetworkTask{
         JSONObject udjObj;
         try {
             udjObj = new JSONObject(jString);
-            Log.i("JSON", jString);
+            Log.i("JSON", "User Demographic Successfully PUT to Web");
         } catch (org.json.JSONException e) {
             Log.d("JSON", "Failed to convert User Demographic to JSON String");
             udjObj = new JSONObject();

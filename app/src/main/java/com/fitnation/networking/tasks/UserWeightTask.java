@@ -89,9 +89,9 @@ public class UserWeightTask extends NetworkTask{
         JSONObject udjObj;
         try {
             udjObj = new JSONObject(jString);
-            Log.i("JSON", jString);
+            Log.i(TAG, "User Weight Successfully POST to Web");
         } catch (org.json.JSONException e) {
-            Log.d("JSON", "Failed to convert User Demographic to JSON String");
+            Log.d(TAG, "Failed to convert User Demographic to JSON String");
             udjObj = new JSONObject();
         }
 
