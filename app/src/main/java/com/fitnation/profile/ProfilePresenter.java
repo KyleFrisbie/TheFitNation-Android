@@ -26,6 +26,8 @@ import com.fitnation.profile.callbacks.UserCallback;
 import com.fitnation.profile.callbacks.UserDemographicsCallback;
 import com.fitnation.profile.callbacks.GetUserWeightCallback;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -96,11 +98,11 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
     public void onDateSet
             (DatePicker view, int year, int month,
              int day, EditText dobText, EditText ageText) {
+        month++;
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         int yearsOld;
         if (calendar!=null) {
-            Calendar now = Calendar.getInstance();
 
             yearsOld = getAgeInYears(calendar);
             dobText.setText(
