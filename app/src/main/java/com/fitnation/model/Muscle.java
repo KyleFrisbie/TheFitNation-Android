@@ -13,6 +13,23 @@ public class Muscle extends RealmObject {
     private Long androidId;
     private long id;
     private String name;
+    private String bodyPartName;
+
+    /**
+     * Overloaded Constructor
+     * @param id
+     * @param name
+     * @param bodyPartName
+     */
+    public Muscle(long id, String name, String bodyPartName) {
+        this.id = id;
+        this.name = name;
+        this.bodyPartName = bodyPartName;
+    }
+
+    public Muscle() {
+        //required default constructor
+    }
 
     public void setId(Long id) {
         this.id = id;

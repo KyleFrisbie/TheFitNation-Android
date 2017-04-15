@@ -47,7 +47,6 @@ public class TestRealmSaving extends InstrumentationTest {
     public void testDataIsPersisted() throws Exception {
         final String FIRST_NAME = "Ryan";
         final String LAST_NAME = "Newsom";
-        final Object syncObject = new Object();
         final DataManager dataManager = new TestDataManager();
         UserDemographic userDemographic = new UserDemographic();
         userDemographic.setAndroidIdToNextAvailable();
@@ -59,42 +58,30 @@ public class TestRealmSaving extends InstrumentationTest {
             @Override
             public void onError() {
                 Assert.assertTrue(false);
-                synchronized (syncObject) {
-                    syncObject.notify();
-                }
             }
 
             @Override
             public void onSuccess() {
                 Assert.assertTrue(true);
-                synchronized (syncObject) {
-                    syncObject.notify();
-                }
+                Realm realm = Realm.getDefaultInstance();
+                // Build the query looking at all users:
+                RealmQuery<UserDemographic> query = realm.where(UserDemographic.class);
+
+                // Add query conditions:
+                query.equalTo("androidId", mUserId);
+
+
+                // Execute the query:
+                RealmResults<UserDemographic> result1 = query.findAll();
+
+                assertEquals(result1.size(), 1);
+                UserDemographic userDemographicFromDb = result1.get(0);
+
+                assertNotNull(userDemographicFromDb);
+                assertTrue(userDemographicFromDb.getAndroidId() != 0L);
+                assertEquals(FIRST_NAME, userDemographicFromDb.getFirstName());
+                assertEquals(LAST_NAME, userDemographicFromDb.getLastName());
             }
         });
-
-        synchronized (syncObject){
-            syncObject.wait();
-        }
-
-        Realm realm = Realm.getDefaultInstance();
-        // Build the query looking at all users:
-        RealmQuery<UserDemographic> query = realm.where(UserDemographic.class);
-
-        // Add query conditions:
-        query.equalTo("androidId", mUserId);
-
-
-        // Execute the query:
-        RealmResults<UserDemographic> result1 = query.findAll();
-
-        assertEquals(result1.size(), 1);
-        UserDemographic userDemographicFromDb = result1.get(0);
-
-        assertNotNull(userDemographicFromDb);
-        assertTrue(userDemographicFromDb.getAndroidId() != 0L);
-        assertEquals(FIRST_NAME, userDemographicFromDb.getFirstName());
-        assertEquals(LAST_NAME, userDemographicFromDb.getLastName());
-
     }
 }

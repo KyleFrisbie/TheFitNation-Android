@@ -15,6 +15,6 @@ public class Environment {
     }
 
     public String getApiUrl() {
-        return baseUrl += "api/";
+        return baseUrl + "api/";
     }
 }
