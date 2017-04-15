@@ -8,9 +8,9 @@ import io.realm.RealmObject;
  */
 public class UserExerciseInstance extends RealmObject{
     private Long id;
+    private Long userWorkoutInstanceId;
+    private Long exerciseInstanceId;
     private String notes;
-    private UserWorkoutInstance userWorkoutInstance;
-    private ExerciseInstance exerciseInstance;
     private RealmList<UserExerciseInstanceSet> userExerciseInstanceSets;
 
     /**
@@ -22,19 +22,23 @@ public class UserExerciseInstance extends RealmObject{
      */
     public UserExerciseInstance(String notes, UserWorkoutInstance userWorkoutInstance, ExerciseInstance exerciseInstance, RealmList<UserExerciseInstanceSet> userExerciseInstanceSets) {
         this.notes = notes;
-        this.userWorkoutInstance = userWorkoutInstance;
-        this.exerciseInstance = exerciseInstance;
+        this.userWorkoutInstanceId = userWorkoutInstance.getId();
+        this.exerciseInstanceId = exerciseInstance.getId();
         this.userExerciseInstanceSets = userExerciseInstanceSets;
+
+        for (ExerciseInstanceSet set: exerciseInstance.getExerciseInstanceSets()) {
+            userExerciseInstanceSets.add(new UserExerciseInstanceSet(set));
+        }
     }
 
     public UserExerciseInstance(ExerciseInstance exerciseInstance, String userNotes, UserWorkoutInstance userWorkoutInstance) {
         this.notes = userNotes;
-        this.userWorkoutInstance = userWorkoutInstance;
-        this.exerciseInstance = exerciseInstance;
+        this.userWorkoutInstanceId = userWorkoutInstance.getId();
+        this.exerciseInstanceId = exerciseInstance.getId();
         userExerciseInstanceSets = new RealmList<>();
 
         for (ExerciseInstanceSet set: exerciseInstance.getExerciseInstanceSets()) {
-            userExerciseInstanceSets.add(new UserExerciseInstanceSet(set, this));
+            userExerciseInstanceSets.add(new UserExerciseInstanceSet(set));
         }
     }
 
@@ -42,7 +46,4 @@ public class UserExerciseInstance extends RealmObject{
         //Required default constructor
     }
 
-    public ExerciseInstance getExerciseInstance() {
-        return exerciseInstance;
-    }
 }

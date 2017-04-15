@@ -73,6 +73,10 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
         return effortQuantity;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
     public Float getRestTime() {
         return restTime;
     }

@@ -12,7 +12,6 @@ public class UserExerciseInstanceSet extends RealmObject {
     @PrimaryKey
     private Long androidId;
     private Long id;
-    private UserExerciseInstance userExerciseInstance;
     private Integer orderNumber;
     private Float repQuantity;
     private Float effortQuantity;
@@ -24,7 +23,6 @@ public class UserExerciseInstanceSet extends RealmObject {
      * Constructor
      * @param androidId
      * @param id
-     * @param userExerciseInstance
      * @param orderNumber
      * @param repQuantity
      * @param effortQuantity
@@ -32,10 +30,9 @@ public class UserExerciseInstanceSet extends RealmObject {
      * @param notes
      * @param exerciseInstanceSet
      */
-    public UserExerciseInstanceSet(Long androidId, Long id, UserExerciseInstance userExerciseInstance, Integer orderNumber, Float repQuantity, Float effortQuantity, Float restTime, String notes, ExerciseInstanceSet exerciseInstanceSet) {
+    public UserExerciseInstanceSet(Long androidId, Long id, Integer orderNumber, Float repQuantity, Float effortQuantity, Float restTime, String notes, ExerciseInstanceSet exerciseInstanceSet) {
         this.androidId = androidId;
         this.id = id;
-        this.userExerciseInstance = userExerciseInstance;
         this.orderNumber = orderNumber;
         this.repQuantity = repQuantity;
         this.effortQuantity = effortQuantity;
@@ -44,14 +41,13 @@ public class UserExerciseInstanceSet extends RealmObject {
         this.exerciseInstanceSetId = exerciseInstanceSet.getId();
     }
 
-    public UserExerciseInstanceSet(ExerciseInstanceSet exerciseInstanceSet, UserExerciseInstance exerciseInstance) {
+    public UserExerciseInstanceSet(ExerciseInstanceSet exerciseInstanceSet) {
         this.exerciseInstanceSetId = exerciseInstanceSet.getId();
-        this.userExerciseInstance = exerciseInstance;
         this.orderNumber = exerciseInstanceSet.getOrderNumber();
         this.repQuantity = exerciseInstanceSet.getReqQuantity();
         this.effortQuantity = exerciseInstanceSet.getEffortQuantity();
         this.restTime = exerciseInstanceSet.getRestTime();
-        this.notes = ""; //TODO implement this field down the road for custom notes per set
+        this.notes = exerciseInstanceSet.getNotes(); //TODO implement this field down the road for custom notes per set
 
     }
 
