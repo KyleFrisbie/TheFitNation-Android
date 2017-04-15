@@ -42,7 +42,7 @@
     <string name="intermediate">INTERMEDIATE</string>
     <string name="advanced">ADVANCED</string>
     <string name="save_workout_title">Name your workout:</string>
-    <string name="build_workout_title">Build a Workout</string>
+    <string name="build_workout_title">Create a Workout</string>
     <string name="dialog_success_title">Success</string>
     <string name="dialog_error_title">Error</string>
     <string name="dialog_build_workout_success_message">Your workout was successfully created!</string>
