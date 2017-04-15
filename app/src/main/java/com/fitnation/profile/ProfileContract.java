@@ -1,5 +1,6 @@
 package com.fitnation.profile;
 
+import android.app.ProgressDialog;
 import android.support.v4.app.FragmentManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -15,13 +16,14 @@ import com.fitnation.model.UserWeight;
 
 public interface ProfileContract {
     interface View extends BaseView<Presenter> {
-
+        void showProgress(ProgressDialog progressDialog);
+        void stopProgress();
         FragmentManager getFragmentManager();
-
         void bindExerciseInstanceToView(ProfileData pInstance);
     }
 
     interface Presenter extends BasePresenter {
+        void start();
         void saveProfileData();
 
         void getProfileData();
@@ -35,7 +37,7 @@ public interface ProfileContract {
 
         void onSaveClicked(EditText mNameTextBox, EditText mWeightTextBox, EditText mDobTextBox, EditText mHeightTextBox, EditText mEmailTextBox, TextView mSwitchMeasurementButton, Spinner mGenderSpinner, Spinner mLifterTypeSpinner);
 
-        void start();
+
 
         void onDateSet(DatePicker view, int year, int month,
                        int day, EditText dobText, EditText ageText);

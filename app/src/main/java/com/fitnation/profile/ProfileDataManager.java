@@ -15,7 +15,6 @@ import com.fitnation.model.UserWeight;
 import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.UserLogins;
-import com.fitnation.networking.tasks.PostUserWeightTask;
 import com.fitnation.networking.tasks.UserDemographicTask;
 import com.fitnation.networking.tasks.UserTask;
 import com.fitnation.networking.tasks.UserWeightTask;
@@ -43,8 +42,8 @@ public class ProfileDataManager extends DataManager {
     static List<SkillLevel> mSkillLevelList;
     String mAuthToken;
 
-    public ProfileDataManager(Context context){
-        mRequestQueue = Volley.newRequestQueue(context);
+    public ProfileDataManager(RequestQueue queue){
+        mRequestQueue = queue;
         mAuthToken = AuthToken.getInstance().getAccessToken();
 
         if (mSkillLevelList==null){
@@ -64,7 +63,15 @@ public class ProfileDataManager extends DataManager {
     }
 
     public void SaveUserDemographicData(final UserDemographic userDemographic){
-
+        if (userDemographic.getId()==null) {
+            try{
+                userDemographic.setId(Long.parseLong(UserLogins.getInstance().getUserDemographicId()));
+                userDemographic.setUserId(Long.parseLong(UserLogins.getInstance().getUserId()));
+                userDemographic.setUserLogin(UserLogins.getInstance().getUserId());
+            } catch (NullPointerException ex){
+                Log.d(TAG, ex.toString());
+            }
+        }
         //save data to local data store
         saveData(userDemographic, new DataResult() {
             @Override
@@ -224,7 +231,6 @@ public class ProfileDataManager extends DataManager {
 
     public void saveUserWeightToWeb(final UserWeight userWeight){
 
-
         final UserWeightTask postUserWeightTask =
                 new UserWeightTask(mAuthToken, mRequestQueue);
 
@@ -235,6 +241,28 @@ public class ProfileDataManager extends DataManager {
                     @Override
                     public void onSuccess(UserWeight userWeightList) {
                         Log.i(TAG, "Successfully saved UserWeight to Web");
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        Log.d(TAG, error.toString());
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public void getUserLogins(){
+        final UserDemographicTask getUserDemoTask =
+                new UserDemographicTask(mAuthToken, mRequestQueue);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getUserDemoTask.getUserDemographicById(new UserDemographicsCallback() {
+                    @Override
+                    public void onSuccess(UserDemographic userDemographic) {
+                        Log.i(TAG, "Updated User Demographic Id, User Id, User Login");
                     }
 
                     @Override

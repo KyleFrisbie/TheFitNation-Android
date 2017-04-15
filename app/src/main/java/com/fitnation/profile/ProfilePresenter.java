@@ -1,6 +1,8 @@
 package com.fitnation.profile;
 
+import android.app.ProgressDialog;
 import android.content.res.Resources;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -15,6 +17,8 @@ import com.fitnation.model.User;
 import com.fitnation.model.UserWeight;
 import com.fitnation.model.UserDemographic;
 import com.fitnation.networking.AuthToken;
+import com.fitnation.networking.UserLogins;
+import com.fitnation.networking.tasks.TaskCallback;
 import com.fitnation.networking.tasks.UserDemographicTask;
 import com.fitnation.networking.tasks.UserTask;
 import com.fitnation.networking.tasks.UserWeightTask;
@@ -25,11 +29,14 @@ import com.fitnation.profile.callbacks.GetUserWeightCallback;
 import java.util.Calendar;
 import java.util.List;
 
+import io.realm.Realm;
+
 import static com.fitnation.utils.UnitConversion.*;
 
-public class ProfilePresenter implements ProfileContract.Presenter {
+public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback.Presenter{
 
     private ProfileContract.View mView;
+    private ProgressDialog mProgressDialog;
     public ProfileData mProfile;
     private ProfileDataManager mProfileDataManager;
 
@@ -63,12 +70,23 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     @Override
     public void start() {
         res = mView.getBaseActivity().getResources();
-        mProfileDataManager = new ProfileDataManager(getBaseActivity());
-        mProfile = mProfileDataManager.getLocalProfileData();
         mQueue = Volley.newRequestQueue(getBaseActivity());
+        mProfileDataManager = new ProfileDataManager(mQueue);
+        mProfile = mProfileDataManager.getLocalProfileData();
         mAuthToken = AuthToken.getInstance().getAccessToken();
+        mProfileDataManager.getUserLogins();
 
-        if (!mProfile.isFullProfile()) {
+        UserDemographic userdemo = ProfileDataManager.getLocalUserDemographic();
+        User user = ProfileDataManager.getLocalUser();
+        UserWeight userWeight = ProfileDataManager.getLocalUserWeight();
+
+        setDemographic(userdemo);
+        setUser(user);
+        setUserWeight(userWeight);
+
+        if (mProfile.isFullProfile()){
+            mView.bindExerciseInstanceToView(mProfile);
+        } else {
             getProfileData();
         }
     }
@@ -100,6 +118,26 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
     }
 
+    @Override
+    public void showSuccess(AlertDialog.Builder successDialog) {
+
+    }
+
+    @Override
+    public void showProgress(ProgressDialog progressDialog) {
+        mView.showProgress(progressDialog);
+    }
+
+    @Override
+    public void stopProgress() {
+        mView.stopProgress();
+    }
+
+    @Override
+    public void showAuthError(AlertDialog.Builder errorDialog) {
+
+    }
+
 
     private void getUserDemographicFromWeb(){
         final UserDemographicTask getUserDemoTask =
@@ -120,6 +158,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                     @Override
                     public void onFailure(String error) {
                         Log.d(TAG, error.toString());
+                        stopProgress();
                     }
                 });
             }
@@ -144,6 +183,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                     @Override
                     public void onFailure(String error) {
                         Log.d(TAG, error);
+                        stopProgress();
                     }
                 });
             }
@@ -172,6 +212,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                     @Override
                     public void onFailure(String error) {
                         Log.d(TAG, error);
+                        stopProgress();
                     }
                 });
             }
@@ -179,15 +220,16 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     }
 
     private void sendProfileDataToView(){
-
         if (gotUser && gotUserDemo && gotWeight){
             ProfileData profileData = new ProfileData(mUserdemo, mUser, mUserWeight);
             Log.i(TAG, "Setting new profile data loaded from web");
             mView.bindExerciseInstanceToView(profileData);
+            mView.stopProgress();
             gotUser = false;
             gotUserDemo = false;
             gotWeight = false;
         }
+
     }
 
     @Override
@@ -269,11 +311,9 @@ public class ProfilePresenter implements ProfileContract.Presenter {
              EditText mEmailTextBox, TextView mSwitchMeasurementButton,
              Spinner mGenderSpinner, Spinner mLifterTypeSpinner) {
 
-
-        mUserdemo = (UserDemographic) mUserdemo.clone();
-        mUserWeight = (UserWeight) mUserWeight.clone();
+        mUserdemo = new UserDemographic();
+        mUserWeight = new UserWeight();
         mUser = new User();
-
 
         try {
             mUser.setFirstName(mNameTextBox.getText().toString().split("\\s+")[0]);
@@ -349,9 +389,6 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         mProfileDataManager.saveUserWeightToWeb(mUserWeight);
     }
 
-    public void bindExerciseInstanceToView(){
-        mView.bindExerciseInstanceToView(mProfile);
-    }
 
     public BaseActivity getBaseActivity(){
         return mView.getBaseActivity();

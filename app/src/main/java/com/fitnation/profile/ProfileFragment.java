@@ -8,7 +8,9 @@ import java.util.Date;
 
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -59,6 +61,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     DatePickerFragment dateFragment;
 
     private ProfileContract.Presenter mPresenter;
+    private ProgressDialog mProgressDialog;
 
     ProfileData mProfile;
 
@@ -92,8 +95,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             }
         });
 
-
-
         genderAdapter = ArrayAdapter.createFromResource(getBaseActivity(),
                 R.array.genderArray, android.R.layout.simple_spinner_item);
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -104,16 +105,17 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         lifterTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mLifterTypeSpinner.setAdapter(lifterTypeAdapter);
 
-
     return v;
     }
 
     public void onStart() {
         super.onStart();
-        mPresenter.start();
-
         NavigationActivity navigationActivity = (NavigationActivity) getBaseActivity();
         navigationActivity.displayBackArrow(true, "Edit");
+
+        mPresenter.start();
+
+        if (mProfile==null) showProgress(new ProgressDialog(getBaseActivity()));
     }
 
     @OnClick(R.id.switchMeasurement)
@@ -142,7 +144,6 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
                 mNameTextBox, mWeightTextBox, mDobTextBox, mHeightTextBox,
                 mEmailTextBox, mSwitchMeasurementButton, mGenderSpinner, mLifterTypeSpinner
         );
-
     }
 
     @Override
@@ -160,16 +161,27 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     }
 
     @Override
-    public void bindExerciseInstanceToView(ProfileData pInstance){
-        mProfile = pInstance;
+    public void showProgress(ProgressDialog progressDialog) {
+        mProgressDialog = progressDialog;
+        mProgressDialog.show();
+    }
 
-        if (pInstance==null) {
-            Log.d("PROFILE", "Failed to load demographic, mUser demographic is null.");
+    @Override
+    public void stopProgress() {
+        if(mProgressDialog!=null) mProgressDialog.dismiss();
+    }
+
+    @Override
+    public void bindExerciseInstanceToView(ProfileData profile){
+        mProfile = profile;
+
+        if (profile==null) {
+            Log.d("PROFILE", "Failed to load demographic, profile data is null.");
             return;
         }
 
         try {
-            if (pInstance.getSkillLevelLevel().toLowerCase().contains("imperial")){
+            if (mProfile.getUnitOfMeasure().toLowerCase().contains("imperial")){
                 mSwitchMeasurementButton.setText(R.string.switchMeasureToMetric);
             } else {
                 mSwitchMeasurementButton.setText(R.string.switchMeasureToImperial);
@@ -182,14 +194,14 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         try {
             if (isImperial())
             {
-                mHeightTextBox.setText(pInstance.getHeight().toString());
+                mHeightTextBox.setText(profile.getHeight().toString());
             } else { //CONVERT SAVED INCHES TO CM
-                mHeightTextBox.setText(String.valueOf(inchToCM(pInstance.getHeight())));
+                mHeightTextBox.setText(String.valueOf(inchToCM(profile.getHeight())));
             }
         } catch (Exception e){
             Log.d("PROFILE", e.toString());
         } try {
-            String dob = pInstance.getDateOfBirth();
+            String dob = profile.getDateOfBirth();
             Calendar c = Calendar.getInstance();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date date = dateFormat.parse(dob);
@@ -202,26 +214,26 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         }
         try {
             mGenderSpinner.setSelection(
-                    genderAdapter.getPosition(pInstance.getGender()));
+                    genderAdapter.getPosition(profile.getGender()));
         } catch (Exception e){
             Log.d("PROFILE", e.toString());
         }
         try {
             mLifterTypeSpinner
-                    .setSelection(lifterTypeAdapter.getPosition(pInstance.getSkillLevelLevel()));
+                    .setSelection(lifterTypeAdapter.getPosition(profile.getSkillLevelLevel()));
         } catch (Exception e){
             Log.d("PROFILE", e.toString());
         }
 
         try {
-            mEmailTextBox.setText(pInstance.getEmail());
+            mEmailTextBox.setText(profile.getEmail());
         } catch (Exception ex) {
             Log.d("PROFILE", ex.toString());
         }
 
         try {
-            String first = pInstance.getFirstName();
-            String last = pInstance.getLastName();
+            String first = profile.getFirstName();
+            String last = profile.getLastName();
             if (first != null && last != null)
                 mNameTextBox.setText(first + " " + last);
         } catch (Exception e){
@@ -229,25 +241,27 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         }
 
         try{
-            mEmailTextBox.setText(pInstance.getEmail());
+            mEmailTextBox.setText(profile.getEmail());
         } catch (Exception e) {
             Log.d("PROFILE", e.toString());
         }
 
-        if (pInstance==null) {
+        if (profile==null) {
             Log.d("PROFILE", "Attempted to load Null UserWeight to profile");
             return;
         }
         try {
             if (isImperial()) {
-                mWeightTextBox.setText(pInstance.getWeight().toString());
+                mWeightTextBox.setText(profile.getWeight().toString());
             } else {
-                mWeightTextBox.setText(String.valueOf(lbsToKgs(pInstance.getWeight())));
+                mWeightTextBox.setText(String.valueOf(lbsToKgs(profile.getWeight())));
             }
 
         } catch (Exception e) {
             Log.d("PROFILE", e.getMessage());
         }
+
+        stopProgress();  //Stop loading circle
     }
 
     private boolean isImperial(){

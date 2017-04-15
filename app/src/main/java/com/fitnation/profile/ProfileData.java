@@ -1,15 +1,18 @@
 package com.fitnation.profile;
 
+import android.util.Log;
+
 import com.fitnation.model.User;
 import com.fitnation.model.UserDemographic;
 import com.fitnation.model.UserWeight;
+import com.fitnation.networking.UserLogins;
 
 /**
  * Created by Jeremy on 4/11/2017.
  */
 
 public class ProfileData {
-
+    private static final String TAG = ProfileData.class.getSimpleName();
     private String firstName;
     private String lastName;
     private String gender;
@@ -40,6 +43,22 @@ public class ProfileData {
         this.skillLevelLevel = userdemo.getSkillLevelLevel();
         this.unitOfMeasure = userdemo.getUnitOfMeasure();
         this.dateOfBirth = userdemo.getDateOfBirth();
+        try {
+            UserLogins.getInstance().setUserId(userdemo.getUserId().toString());
+        } catch (NullPointerException ex) {
+            Log.d(TAG, ex.toString());
+        }
+        try {
+            UserLogins.getInstance().setUserDemographicId(userdemo.getId().toString());
+        } catch (NullPointerException ex){
+            Log.d(TAG, ex.toString());
+        }
+        try {
+            UserLogins.getInstance().setUserLogin(userdemo.getUserLogin());
+        } catch (NullPointerException ex){
+            Log.d(TAG, ex.toString());
+        }
+
         hasUserDemographic = true;
     }
 

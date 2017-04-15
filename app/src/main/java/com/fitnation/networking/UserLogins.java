@@ -25,7 +25,8 @@ public class UserLogins {
     }
 
     public synchronized static void setUserId(String userId) {
-        UserLogins.userId = userId;
+
+        if(!(userId==null||userId.equals(""))) UserLogins.userId = userId;
     }
 
     public synchronized static String getUserLogin() {
@@ -33,11 +34,11 @@ public class UserLogins {
     }
 
     public synchronized static void setUserLogin(String userLogin) {
-        UserLogins.userLogin = userLogin;
+        if(!(userLogin==null||userLogin.equals(""))) UserLogins.userLogin = userLogin;
     }
 
     public synchronized static void setUserDemographicId(String id){
-        userdemographicId = id;
+        if(!(id==null||id.equals(""))) userdemographicId = id;
     }
 
     public synchronized static String getUserDemographicId(){

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.model.enums.UnitOfMeasure;
 import com.fitnation.networking.UserLogins;
+import com.fitnation.profile.ProfileDataManager;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,7 @@ import io.realm.annotations.PrimaryKey;
  * Information about a mUser and their data
  */
 public class UserDemographic extends RealmObject implements Cloneable {
+    private static final String TAG = UserDemographic.class.getSimpleName();
     @PrimaryKey
     private Long androidId;
     private Long id;  //userDemographicId
@@ -71,9 +73,10 @@ public class UserDemographic extends RealmObject implements Cloneable {
     }
 
     public Long getId() {
-        if (!(id.equals("") || id==null)) {
-            UserLogins.getInstance().setUserDemographicId(String.valueOf(id));
-        }
+        if (id==null||id.equals("")) return null;
+
+        UserLogins.getInstance().setUserDemographicId(String.valueOf(id));
+
         return Long.parseLong(UserLogins.getInstance().getUserDemographicId());
     }
 
@@ -133,7 +136,7 @@ public class UserDemographic extends RealmObject implements Cloneable {
         try {
             height = Float.parseFloat(pHeight);
         } catch (Exception e){
-            Log.d("USERDEMO", e.toString());
+            Log.d(TAG, e.toString());
             height = 0.0f;
         }
     }
@@ -154,7 +157,7 @@ public class UserDemographic extends RealmObject implements Cloneable {
             uWeight.setWeight(weight);
             userWeights.add(uWeight);
         } catch (Exception e){
-            System.out.println("Invalid mUserWeight input");
+            Log.d(TAG, e.toString());
         }
 
     }
@@ -191,7 +194,7 @@ public class UserDemographic extends RealmObject implements Cloneable {
         try {
             clone = (UserDemographic) super.clone();
         } catch (CloneNotSupportedException ex) {
-            Log.d("USERDEMOGRAPHIC", ex.toString());
+            Log.d(TAG, ex.toString());
         }
 
         return clone;
