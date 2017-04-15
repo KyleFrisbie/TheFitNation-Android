@@ -12,6 +12,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ public class NavigationActivity extends BaseActivity
     @BindView(R.id.toolbar) public Toolbar mToolbar;
     @BindView(R.id.drawer_layout) public DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
+    private static final String TAG = NavigationActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +102,11 @@ public class NavigationActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        if (item.isChecked()){
+            Log.i(TAG, "Attempted to select an already selected Nav Drawer item");
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            return false;
+        }
 
         if (id == R.id.nav_start_workout) {
 
@@ -126,24 +133,4 @@ public class NavigationActivity extends BaseActivity
         return true;
     }
 
-
-    public void displayBackArrow(boolean show, String title) {
-        if (title != null) {
-            getSupportActionBar().setTitle(title);
-        }
-        if(show) {
-            mToggle.setDrawerIndicatorEnabled(false);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            mToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onBackPressed();
-                }
-            });
-        } else {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            mToggle.setDrawerIndicatorEnabled(true);
-            mToggle.setToolbarNavigationClickListener(null);
-        }
-    }
 }

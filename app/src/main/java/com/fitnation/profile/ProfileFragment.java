@@ -112,7 +112,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     public void onStart() {
         super.onStart();
         NavigationActivity navigationActivity = (NavigationActivity) getBaseActivity();
-        navigationActivity.displayBackArrow(true, "Edit");
+        //navigationActivity.displayBackArrow(true, "Edit");
 
         mPresenter.start();
 
