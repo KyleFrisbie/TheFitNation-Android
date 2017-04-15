@@ -2,11 +2,9 @@ package com.fitnation.model;
 
 import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.model.enums.UnitOfMeasure;
+import com.fitnation.utils.PrimaryKeyFactory;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;

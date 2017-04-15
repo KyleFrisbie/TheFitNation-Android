@@ -1,4 +1,4 @@
-package com.fitnation.model;
+package com.fitnation.utils;
 
 import android.util.Log;
 import java.util.HashMap;
