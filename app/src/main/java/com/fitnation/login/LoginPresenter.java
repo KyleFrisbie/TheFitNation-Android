@@ -1,12 +1,10 @@
 package com.fitnation.login;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
-import com.fitnation.navigation.NavigationActivity;
-import com.fitnation.networking.tasks.GetAuthTokenTask;
-import com.fitnation.networking.tasks.TaskCallback;
+import com.fitnation.networking.tasks.loginTasks.GetAuthTokenTask;
+import com.fitnation.networking.tasks.loginTasks.TaskCallback;
 
 import static com.fitnation.login.LoginBaseActivity.VIEW_CONTAINER;
 
