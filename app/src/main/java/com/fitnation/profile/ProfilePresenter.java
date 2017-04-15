@@ -289,7 +289,8 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
         return txt.replaceAll("[^\\d.]", "");
     }
 
-    private void measurementsAddUnits(EditText heightText, EditText weightText){
+    @Override
+    public void measurementsAddUnits(EditText heightText, EditText weightText){
 
         if (isImperial){
             weightText.setText(String.format("%.1f", getNumValue(weightText))+ " lbs");
@@ -306,9 +307,9 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
 
     @Override
     public void onSaveClicked
-            (EditText mNameTextBox, EditText mWeightTextBox,
+            (TextView mNameTextBox, EditText mWeightTextBox,
              EditText mDobTextBox, EditText mHeightTextBox,
-             EditText mEmailTextBox, TextView mSwitchMeasurementButton,
+             TextView mEmailTextBox, TextView mSwitchMeasurementButton,
              Spinner mGenderSpinner, Spinner mLifterTypeSpinner) {
 
         mUserdemo = new UserDemographic();
@@ -348,19 +349,20 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
         double height = getNumValue(mHeightTextBox);
         double weight = getNumValue(mWeightTextBox);
         //if measurement text contains "Switch to Metric" then we're in Imperial measurements
-        isImperial = mSwitchMeasurementButton.
-                getText().toString().
-                toLowerCase().contains("metric");
+        isImperial = mProfile.getUnitOfMeasure().toString().
+                toLowerCase().equals("Imperial");
         if (isImperial){
             mUserdemo.setUnitOfMeasure("Imperial");
+            Log.i(TAG, "Setting measurement to Imperial");
             mUserdemo.setHeight(getNumValue(mHeightTextBox).toString());
             mUserdemo.setUserWeights(getNumValue(mWeightTextBox).toString());
             mUserWeight.setWeight(new Float(weight));
         } else { //METRIC MEASUREMENTS
             mUserdemo.setUnitOfMeasure("Metric");
+            Log.i(TAG, "Setting measurement to Metric");
             //WE ONLY WANT TO SAVE VALUES AS IMPERIAL UNITS SO CONVERT FROM METRIC
             height = cmToInch(height);
-            weight = kgsToLbs(weight);
+            weight = kgsToLbs(weight); // To
             mUserdemo.setHeight(Double.valueOf(height).toString());
             mUserWeight.setWeight(new Float(weight));
         }
@@ -385,7 +387,7 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
         mProfileDataManager.SaveWeightData(mUserWeight);
 
         mProfileDataManager.saveUserDemographicToWeb(mUserdemo);
-        mProfileDataManager.saveUserToWeb(mUser);
+        //mProfileDataManager.saveUserToWeb(mUser);
         mProfileDataManager.saveUserWeightToWeb(mUserWeight);
     }
 

@@ -35,9 +35,11 @@ public interface ProfileContract {
 
         void openDatePicker(DatePickerFragment datePickerFragment);
 
-        void onSaveClicked(EditText mNameTextBox, EditText mWeightTextBox, EditText mDobTextBox, EditText mHeightTextBox, EditText mEmailTextBox, TextView mSwitchMeasurementButton, Spinner mGenderSpinner, Spinner mLifterTypeSpinner);
-
-
+        void onSaveClicked(TextView mNameTextBox, EditText mWeightTextBox,
+                           EditText mDobTextBox, EditText mHeightTextBox,
+                           TextView mEmailTextBox, TextView mSwitchMeasurementButton,
+                           Spinner mGenderSpinner, Spinner mLifterTypeSpinner);
+        void measurementsAddUnits(EditText heightText, EditText weightText);
 
         void onDateSet(DatePicker view, int year, int month,
                        int day, EditText dobText, EditText ageText);

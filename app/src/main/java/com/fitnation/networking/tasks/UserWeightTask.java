@@ -45,7 +45,7 @@ public class UserWeightTask extends NetworkTask{
     public void getUserWeights(final GetUserWeightCallback callback){
         String url = EnvironmentManager.
                 getInstance().getCurrentEnvironment().
-                getApiUrl()+"user-weights/byLoggedInUser/";
+                getApiUrl()+"user-weights";
 
         final String authToken = AuthToken.getInstance().getAccessToken();
 
@@ -83,7 +83,7 @@ public class UserWeightTask extends NetworkTask{
         //save data to web
         String url = EnvironmentManager.
                 getInstance().getCurrentEnvironment().
-                getApiUrl()+"user-weights/byLoggedInUser/";
+                getApiUrl()+"user-weights";
 
         String jString = JsonParser.convertPojoToJsonString(weight);
         JSONObject udjObj;

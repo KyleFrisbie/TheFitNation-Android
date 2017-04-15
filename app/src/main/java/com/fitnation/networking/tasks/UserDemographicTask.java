@@ -26,17 +26,16 @@ import java.util.Map;
 
 public class UserDemographicTask extends NetworkTask{
 
-    String resourceRoute = "user-demographics/";
+
 
     public UserDemographicTask(String authToken, RequestQueue queue) {
         super(authToken, queue);
     }
 
     public void getUserDemographicById(final UserDemographicsCallback callback){
-        String userDemographicId = "3164";
-        //String userDemographicId = UserLogins.getInstance().getUserDemographicId();
+        String resourceRoute = "users/user-demographic/";
         String url = EnvironmentManager.getInstance().
-                getCurrentEnvironment().getApiUrl() + resourceRoute + userDemographicId;
+                getCurrentEnvironment().getApiUrl() + resourceRoute;
 
         //USERDEMOGRAPHIC
         JsonObjectRequest jsonRequestUserDemo =
@@ -74,6 +73,7 @@ public class UserDemographicTask extends NetworkTask{
 
     public void putUserDemographicData(UserDemographic userdemo, UserDemographicsCallback callback){
         //save data to web
+        String resourceRoute = "/user-demographics";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment()
                 .getApiUrl()+resourceRoute;
         final String authToken = AuthToken.getInstance().getAccessToken();

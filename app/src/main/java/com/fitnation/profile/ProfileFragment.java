@@ -45,12 +45,12 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         DatePickerDialog.OnDateSetListener {
 
 
-    @BindView(R.id.nameText)          public EditText mNameTextBox;
+    @BindView(R.id.nameText)          public TextView mNameTextBox;
     @BindView(R.id.weightEditText)    public EditText mWeightTextBox;
     @BindView(R.id.heightEditText)    public EditText mHeightTextBox;
     @BindView(R.id.ageText)           public EditText mAgeTextBox;
     @BindView(R.id.birthdayEditText)  public EditText mDobTextBox;
-    @BindView(R.id.emailEditText)     public EditText mEmailTextBox;
+    @BindView(R.id.emailEditText)     public TextView mEmailTextBox;
     @BindView(R.id.saveButton)        public Button mSaveButton;
     @BindView(R.id.genderEditText)    public Spinner mGenderSpinner;
     @BindView(R.id.lifterTypeSpinner) public Spinner mLifterTypeSpinner;
@@ -260,8 +260,9 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         } catch (Exception e) {
             Log.d("PROFILE", e.getMessage());
         }
-
+        mPresenter.measurementsAddUnits(mHeightTextBox, mWeightTextBox);
         stopProgress();  //Stop loading circle
+
     }
 
     private boolean isImperial(){
