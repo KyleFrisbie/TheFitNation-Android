@@ -24,6 +24,8 @@ import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.model.enums.SkillLevel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import io.realm.Realm;
@@ -97,6 +99,11 @@ public class ExercisesManager extends DataManager {
                                 mExerciseInstancesTab1 = filterExerciseBySkillLevel(mExerciseInstancesTab1, SkillLevel.BEGINNER);
                                 mExerciseInstancesTab2 = filterExerciseBySkillLevel(mExerciseInstancesTab2, SkillLevel.INTERMEDIATE);
                                 mExerciseInstancesTab3 = filterExerciseBySkillLevel(mExerciseInstancesTab3, SkillLevel.ADVANCED);
+
+                                Collections.sort(mExerciseInstances);
+                                Collections.sort(mExerciseInstancesTab1);
+                                Collections.sort(mExerciseInstancesTab2);
+                                Collections.sort(mExerciseInstancesTab3);
                             }
                             callback.onExercisesRetrieved(mExerciseInstancesTab1, mExerciseInstancesTab2, mExerciseInstancesTab3);
                         }
@@ -315,19 +322,24 @@ public class ExercisesManager extends DataManager {
     public void updateExerciseList(ExerciseInstance original, ExerciseInstance updated, int tab) {
         mExerciseInstances.remove(original);
         mExerciseInstances.add(updated);
+        Collections.sort(mExerciseInstances);
 
         switch(tab) {
             case 0:
                 mExerciseInstancesTab1.remove(original);
                 mExerciseInstancesTab1.add(updated);
+                Collections.sort(mExerciseInstancesTab1);
                 break;
             case 1:
                 mExerciseInstancesTab2.remove(original);
                 mExerciseInstancesTab2.add(updated);
+                Collections.sort(mExerciseInstancesTab2);
+
                 break;
             case 2:
                 mExerciseInstancesTab3.remove(original);
                 mExerciseInstancesTab3.add(updated);
+                Collections.sort(mExerciseInstancesTab3);
                 break;
         }
 

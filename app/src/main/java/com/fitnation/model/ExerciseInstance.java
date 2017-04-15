@@ -1,6 +1,7 @@
 package com.fitnation.model;
 
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 
@@ -19,7 +20,7 @@ import io.realm.RealmObject;
  * Created by Ryan on 3/21/2017.
  */
 @Parcel(implementations = { ExerciseInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { ExerciseInstance.class })
-public class ExerciseInstance extends RealmObject implements Cloneable {
+public class ExerciseInstance extends RealmObject implements Cloneable, Comparable {
     public static final Float REPS_DEFAULT = 8f;
     public static final Float EFFORT_DEFAULT = 20f;
     public static final Float REST_TIME_DEFAULT = 30f;
@@ -118,7 +119,43 @@ public class ExerciseInstance extends RealmObject implements Cloneable {
         return cloned;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ExerciseInstance that = (ExerciseInstance) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (androidId != null ? !androidId.equals(that.androidId) : that.androidId != null)
+            return false;
+        if (exerciseId != null ? !exerciseId.equals(that.exerciseId) : that.exerciseId != null)
+            return false;
+        if (exerciseName != null ? !exerciseName.equals(that.exerciseName) : that.exerciseName != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (androidId != null ? androidId.hashCode() : 0);
+        result = 31 * result + (exerciseId != null ? exerciseId.hashCode() : 0);
+        result = 31 * result + (exerciseName != null ? exerciseName.hashCode() : 0);
+        return result;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        ExerciseInstance exerciseInstance = (ExerciseInstance) o;
+        String nameThis = this.exerciseName;
+        String nameOther = exerciseInstance.getExercise().getName();
+
+        return nameThis.compareTo(nameOther);
     }
 }
