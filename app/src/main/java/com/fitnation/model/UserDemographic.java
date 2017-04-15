@@ -98,23 +98,23 @@ public class UserDemographic extends RealmObject implements Cloneable {
         return result;
     }
 
-    public void setFirstName(String pName){
-        firstName = pName;
+    public void setFirstName(String name){
+        firstName = name;
     }
 
     public String getFirstName(){
         return firstName;
     }
 
-    public void setLastName(String pName){
-        lastName = pName;
+    public void setLastName(String name){
+        lastName = name;
     }
 
     public String getLastName(){
         return lastName;
     }
 
-    public void setGender(String pGender){ gender = pGender; }
+    public void setGender(String gender){ this.gender = gender; }
 
     public String getGender(){
         return gender;
@@ -142,7 +142,7 @@ public class UserDemographic extends RealmObject implements Cloneable {
         return height;
     }
 
-    public void setUserWeights(String pWeights){
+    public void setUserWeights(String weights){
         UserWeight uWeight = new UserWeight();
 
         if (userWeights == null) {
@@ -150,7 +150,7 @@ public class UserDemographic extends RealmObject implements Cloneable {
         }
 
         try {
-            Float weight = Float.parseFloat(pWeights);
+            Float weight = Float.parseFloat(weights);
             uWeight.setWeight(weight);
             userWeights.add(uWeight);
         } catch (Exception e){
