@@ -334,7 +334,6 @@ public class ExercisesManager extends DataManager {
                 mExerciseInstancesTab2.remove(original);
                 mExerciseInstancesTab2.add(updated);
                 Collections.sort(mExerciseInstancesTab2);
-
                 break;
             case 2:
                 mExerciseInstancesTab3.remove(original);
