@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#283593</color>
-    <color name="colorAccent">#5e35b1</color>
-    <color name="actionable">#0091ea</color>
-    <color name="defaultBackground">#ffffff</color>
+    <color name="colorPrimary">#00b8d4</color>
+    <color name="colorPrimaryDark">#00a8c2</color>
+    <color name="colorAccent">#00b8d4</color>
+    <color name="actionable">#00b8d4</color>
+    <color name="disabled">#bdbdbd</color>
+    <color name="defaultBackground">#FFFFFF</color>
     <color name="statusBar">@color/colorPrimary</color>
     <color name="textColor">#FFFFFF</color>
+    <color name="textColorDark">#000000</color>
+    <color name="accentGreen">#00e676</color>
     <color name="loginEditText">#edffffff</color>
     <color name="loginButtonText">#ffffff</color>
     <color name="loginFooter">#a0ffffff</color>
-    <color name="textColorDark">#000000</color>
 </resources>

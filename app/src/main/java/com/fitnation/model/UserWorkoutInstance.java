@@ -12,8 +12,8 @@ public class UserWorkoutInstance extends RealmObject {
     private Long id;
     private Date createdOn;
     private Boolean wasCompleted;
-    private UserWorkoutTemplate userWorkoutTemplate;
-    private WorkoutInstance workoutInstance;
+    private Long userWorkoutTemplateId;
+    private Long workoutInstanceId;
 
     public void setId(Long id) {
         this.id = id;
