@@ -201,14 +201,14 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
                     @Override
                     public void onSuccess(List<UserWeight> userWeightList) {
                         List<UserWeight> weightList = userWeightList;
+                        gotWeight = true;
                         if (weightList.size() > 0) {
                             UserWeight weight = weightList.get(weightList.size() - 1);
                             setUserWeight(weight);
-                            gotWeight = true;
-                            sendProfileDataToView();
                         } else {
                             Log.i(TAG, "Weight list attained from server is empty");
-                        }
+                            }
+                        sendProfileDataToView();
                     }
 
                     @Override
@@ -313,6 +313,8 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
              EditText mDobTextBox, EditText mHeightTextBox,
              TextView mEmailTextBox, TextView mSwitchMeasurementButton,
              Spinner mGenderSpinner, Spinner mLifterTypeSpinner) {
+
+
 
         mUserdemo = new UserDemographic();
         mUserWeight = new UserWeight();

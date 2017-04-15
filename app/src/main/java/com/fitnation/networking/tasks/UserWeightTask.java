@@ -96,7 +96,7 @@ public class UserWeightTask extends NetworkTask{
         }
 
         JsonObjectRequest jsonWeightRequest =
-                new JsonObjectRequest(Request.Method.POST, url, udjObj, new Response.Listener<JSONObject>() {
+                new JsonObjectRequest(Request.Method.PUT, url, udjObj, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.i("POST", response.toString());
