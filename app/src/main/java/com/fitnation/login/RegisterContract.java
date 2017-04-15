@@ -18,6 +18,6 @@ public interface RegisterContract {
     }
 
     interface Presenter extends BasePresenter {
-        void onRegisterCreatePressed(String email, String password, String userName, String language);
+        void onRegisterCreatePressed(String email, String password, String userName, String firstName, String lastName, String language);
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -23,7 +24,9 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
 
     @BindView(R.id.registerEmail_editText) public EditText mEmail;
     @BindView(R.id.registerPassword_editText) public EditText mPassword;
-    @BindView(R.id.userName_editText) public EditText userName;
+    @BindView(R.id.userName_editText) public EditText mUserName;
+    @BindView(R.id.first_name_editText) public EditText mFirstName;
+    @BindView(R.id.last_name_editText) public EditText mLastName;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -54,10 +57,13 @@ public class RegisterFragment extends BaseFragment implements RegisterContract.V
     @OnClick(R.id.register_button)
     public void onRegisterButtonPressed() {
         if(!mEmail.getText().toString().isEmpty() && !mPassword.getText().toString().isEmpty()
-                && !userName.getText().toString().isEmpty()) {
+                && !mUserName.getText().toString().isEmpty() && !mFirstName.getText().toString().isEmpty()
+                && !mLastName.getText().toString().isEmpty()) {
             mPresenter.onRegisterCreatePressed(mEmail.getText().toString().trim(),
                     mPassword.getText().toString().trim(),
-                    userName.getText().toString().trim(),
+                    mUserName.getText().toString().trim(),
+                    mFirstName.getText().toString().trim(),
+                    mLastName.getText().toString().trim(),
                     "en");
         }
     }

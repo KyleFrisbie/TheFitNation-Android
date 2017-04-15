@@ -109,8 +109,8 @@ public class LoginScreenTest extends InstrumentationTest {
                     case "/api/register":
                         body = request.getBody().readUtf8();
 
-                        if (body.contains("testemail@android.com") && body.contains("testemail@android.com")
-                                && body.contains("Pa55w0rd")) {
+                        if (body.contains("testemail@android.com") && body.contains("androidtest")
+                                && body.contains("Pa55w0rd") && body.contains("good") && body.contains("name")) {
                             return new MockResponse().setResponseCode(201).setBody("");
                         } else {
                             return new MockResponse().setResponseCode(400).setBody("login already in use");
@@ -176,6 +176,8 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.registerEmail_editText)).perform(typeText("bad@email.com"));
         onView(withId(R.id.registerPassword_editText)).perform(typeText("Pa55w0rd"));
         onView(withId(R.id.userName_editText)).perform(typeText("bad"));
+        onView(withId(R.id.first_name_editText)).perform(typeText("bad"));
+        onView(withId(R.id.last_name_editText)).perform(typeText("name"));
         pressBack();
         onView(withId(R.id.register_button)).perform(click());
         SystemClock.sleep(DELAY_TIME);
@@ -191,6 +193,8 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.registerEmail_editText)).perform(typeText("testemail@android.com"));
         onView(withId(R.id.registerPassword_editText)).perform(typeText("Pa55w0rd"));
         onView(withId(R.id.userName_editText)).perform(typeText("androidtest"));
+        onView(withId(R.id.first_name_editText)).perform(typeText("good"));
+        onView(withId(R.id.last_name_editText)).perform(typeText("name"));
         pressBack();
         onView(withId(R.id.register_button)).perform(click());
         SystemClock.sleep(DELAY_TIME);
