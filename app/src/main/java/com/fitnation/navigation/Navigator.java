@@ -1,4 +1,4 @@
-package com.fitnation.workout.common;
+package com.fitnation.navigation;
 
 import android.app.Activity;
 
@@ -23,6 +23,7 @@ public class Navigator {
 
     public static void navigateToEditWorkout(BaseActivity activity, UserWorkoutInstance userWorkoutInstance, int containterId) {
         EditWorkoutFragment editWorkoutFragment = EditWorkoutFragment.newInstance(userWorkoutInstance);
+
         editWorkoutFragment.setPresenter(new EditWorkoutPresenter(editWorkoutFragment));
         activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment ).commit();
     }

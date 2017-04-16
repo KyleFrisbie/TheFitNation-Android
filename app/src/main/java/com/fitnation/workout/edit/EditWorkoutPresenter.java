@@ -1,20 +1,22 @@
 package com.fitnation.workout.edit;
 
+import android.support.annotation.Nullable;
+
 import com.fitnation.R;
-import com.fitnation.base.BasePresenter;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
+import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
+import com.fitnation.navigation.Navigator;
+import com.fitnation.workout.exercise.ExerciseType;
 import com.fitnation.workout.exerciseList.ExercisesListFragment;
-
-import java.util.List;
 
 /**
  * Created by Ryan on 4/16/2017.
  */
 
-public class EditWorkoutPresenter implements EditWorkoutContract.Presenter {
+public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnExerciseUpdatedCallback {
     private UserWorkoutInstance mUserWorkoutInstance;
     private EditWorkoutContract.View mView;
 
@@ -33,7 +35,7 @@ public class EditWorkoutPresenter implements EditWorkoutContract.Presenter {
         }, new OnEditExercisePressedCallback() {
             @Override
             public void onEditPressed(ExerciseView exercise) {
-
+                Navigator.navigateToEditExercise(mView.getBaseActivity(), exercise, ExerciseType.USER, EditWorkoutPresenter.this, R.id.content_main_container);
             }
         });
         mView.getBaseActivity().getSupportFragmentManager().beginTransaction().add(R.id.edit_workout_container, exercisesListFragment).commit();
@@ -51,6 +53,11 @@ public class EditWorkoutPresenter implements EditWorkoutContract.Presenter {
 
     @Override
     public void stop() {
+
+    }
+
+    @Override
+    public void exerciseUpdated(@Nullable ExerciseView updatedExerciseInstance) {
 
     }
 }

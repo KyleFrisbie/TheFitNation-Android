@@ -76,13 +76,6 @@ public class NavigationActivity extends BaseActivity
             mDrawerLayout.closeDrawer(GravityCompat.START);
 
         } else {
-            List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-            if (fragmentList != null) {
-                Fragment fragment = fragmentList.get(0);
-                if(fragment instanceof ExercisesParentFragment) {
-                    displayBackArrow(false, getString(R.string.build_workout_title));
-                }
-            }
             int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
 
             if (backStackCount >= 1) {

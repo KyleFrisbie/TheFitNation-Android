@@ -12,7 +12,7 @@ import com.fitnation.model.ExerciseInstance;
 import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.networking.JsonParser;
 import com.fitnation.utils.FileUtils;
-import com.fitnation.workout.common.Navigator;
+import com.fitnation.navigation.Navigator;
 
 import org.junit.After;
 import org.junit.Before;

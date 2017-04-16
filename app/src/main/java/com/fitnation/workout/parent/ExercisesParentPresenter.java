@@ -13,11 +13,8 @@ import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.workout.callbacks.SaveDialogCallback;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
 import com.fitnation.workout.common.ExerciseAlertDialogFactory;
-import com.fitnation.workout.common.Navigator;
-import com.fitnation.workout.edit.EditWorkoutFragment;
+import com.fitnation.navigation.Navigator;
 import com.fitnation.workout.exercise.ExerciseType;
-import com.fitnation.workout.exercise.ViewExerciseFragment;
-import com.fitnation.workout.exercise.ViewExercisePresenter;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.enums.ExerciseAction;
 
