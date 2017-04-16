@@ -56,6 +56,8 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
         } else {
             sets.add(new UserExerciseInstanceSet(orderNumber));
         }
+        mExercise.setExerciseSetViews(sets);
+
         mView.bindExerciseInstanceToView(mExercise, this);
     }
 
@@ -91,6 +93,8 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
             ExerciseSetView currentSet = sets.get(i);
             currentSet.setOrderNumber(i+1);
         }
+
+        mExercise.setExerciseSetViews(sets);
 
         mView.bindExerciseInstanceToView(mExercise, this);
     }
