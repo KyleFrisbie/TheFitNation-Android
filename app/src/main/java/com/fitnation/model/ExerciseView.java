@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Ryan on 4/15/2017.
  */
 
-public interface ExerciseView {
+public interface ExerciseView extends Comparable{
     List<ExerciseSetView> getExerciseSetView();
     void setExerciseSetViews(List<ExerciseSetView> sets);
     boolean isSelected();

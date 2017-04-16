@@ -35,7 +35,7 @@ public class Navigator {
         if(size >= 2) {
             mNavigationStateList.remove(size-1);
             return mNavigationStateList.get(size-2);
-        } else if(size >=1) {
+        } else if(size >= 1) {
             mNavigationStateList.get(0);
         } {
             return null;

@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.model.Exercise;
+import com.fitnation.model.ExerciseSetView;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
 import com.fitnation.model.ExerciseInstance;
@@ -20,6 +22,8 @@ import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -90,7 +94,6 @@ public class ExercisesListFragment extends BaseFragment {
         Log.i(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-
         if(bundle != null) {
             mExercises = Parcels.unwrap(bundle.getParcelable(EXERCISE_LIST));
             mElementsSelectable = bundle.getBoolean(DISPLAY_SELECTABLE);
@@ -98,6 +101,15 @@ public class ExercisesListFragment extends BaseFragment {
 
         if(savedInstanceState != null) {
             mExercises = Parcels.unwrap(savedInstanceState.getParcelable(EXERCISE_LIST));
+        }
+
+        if(mExercises != null) {
+            Collections.sort(mExercises);
+            for (ExerciseView exerciseView : mExercises) {
+                List<ExerciseSetView> exerciseSetViews = exerciseView.getExerciseSetView();
+                Collections.sort(exerciseSetViews);
+                exerciseView.setExerciseSetViews(exerciseSetViews);
+            }
         }
     }
 

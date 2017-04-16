@@ -142,6 +142,7 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
             mExerciseInstance.setExerciseSetViews(mAdapter.getExerciseInstanceSets());
             mPresenter.onExit(mExerciseInstance);
         }
+
         super.onStop();
     }
 }

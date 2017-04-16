@@ -63,8 +63,7 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
 
     @Override
     public void onSaveClicked(ExerciseView exerciseInstance) {
-        mOnExerciseUpdatedCallback.exerciseUpdated(exerciseInstance);
-        mView.getBaseActivity().getSupportFragmentManager().popBackStack();
+        onExit(exerciseInstancetheog);
     }
 
     @Override
@@ -78,7 +77,7 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
     public void onExit(ExerciseView exerciseInstance) {
         mOnExerciseUpdatedCallback.exerciseUpdated(exerciseInstance);
         try {
-            mView.getBaseActivity().getSupportFragmentManager().popBackStack();
+            mView.getBaseActivity().onBackPressed();
         } catch (IllegalStateException ise) {
             Log.e(TAG, "Error onExit(): " + ise.getMessage());
         }

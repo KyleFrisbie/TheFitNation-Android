@@ -1,5 +1,7 @@
 package com.fitnation.model;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 
 import org.parceler.Parcel;
@@ -119,5 +121,14 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView {
     @Override
     public Object clone() {
         return null;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        UserExerciseInstance exerciseInstance = (UserExerciseInstance) o;
+        String nameThis = this.getName();
+        String nameOther = exerciseInstance.getName();
+
+        return nameThis.compareTo(nameOther);
     }
 }

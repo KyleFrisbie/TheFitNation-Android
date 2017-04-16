@@ -1,5 +1,7 @@
 package com.fitnation.model;
 
+import android.support.annotation.NonNull;
+
 import org.parceler.Parcel;
 
 import io.realm.ExerciseInstanceSetRealmProxy;
@@ -141,5 +143,12 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable, Exerc
         result = 31 * result + (exerciseInstanceId != null ? exerciseInstanceId.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        ExerciseInstanceSet otherInstanceSet = (ExerciseInstanceSet) o;
+
+        return this.orderNumber - otherInstanceSet.getOrderNumber();
     }
 }

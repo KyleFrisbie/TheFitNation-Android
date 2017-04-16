@@ -1,5 +1,7 @@
 package com.fitnation.model;
 
+import android.support.annotation.NonNull;
+
 import java.util.Objects;
 
 import io.realm.RealmObject;
@@ -131,5 +133,12 @@ public class UserExerciseInstanceSet extends RealmObject implements ExerciseSetV
     @Override
     public void setRestTime(Float restTime) {
         this.restTime = restTime;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        UserExerciseInstanceSet otherInstanceSet = (UserExerciseInstanceSet) o;
+
+        return this.orderNumber - otherInstanceSet.getOrderNumber();
     }
 }
