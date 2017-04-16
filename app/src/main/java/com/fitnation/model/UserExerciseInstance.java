@@ -1,18 +1,27 @@
 package com.fitnation.model;
 
+import com.google.gson.annotations.Expose;
+
+import org.parceler.Parcel;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.UserExerciseInstanceRealmProxy;
 
 /**
  * Created by Ryan on 3/22/2017.
  */
-public class UserExerciseInstance extends RealmObject implements ExerciseView{
+@Parcel(implementations = {UserExerciseInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { UserExerciseInstance.class })
+public class UserExerciseInstance extends RealmObject implements ExerciseView {
     private Long id;
     private Long userWorkoutInstanceId;
     private Long exerciseInstanceId;
     private String notes;
+    @Expose(serialize = false)
+    private ExerciseInstance exerciseInstance;
     private RealmList<UserExerciseInstanceSet> userExerciseInstanceSets;
 
     /**
@@ -26,6 +35,7 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView{
         this.notes = notes;
         this.userWorkoutInstanceId = userWorkoutInstance.getId();
         this.exerciseInstanceId = exerciseInstance.getId();
+        this.exerciseInstance = exerciseInstance;
         this.userExerciseInstanceSets = userExerciseInstanceSets;
 
         for (ExerciseInstanceSet set: exerciseInstance.getExerciseInstanceSets()) {
@@ -33,9 +43,10 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView{
         }
     }
 
-    public UserExerciseInstance(ExerciseInstance exerciseInstance, String userNotes, UserWorkoutInstance userWorkoutInstance) {
-        this.notes = userNotes;
+    public UserExerciseInstance(ExerciseInstance exerciseInstance, UserWorkoutInstance userWorkoutInstance) {
+        this.notes = exerciseInstance.getNotes();
         this.userWorkoutInstanceId = userWorkoutInstance.getId();
+        this.exerciseInstance = exerciseInstance;
         this.exerciseInstanceId = exerciseInstance.getId();
         userExerciseInstanceSets = new RealmList<>();
 
@@ -50,7 +61,14 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView{
 
     @Override
     public List<ExerciseSetView> getExerciseSetView() {
-        return null;
+        List<ExerciseSetView> exerciseSetViews = new ArrayList<>();
+
+        for (UserExerciseInstanceSet userExerciseInstanceSet :
+                userExerciseInstanceSets) {
+            exerciseSetViews.add(userExerciseInstanceSet);
+        }
+
+        return exerciseSetViews;
     }
 
     @Override
@@ -59,8 +77,13 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView{
     }
 
     @Override
+    public boolean isSelectable() {
+        return false;
+    }
+
+    @Override
     public String getName() {
-        return null;
+        return exerciseInstance.getName();
     }
 
     @Override
@@ -70,6 +93,6 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView{
 
     @Override
     public Long getId() {
-        return null;
+        return id;
     }
 }

@@ -73,7 +73,19 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
             }
         }
 
-        holder.addExerciseBox.setChecked(exerciseInstance.isSelected());
+        if(!exerciseInstance.isSelectable()) {
+            holder.addExerciseBox.setVisibility(View.GONE);
+        } else {
+            holder.addExerciseBox.setVisibility(View.VISIBLE);
+            holder.addExerciseBox.setChecked(exerciseInstance.isSelected());
+            holder.addExerciseBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                    exerciseInstance.setSelected(checked);
+                    mSelectedExercisesCallback.onExerciseSelected(exerciseInstance, checked);
+                }
+            });
+        }
         holder.exerciseName.setText(exerciseInstance.getName());
         holder.setOne.setText(setText);
         holder.setOneReps.setText(repText);
@@ -81,13 +93,6 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 mEditPressedCallback.onEditPressed(exerciseInstance);
-            }
-        });
-        holder.addExerciseBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                exerciseInstance.setSelected(checked);
-                mSelectedExercisesCallback.onExerciseSelected(exerciseInstance, checked);
             }
         });
     }

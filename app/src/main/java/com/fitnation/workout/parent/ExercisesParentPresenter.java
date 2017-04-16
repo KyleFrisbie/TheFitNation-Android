@@ -6,11 +6,14 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.fitnation.R;
+import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.workout.callbacks.ExercisesRequestCallback;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.workout.callbacks.SaveDialogCallback;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
 import com.fitnation.workout.common.ExerciseAlertDialogFactory;
+import com.fitnation.workout.common.Navigator;
+import com.fitnation.workout.edit.EditWorkoutFragment;
 import com.fitnation.workout.exercise.ViewExerciseFragment;
 import com.fitnation.workout.exercise.ViewExercisePresenter;
 import com.fitnation.model.ExerciseInstance;
@@ -108,8 +111,8 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
-
-                            //TODO clear back stack, launch Fragment for viewing created workouts
+                            UserWorkoutInstance userWorkoutInstance = new UserWorkoutInstance(mExerciseManager.getWorkoutInstance());
+                            Navigator.navigateToEditWorkout(mView.getBaseActivity(), userWorkoutInstance, R.id.content_main_container);
                         }
                     }));
 

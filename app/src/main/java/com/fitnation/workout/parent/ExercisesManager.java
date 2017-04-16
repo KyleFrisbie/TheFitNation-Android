@@ -44,6 +44,7 @@ public class ExercisesManager extends DataManager {
     private List<ExerciseInstance> mExerciseInstancesTab1;
     private List<ExerciseInstance> mExerciseInstancesTab2;
     private List<ExerciseInstance> mExerciseInstancesTab3;
+    private WorkoutInstance mWorkoutInstance;
 
 
     public ExercisesManager(Context context) {
@@ -174,6 +175,10 @@ public class ExercisesManager extends DataManager {
         return mSelectedExercises.size() >= 1;
     }
 
+    public WorkoutInstance getWorkoutInstance() {
+        return mWorkoutInstance;
+    }
+
 
     private WorkoutInstance buildWorkoutInstance(WorkoutTemplate updatedTemplate, String name) {
         WorkoutInstance workoutInstance = new WorkoutInstance(name, 0f, 1, updatedTemplate, "");
@@ -242,7 +247,7 @@ public class ExercisesManager extends DataManager {
         }
     }
 
-    private void saveWorkoutToDatabase(WorkoutTemplate workoutTemplate, final SaveWorkoutCallback callback) {
+    private void saveWorkoutToDatabase(final WorkoutTemplate workoutTemplate, final SaveWorkoutCallback callback) {
         saveData(workoutTemplate, new DataResult() {
             @Override
             public void onError() {
@@ -253,6 +258,7 @@ public class ExercisesManager extends DataManager {
             @Override
             public void onSuccess() {
                 callback.onSuccess();
+                mWorkoutInstance = workoutTemplate.getWorkoutInstances().get(0);
                 Log.e(TAG, "WorkoutTemplate was succesfully saved");
             }
         });

@@ -1,5 +1,6 @@
 package com.fitnation.model;
 
+import com.fitnation.utils.DateFormatter;
 import com.google.gson.annotations.Expose;
 
 import java.text.SimpleDateFormat;
@@ -37,13 +38,13 @@ public class WorkoutTemplate extends RealmObject implements Cloneable {
         createdOnObj = new Date();
         lastUpdatedObj = new Date();
         workoutInstances = new RealmList<>();
-        SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+
         if(createdOnObj != null) {
-            createdOn = dateFormat.format(createdOnObj);
+            createdOn = DateFormatter.getFormattedDate(createdOnObj);
         }
 
         if(lastUpdatedObj != null) {
-            lastUpdated = dateFormat.format(lastUpdatedObj);
+            lastUpdated = DateFormatter.getFormattedDate(lastUpdatedObj);
         }
     }
 

@@ -1,5 +1,7 @@
 package com.fitnation.model;
 
+import com.fitnation.utils.DateFormatter;
+
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
@@ -35,6 +37,24 @@ public class UserWorkoutInstance extends RealmObject {
         return id;
     }
 
+    public UserWorkoutInstance() {
+        //required default constructor
+    }
+
+    public UserWorkoutInstance(WorkoutInstance workoutInstance) {
+        createdOn = DateFormatter.getFormattedDate(new Date());
+        lastUpdated = DateFormatter.getFormattedDate(new Date());
+        workoutInstanceId = workoutInstance.getId();
+        workoutInstanceName = workoutInstance.getName();
+        notes = workoutInstance.getNotes();
+        userExerciseInstances = new RealmList<>();
+        for (ExerciseInstance exerciseInstance :
+                workoutInstance.getExerciseInstances()) {
+            UserExerciseInstance userExerciseInstance = new UserExerciseInstance(exerciseInstance, this);
+            userExerciseInstances.add(userExerciseInstance);
+        }
+    }
+
     @ParcelPropertyConverter(UserExerciseInstanceParcelConverter.class)
     public void setExerciseInstanceSets(RealmList<UserExerciseInstance> userExerciseInstances) {
         this.userExerciseInstances = userExerciseInstances;
@@ -42,6 +62,10 @@ public class UserWorkoutInstance extends RealmObject {
 
     public RealmList<UserExerciseInstance> getUserExerciseInstances() {
         return userExerciseInstances;
+    }
+
+    public String getWorkoutInstanceName() {
+        return workoutInstanceName;
     }
 
     @Override

@@ -8,7 +8,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * A single set of an Exercise that a User has/will perform
  */
-public class UserExerciseInstanceSet extends RealmObject {
+public class UserExerciseInstanceSet extends RealmObject implements ExerciseSetView {
     @PrimaryKey
     private Long androidId;
     private Long id;
@@ -47,7 +47,7 @@ public class UserExerciseInstanceSet extends RealmObject {
         this.repQuantity = exerciseInstanceSet.getReqQuantity();
         this.effortQuantity = exerciseInstanceSet.getEffortQuantity();
         this.restTime = exerciseInstanceSet.getRestTime();
-        this.notes = exerciseInstanceSet.getNotes(); //TODO implement this field down the road for custom notes per set
+        this.notes = exerciseInstanceSet.getNotes();
 
     }
 
@@ -84,5 +84,15 @@ public class UserExerciseInstanceSet extends RealmObject {
         return "UserExerciseInstanceSet{" +
             "id=" + id +
             '}';
+    }
+
+    @Override
+    public Integer getOrderNumber() {
+        return orderNumber;
+    }
+
+    @Override
+    public Integer getRepQuantityAsInt() {
+        return Math.round(repQuantity);
     }
 }

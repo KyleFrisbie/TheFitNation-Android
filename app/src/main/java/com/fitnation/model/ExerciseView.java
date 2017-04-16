@@ -1,5 +1,8 @@
 package com.fitnation.model;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,6 +12,7 @@ import java.util.List;
 public interface ExerciseView {
     List<ExerciseSetView> getExerciseSetView();
     boolean isSelected();
+    boolean isSelectable();
     String getName();
     void setSelected(boolean checked);
     Long getId();

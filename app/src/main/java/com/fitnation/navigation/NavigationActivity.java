@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
+import com.fitnation.base.Navigationable;
 import com.fitnation.workout.parent.ExercisesParentFragment;
 import com.fitnation.model.enums.ExerciseAction;
 
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
  * Handles Navigation for the flyout drawer & its container
  */
 public class NavigationActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Navigationable {
     private static final String TAG = NavigationActivity.class.getSimpleName();
 
     @BindView(R.id.toolbar) public Toolbar mToolbar;
@@ -141,6 +142,7 @@ public class NavigationActivity extends BaseActivity
         return true;
     }
 
+    @Override
     public void displayBackArrow(boolean show, String title) {
         if (title != null) {
             getSupportActionBar().setTitle(title);

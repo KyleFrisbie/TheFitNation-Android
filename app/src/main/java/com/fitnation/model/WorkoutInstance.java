@@ -67,8 +67,24 @@ public class WorkoutInstance extends RealmObject {
         this.id = id;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
     public void setExercises(RealmList<ExerciseInstance> exercises) {
         this.exerciseInstances  = exercises;
+    }
+
+    public RealmList<ExerciseInstance> getExerciseInstances() {
+        return exerciseInstances;
     }
 
     @Override

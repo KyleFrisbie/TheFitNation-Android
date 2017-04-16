@@ -66,13 +66,13 @@ public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
         switch (position) {
             case 0:
-                mFragmentTab1 = ExercisesListFragment.newInstance(ExerciseInstance.convertExercisesToExerciseViews(mExerciseListTab1), mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+                mFragmentTab1 = ExercisesListFragment.newInstance(ExerciseInstance.convertExercisesToExerciseViews(mExerciseListTab1), true, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
                 return mFragmentTab1;
             case 1:
-                mFragmentTab2 = ExercisesListFragment.newInstance(ExerciseInstance.convertExercisesToExerciseViews(mExerciseListTab2), mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+                mFragmentTab2 = ExercisesListFragment.newInstance(ExerciseInstance.convertExercisesToExerciseViews(mExerciseListTab2), true, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
                 return mFragmentTab2;
             case 2:
-                mFragmentTab3 = ExercisesListFragment.newInstance(ExerciseInstance.convertExercisesToExerciseViews(mExerciseListTab3), mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+                mFragmentTab3 = ExercisesListFragment.newInstance(ExerciseInstance.convertExercisesToExerciseViews(mExerciseListTab3), true, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
                 return mFragmentTab3;
             default:
                 return null;

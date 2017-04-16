@@ -105,8 +105,14 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
         return exerciseViews;
     }
 
+    @Override
     public boolean isSelected() {
         return selected;
+    }
+
+    @Override
+    public boolean isSelectable() {
+        return true;
     }
 
     @Override
