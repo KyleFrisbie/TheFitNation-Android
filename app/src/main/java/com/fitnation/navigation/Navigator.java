@@ -14,12 +14,33 @@ import com.fitnation.workout.exercise.ExerciseType;
 import com.fitnation.workout.exercise.ViewExerciseFragment;
 import com.fitnation.workout.exercise.ViewExercisePresenter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Ryan on 4/16/2017.
  */
 
 public class Navigator {
     private Navigator(){}
+
+    private static List<NavigationState> mNavigationStateList = new ArrayList<>();
+
+    public static void addNavigationState(NavigationState navigationState) {
+        mNavigationStateList.add(navigationState);
+    }
+
+    public static NavigationState popNavigationState() {
+        int size = mNavigationStateList.size();
+        if(size >= 2) {
+            mNavigationStateList.remove(size-1);
+            return mNavigationStateList.get(size-2);
+        } else if(size >=1) {
+            mNavigationStateList.get(0);
+        } {
+            return null;
+        }
+    }
 
     public static void navigateToEditWorkout(BaseActivity activity, UserWorkoutInstance userWorkoutInstance, int containterId) {
         EditWorkoutFragment editWorkoutFragment = EditWorkoutFragment.newInstance(userWorkoutInstance);

@@ -5,5 +5,5 @@ package com.fitnation.base;
  */
 
 public interface Navigationable {
-    public void displayBackArrow(boolean show, String title);
+    public void updateToolbar(boolean show, String title);
 }

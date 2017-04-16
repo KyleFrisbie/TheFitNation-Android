@@ -151,7 +151,7 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
         Log.i(TAG, "onStart()");
         super.onStart();
         mPresenter.onViewReady();
-        ((NavigationActivity) getActivity()).displayBackArrow(false, "Build A Workout");
+        ((NavigationActivity) getActivity()).updateToolbar(false, "Build A Workout");
     }
 
     @Override

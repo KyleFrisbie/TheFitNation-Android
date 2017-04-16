@@ -15,7 +15,6 @@ import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.callbacks.OnSetSelectedCallback;
-import com.fitnation.model.ExerciseInstance;
 import com.fitnation.navigation.NavigationActivity;
 
 import org.parceler.Parcels;
@@ -108,13 +107,12 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
     public void onStart() {
         super.onStart();
         NavigationActivity navigationActivity = (NavigationActivity) getBaseActivity();
-        navigationActivity.displayBackArrow(true, "Edit");
+        navigationActivity.updateToolbar(true, "Edit");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ((NavigationActivity) getActivity()).displayBackArrow(false, "Build A Workout");
     }
 
     @OnClick(R.id.add_set_button)

@@ -68,6 +68,7 @@ public class NavigationActivity extends BaseActivity
         };
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
+        updateToolbar(false, getString(R.string.fit_nation));
     }
 
     @Override
@@ -79,6 +80,8 @@ public class NavigationActivity extends BaseActivity
             int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
 
             if (backStackCount >= 1) {
+                NavigationState navigationState = Navigator.popNavigationState();
+                updateBasedOffNavigationState(navigationState);
                 getSupportFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();
@@ -135,8 +138,20 @@ public class NavigationActivity extends BaseActivity
         return true;
     }
 
+    private void updateBasedOffNavigationState(NavigationState navigationState) {
+        if(navigationState != null) {
+            updateToolbarView(navigationState.isBackArrowShown(), navigationState.getTitle());
+        }
+    }
+
     @Override
-    public void displayBackArrow(boolean show, String title) {
+    public void updateToolbar(boolean show, String title) {
+        Navigator.addNavigationState(new NavigationState(show, title));
+
+        updateToolbarView(show, title);
+    }
+
+    private void updateToolbarView(boolean show, String title) {
         if (title != null) {
             getSupportActionBar().setTitle(title);
         }

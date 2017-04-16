@@ -7,26 +7,16 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
-import com.fitnation.base.BaseView;
 import com.fitnation.base.Navigationable;
-import com.fitnation.model.ExerciseView;
 import com.fitnation.model.UserWorkoutInstance;
-import com.fitnation.navigation.NavigationActivity;
-import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
-import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
-import com.fitnation.workout.exerciseList.ExerciseAdapter;
-import com.fitnation.workout.exerciseList.ExercisesListFragment;
 
 import org.parceler.Parcels;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Optional;
 
 /**
  */
@@ -63,7 +53,7 @@ public class EditWorkoutFragment extends BaseFragment implements EditWorkoutCont
         View v = inflater.inflate(R.layout.workout_fragment_edit_workout, container, false);
         ButterKnife.bind(this, v);
         Navigationable navigationable =  (Navigationable) getBaseActivity();
-        navigationable.displayBackArrow(true, getString(R.string.edit_workout_title) + " " + mUserWorkoutInstance.getWorkoutInstanceName());
+        navigationable.updateToolbar(true, getString(R.string.edit_workout_title) + " " + mUserWorkoutInstance.getWorkoutInstanceName());
 
         mPresenter.onViewReady();
 
