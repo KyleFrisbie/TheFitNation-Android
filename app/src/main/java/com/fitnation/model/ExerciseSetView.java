@@ -6,5 +6,11 @@ package com.fitnation.model;
 
 public interface ExerciseSetView {
     Integer getOrderNumber();
+    void setOrderNumber(Integer orderNumber);
     Integer getRepQuantityAsInt();
+    Float getEffortQuantity();
+    Float getRestTime();
+    void setReqQuantity(Float reqQuantity);
+    void setEffortQuantity(Float effortQuantity);
+    void setRestTime(Float restTime);
 }

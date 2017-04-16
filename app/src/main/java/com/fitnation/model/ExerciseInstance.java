@@ -91,6 +91,15 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
         return exerciseSetView;
     }
 
+    @Override
+    public void setExerciseSetViews(List<ExerciseSetView> sets) {
+        exerciseInstanceSets = new RealmList();
+
+        for (ExerciseSetView setView : sets) {
+            exerciseInstanceSets.add((ExerciseInstanceSet) setView);
+        }
+    }
+
     public static List<ExerciseView> convertExercisesToExerciseViews(List<ExerciseInstance> exerciseInstances) {
         List<ExerciseView> exerciseViews = null;
 
@@ -118,6 +127,11 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
     @Override
     public String getName() {
         return exerciseName;
+    }
+
+    @Override
+    public String getSkillLevelLevel() {
+        return exercise.getSkillLevelLevel();
     }
 
     public RealmList<ExerciseInstanceSet> getExerciseInstanceSets() {

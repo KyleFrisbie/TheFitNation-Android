@@ -10,6 +10,7 @@ import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.workout.edit.EditWorkoutFragment;
 import com.fitnation.workout.edit.EditWorkoutPresenter;
+import com.fitnation.workout.exercise.ExerciseType;
 import com.fitnation.workout.exercise.ViewExerciseFragment;
 import com.fitnation.workout.exercise.ViewExercisePresenter;
 
@@ -26,10 +27,10 @@ public class Navigator {
         activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment ).commit();
     }
 
-    public static void navigateToEditExercise(BaseActivity activity, ExerciseView exerciseView, OnExerciseUpdatedCallback callback, int containerId) {
-//        ViewExerciseFragment viewExerciseFragment = ViewExerciseFragment.newInstance(exerciseView);
-//
-//        viewExerciseFragment.setPresenter(new ViewExercisePresenter(exerciseView, viewExerciseFragment, callback));
-//        activity.getSupportFragmentManager().beginTransaction().add(containerId, viewExerciseFragment).addToBackStack(null);
+    public static void navigateToEditExercise(BaseActivity activity, ExerciseView exerciseView, ExerciseType exerciseType, OnExerciseUpdatedCallback callback, int containerId) {
+        ViewExerciseFragment viewExerciseFragment = ViewExerciseFragment.newInstance(exerciseView);
+
+        viewExerciseFragment.setPresenter(new ViewExercisePresenter(exerciseView, exerciseType, viewExerciseFragment, callback));
+        activity.getSupportFragmentManager().beginTransaction().add(containerId, viewExerciseFragment).addToBackStack(null).commit();
     }
 }

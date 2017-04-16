@@ -13,7 +13,7 @@ public class UserExerciseInstanceSet extends RealmObject implements ExerciseSetV
     private Long androidId;
     private Long id;
     private Integer orderNumber;
-    private Float repQuantity;
+    private Float reqQuantity;
     private Float effortQuantity;
     private Float restTime;
     private String notes;
@@ -24,17 +24,17 @@ public class UserExerciseInstanceSet extends RealmObject implements ExerciseSetV
      * @param androidId
      * @param id
      * @param orderNumber
-     * @param repQuantity
+     * @param reqQuantity
      * @param effortQuantity
      * @param restTime
      * @param notes
      * @param exerciseInstanceSet
      */
-    public UserExerciseInstanceSet(Long androidId, Long id, Integer orderNumber, Float repQuantity, Float effortQuantity, Float restTime, String notes, ExerciseInstanceSet exerciseInstanceSet) {
+    public UserExerciseInstanceSet(Long androidId, Long id, Integer orderNumber, Float reqQuantity, Float effortQuantity, Float restTime, String notes, ExerciseInstanceSet exerciseInstanceSet) {
         this.androidId = androidId;
         this.id = id;
         this.orderNumber = orderNumber;
-        this.repQuantity = repQuantity;
+        this.reqQuantity = reqQuantity;
         this.effortQuantity = effortQuantity;
         this.restTime = restTime;
         this.notes = notes;
@@ -44,7 +44,7 @@ public class UserExerciseInstanceSet extends RealmObject implements ExerciseSetV
     public UserExerciseInstanceSet(ExerciseInstanceSet exerciseInstanceSet) {
         this.exerciseInstanceSetId = exerciseInstanceSet.getId();
         this.orderNumber = exerciseInstanceSet.getOrderNumber();
-        this.repQuantity = exerciseInstanceSet.getReqQuantity();
+        this.reqQuantity = exerciseInstanceSet.getReqQuantity();
         this.effortQuantity = exerciseInstanceSet.getEffortQuantity();
         this.restTime = exerciseInstanceSet.getRestTime();
         this.notes = exerciseInstanceSet.getNotes();
@@ -53,6 +53,13 @@ public class UserExerciseInstanceSet extends RealmObject implements ExerciseSetV
 
     public UserExerciseInstanceSet() {
         //default constructor
+    }
+
+    public UserExerciseInstanceSet(int orderNumber) {
+        this.orderNumber = orderNumber;
+        reqQuantity = ExerciseInstance.REPS_DEFAULT;
+        effortQuantity = ExerciseInstance.EFFORT_DEFAULT;
+        restTime = ExerciseInstance.REST_TIME_DEFAULT;
     }
 
     public void setId(Long id) {
@@ -92,7 +99,37 @@ public class UserExerciseInstanceSet extends RealmObject implements ExerciseSetV
     }
 
     @Override
+    public void setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    @Override
     public Integer getRepQuantityAsInt() {
-        return Math.round(repQuantity);
+        return Math.round(reqQuantity);
+    }
+
+    @Override
+    public Float getEffortQuantity() {
+        return effortQuantity;
+    }
+
+    @Override
+    public Float getRestTime() {
+        return restTime;
+    }
+
+    @Override
+    public void setReqQuantity(Float reqQuantity) {
+        this.reqQuantity = reqQuantity;
+    }
+
+    @Override
+    public void setEffortQuantity(Float effortQuantity) {
+        this.effortQuantity = effortQuantity;
+    }
+
+    @Override
+    public void setRestTime(Float restTime) {
+        this.restTime = restTime;
     }
 }

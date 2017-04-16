@@ -11,9 +11,13 @@ import java.util.List;
 
 public interface ExerciseView {
     List<ExerciseSetView> getExerciseSetView();
+    void setExerciseSetViews(List<ExerciseSetView> sets);
     boolean isSelected();
     boolean isSelectable();
     String getName();
+    String getSkillLevelLevel();
+    String getNotes();
     void setSelected(boolean checked);
     Long getId();
+    Object clone();
 }

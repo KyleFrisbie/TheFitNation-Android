@@ -72,6 +72,16 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView {
     }
 
     @Override
+    public void setExerciseSetViews(List<ExerciseSetView> sets) {
+        userExerciseInstanceSets = new RealmList<>();
+
+        for (ExerciseSetView exerciseSetView :
+                sets) {
+            userExerciseInstanceSets.add((UserExerciseInstanceSet)exerciseSetView);
+        }
+    }
+
+    @Override
     public boolean isSelected() {
         return false;
     }
@@ -87,6 +97,16 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView {
     }
 
     @Override
+    public String getSkillLevelLevel() {
+        return null;
+    }
+
+    @Override
+    public String getNotes() {
+        return null;
+    }
+
+    @Override
     public void setSelected(boolean checked) {
 
     }
@@ -94,5 +114,10 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView {
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public Object clone() {
+        return null;
     }
 }
