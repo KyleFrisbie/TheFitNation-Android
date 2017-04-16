@@ -62,14 +62,14 @@ public class ExercisesListFragment extends BaseFragment {
 
     public static ExercisesListFragment newInstance(List<ExerciseView> exerciseInstances, boolean elementsSelectable, ExerciseSelectedCallback callback, OnEditExercisePressedCallback onEditExercisePressedCallback) {
         ExercisesListFragment  exercisesListFragment = new ExercisesListFragment();
+        Bundle bundle = new Bundle();
 
         if(exerciseInstances != null && !exerciseInstances.isEmpty()) {
-            Bundle bundle = new Bundle();
-
             bundle.putParcelable(EXERCISE_LIST, Parcels.wrap(exerciseInstances));
-            bundle.putBoolean(DISPLAY_SELECTABLE, elementsSelectable);
-            exercisesListFragment.setArguments(bundle);
         }
+
+        bundle.putBoolean(DISPLAY_SELECTABLE, elementsSelectable);
+        exercisesListFragment.setArguments(bundle);
 
         exercisesListFragment.setExerciseSelectedCallback(callback);
         exercisesListFragment.setOnEditExercisePressed(onEditExercisePressedCallback);
