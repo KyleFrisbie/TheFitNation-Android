@@ -10,6 +10,8 @@ import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.workout.edit.EditWorkoutFragment;
 import com.fitnation.workout.edit.EditWorkoutPresenter;
+import com.fitnation.workout.edit.SaveUserWorkoutInstanceFragment;
+import com.fitnation.workout.edit.SaveWorkoutPresenter;
 import com.fitnation.workout.exercise.ExerciseType;
 import com.fitnation.workout.exercise.ViewExerciseFragment;
 import com.fitnation.workout.exercise.ViewExercisePresenter;
@@ -54,5 +56,12 @@ public class Navigator {
 
         viewExerciseFragment.setPresenter(new ViewExercisePresenter(exerciseView, exerciseType, viewExerciseFragment, callback));
         activity.getSupportFragmentManager().beginTransaction().add(containerId, viewExerciseFragment).addToBackStack(null).commit();
+    }
+
+    public static void navigateToSaveUserWorkoutInstance(BaseActivity activity, UserWorkoutInstance userWorkoutInstance, int containerId) {
+        SaveUserWorkoutInstanceFragment saveUserWorkoutInstanceFragment = SaveUserWorkoutInstanceFragment.newInstance(userWorkoutInstance);
+
+        saveUserWorkoutInstanceFragment.setPresenter(new SaveWorkoutPresenter(saveUserWorkoutInstanceFragment));
+        activity.getSupportFragmentManager().beginTransaction().replace(containerId, saveUserWorkoutInstanceFragment ).commit();
     }
 }
