@@ -61,6 +61,13 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView {
         //Required default constructor
     }
 
+    public RealmList<UserExerciseInstanceSet> getUserExerciseInstanceSets() {
+        if(userExerciseInstanceSets == null) {
+            userExerciseInstanceSets = new RealmList<>();
+        }
+        return userExerciseInstanceSets;
+    }
+
     @Override
     public List<ExerciseSetView> getExerciseSetView() {
         List<ExerciseSetView> exerciseSetViews = new ArrayList<>();
@@ -130,5 +137,24 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView {
         String nameOther = exerciseInstance.getName();
 
         return nameThis.compareTo(nameOther);
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserExerciseInstance that = (UserExerciseInstance) o;
+
+        return exerciseInstanceId != null ? exerciseInstanceId.equals(that.exerciseInstanceId) : that.exerciseInstanceId == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (exerciseInstanceId != null ? exerciseInstanceId.hashCode() : 0);
+        return result;
     }
 }

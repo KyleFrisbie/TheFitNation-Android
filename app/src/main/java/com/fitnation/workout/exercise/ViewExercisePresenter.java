@@ -63,7 +63,7 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
 
     @Override
     public void onSaveClicked(ExerciseView exerciseInstance) {
-        onExit(exerciseInstancetheog);
+        onExit(exerciseInstance);
     }
 
     @Override

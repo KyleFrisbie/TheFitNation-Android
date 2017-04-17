@@ -68,26 +68,6 @@ public class UserWorkoutInstance extends RealmObject {
         return workoutInstanceName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        UserWorkoutInstance userWorkoutInstance = (UserWorkoutInstance) o;
-        if (userWorkoutInstance.id == null || id == null) {
-            return false;
-        }
-        return Objects.equals(id, userWorkoutInstance.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
-
     public List<ExerciseView> getExerciseViews() {
         List<ExerciseView> exerciseViews = new ArrayList<>(userExerciseInstances.size());
         for (UserExerciseInstance exercise : userExerciseInstances) {
@@ -102,5 +82,24 @@ public class UserWorkoutInstance extends RealmObject {
         return "UserWorkoutInstance{" +
             "id=" + id +
             '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserWorkoutInstance that = (UserWorkoutInstance) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        return workoutInstanceId != null ? workoutInstanceId.equals(that.workoutInstanceId) : that.workoutInstanceId == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (workoutInstanceId != null ? workoutInstanceId.hashCode() : 0);
+        return result;
     }
 }

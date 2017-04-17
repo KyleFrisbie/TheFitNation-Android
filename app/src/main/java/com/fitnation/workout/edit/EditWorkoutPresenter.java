@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.fitnation.R;
 import com.fitnation.model.ExerciseView;
+import com.fitnation.model.UserExerciseInstance;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
@@ -12,6 +13,10 @@ import com.fitnation.navigation.Navigator;
 import com.fitnation.workout.exercise.ExerciseType;
 import com.fitnation.workout.exerciseList.ExercisesListFragment;
 
+import java.util.Collections;
+
+import io.realm.RealmList;
+
 /**
  * Created by Ryan on 4/16/2017.
  */
@@ -19,6 +24,8 @@ import com.fitnation.workout.exerciseList.ExercisesListFragment;
 public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnExerciseUpdatedCallback {
     private UserWorkoutInstance mUserWorkoutInstance;
     private EditWorkoutContract.View mView;
+    private ExercisesListFragment mListFragment;
+    private UserExerciseInstance mUserExerciseBeingEdited;
 
     public EditWorkoutPresenter (EditWorkoutContract.View view) {
         mView = view;
@@ -27,18 +34,15 @@ public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnEx
 
     @Override
     public void onViewReady() {
-        ExercisesListFragment exercisesListFragment = ExercisesListFragment.newInstance(mUserWorkoutInstance.getExerciseViews(), false, new ExerciseSelectedCallback() {
-            @Override
-            public void onExerciseSelected(ExerciseView exerciseInstance, boolean isSelected) {
-
-            }
-        }, new OnEditExercisePressedCallback() {
+        mListFragment = ExercisesListFragment.newInstance(mUserWorkoutInstance.getExerciseViews(), false, null,
+                new OnEditExercisePressedCallback() {
             @Override
             public void onEditPressed(ExerciseView exercise) {
+                mUserExerciseBeingEdited = (UserExerciseInstance) exercise;
                 Navigator.navigateToEditExercise(mView.getBaseActivity(), exercise, ExerciseType.USER, EditWorkoutPresenter.this, R.id.content_main_container);
             }
         });
-        mView.getBaseActivity().getSupportFragmentManager().beginTransaction().add(R.id.edit_workout_container, exercisesListFragment).commit();
+        mView.getBaseActivity().getSupportFragmentManager().beginTransaction().add(R.id.edit_workout_container, mListFragment).commit();
     }
 
     @Override
@@ -57,7 +61,14 @@ public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnEx
     }
 
     @Override
-    public void exerciseUpdated(@Nullable ExerciseView updatedExerciseInstance) {
+    public void exerciseUpdated(@Nullable ExerciseView updatedExerciseView) {
+        UserExerciseInstance updatedExerciseInstance = (UserExerciseInstance) updatedExerciseView;
+        RealmList<UserExerciseInstance> userExerciseInstances = mUserWorkoutInstance.getUserExerciseInstances();
+        userExerciseInstances.remove(mUserExerciseBeingEdited);userExerciseInstances.add(updatedExerciseInstance);
+        Collections.sort(userExerciseInstances);
 
+        mUserWorkoutInstance.setExerciseInstanceSets(userExerciseInstances);
+
+        mListFragment.displayExercises(mUserWorkoutInstance.getExerciseViews());
     }
 }

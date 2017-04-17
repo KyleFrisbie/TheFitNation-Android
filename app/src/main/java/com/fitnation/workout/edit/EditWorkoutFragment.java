@@ -69,4 +69,10 @@ public class EditWorkoutFragment extends BaseFragment implements EditWorkoutCont
     public BaseActivity getBaseActivity() {
         return (BaseActivity) getActivity();
     }
+
+    @Override
+    public void updateData(UserWorkoutInstance userWorkoutInstance) {
+        mUserWorkoutInstance = userWorkoutInstance;
+
+    }
 }

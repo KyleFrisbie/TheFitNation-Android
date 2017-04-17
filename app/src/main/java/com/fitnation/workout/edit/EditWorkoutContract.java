@@ -10,7 +10,7 @@ import com.fitnation.model.UserWorkoutInstance;
 
 public interface EditWorkoutContract {
     interface View extends BaseView<Presenter> {
-
+        void updateData(UserWorkoutInstance userWorkoutInstance);
     }
 
     interface Presenter extends BasePresenter{
