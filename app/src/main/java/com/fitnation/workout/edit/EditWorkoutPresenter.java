@@ -51,6 +51,11 @@ public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnEx
     }
 
     @Override
+    public void onSavePressed() {
+        //show save fragment
+    }
+
+    @Override
     public void start() {
 
     }
@@ -59,6 +64,8 @@ public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnEx
     public void stop() {
 
     }
+
+    //-----------------------OnExerciseUpdatedCallback---------------------------------//
 
     @Override
     public void exerciseUpdated(@Nullable ExerciseView updatedExerciseView) {

@@ -1,6 +1,7 @@
 package com.fitnation.model;
 
 import com.fitnation.utils.DateFormatter;
+import com.google.gson.annotations.Expose;
 
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
@@ -13,12 +14,16 @@ import java.util.Objects;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.UserWorkoutInstanceRealmProxy;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * A workout that has/will been/be performed by a User
  */
 @Parcel(implementations = {UserWorkoutInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { UserWorkoutInstance.class })
 public class UserWorkoutInstance extends RealmObject {
+    @PrimaryKey
+    @Expose(serialize = false)
+    private Long androidId;
     private Long id;
     private String createdOn;
     private String lastUpdated;

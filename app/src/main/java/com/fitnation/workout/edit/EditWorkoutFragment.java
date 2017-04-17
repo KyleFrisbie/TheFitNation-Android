@@ -17,6 +17,7 @@ import com.fitnation.model.UserWorkoutInstance;
 import org.parceler.Parcels;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  */
@@ -75,4 +76,10 @@ public class EditWorkoutFragment extends BaseFragment implements EditWorkoutCont
         mUserWorkoutInstance = userWorkoutInstance;
 
     }
+
+    @OnClick(R.id.edit_workout_action_button)
+    public void onActionRequested() {
+        mPresenter.onSavePressed();
+    }
+
 }

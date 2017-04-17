@@ -1,6 +1,8 @@
 package com.fitnation.model;
 
 
+import com.google.gson.annotations.Expose;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +18,7 @@ import io.realm.annotations.PrimaryKey;
  */
 public class UserWorkoutTemplate extends RealmObject {
     @PrimaryKey
+    @Expose(serialize = false)
     private Long androidId;
     private Long id;
     private Date createdOn;

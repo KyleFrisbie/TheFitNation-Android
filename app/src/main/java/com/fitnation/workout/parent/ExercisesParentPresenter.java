@@ -8,7 +8,7 @@ import android.util.Log;
 import com.fitnation.R;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.model.UserWorkoutInstance;
-import com.fitnation.workout.callbacks.ExercisesRequestCallback;
+import com.fitnation.networking.tasks.callbacks.ExercisesRequestCallback;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.workout.callbacks.SaveDialogCallback;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;

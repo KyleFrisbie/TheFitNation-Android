@@ -15,5 +15,6 @@ public interface EditWorkoutContract {
 
     interface Presenter extends BasePresenter{
         void setUserWorkoutInstance(UserWorkoutInstance userWorkoutInstance);
+        void onSavePressed();
     }
 }
