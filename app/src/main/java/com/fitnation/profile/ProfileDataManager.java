@@ -1,12 +1,10 @@
 package com.fitnation.profile;
 
 
-import android.content.Context;
 import android.util.Log;
 
 
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.fitnation.base.DataManager;
 import com.fitnation.base.DataResult;
 import com.fitnation.model.User;
@@ -16,10 +14,8 @@ import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.UserLogins;
 import com.fitnation.networking.tasks.UserDemographicTask;
-import com.fitnation.networking.tasks.UserTask;
 import com.fitnation.networking.tasks.UserWeightTask;
 import com.fitnation.profile.callbacks.PutUserWeightCallback;
-import com.fitnation.profile.callbacks.UserCallback;
 import com.fitnation.profile.callbacks.UserDemographicsCallback;
 import com.fitnation.workout.callbacks.GetSkillLevelsCallback;
 import com.fitnation.workout.parent.GetSkillLevelsTask;
@@ -213,7 +209,7 @@ public class ProfileDataManager extends DataManager {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                postUserWeightTask.postUserWeight(userWeight, new PutUserWeightCallback() {
+                postUserWeightTask.putUserWeight(userWeight, new PutUserWeightCallback() {
                     @Override
                     public void onSuccess(UserWeight userWeightList) {
                         Log.i(TAG, "Successfully saved UserWeight to Web");

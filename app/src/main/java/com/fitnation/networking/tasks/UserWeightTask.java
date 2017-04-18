@@ -18,6 +18,7 @@ import com.fitnation.profile.callbacks.GetUserWeightCallback;
 import com.fitnation.profile.callbacks.PutUserWeightCallback;
 import com.fitnation.utils.Environment;
 import com.fitnation.utils.EnvironmentManager;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -79,32 +80,32 @@ public class UserWeightTask extends NetworkTask{
         mRequestQueue.add(jsonRequestWeights);
     }
 
-    public void postUserWeight(UserWeight weight, final PutUserWeightCallback callback) {
+    public void putUserWeight(UserWeight weight, final PutUserWeightCallback callback) {
         //save data to web
         String url = EnvironmentManager.
                 getInstance().getCurrentEnvironment().
                 getApiUrl()+"user-weights";
 
         String jString = JsonParser.convertPojoToJsonString(weight);
-        JSONObject udjObj;
+        JSONArray udjObj;
         try {
-            udjObj = new JSONObject(jString);
+            udjObj = new JSONArray(jString);
             Log.i(TAG, "User Weight Successfully POST to Web");
         } catch (org.json.JSONException e) {
             Log.d(TAG, "Failed to convert User Demographic to JSON String");
-            udjObj = new JSONObject();
+            udjObj = new JSONArray();
         }
 
-        JsonObjectRequest jsonWeightRequest =
-                new JsonObjectRequest(Request.Method.PUT, url, udjObj, new Response.Listener<JSONObject>() {
+        JsonArrayRequest jsonWeightRequest =
+                new JsonArrayRequest(Request.Method.PUT, url, udjObj, new Response.Listener<JSONArray> () {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i("POST", response.toString());
+                    public void onResponse(JSONArray response) {
+                        Log.i("PUT", response.toString());
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("POST", error.toString());
+                        Log.d("PUT", error.toString());
                     }
                 }) {
                 @Override

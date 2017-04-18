@@ -17,7 +17,6 @@ import com.fitnation.model.User;
 import com.fitnation.model.UserWeight;
 import com.fitnation.model.UserDemographic;
 import com.fitnation.networking.AuthToken;
-import com.fitnation.networking.UserLogins;
 import com.fitnation.networking.tasks.TaskCallback;
 import com.fitnation.networking.tasks.UserDemographicTask;
 import com.fitnation.networking.tasks.UserTask;
@@ -26,12 +25,8 @@ import com.fitnation.profile.callbacks.UserCallback;
 import com.fitnation.profile.callbacks.UserDemographicsCallback;
 import com.fitnation.profile.callbacks.GetUserWeightCallback;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-
-import io.realm.Realm;
 
 import static com.fitnation.utils.UnitConversion.*;
 
@@ -270,12 +265,12 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
 
     @Override
     public void scaleFocusChanged
-            (EditText heightText, EditText weightText, boolean focus) {
+            (TextView mSwitchMeasurementButton, EditText heightText, EditText weightText, boolean focus) {
         if (focus) {
             heightText.setText(removeUnits(heightText.getText().toString()));
             weightText.setText(removeUnits(weightText.getText().toString()));
         } else {
-            measurementsAddUnits(heightText, weightText);
+            measurementsAddUnits(mSwitchMeasurementButton, heightText, weightText);
         }
     }
 
@@ -293,9 +288,9 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
     }
 
     @Override
-    public void measurementsAddUnits(EditText heightText, EditText weightText){
+    public void measurementsAddUnits(TextView mSwitchMeasurementButton, EditText heightText, EditText weightText){
 
-        if (isImperial){
+        if (mSwitchMeasurementButton.getText().toString().contains("imperial")){
             weightText.setText(String.format("%.1f", getNumValue(weightText))+ " lbs");
             heightText.setText(String.format("%.1f", getNumValue(heightText))+ " inches");
         } else {

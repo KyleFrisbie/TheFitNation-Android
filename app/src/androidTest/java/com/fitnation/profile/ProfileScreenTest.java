@@ -1,5 +1,6 @@
 package com.fitnation.profile;
 
+import org.bouncycastle.crypto.tls.NewSessionTicket;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -46,10 +47,11 @@ public class ProfileScreenTest extends InstrumentationTest {
     private final int DELAY_TIME = 500;
     final static String SUCCESS_AUTH_TOKEN = "65d2a110-212b-403c-8d7e-0be4102442db";
     final static String FAILURE_AUTH_TOKEN = "e7f01c5f-4efe-4749-8c7a-d4d9b98670d5";
-    final static String USER_DEMO_BY_LOGGED_IN_PATH = "api/users/user-demographic";
-    final static String USER_WEIGHT_PATH = "api/user-weights";
-    final static String USER_PATH = "api/users/admin";
-    final static String SKILL_LEVELS_PATH = "/api/skill-levels";
+    final static String USER_DEMO_BY_LOGGED_IN_PATH = "users/user-demographic";
+    final static String USER_DEMO_PUT_PATH = "user-demographics";
+    final static String USER_WEIGHT_PATH = "user-weights";
+    final static String USER_PATH = "users/admin";
+    final static String SKILL_LEVELS_PATH = "skill-levels";
 
     @Rule
     public ActivityTestRule<NavigationActivity> mActivityRule =
@@ -144,13 +146,36 @@ public class ProfileScreenTest extends InstrumentationTest {
                 "  }\n" +
                 "]";
 
+        final String USER_DEMO_PUT_RESPONSE = "{\"id\":3154,\"" +
+                "createdOn\":\"2017-04-17\",\"" +
+                "lastLogin\":\"2017-04-18\",\"" +
+                "gender\":\"Other\",\"" +
+                "dateOfBirth\":\"2017-04-17\",\"" +
+                "height\":80,\"" +
+                "unitOfMeasure\":\"" +
+                "Imperial\",\"" +
+                "userId\":2802,\"" +
+                "userLogin\":\"admin\",\"" +
+                "gyms\":[],\"" +
+                "skillLevelId\":1251,\"" +
+                "skillLevelLevel\":\"Beginner\"" +
+                "}";
+
+        final String WEIGHT_POST_RESPONSE = "{\"id\":15101,\"" +
+                "weightDate\":\"2017-04-17\",\"" +
+                "weight\":150,\"" +
+                "userDemographicId\":3154}";
+
+
         final String EMPTY_WEIGHT_RESPONSE = "[]";
 
         final MockResponse good_user_demo_response = new MockResponse().setResponseCode(200).setBody(USERDEMOGRAPHIC_RESPONSE);
         final MockResponse good_weights_response = new MockResponse().setResponseCode(200).setBody(WEIGHT_RESPONSE);
-        final MockResponse good_user_response = new MockResponse().setResponseCode(200).setBody(USER_RESPONSE);
         final MockResponse empty_weight_response = new MockResponse().setResponseCode(200).setBody(EMPTY_WEIGHT_RESPONSE);
-        final MockResponse skill_levels_respons = new MockResponse().setResponseCode(200).setBody(SKILL_LEVELS_RESPONSE);
+        final MockResponse good_user_response = new MockResponse().setResponseCode(200).setBody(USER_RESPONSE);
+        final MockResponse skill_levels_response = new MockResponse().setResponseCode(200).setBody(SKILL_LEVELS_RESPONSE);
+        final MockResponse user_demo_put_response = new MockResponse().setResponseCode(200).setBody(USER_DEMO_PUT_RESPONSE);
+        final MockResponse user_weight_post_response = new MockResponse().setResponseCode(200).setBody(WEIGHT_POST_RESPONSE);
 
 
         final Dispatcher dispatcher = new Dispatcher() {
@@ -174,7 +199,14 @@ public class ProfileScreenTest extends InstrumentationTest {
                     return good_user_response;
                 } else if (request.getPath().toLowerCase().contains(SKILL_LEVELS_PATH)
                         && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)) {
-                    return skill_levels_respons;
+                    return skill_levels_response;
+                } else if (request.getPath().toLowerCase().contains(USER_DEMO_PUT_PATH)
+                        && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)) {
+                    return user_demo_put_response;
+                } else if (request.getPath().toLowerCase().contains(USER_WEIGHT_PATH)
+                        && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)
+                        && request.toString().contains("PUT")) {
+                    return user_weight_post_response;
                 }
                     else return new MockResponse().setResponseCode(404);
             }
@@ -199,8 +231,9 @@ public class ProfileScreenTest extends InstrumentationTest {
         AuthToken.getInstance().setAccessToken(SUCCESS_AUTH_TOKEN);
         onNavMyProfilePressed();
         profilePageDisplayed();
-
-        SystemClock.sleep(1000);
+        onView(withId(R.id.switchMeasurement)).perform(click());
+        onView(withId(R.id.saveButton)).perform(click());
+        SystemClock.sleep(DELAY_TIME);
     }
 
     public void onNavMyProfilePressed(){

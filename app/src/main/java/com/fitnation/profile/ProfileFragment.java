@@ -126,7 +126,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
 
     @OnFocusChange({R.id.weightEditText, R.id.heightEditText})
     void scaleFocusChanged(boolean focus){
-        mPresenter.scaleFocusChanged(mHeightTextBox, mWeightTextBox, focus);
+        mPresenter.scaleFocusChanged(mSwitchMeasurementButton, mHeightTextBox, mWeightTextBox, focus);
     }
 
 
@@ -260,7 +260,8 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         } catch (Exception e) {
             Log.d("PROFILE", e.getMessage());
         }
-        mPresenter.measurementsAddUnits(mHeightTextBox, mWeightTextBox);
+
+        mPresenter.measurementsAddUnits(mSwitchMeasurementButton, mHeightTextBox, mWeightTextBox);
         stopProgress();  //Stop loading circle
 
     }

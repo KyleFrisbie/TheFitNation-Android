@@ -20,6 +20,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.realm.Realm;
+
 /**
  * Created by Jeremy on 4/9/2017.
  */
@@ -33,6 +35,7 @@ public class UserDemographicTask extends NetworkTask{
     }
 
     public void getUserDemographicById(final UserDemographicsCallback callback){
+
         String resourceRoute = "users/user-demographic/";
         String url = EnvironmentManager.getInstance().
                 getCurrentEnvironment().getApiUrl() + resourceRoute;

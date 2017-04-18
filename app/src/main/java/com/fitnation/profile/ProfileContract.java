@@ -31,7 +31,7 @@ public interface ProfileContract {
         void onSwitchMeasurementClicked
                 (EditText weightText, EditText heightText, TextView measurementText);
 
-        void scaleFocusChanged(EditText heightText, EditText weightText, boolean focus);
+        void scaleFocusChanged(TextView mSwitchMeasurementButton, EditText heightText, EditText weightText, boolean focus);
 
         void openDatePicker(DatePickerFragment datePickerFragment);
 
@@ -39,7 +39,7 @@ public interface ProfileContract {
                            EditText mDobTextBox, EditText mHeightTextBox,
                            TextView mEmailTextBox, TextView mSwitchMeasurementButton,
                            Spinner mGenderSpinner, Spinner mLifterTypeSpinner);
-        void measurementsAddUnits(EditText heightText, EditText weightText);
+        void measurementsAddUnits(TextView mSwitchMeasurementButton, EditText heightText, EditText weightText);
 
         void onDateSet(DatePicker view, int year, int month,
                        int day, EditText dobText, EditText ageText);
