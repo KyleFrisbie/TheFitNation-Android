@@ -10,7 +10,6 @@ import java.util.Date;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -50,7 +49,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @BindView(R.id.heightEditText)    public EditText mHeightTextBox;
     @BindView(R.id.ageText)           public EditText mAgeTextBox;
     @BindView(R.id.birthdayEditText)  public EditText mDobTextBox;
-    @BindView(R.id.emailEditText)     public TextView mEmailTextBox;
+    @BindView(R.id.emailText)     public TextView mEmailTextBox;
     @BindView(R.id.saveButton)        public Button mSaveButton;
     @BindView(R.id.genderEditText)    public Spinner mGenderSpinner;
     @BindView(R.id.lifterTypeSpinner) public Spinner mLifterTypeSpinner;

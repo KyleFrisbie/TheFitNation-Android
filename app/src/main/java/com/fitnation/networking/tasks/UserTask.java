@@ -66,7 +66,7 @@ public class UserTask extends NetworkTask{
 
         mRequestQueue.add(jsonRequestUser);
     }
-
+    /*  NOT SUPPORTED AT THE MOMENT, LEFT IN JUST IN CASE
     public void putUser(User user, final UserCallback callback){
         //USER
         Environment env = EnvironmentManager.getInstance().getCurrentEnvironment();
@@ -111,5 +111,5 @@ public class UserTask extends NetworkTask{
                 };
 
         mRequestQueue.add(jsonRequestUser);
-    }
+    }*/
 }

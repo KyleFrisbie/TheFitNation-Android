@@ -38,7 +38,6 @@ import static com.fitnation.utils.UnitConversion.*;
 public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback.Presenter{
 
     private ProfileContract.View mView;
-    private ProgressDialog mProgressDialog;
     public ProfileData mProfile;
     private ProfileDataManager mProfileDataManager;
 

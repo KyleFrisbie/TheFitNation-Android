@@ -51,7 +51,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/emailEditText"
+            android:id="@+id/emailText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/emailView"
@@ -82,8 +82,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/genderView"
-            android:layout_alignEnd="@+id/emailEditText"
-            android:layout_alignStart="@+id/emailEditText"
+            android:layout_alignEnd="@+id/emailText"
+            android:layout_alignStart="@+id/emailText"
             android:hint="@string/gender"
             android:textSize="18sp"
             android:layout_alignTop="@+id/genderView" />

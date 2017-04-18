@@ -180,30 +180,6 @@ public class ProfileDataManager extends DataManager {
         }).start();
     }
 
-    public void saveUserToWeb(final User user){
-        user.setId(Long.parseLong(UserLogins.getUserId()));
-
-        user.setLogin(UserLogins.getUserLogin());
-        final UserTask putUserTask = new UserTask(mAuthToken, mRequestQueue);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                putUserTask.putUser(user, new UserCallback() {
-                    @Override
-                    public void onSuccess(User user) {
-                        Log.i(TAG, "Successfully save user to Web");
-                    }
-
-                    @Override
-                    public void onFailure(String error) {
-                        Log.d(TAG, error.toString() +
-                                " Failed to Save User to Web");
-                    }
-                });
-            }
-        }).start();
-    }
 
     public void saveUserDemographicToWeb(final UserDemographic userdemo){
         final UserDemographicTask userDemographicTask =
