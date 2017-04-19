@@ -2,6 +2,8 @@ package com.fitnation.profile;
 
 import org.junit.After;
 import org.junit.AfterClass;
+
+import static android.support.test.espresso.Espresso.pressBack;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -299,6 +301,7 @@ public class ProfileScreenTest extends InstrumentationTest {
         profilePageIsDisplayed();
         onView(withText(R.string.switchMeasureToMetric));
         onView(withId(R.id.switchMeasurement)).perform(click());
+        SystemClock.sleep(DELAY_TIME);
         onView(withText(R.string.switchMeasureToImperial));
         onView(withId(R.id.saveButton)).perform(click());
         SystemClock.sleep(DELAY_TIME);
