@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 
 import static android.support.test.espresso.Espresso.pressBack;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static org.hamcrest.Matchers.allOf;
@@ -23,6 +24,7 @@ import com.fitnation.utils.Environment;
 import com.fitnation.utils.EnvironmentManager;
 
 import android.os.SystemClock;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -47,6 +49,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
 
 /**
  * Created by Jeremy on 4/16/2017.
@@ -78,6 +81,7 @@ public class ProfileScreenTest extends InstrumentationTest {
     @Before
     public void setUp() {
         super.unlockScreen(mActivityRule.getActivity());
+
 
         testRealm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -299,6 +303,32 @@ public class ProfileScreenTest extends InstrumentationTest {
     }
 
     @Test
+    public void dateFragmentTest(){
+        AuthToken.getInstance().setAccessToken(SUCCESS_AUTH_TOKEN);
+        onNavMyProfilePressed();
+        profilePageIsDisplayed();
+        SystemClock.sleep(DELAY_TIME);
+        onView(allOf(withId(R.id.birthdayEditText),
+                withParent(withId(R.id.fragment_profile))))
+                .perform(scrollTo(), click());
+
+        SystemClock.sleep(DELAY_TIME);
+
+        onView(withId(android.R.id.button1)).check(matches(isDisplayed())).perform(longClick());
+
+        SystemClock.sleep(DELAY_TIME*2);
+
+        onView(allOf(withId(R.id.ageText),
+                withParent(withId(R.id.fragment_profile))))
+                .perform(scrollTo(), click());
+
+        SystemClock.sleep(DELAY_TIME*3);
+
+        onView(withId(android.R.id.button2)).check(matches(isDisplayed())).perform(longClick());
+        SystemClock.sleep(DELAY_TIME);
+    }
+
+    @Test
     public void navigationActivityDisplayed() {
         onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
         onView(withId(R.id.app_bar)).check(matches(isDisplayed()));
@@ -321,15 +351,13 @@ public class ProfileScreenTest extends InstrumentationTest {
         onNavMyProfilePressed();
         profilePageIsDisplayed();
         SystemClock.sleep(DELAY_TIME);
-        onView(withText(R.string.switchMeasureToMetric));
+        onView(withText(R.string.switchMeasureToImperial)).perform(scrollTo(), click());
         SystemClock.sleep(DELAY_TIME);
-        onView(withId(R.id.switchMeasurement)).perform(click());
-        SystemClock.sleep(DELAY_TIME);
-        onView(withText(R.string.switchMeasureToImperial));
+        onView(withText(R.string.switchMeasureToMetric)).perform(scrollTo(), click());
         onView(withId(R.id.weightEditText)).perform(replaceText("123"));
         onView(withId(R.id.heightEditText)).perform(replaceText("456"));
         SystemClock.sleep(DELAY_TIME);
-        onView(withId(R.id.switchMeasurement)).perform(click());
+        onView(withId(R.id.switchMeasurement)).perform(scrollTo(), click());
         SystemClock.sleep(DELAY_TIME);
         onView(allOf(withId(R.id.saveButton),
                 withText("Save"),
@@ -343,32 +371,7 @@ public class ProfileScreenTest extends InstrumentationTest {
         pressBack();
     }
 
-    @Test
-    public void dateFragmentTest(){
-        AuthToken.getInstance().setAccessToken(SUCCESS_AUTH_TOKEN);
-        onNavMyProfilePressed();
-        profilePageIsDisplayed();
-        SystemClock.sleep(DELAY_TIME);
-        onView(allOf(withId(R.id.birthdayEditText),
-                withParent(withId(R.id.fragment_profile))))
-                .perform(scrollTo(), click());
 
-        SystemClock.sleep(DELAY_TIME);
-
-        onView(withId(android.R.id.button1)).perform(click());
-
-        SystemClock.sleep(DELAY_TIME*2);
-
-        onView(allOf(withId(R.id.ageText),
-                withParent(withId(R.id.fragment_profile))))
-                .perform(scrollTo(), click());
-
-        SystemClock.sleep(DELAY_TIME*3);
-
-        onView(withId(android.R.id.button2)).perform(click());
-        SystemClock.sleep(DELAY_TIME);
-
-    }
 
     @Test
     public void imperialMeasureTest(){
