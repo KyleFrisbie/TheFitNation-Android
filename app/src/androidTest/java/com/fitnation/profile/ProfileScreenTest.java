@@ -7,12 +7,10 @@ import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static org.hamcrest.Matchers.allOf;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 
 import com.fitnation.R;
@@ -29,17 +27,13 @@ import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.mock.MockContext;
-import android.util.Log;
 
 import com.fitnation.base.InstrumentationTest;
 import com.fitnation.navigation.NavigationActivity;
 
-import java.io.File;
 import java.io.IOException;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
@@ -50,7 +44,6 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -64,6 +57,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class ProfileScreenTest extends InstrumentationTest {
     private final int DELAY_TIME = 500;
     final static String SUCCESS_AUTH_TOKEN = "65d2a110-212b-403c-8d7e-0be4102442db";
+    final static String TOKEN_FOR_IMPERIAL = "65d2a110-212b-403c-8d7e-0be4102442dd";
     final static String FAILURE_AUTH_TOKEN = "e7f01c5f-4efe-4749-8c7a-d4d9b98670d5";
     final static String USER_DEMO_BY_LOGGED_IN_PATH = "users/user-demographic";
     final static String USER_DEMO_PUT_PATH = "user-demographics";
@@ -138,6 +132,21 @@ public class ProfileScreenTest extends InstrumentationTest {
                 "  \"dateOfBirth\": \"2017-04-08\",\n" +
                 "  \"height\": 123,\n" +
                 "  \"unitOfMeasure\": \"Metric\",\n" +
+                "  \"userId\": 2802,\n" +
+                "  \"userLogin\": \"admin\",\n" +
+                "  \"gyms\": [],\n" +
+                "  \"skillLevelId\": 1251,\n" +
+                "  \"skillLevelLevel\": \"Beginner\"\n" +
+                "}";
+
+        final String IMPERIAL_USERDEMO_RESPONSE = "{\n" +
+                "  \"id\": 3154,\n" +
+                "  \"createdOn\": \"2017-04-09\",\n" +
+                "  \"lastLogin\": \"2017-04-09\",\n" +
+                "  \"gender\": \"Other\",\n" +
+                "  \"dateOfBirth\": \"2017-04-08\",\n" +
+                "  \"height\": 67,\n" +
+                "  \"unitOfMeasure\": \"Imperial\",\n" +
                 "  \"userId\": 2802,\n" +
                 "  \"userLogin\": \"admin\",\n" +
                 "  \"gyms\": [],\n" +
@@ -228,6 +237,7 @@ public class ProfileScreenTest extends InstrumentationTest {
 
         final String EMPTY_WEIGHT_RESPONSE = "[]";
 
+        final MockResponse imperial_user_demo_response = new MockResponse().setResponseCode(200).setBody(IMPERIAL_USERDEMO_RESPONSE);
         final MockResponse good_user_demo_response = new MockResponse().setResponseCode(200).setBody(USERDEMOGRAPHIC_RESPONSE);
         final MockResponse good_weights_response = new MockResponse().setResponseCode(200).setBody(WEIGHT_RESPONSE);
         final MockResponse empty_weight_response = new MockResponse().setResponseCode(200).setBody(EMPTY_WEIGHT_RESPONSE);
@@ -241,11 +251,15 @@ public class ProfileScreenTest extends InstrumentationTest {
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
                 if (request.toString().contains(USER_WEIGHT_PATH)
-                        && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)) {
+                        && (request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN) ||
+                            request.getPath().toLowerCase().contains(TOKEN_FOR_IMPERIAL))) {
                     return good_weights_response;
                 } else if (request.getPath().toLowerCase().contains(USER_WEIGHT_PATH)
                         && request.getHeaders().toString().contains(FAILURE_AUTH_TOKEN)) {
                     return empty_weight_response;
+                } else if (request.getPath().toLowerCase().contains(USER_DEMO_BY_LOGGED_IN_PATH)
+                        && request.getHeaders().toString().contains(TOKEN_FOR_IMPERIAL)) {
+                    return imperial_user_demo_response;
                 } else if (request.getPath().toLowerCase().contains(USER_DEMO_BY_LOGGED_IN_PATH)
                         && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)) {
                     return good_user_demo_response;
@@ -253,10 +267,14 @@ public class ProfileScreenTest extends InstrumentationTest {
                         && request.getHeaders().toString().contains(FAILURE_AUTH_TOKEN)) {
                     return good_user_demo_response;
                 } else if (request.getPath().toLowerCase().contains(USER_PATH)
-                        && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)) {
+                        && (request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN) ||
+                            request.getPath().toLowerCase().contains(TOKEN_FOR_IMPERIAL))) {
                     return good_user_response;
-                } else if (request.getPath().toLowerCase().contains(SKILL_LEVELS_PATH)
-                        && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)) {
+                } else if ((request.getPath().toLowerCase().contains(SKILL_LEVELS_PATH)                       )
+                        &&
+                        (request.getHeaders().toString().contains(TOKEN_FOR_IMPERIAL)
+                        ||
+                        request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN))) {
                     return skill_levels_response;
                 } else if (request.getPath().toLowerCase().contains(USER_DEMO_PUT_PATH)
                         && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)) {
@@ -306,6 +324,9 @@ public class ProfileScreenTest extends InstrumentationTest {
         onView(withId(R.id.switchMeasurement)).perform(click());
         SystemClock.sleep(DELAY_TIME);
         onView(withText(R.string.switchMeasureToImperial));
+        onView(withId(R.id.weightEditText)).perform(replaceText("123"));
+        onView(withId(R.id.heightEditText)).perform(replaceText("456"));
+        onView(withId(R.id.switchMeasurement)).perform(click());
         SystemClock.sleep(DELAY_TIME);
         onView(allOf(withId(R.id.saveButton),
                 withText("Save"),
@@ -316,8 +337,55 @@ public class ProfileScreenTest extends InstrumentationTest {
         onView(withText("My Workouts")).perform(click());
         onNavMyProfilePressed();
         profilePageIsDisplayed();
+        pressBack();
+    }
+
+    @Test
+    public void dateFragmentTest(){
+        AuthToken.getInstance().setAccessToken(SUCCESS_AUTH_TOKEN);
+        onNavMyProfilePressed();
+        profilePageIsDisplayed();
+        SystemClock.sleep(DELAY_TIME);
+        onView(allOf(withId(R.id.birthdayEditText),
+                withParent(withId(R.id.fragment_profile))))
+                .perform(scrollTo(), click());
+
+        SystemClock.sleep(DELAY_TIME);
+        onView(allOf(withId(android.R.id.button1),
+                withText("OK"))).perform(scrollTo(), click());
+
+        SystemClock.sleep(DELAY_TIME);
+
+        onView(allOf(withId(R.id.ageText),
+                withParent(withId(R.id.fragment_profile))))
+                .perform(scrollTo(), click());
+
+        SystemClock.sleep(DELAY_TIME);
+        onView(withId(android.R.id.button2)).perform(scrollTo(), click());
+        SystemClock.sleep(DELAY_TIME);
 
     }
+
+    @Test
+    public void imperialMeasureTest(){
+        AuthToken.getInstance().setAccessToken(TOKEN_FOR_IMPERIAL);
+        onNavMyProfilePressed();
+        profilePageIsDisplayed();
+        onView(withId(R.id.switchMeasurement)).perform(click());
+        SystemClock.sleep(DELAY_TIME);
+        onView(withId(R.id.weightEditText)).perform(replaceText("123"));
+        onView(withId(R.id.heightEditText)).perform(replaceText("456"));
+        onView(withId(R.id.switchMeasurement)).perform(click());
+        SystemClock.sleep(DELAY_TIME);
+        onView(allOf(withId(R.id.saveButton),
+                withText("Save"),
+                withParent(withId(R.id.fragment_profile)))).
+                perform(scrollTo(), click());
+        SystemClock.sleep(DELAY_TIME);
+        pressBack();
+    }
+
+
 
     public void onNavMyProfilePressed(){
         SystemClock.sleep(DELAY_TIME);
@@ -347,6 +415,5 @@ public class ProfileScreenTest extends InstrumentationTest {
         onView(withId(R.id.lifterTypeSpinner));
         onView(withId(R.id.saveButton));
     }
-
 
 }
