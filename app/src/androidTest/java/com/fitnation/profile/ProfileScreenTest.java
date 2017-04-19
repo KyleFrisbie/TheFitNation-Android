@@ -351,8 +351,8 @@ public class ProfileScreenTest extends InstrumentationTest {
                 .perform(scrollTo(), click());
 
         SystemClock.sleep(DELAY_TIME);
-        onView(allOf(withId(android.R.id.button1),
-                withText("OK"))).perform(scrollTo(), click());
+
+        onView(withId(android.R.id.button1)).perform(click());
 
         SystemClock.sleep(DELAY_TIME);
 
@@ -361,7 +361,7 @@ public class ProfileScreenTest extends InstrumentationTest {
                 .perform(scrollTo(), click());
 
         SystemClock.sleep(DELAY_TIME);
-        onView(withId(android.R.id.button2)).perform(scrollTo(), click());
+        onView(withId(android.R.id.button2)).perform(click());
         SystemClock.sleep(DELAY_TIME);
 
     }
