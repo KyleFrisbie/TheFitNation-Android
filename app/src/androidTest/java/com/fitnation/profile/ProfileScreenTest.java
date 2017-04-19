@@ -320,6 +320,7 @@ public class ProfileScreenTest extends InstrumentationTest {
         AuthToken.getInstance().setAccessToken(SUCCESS_AUTH_TOKEN);
         onNavMyProfilePressed();
         profilePageIsDisplayed();
+        SystemClock.sleep(DELAY_TIME);
         onView(withText(R.string.switchMeasureToMetric));
         onView(withId(R.id.switchMeasurement)).perform(click());
         SystemClock.sleep(DELAY_TIME);
@@ -360,7 +361,8 @@ public class ProfileScreenTest extends InstrumentationTest {
                 withParent(withId(R.id.fragment_profile))))
                 .perform(scrollTo(), click());
 
-        SystemClock.sleep(DELAY_TIME);
+        SystemClock.sleep(DELAY_TIME*2);
+
         onView(withId(android.R.id.button2)).perform(click());
         SystemClock.sleep(DELAY_TIME);
 
