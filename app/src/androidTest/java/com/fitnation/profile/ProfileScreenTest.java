@@ -322,11 +322,13 @@ public class ProfileScreenTest extends InstrumentationTest {
         profilePageIsDisplayed();
         SystemClock.sleep(DELAY_TIME);
         onView(withText(R.string.switchMeasureToMetric));
+        SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.switchMeasurement)).perform(click());
         SystemClock.sleep(DELAY_TIME);
         onView(withText(R.string.switchMeasureToImperial));
         onView(withId(R.id.weightEditText)).perform(replaceText("123"));
         onView(withId(R.id.heightEditText)).perform(replaceText("456"));
+        SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.switchMeasurement)).perform(click());
         SystemClock.sleep(DELAY_TIME);
         onView(allOf(withId(R.id.saveButton),
@@ -355,13 +357,13 @@ public class ProfileScreenTest extends InstrumentationTest {
 
         onView(withId(android.R.id.button1)).perform(click());
 
-        SystemClock.sleep(DELAY_TIME);
+        SystemClock.sleep(DELAY_TIME*2);
 
         onView(allOf(withId(R.id.ageText),
                 withParent(withId(R.id.fragment_profile))))
                 .perform(scrollTo(), click());
 
-        SystemClock.sleep(DELAY_TIME*2);
+        SystemClock.sleep(DELAY_TIME*3);
 
         onView(withId(android.R.id.button2)).perform(click());
         SystemClock.sleep(DELAY_TIME);
