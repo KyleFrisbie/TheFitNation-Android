@@ -4,6 +4,9 @@ import org.junit.After;
 import org.junit.AfterClass;
 
 import static android.support.test.espresso.Espresso.pressBack;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -304,7 +307,10 @@ public class ProfileScreenTest extends InstrumentationTest {
         SystemClock.sleep(DELAY_TIME);
         onView(withText(R.string.switchMeasureToImperial));
         SystemClock.sleep(DELAY_TIME);
-        onView(withText("Save")).perform(click());
+        onView(allOf(withId(R.id.saveButton),
+                withText("Save"),
+                withParent(withId(R.id.fragment_profile)))).
+                perform(scrollTo(), click());
         SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withText("My Workouts")).perform(click());

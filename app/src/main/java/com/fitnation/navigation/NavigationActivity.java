@@ -82,6 +82,7 @@ public class NavigationActivity extends BaseActivity
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+
         }
     }
 
@@ -107,7 +108,11 @@ public class NavigationActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        /*if (item.isChecked()){
+            Log.i(TAG, "Attempted to select an already selected Nav Drawer item");
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            return false;
+        }*/
 
         if (id == R.id.nav_start_workout) {
 
@@ -118,11 +123,7 @@ public class NavigationActivity extends BaseActivity
         } else if (id == R.id.nav_workout_regimens) {
 
         } else if (id == R.id.nav_my_profile) {
-            if (item.isChecked()){
-                Log.i(TAG, "Attempted to select an already selected Nav Drawer item");
-                mDrawerLayout.closeDrawer(GravityCompat.START);
-                return false;
-            }
+
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content_main_container, ProfileFragment.newInstance())
