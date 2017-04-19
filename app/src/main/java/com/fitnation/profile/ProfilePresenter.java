@@ -52,8 +52,6 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
     private RequestQueue mQueue;
     private String mAuthToken;
 
-    private boolean isImperial;
-
     public ProfilePresenter(ProfileContract.View view) {
         mView = view;
     }
@@ -231,8 +229,19 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
     }
 
     @Override
+    public void scaleFocusChanged
+            (TextView mSwitchMeasurementButton, EditText heightText,
+             EditText weightText, boolean isImperial) {
+
+        heightText.setText(removeUnits(heightText.getText().toString()));
+        weightText.setText(removeUnits(weightText.getText().toString()));
+        measurementsAddUnits(mSwitchMeasurementButton, heightText, weightText, isImperial);
+
+    }
+
+    @Override
     public void onSwitchMeasurementClicked
-            (EditText weightText, EditText heightText, TextView measurementText) {
+            (EditText weightText, EditText heightText, TextView measurementText, boolean isImperial) {
         double weightFlt = 0;
         double heightFlt = 0;
         try {
@@ -244,7 +253,6 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
                     "Failed to get numeric value from mUserWeight/height text box" + ex.toString());
         }
         //if measurement text contains "Switch to Metric" then we're in Imperial measurements
-        isImperial = measurementText.getText().toString().toLowerCase().contains("metric");
         if (isImperial){
             measurementText.setText(res.getString(R.string.switchMeasureToImperial));
             isImperial = false;
@@ -263,14 +271,19 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
 
     }
 
+    private String removeUnits(String txt){
+        return txt.replaceAll("[^\\d.]", "");
+    }
+
     @Override
-    public void scaleFocusChanged
-            (TextView mSwitchMeasurementButton, EditText heightText, EditText weightText, boolean focus) {
-        if (focus) {
-            heightText.setText(removeUnits(heightText.getText().toString()));
-            weightText.setText(removeUnits(weightText.getText().toString()));
+    public void measurementsAddUnits(TextView mSwitchMeasurementButton, EditText heightText, EditText weightText, boolean isImperial){
+
+        if (isImperial){
+            weightText.setText(String.format("%.1f", getNumValue(weightText))+ " lbs");
+            heightText.setText(String.format("%.1f", getNumValue(heightText))+ " inches");
         } else {
-            measurementsAddUnits(mSwitchMeasurementButton, heightText, weightText);
+            weightText.setText(String.format("%.1f", getNumValue(weightText))+ " kgs");
+            heightText.setText(String.format("%.1f", getNumValue(heightText))+ " cms");
         }
     }
 
@@ -280,22 +293,6 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
             return Float.valueOf(txt[0]);
         } else {
             return 0.0f;
-        }
-    }
-
-    private String removeUnits(String txt){
-        return txt.replaceAll("[^\\d.]", "");
-    }
-
-    @Override
-    public void measurementsAddUnits(TextView mSwitchMeasurementButton, EditText heightText, EditText weightText){
-
-        if (mSwitchMeasurementButton.getText().toString().contains("imperial")){
-            weightText.setText(String.format("%.1f", getNumValue(weightText))+ " lbs");
-            heightText.setText(String.format("%.1f", getNumValue(heightText))+ " inches");
-        } else {
-            weightText.setText(String.format("%.1f", getNumValue(weightText))+ " kgs");
-            heightText.setText(String.format("%.1f", getNumValue(heightText))+ " cms");
         }
     }
 
@@ -349,7 +346,7 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
         double height = getNumValue(mHeightTextBox);
         double weight = getNumValue(mWeightTextBox);
         //if measurement text contains "Switch to Metric" then we're in Imperial measurements
-        isImperial = mSwitchMeasurementButton
+        boolean isImperial = mSwitchMeasurementButton
                 .getText().toString()
                 .toLowerCase().contains("metric");
         if (isImperial){

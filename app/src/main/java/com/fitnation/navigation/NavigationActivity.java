@@ -17,8 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.android.volley.toolbox.Volley;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
+import com.fitnation.profile.ProfileDataManager;
 import com.fitnation.profile.ProfileFragment;
 
 import java.util.List;
@@ -45,6 +47,9 @@ public class NavigationActivity extends BaseActivity
         setUpActionBar();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        ProfileDataManager profileDataManager =
+                new ProfileDataManager(Volley.newRequestQueue(this));
+        profileDataManager.getUserLogins();
     }
 
     private void setUpActionBar() {
@@ -102,11 +107,7 @@ public class NavigationActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (item.isChecked()){
-            Log.i(TAG, "Attempted to select an already selected Nav Drawer item");
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-            return false;
-        }
+
 
         if (id == R.id.nav_start_workout) {
 
@@ -117,6 +118,11 @@ public class NavigationActivity extends BaseActivity
         } else if (id == R.id.nav_workout_regimens) {
 
         } else if (id == R.id.nav_my_profile) {
+            if (item.isChecked()){
+                Log.i(TAG, "Attempted to select an already selected Nav Drawer item");
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                return false;
+            }
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.content_main_container, ProfileFragment.newInstance())

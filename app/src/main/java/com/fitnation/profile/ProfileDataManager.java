@@ -23,6 +23,7 @@ import com.fitnation.workout.parent.GetSkillLevelsTask;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 
@@ -32,7 +33,7 @@ import io.realm.RealmResults;
 
 public class ProfileDataManager extends DataManager {
 
-    String TAG = ProfileDataManager.class.getSimpleName();
+    static String TAG = ProfileDataManager.class.getSimpleName();
 
     RequestQueue mRequestQueue;
     static List<SkillLevel> mSkillLevelList;
@@ -84,7 +85,10 @@ public class ProfileDataManager extends DataManager {
 
     public static UserDemographic getLocalUserDemographic(){
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<UserDemographic> userDemoResults = realm.where(UserDemographic.class).findAll();
+        RealmResults<UserDemographic> userDemoResults = realm.where(UserDemographic.class)
+                .equalTo("id", getUserdemographicId()).findAll();
+
+
         realm.close();
         if (!userDemoResults.isEmpty()) return userDemoResults.last();
         Log.i("PROFILE", "Realm Result empty for UserDemographic");
@@ -110,11 +114,10 @@ public class ProfileDataManager extends DataManager {
     public static User getLocalUser(){
         Realm realm = Realm.getDefaultInstance();
         RealmResults<User> userResults =
-                realm.where(User.class).findAll();
+                realm.where(User.class).equalTo("id", getUserId()).findAll();
         realm.close();
         if (!userResults.isEmpty()) return userResults.last();
-        Log.i("PROFILE", "Realm Result empty for User");
-        return null;
+        Log.i("PROFILE", "Realm Result empty for User");     return null;
     }
 
     public void SaveWeightData(final UserWeight weight){
@@ -136,7 +139,9 @@ public class ProfileDataManager extends DataManager {
     public static UserWeight getLocalUserWeight(){
         Realm realm = Realm.getDefaultInstance();
         RealmResults<UserWeight> weightResults =
-                realm.where(UserWeight.class).findAll();
+                realm.where(UserWeight.class)
+                        .equalTo("userDemographicId", getUserdemographicId())
+                        .findAll();
         realm.close();
         if (!weightResults.isEmpty()) return weightResults.last();
         Log.i("PROFILE", "Realm Result empty for UserWeight");
@@ -244,6 +249,26 @@ public class ProfileDataManager extends DataManager {
                 });
             }
         }).start();
+    }
+
+    private static int getUserdemographicId(){
+        try {
+            int udid = Integer.parseInt(UserLogins.getUserDemographicId());
+            return udid;
+        } catch (Exception ex){
+            Log.d(TAG, ex.toString());
+            return 0;
+        }
+    }
+
+    private static int getUserId(){
+        try {
+            int uid = Integer.parseInt(UserLogins.getUserId());
+            return uid;
+        } catch (Exception ex){
+            Log.d(TAG, ex.toString());
+            return 0;
+        }
     }
 }
 

@@ -121,12 +121,12 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @OnClick(R.id.switchMeasurement)
     public void onSwitchMeasurementClicked(){
         mPresenter.onSwitchMeasurementClicked
-                (mWeightTextBox, mHeightTextBox, mSwitchMeasurementButton);
+                (mWeightTextBox, mHeightTextBox, mSwitchMeasurementButton, isImperial());
     }
 
     @OnFocusChange({R.id.weightEditText, R.id.heightEditText})
     void scaleFocusChanged(boolean focus){
-        mPresenter.scaleFocusChanged(mSwitchMeasurementButton, mHeightTextBox, mWeightTextBox, focus);
+        mPresenter.scaleFocusChanged(mSwitchMeasurementButton, mHeightTextBox, mWeightTextBox, isImperial());
     }
 
 
@@ -176,7 +176,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
         mProfile = profile;
 
         if (profile==null) {
-            Log.d("PROFILE", "Failed to load demographic, profile data is null.");
+            Log.d(TAG, "Failed to load demographic, profile data is null.");
             return;
         }
 
@@ -188,7 +188,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             }
 
         } catch (Exception e){
-            Log.d("PROFILE", e.toString());
+            Log.d(TAG, e.toString());
         }
 
         try {
@@ -199,7 +199,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
                 mHeightTextBox.setText(String.valueOf(inchToCM(profile.getHeight())));
             }
         } catch (Exception e){
-            Log.d("PROFILE", e.toString());
+            Log.d(TAG, e.toString());
         } try {
             String dob = profile.getDateOfBirth();
             Calendar c = Calendar.getInstance();
@@ -210,25 +210,25 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             mDobTextBox.setText(dob);
             mAgeTextBox.setText("age: " + String.valueOf(age));
         } catch (Exception e){
-            Log.d("PROFILE", e.toString());
+            Log.d(TAG, e.toString());
         }
         try {
             mGenderSpinner.setSelection(
                     genderAdapter.getPosition(profile.getGender()));
         } catch (Exception e){
-            Log.d("PROFILE", e.toString());
+            Log.d(TAG, e.toString());
         }
         try {
             mLifterTypeSpinner
                     .setSelection(lifterTypeAdapter.getPosition(profile.getSkillLevelLevel()));
         } catch (Exception e){
-            Log.d("PROFILE", e.toString());
+            Log.d(TAG, e.toString());
         }
 
         try {
             mEmailTextBox.setText(profile.getEmail());
         } catch (Exception ex) {
-            Log.d("PROFILE", ex.toString());
+            Log.d(TAG, ex.toString());
         }
 
         try {
@@ -237,17 +237,17 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             if (first != null && last != null)
                 mNameTextBox.setText(first + " " + last);
         } catch (Exception e){
-            Log.d("PROFILE", e.toString());
+            Log.d(TAG, e.toString());
         }
 
         try{
             mEmailTextBox.setText(profile.getEmail());
         } catch (Exception e) {
-            Log.d("PROFILE", e.toString());
+            Log.d(TAG, e.toString());
         }
 
         if (profile==null) {
-            Log.d("PROFILE", "Attempted to load Null UserWeight to profile");
+            Log.d(TAG, "Attempted to load Null UserWeight to profile");
             return;
         }
         try {
@@ -258,17 +258,21 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             }
 
         } catch (Exception e) {
-            Log.d("PROFILE", e.getMessage());
+            Log.d(TAG, e.getMessage());
         }
 
-        mPresenter.measurementsAddUnits(mSwitchMeasurementButton, mHeightTextBox, mWeightTextBox);
+        mPresenter.measurementsAddUnits(mSwitchMeasurementButton, mHeightTextBox, mWeightTextBox, !isImperial());
         stopProgress();  //Stop loading circle
 
     }
 
     private boolean isImperial(){
-        Log.i(TAG, mProfile.getUnitOfMeasure());
-        return (mProfile.getUnitOfMeasure().toLowerCase().contains("imperial"));
+        Log.i(TAG, "Imperial = " +String.valueOf(!mSwitchMeasurementButton
+                .getText().toString()
+                .toLowerCase().contains("imperial")));
+        return (!mSwitchMeasurementButton
+                .getText().toString()
+                .toLowerCase().contains("imperial"));
     }
 
 }

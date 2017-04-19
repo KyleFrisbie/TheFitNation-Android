@@ -1,15 +1,21 @@
 package com.fitnation.profile;
 
-import org.bouncycastle.crypto.tls.NewSessionTicket;
 import org.junit.After;
+import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 
 import com.fitnation.R;
+import com.fitnation.model.User;
+import com.fitnation.model.UserDemographic;
+import com.fitnation.model.UserWeight;
 import com.fitnation.networking.AuthToken;
+import com.fitnation.networking.UserLogins;
 import com.fitnation.utils.Environment;
 import com.fitnation.utils.EnvironmentManager;
 
@@ -18,13 +24,18 @@ import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.test.mock.MockContext;
 import android.util.Log;
 
 import com.fitnation.base.InstrumentationTest;
 import com.fitnation.navigation.NavigationActivity;
 
+import java.io.File;
 import java.io.IOException;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -32,7 +43,9 @@ import okhttp3.mockwebserver.RecordedRequest;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -52,14 +65,29 @@ public class ProfileScreenTest extends InstrumentationTest {
     final static String USER_WEIGHT_PATH = "user-weights";
     final static String USER_PATH = "users/admin";
     final static String SKILL_LEVELS_PATH = "skill-levels";
+    static Realm testRealm;
+    static RealmResults<UserDemographic> udQuery;
+    static RealmResults<User> uQuery;
+    static RealmResults<UserWeight> uwQuery;
+
 
     @Rule
     public ActivityTestRule<NavigationActivity> mActivityRule =
             new ActivityTestRule<NavigationActivity>(NavigationActivity.class);
 
+
     @Before
     public void setUp() {
         super.unlockScreen(mActivityRule.getActivity());
+
+        testRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                testRealm.where(UserDemographic.class).findAll().deleteAllFromRealm();
+                testRealm.where(User.class).findAll().deleteAllFromRealm();
+                testRealm.where(UserWeight.class).findAll().deleteAllFromRealm();
+            }
+        });
     }
 
     @After
@@ -67,8 +95,34 @@ public class ProfileScreenTest extends InstrumentationTest {
         super.tearDown(mActivityRule.getActivity());
     }
 
+    @AfterClass
+    public static void AfterClass(){
+        testRealm.beginTransaction();
+        testRealm.insert(udQuery);
+        testRealm.insert(uQuery);
+        testRealm.insert(uwQuery);
+        testRealm.commitTransaction();
+        testRealm.close();
+    }
+
     @BeforeClass
     public static void mockServer() throws IOException {
+        //get all the data out of realm and set it aside while testing.
+        testRealm = Realm.getDefaultInstance();
+        udQuery = testRealm.where(UserDemographic.class).findAll();
+        uQuery = testRealm.where(User.class).findAll();
+        uwQuery = testRealm.where(UserWeight.class).findAll();
+
+        testRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                udQuery.deleteAllFromRealm();
+                uQuery.deleteAllFromRealm();
+                uwQuery.deleteAllFromRealm();
+            }
+        });
+
+
         final MockWebServer mockWebServer = new MockWebServer();
 
         final String USERDEMOGRAPHIC_RESPONSE = "{\n" +
@@ -77,7 +131,7 @@ public class ProfileScreenTest extends InstrumentationTest {
                 "  \"lastLogin\": \"2017-04-09\",\n" +
                 "  \"gender\": \"Other\",\n" +
                 "  \"dateOfBirth\": \"2017-04-08\",\n" +
-                "  \"height\": 150,\n" +
+                "  \"height\": 123,\n" +
                 "  \"unitOfMeasure\": \"Metric\",\n" +
                 "  \"userId\": 2802,\n" +
                 "  \"userLogin\": \"admin\",\n" +
@@ -109,20 +163,20 @@ public class ProfileScreenTest extends InstrumentationTest {
                 "{\n" +
                 "    \"id\": 11663,\n" +
                 "    \"weightDate\": \"2017-04-15\",\n" +
-                "    \"weight\": 160.8,\n" +
-                "    \"userDemographicId\": 3164\n" +
+                "    \"weight\": 456,\n" +
+                "    \"userDemographicId\": 3154\n" +
                 "  },\n" +
                 "  {\n" +
                 "    \"id\": 11664,\n" +
                 "    \"weightDate\": \"2017-04-15\",\n" +
-                "    \"weight\": 160.8,\n" +
-                "    \"userDemographicId\": 3164\n" +
+                "    \"weight\": 567,\n" +
+                "    \"userDemographicId\": 3154\n" +
                 "  },\n" +
                 "  {\n" +
                 "    \"id\": 11665,\n" +
                 "    \"weightDate\": \"2017-04-15\",\n" +
-                "    \"weight\": 160.7168,\n" +
-                "    \"userDemographicId\": 3164\n" +
+                "    \"weight\": 678,\n" +
+                "    \"userDemographicId\": 3154\n" +
                 "  }\n" +
                 "]";
 
@@ -181,7 +235,6 @@ public class ProfileScreenTest extends InstrumentationTest {
         final Dispatcher dispatcher = new Dispatcher() {
             @Override
             public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
-                Log.i("PROFILETEST", request.toString() + "\n" + request.getHeaders().toString());
                 if (request.toString().contains(USER_WEIGHT_PATH)
                         && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)) {
                     return good_weights_response;
@@ -217,6 +270,9 @@ public class ProfileScreenTest extends InstrumentationTest {
         Environment environment = new Environment(mockWebServer.url("").toString());
         EnvironmentManager.getInstance().setEnvironment(environment);
         SystemClock.sleep(500);
+        UserLogins.setUserDemographicId("3154");
+        UserLogins.setUserLogin("admin");
+        UserLogins.setUserId("2802");
     }
 
     @Test
@@ -227,22 +283,41 @@ public class ProfileScreenTest extends InstrumentationTest {
     }
 
     @Test
-    public void emptyStartUp() {
+    public void badAuthToken() {
+        SystemClock.sleep(DELAY_TIME);
+        AuthToken.getInstance().setAccessToken(FAILURE_AUTH_TOKEN);
+        onNavMyProfilePressed();
+        profilePageIsDisplayed();
+        SystemClock.sleep(DELAY_TIME);
+
+    }
+
+    @Test
+    public void startupFromScratch() {
         AuthToken.getInstance().setAccessToken(SUCCESS_AUTH_TOKEN);
         onNavMyProfilePressed();
-        profilePageDisplayed();
+        profilePageIsDisplayed();
+        onView(withText(R.string.switchMeasureToMetric));
         onView(withId(R.id.switchMeasurement)).perform(click());
+        onView(withText(R.string.switchMeasureToImperial));
         onView(withId(R.id.saveButton)).perform(click());
         SystemClock.sleep(DELAY_TIME);
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withText("My Workouts")).perform(click());
+        onNavMyProfilePressed();
+        profilePageIsDisplayed();
+
     }
 
     public void onNavMyProfilePressed(){
+        SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
         onView(withText("My Profile")).perform(click());
+
     }
 
-    public void profilePageDisplayed(){
+    public void profilePageIsDisplayed(){
         SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.nameText));
         onView(withId(R.id.nameView));
