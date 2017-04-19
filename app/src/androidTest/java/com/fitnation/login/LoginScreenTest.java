@@ -193,7 +193,7 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.userName_editText)).perform(typeText("androidtest"));
         pressBack();
         onView(withId(R.id.register_button)).perform(click());
-        SystemClock.sleep(DELAY_TIME);
+        SystemClock.sleep(DELAY_TIME*2);
         onView((withText("Success!"))).check(matches(isDisplayed()));
         onView((withText("OK"))).perform(click());
     }

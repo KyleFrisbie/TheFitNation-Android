@@ -303,7 +303,8 @@ public class ProfileScreenTest extends InstrumentationTest {
         onView(withId(R.id.switchMeasurement)).perform(click());
         SystemClock.sleep(DELAY_TIME);
         onView(withText(R.string.switchMeasureToImperial));
-        onView(withId(R.id.saveButton)).perform(click());
+        SystemClock.sleep(DELAY_TIME);
+        onView(withText("Save")).perform(click());
         SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withText("My Workouts")).perform(click());
