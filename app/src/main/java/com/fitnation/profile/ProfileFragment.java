@@ -261,7 +261,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
             Log.d(TAG, e.getMessage());
         }
 
-        mPresenter.measurementsAddUnits(mSwitchMeasurementButton, mHeightTextBox, mWeightTextBox, !isImperial());
+        mPresenter.measurementsAddUnits(mSwitchMeasurementButton, mHeightTextBox, mWeightTextBox, isImperial());
         stopProgress();  //Stop loading circle
 
     }

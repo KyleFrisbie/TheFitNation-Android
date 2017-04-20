@@ -28,9 +28,6 @@
         <item>Intermediate</item>
         <item>Advanced</item>
     </string-array>
-    <string name="beginner">Beginner</string>
-    <string name="intermediate">Intermediate</string>
-    <string name="advanced">Advanced</string>
     <string name="gender">Gender</string>
 
     <string-array name="genderArray">

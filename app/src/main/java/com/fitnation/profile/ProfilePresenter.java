@@ -255,13 +255,11 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
         //if measurement text contains "Switch to Metric" then we're in Imperial measurements
         if (isImperial){
             measurementText.setText(res.getString(R.string.switchMeasureToImperial));
-            isImperial = false;
             weightFlt = lbsToKgs(weightFlt);  //lb to kg
             heightFlt = inchToCM(heightFlt); //inch to cm
             weightText.setText(String.format("%.1f", weightFlt)+ " kgs");
             heightText.setText(String.format("%.1f", heightFlt)+ " cms");
         } else {
-            isImperial = true;
             measurementText.setText(res.getString(R.string.switchMeasureToMetric));
             weightFlt = kgsToLbs(weightFlt);  //kgs to lbs
             heightFlt = cmToInch(heightFlt); //cm to inch
@@ -276,7 +274,8 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
     }
 
     @Override
-    public void measurementsAddUnits(TextView mSwitchMeasurementButton, EditText heightText, EditText weightText, boolean isImperial){
+    public void measurementsAddUnits(TextView mSwitchMeasurementButton, EditText heightText,
+                                     EditText weightText, boolean isImperial){
 
         if (isImperial){
             weightText.setText(String.format("%.1f", getNumValue(weightText))+ " lbs");

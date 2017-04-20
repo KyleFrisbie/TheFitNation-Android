@@ -378,7 +378,12 @@ public class ProfileScreenTest extends InstrumentationTest {
         AuthToken.getInstance().setAccessToken(TOKEN_FOR_IMPERIAL);
         onNavMyProfilePressed();
         profilePageIsDisplayed();
-        onView(withId(R.id.switchMeasurement)).perform(click());
+        try {
+            onView(withText(R.string.switchMeasureToMetric)).perform(click());
+        } catch (Exception e) {
+            onView(withText(R.string.switchMeasureToImperial)).perform(click());
+        }
+
         SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.weightEditText)).perform(replaceText("123"));
         onView(withId(R.id.heightEditText)).perform(replaceText("456"));

@@ -6,6 +6,7 @@ import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.model.enums.UnitOfMeasure;
 import com.fitnation.networking.UserLogins;
 import com.fitnation.profile.ProfileDataManager;
+import com.fitnation.utils.PrimaryKeyFactory;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

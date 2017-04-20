@@ -68,17 +68,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.555" />
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/TextView.Header"
-            android:text=""
-            tools:layout_constraintRight_creator="1"
-            android:layout_marginEnd="1dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView11"
-            tools:layout_constraintBaseline_creator="1" />
+
     </android.support.constraint.ConstraintLayout>
 
 
