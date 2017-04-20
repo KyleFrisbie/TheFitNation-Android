@@ -49,8 +49,9 @@ public class RegisterUserTask implements FactoryCallback.FactoryReturn{
      * @param language The language which by default is english for now
      */
      // TODO: allow for different languages
-    public void requestRegistration(final String email, final String password, final String userName,
-                                    final String language){
+    public void requestRegistration(final String email, final String password,
+                                    final String userName, final String firstName,
+                                    final String lastName, final String language){
         RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
         String endpoint = "api/register";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
@@ -84,6 +85,8 @@ public class RegisterUserTask implements FactoryCallback.FactoryReturn{
                 map.put("langKey", language);
                 map.put("login", userName);
                 map.put("password", password);
+                map.put("firstName", firstName);
+                map.put("lastName", lastName);
 
                 JSONObject jsonObject = new JSONObject(map);
                 return jsonObject.toString().getBytes();

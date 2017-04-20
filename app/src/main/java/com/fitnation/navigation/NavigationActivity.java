@@ -1,14 +1,10 @@
 package com.fitnation.navigation;
 
-
-import android.os.Build;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -17,11 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.android.volley.toolbox.Volley;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
-import com.fitnation.profile.ProfileDataManager;
-import com.fitnation.profile.ProfileFragment;
+import com.fitnation.workout.parent.ExercisesParentFragment;
+import com.fitnation.model.enums.ExerciseAction;
 
 import java.util.List;
 import com.fitnation.login.LoginBaseActivity;
@@ -34,10 +29,11 @@ import butterknife.ButterKnife;
  */
 public class NavigationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = NavigationActivity.class.getSimpleName();
+
     @BindView(R.id.toolbar) public Toolbar mToolbar;
     @BindView(R.id.drawer_layout) public DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private static final String TAG = NavigationActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +43,6 @@ public class NavigationActivity extends BaseActivity
         setUpActionBar();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        ProfileDataManager profileDataManager =
-                new ProfileDataManager(Volley.newRequestQueue(this));
-        profileDataManager.getUserLogins();
     }
 
     private void setUpActionBar() {
@@ -80,9 +73,22 @@ public class NavigationActivity extends BaseActivity
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
 
+        } else {
+            List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+            if (fragmentList != null) {
+                Fragment fragment = fragmentList.get(0);
+                if(fragment instanceof ExercisesParentFragment) {
+                    displayBackArrow(false, getString(R.string.build_workout_title));
+                }
+            }
+            int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
+
+            if (backStackCount >= 1) {
+                getSupportFragmentManager().popBackStack();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -108,11 +114,6 @@ public class NavigationActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        /*if (item.isChecked()){
-            Log.i(TAG, "Attempted to select an already selected Nav Drawer item");
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-            return false;
-        }*/
 
         if (id == R.id.nav_start_workout) {
 
@@ -122,13 +123,13 @@ public class NavigationActivity extends BaseActivity
 
         } else if (id == R.id.nav_workout_regimens) {
 
+        } else if (id == R.id.nav_build_workout) {
+            if(!item.isChecked()) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_container, ExercisesParentFragment.newInstance(this, ExerciseAction.SAVE)).commit();
+            } else {
+                Log.i(TAG, "Nav Build Workout is already selected");
+            }
         } else if (id == R.id.nav_my_profile) {
-
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.content_main_container, ProfileFragment.newInstance())
-                    .addToBackStack(null)
-                    .commit();
 
         } else if (id == R.id.nav_logout){
             Intent loginIntent = new Intent(this, LoginBaseActivity.class);
@@ -140,4 +141,23 @@ public class NavigationActivity extends BaseActivity
         return true;
     }
 
+    public void displayBackArrow(boolean show, String title) {
+        if (title != null) {
+            getSupportActionBar().setTitle(title);
+        }
+        if(show) {
+            mToggle.setDrawerIndicatorEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            mToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+        } else {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            mToggle.setDrawerIndicatorEnabled(true);
+            mToggle.setToolbarNavigationClickListener(null);
+        }
+    }
 }

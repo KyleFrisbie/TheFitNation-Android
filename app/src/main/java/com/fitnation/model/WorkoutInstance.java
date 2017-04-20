@@ -1,11 +1,11 @@
 package com.fitnation.model;
 
+import com.google.gson.annotations.Expose;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
-import io.realm.RealmCollection;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -15,22 +15,60 @@ import io.realm.annotations.PrimaryKey;
  */
 public class WorkoutInstance extends RealmObject {
     @PrimaryKey
+    @Expose(serialize = false)
     private Long androidId;
     private Long id;
     private String name;
-    private Date createdOn;
-    private Integer restBetweenInstances;
+    private String createdOn;
+    private String lastUpdated;
+    @Expose(serialize = false)
+    private Date createdOnObj;
+    @Expose(serialize = false)
+    private Date lastUpdatedObj;
+    private Float restBetweenInstances;
     private Integer orderNumber;
-    private WorkoutTemplate workoutTemplate;
-    private RealmList<UserWorkoutInstance> userWorkoutInstances;
-    private RealmList<Exercise> exercises;
+    private Long workoutTemplateId;
+    private String workoutTemplateName;
+    private RealmList<ExerciseInstance> exerciseInstances;
+    private String notes;
 
     public WorkoutInstance() {
-        createdOn = new Date();
+        createdOnObj = new Date();
+        lastUpdatedObj = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+        if(createdOnObj != null) {
+            createdOn = dateFormat.format(createdOnObj);
+        }
+
+        if(lastUpdatedObj != null) {
+            lastUpdated = dateFormat.format(lastUpdatedObj);
+        }
+    }
+
+    public WorkoutInstance(String name, Float restBetweenInstances, Integer orderNumber, WorkoutTemplate workoutTemplate, String notes) {
+        createdOnObj = new Date();
+        lastUpdatedObj = new Date();
+        this.name = name;
+        this.restBetweenInstances = restBetweenInstances;
+        this.orderNumber = orderNumber;
+        this.workoutTemplateId = workoutTemplate.getId();
+        this.workoutTemplateName = workoutTemplate.getName();
+        this.notes = notes;
+        SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+        createdOn = dateFormat.format(createdOnObj);
+        lastUpdated = dateFormat.format(lastUpdatedObj);
+    }
+
+    public void setAndroidId(Long androidId) {
+        this.androidId = androidId;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setExercises(RealmList<ExerciseInstance> exercises) {
+        this.exerciseInstances  = exercises;
     }
 
     @Override
