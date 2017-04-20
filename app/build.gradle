@@ -37,7 +37,6 @@ android {
                 testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
             }
         }
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     lintOptions {
         abortOnError false
@@ -101,18 +100,12 @@ dependencies {
     //Volley
     compile 'com.android.volley:volley:1.0.0'
 
-    //Volley for network calls
-    compile 'com.android.volley:volley:1.0.0'
-
     //Butterknife for binding views
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
     //Picasso for image resizing inside imageviews
     compile 'com.squareup.picasso:picasso:2.5.2'
-
-    //Volley for network communications
-    compile 'com.android.volley:volley:1.0.0'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
         transitive = true;

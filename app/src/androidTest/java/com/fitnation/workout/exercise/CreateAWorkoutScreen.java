@@ -166,7 +166,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         }
 
         UiObject successDialog = uiDevice.findObject(new UiSelector().text("Success"));
-        if (successDialog.waitForExists(dialogWaitTime)) {
+        if (successDialog.waitForExists(TEST_WAIT_TIME)) {
             UiObject button = uiDevice.findObject(new UiSelector().text("OK"));
             if (button.exists()) {
                 button.click();
