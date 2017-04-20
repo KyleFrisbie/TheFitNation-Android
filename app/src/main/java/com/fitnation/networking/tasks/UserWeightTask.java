@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.Factory.FactoryCallback;
 import com.fitnation.model.UserWeight;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.JsonParser;
@@ -64,6 +65,7 @@ public class UserWeightTask extends NetworkTask{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("GET", error.toString());
+
                     }
                 }) {
                     @Override

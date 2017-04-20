@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.fitnation.Factory.FactoryCallback;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.model.User;
@@ -373,7 +374,7 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
 
         saveProfileData();
     }
-    //------------------------SaveProfileCallback-----------------------------------//
+
 
     @Override
     public void saveProfileData() {

@@ -118,7 +118,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
 
 
         verifyCreateWorkoutScreenVisible();
-        ;
+
     }
 
     private void verifyCreateWorkoutScreenVisible() {
@@ -166,7 +166,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         }
 
         UiObject successDialog = uiDevice.findObject(new UiSelector().text("Success"));
-        if (successDialog.waitForExists(TEST_WAIT_TIME)) {
+        if (successDialog.waitForExists(dialogWaitTime)) {
             UiObject button = uiDevice.findObject(new UiSelector().text("OK"));
             if (button.exists()) {
                 button.click();
