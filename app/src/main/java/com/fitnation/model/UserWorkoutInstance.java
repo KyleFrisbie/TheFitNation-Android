@@ -28,7 +28,7 @@ public class UserWorkoutInstance extends RealmObject {
     private Long id;
     private String createdOn;
     private String lastUpdated;
-    private Boolean wasCompleted;
+    private boolean wasCompleted;
     private Long userWorkoutTemplateId;
     private Long workoutInstanceId;
     private String workoutInstanceName;
@@ -37,6 +37,10 @@ public class UserWorkoutInstance extends RealmObject {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setUserWorkoutTemplateId(Long userWorkoutTemplateId) {
+        this.userWorkoutTemplateId = userWorkoutTemplateId;
     }
 
     public Long getId() {

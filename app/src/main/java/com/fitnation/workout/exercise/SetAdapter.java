@@ -14,13 +14,11 @@ import android.widget.TextView;
 import com.fitnation.R;
 import com.fitnation.model.ExerciseSetView;
 import com.fitnation.workout.callbacks.OnSetSelectedCallback;
-import com.fitnation.model.ExerciseInstanceSet;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.RealmList;
 
 /**
  * Adapter for ExerciseInstanceSets
@@ -95,7 +93,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
             public void afterTextChanged(Editable editable) {
                 try {
                     Float newAmount = Float.valueOf(editable.toString());
-                    set.setReqQuantity(newAmount);
+                    set.setRepQuantity(newAmount);
                 } catch (NumberFormatException e) {
                     Log.e(TAG, e.getMessage());
                 }

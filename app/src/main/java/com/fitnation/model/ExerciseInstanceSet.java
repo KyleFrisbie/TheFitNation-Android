@@ -55,8 +55,8 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable, Exerc
         //required default constructor
     }
 
-    public void setReqQuantity(Float reqQuantity) {
-        this.reqQuantity = reqQuantity;
+    public void setRepQuantity(Float repQuantity) {
+        this.reqQuantity = repQuantity;
     }
 
     public Long getId() {

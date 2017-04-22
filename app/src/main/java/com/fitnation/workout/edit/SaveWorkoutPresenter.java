@@ -1,5 +1,6 @@
 package com.fitnation.workout.edit;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.fitnation.model.UserWorkoutInstance;
@@ -16,9 +17,9 @@ public class SaveWorkoutPresenter implements SaveWorkoutContract.Presenter{
     private UserWorkoutTemplate mUserWorkoutTemplate;
     private SaveWorkoutContract.View mView;
 
-    public SaveWorkoutPresenter(SaveWorkoutContract.View view) {
+    public SaveWorkoutPresenter(SaveWorkoutContract.View view, Context context) {
         mView = view;
-        mDataManager = new UserWorkoutDataManager();
+        mDataManager = new UserWorkoutDataManager(context);
     }
 
     @Override

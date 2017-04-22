@@ -62,7 +62,7 @@ public class Navigator {
     public static void navigateToSaveUserWorkoutInstance(BaseActivity activity, UserWorkoutInstance userWorkoutInstance, UserWorkoutTemplate userWorkoutTemplate, int containerId) {
         SaveUserWorkoutInstanceFragment saveUserWorkoutInstanceFragment = SaveUserWorkoutInstanceFragment.newInstance(userWorkoutInstance, userWorkoutTemplate);
 
-        saveUserWorkoutInstanceFragment.setPresenter(new SaveWorkoutPresenter(saveUserWorkoutInstanceFragment));
+        saveUserWorkoutInstanceFragment.setPresenter(new SaveWorkoutPresenter(saveUserWorkoutInstanceFragment, activity.getBaseContext()));
         activity.getSupportFragmentManager().beginTransaction().replace(containerId, saveUserWorkoutInstanceFragment ).commit();
     }
 }

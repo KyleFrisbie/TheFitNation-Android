@@ -52,6 +52,14 @@ public class WorkoutTemplate extends RealmObject implements Cloneable {
         workoutInstances.add(workoutInstance);
     }
 
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public String getLastUpdated() {
+        return lastUpdated;
+    }
+
     public String getNotes() {
         return notes;
     }

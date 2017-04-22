@@ -1,5 +1,7 @@
 package com.fitnation.workout.edit;
 
+import android.content.Context;
+
 import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
 import com.fitnation.model.UserWorkoutInstance;
@@ -11,7 +13,7 @@ import com.fitnation.model.UserWorkoutTemplate;
 
 public interface SaveWorkoutContract {
     interface View extends BaseView<SaveWorkoutContract.Presenter> {
-
+        Context getContext();
     }
 
     interface Presenter extends BasePresenter {

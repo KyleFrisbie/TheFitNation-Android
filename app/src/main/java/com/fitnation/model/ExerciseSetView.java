@@ -10,7 +10,7 @@ public interface ExerciseSetView extends Comparable{
     Integer getRepQuantityAsInt();
     Float getEffortQuantity();
     Float getRestTime();
-    void setReqQuantity(Float reqQuantity);
+    void setRepQuantity(Float repQuantity);
     void setEffortQuantity(Float effortQuantity);
     void setRestTime(Float restTime);
 }

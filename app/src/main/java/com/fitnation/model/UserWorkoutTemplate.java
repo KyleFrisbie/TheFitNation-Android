@@ -28,29 +28,34 @@ public class UserWorkoutTemplate extends RealmObject {
     private Long id;
     private String createdOn;
     private String lastUpdated;
-    private boolean isPrivate;
     private String notes;
-    private String skillLevelLevel;
-    private Long skillLevelId;
-    private String name;
+    private String workoutTemplateName;
+    private Long workoutTemplateId;
 
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+
 
     public UserWorkoutTemplate() {
 
     }
 
     public UserWorkoutTemplate(WorkoutTemplate workoutTemplate) {
-        skillLevelLevel = workoutTemplate.getSkillLevelLevel();
-        skillLevelId = workoutTemplate.getSkillLevelId();
-        name = workoutTemplate.getName();
+        workoutTemplateId = workoutTemplate.getId();
+        workoutTemplateName = workoutTemplate.getName();
+        createdOn = workoutTemplate.getCreatedOn();
+        lastUpdated = workoutTemplate.getLastUpdated();
     }
 
     public void initAndroidId() {
         androidId = PrimaryKeyFactory.getInstance().nextKey(UserWorkoutTemplate.class);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override
