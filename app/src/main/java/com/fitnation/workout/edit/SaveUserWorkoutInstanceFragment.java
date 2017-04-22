@@ -19,6 +19,7 @@ import org.parceler.Parcels;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
@@ -73,16 +74,9 @@ public class SaveUserWorkoutInstanceFragment extends BaseFragment implements Sav
         return v;
     }
 
-    @OnTextChanged(R.id.workout_instance_name_edittext)
-    public void onNameTextChanged(CharSequence charSequence) {
-        String name = charSequence.toString();
-
-        if(name != null && !name.isEmpty()) {
-            mActionButton.setEnabled(true);
-        } else {
-            mActionButton.setEnabled(false);
-        }
-
+    @OnCheckedChanged(R.id.completed_checkbox)
+    public void onCheckedChanged(boolean checked) {
+        mUserWorkoutInstance.setWasCompleted(checked);
     }
 
     @OnClick(R.id.save_user_workout_instance_button)
