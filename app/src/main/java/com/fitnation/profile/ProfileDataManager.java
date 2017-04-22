@@ -90,7 +90,9 @@ public class ProfileDataManager extends DataManager {
 
 
         realm.close();
-        if (!userDemoResults.isEmpty()) return userDemoResults.last();
+        if (!userDemoResults.isEmpty()){
+            return userDemoResults.last();
+        }
         Log.i("PROFILE", "Realm Result empty for UserDemographic");
         return null;
     }
@@ -116,8 +118,11 @@ public class ProfileDataManager extends DataManager {
         RealmResults<User> userResults =
                 realm.where(User.class).equalTo("id", getUserId()).findAll();
         realm.close();
-        if (!userResults.isEmpty()) return userResults.last();
-        Log.i("PROFILE", "Realm Result empty for User");     return null;
+        if (!userResults.isEmpty()){
+            return userResults.last();
+        }
+        Log.i("PROFILE", "Realm Result empty for User");
+        return null;
     }
 
     public void saveWeightData(final UserWeight weight){
@@ -143,7 +148,9 @@ public class ProfileDataManager extends DataManager {
                         .equalTo("userDemographicId", getUserdemographicId())
                         .findAll();
         realm.close();
-        if (!weightResults.isEmpty()) return weightResults.last();
+        if (!weightResults.isEmpty()){
+            return weightResults.last();
+        }
         Log.i("PROFILE", "Realm Result empty for UserWeight");
         return null;
     }

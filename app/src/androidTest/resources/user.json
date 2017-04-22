@@ -1,0 +1,18 @@
+{
+  "id": 2802,
+  "login": "admin",
+  "firstName": "admin",
+  "lastName": "admin",
+  "email": "admin@admin.com",
+  "imageUrl": null,
+  "activated": true,
+  "langKey": "en",
+  "createdBy": "kyle",
+  "createdDate": "2017-03-13T01:59:24.183Z",
+  "lastModifiedBy": "admin",
+  "lastModifiedDate": "2017-03-19T19:04:27.062Z",
+  "authorities": [
+    "ROLE_USER",
+    "ROLE_ADMIN"
+  ]
+}

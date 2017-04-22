@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 
 import static android.support.test.espresso.Espresso.pressBack;
-import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static org.hamcrest.Matchers.allOf;
@@ -14,7 +13,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.android.volley.RequestQueue;
 import com.fitnation.R;
 import com.fitnation.model.User;
 import com.fitnation.model.UserDemographic;
@@ -24,17 +22,20 @@ import com.fitnation.networking.UserLogins;
 import com.fitnation.utils.Environment;
 import com.fitnation.utils.EnvironmentManager;
 
+import android.nfc.Tag;
 import android.os.SystemClock;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import com.fitnation.base.InstrumentationTest;
 import com.fitnation.navigation.NavigationActivity;
+import com.fitnation.utils.FileUtils;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -50,7 +51,6 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static android.support.test.espresso.matcher.ViewMatchers.*;
 
 /**
  * Created by Jeremy on 4/16/2017.
@@ -59,7 +59,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.*;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class ProfileScreenTest extends InstrumentationTest {
-    private final int DELAY_TIME = 500;
     final static String SUCCESS_AUTH_TOKEN = "65d2a110-212b-403c-8d7e-0be4102442db";
     final static String TOKEN_FOR_IMPERIAL = "65d2a110-212b-403c-8d7e-0be4102442dd";
     final static String FAILURE_AUTH_TOKEN = "e7f01c5f-4efe-4749-8c7a-d4d9b98670d5";
@@ -72,6 +71,9 @@ public class ProfileScreenTest extends InstrumentationTest {
     static RealmResults<UserDemographic> udQuery;
     static RealmResults<User> uQuery;
     static RealmResults<UserWeight> uwQuery;
+    final String TAG = getClass().getSimpleName().toString();
+    private final int DELAY_TIME = 500;
+
 
 
     @Rule
@@ -95,6 +97,96 @@ public class ProfileScreenTest extends InstrumentationTest {
                 tempUW.deleteAllFromRealm();
             }
         });
+
+        final MockWebServer mockWebServer = new MockWebServer();
+
+        final String USERDEMOGRAPHIC_RESPONSE = FileUtils.readTextFile(getClass()
+                .getClassLoader().getResourceAsStream("user-demographic-metric.json"));
+
+        final String IMPERIAL_USERDEMO_RESPONSE = FileUtils.readTextFile(getClass()
+                .getClassLoader().getResourceAsStream("user-demographic-imperial.json"));
+
+        final String USER_RESPONSE = FileUtils.readTextFile(getClass()
+                .getClassLoader().getResourceAsStream("user.json"));
+
+        final String WEIGHT_RESPONSE = FileUtils.readTextFile(getClass()
+                .getClassLoader().getResourceAsStream("user-weights.json"));
+
+        final String INVALID_TOKEN = FileUtils.readTextFile(getClass()
+                .getClassLoader().getResourceAsStream("500-internal-server-error.json"));
+
+        final String SKILL_LEVELS_RESPONSE = FileUtils.readTextFile(getClass()
+                .getClassLoader().getResourceAsStream("skill-levels.json"));
+
+        final String USER_DEMO_PUT_RESPONSE = FileUtils.readTextFile(getClass()
+                .getClassLoader().getResourceAsStream("user-demographic-metric.json"));
+
+        final String WEIGHT_POST_RESPONSE = FileUtils.readTextFile(getClass()
+                .getClassLoader().getResourceAsStream("user-weight-post.json"));
+
+
+        final String EMPTY_WEIGHT_RESPONSE = FileUtils.readTextFile(getClass()
+                .getClassLoader().getResourceAsStream("user-weights-empty.json"));
+
+        final MockResponse imperial_user_demo_response = new MockResponse().setResponseCode(200).setBody(IMPERIAL_USERDEMO_RESPONSE);
+        final MockResponse good_user_demo_response = new MockResponse().setResponseCode(200).setBody(USERDEMOGRAPHIC_RESPONSE);
+        final MockResponse good_weights_response = new MockResponse().setResponseCode(200).setBody(WEIGHT_RESPONSE);
+        final MockResponse empty_weight_response = new MockResponse().setResponseCode(200).setBody(EMPTY_WEIGHT_RESPONSE);
+        final MockResponse good_user_response = new MockResponse().setResponseCode(200).setBody(USER_RESPONSE);
+        final MockResponse skill_levels_response = new MockResponse().setResponseCode(200).setBody(SKILL_LEVELS_RESPONSE);
+        final MockResponse user_demo_put_response = new MockResponse().setResponseCode(200).setBody(USER_DEMO_PUT_RESPONSE);
+        final MockResponse user_weight_post_response = new MockResponse().setResponseCode(200).setBody(WEIGHT_POST_RESPONSE);
+
+
+        final Dispatcher dispatcher = new Dispatcher() {
+            @Override
+            public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
+                if (request.toString().contains(USER_WEIGHT_PATH)
+                        && (request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN) ||
+                        request.getPath().toLowerCase().contains(TOKEN_FOR_IMPERIAL))) {
+                    return good_weights_response;
+                } else if (request.getPath().toLowerCase().contains(USER_WEIGHT_PATH)
+                        && request.getHeaders().toString().contains(FAILURE_AUTH_TOKEN)) {
+                    return empty_weight_response;
+                } else if (request.getPath().toLowerCase().contains(USER_DEMO_BY_LOGGED_IN_PATH)
+                        && request.getHeaders().toString().contains(TOKEN_FOR_IMPERIAL)) {
+                    return imperial_user_demo_response;
+                } else if (request.getPath().toLowerCase().contains(USER_DEMO_BY_LOGGED_IN_PATH)
+                        && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)) {
+                    return good_user_demo_response;
+                } else if (request.getPath().toLowerCase().contains(USER_DEMO_BY_LOGGED_IN_PATH)
+                        && request.getHeaders().toString().contains(FAILURE_AUTH_TOKEN)) {
+                    return good_user_demo_response;
+                } else if (request.getPath().toLowerCase().contains(USER_PATH)
+                        && (request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN) ||
+                        request.getPath().toLowerCase().contains(TOKEN_FOR_IMPERIAL))) {
+                    return good_user_response;
+                } else if (request.getPath().toLowerCase().contains(SKILL_LEVELS_PATH)) {
+                    return skill_levels_response;
+                } else if (request.getPath().toLowerCase().contains(USER_DEMO_PUT_PATH)
+                        && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)) {
+                    return user_demo_put_response;
+                } else if (request.getPath().toLowerCase().contains(USER_WEIGHT_PATH)
+                        && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)
+                        && request.toString().contains("PUT")) {
+                    return user_weight_post_response;
+                }
+                else return new MockResponse().setResponseCode(404);
+            }
+        };
+
+        mockWebServer.setDispatcher(dispatcher);
+        try {
+            mockWebServer.start();
+        } catch (IOException ex){
+            Log.d(TAG, ex.toString());
+        }
+        Environment environment = new Environment(mockWebServer.url("").toString());
+        EnvironmentManager.getInstance().setEnvironment(environment);
+        SystemClock.sleep(500);
+        UserLogins.setUserDemographicId("3154");
+        UserLogins.setUserLogin("admin");
+        UserLogins.setUserId("2802");
     }
 
     @After
@@ -128,179 +220,9 @@ public class ProfileScreenTest extends InstrumentationTest {
                 uwQuery.deleteAllFromRealm();
             }
         });
-
-
-        final MockWebServer mockWebServer = new MockWebServer();
-
-        final String USERDEMOGRAPHIC_RESPONSE = "{\n" +
-                "  \"id\": 3154,\n" +
-                "  \"createdOn\": \"2017-04-09\",\n" +
-                "  \"lastLogin\": \"2017-04-09\",\n" +
-                "  \"gender\": \"Other\",\n" +
-                "  \"dateOfBirth\": \"2017-04-08\",\n" +
-                "  \"height\": 123,\n" +
-                "  \"unitOfMeasure\": \"Metric\",\n" +
-                "  \"userId\": 2802,\n" +
-                "  \"userLogin\": \"admin\",\n" +
-                "  \"gyms\": [],\n" +
-                "  \"skillLevelId\": 1251,\n" +
-                "  \"skillLevelLevel\": \"Beginner\"\n" +
-                "}";
-
-        final String IMPERIAL_USERDEMO_RESPONSE = "{\n" +
-                "  \"id\": 3154,\n" +
-                "  \"createdOn\": \"2017-04-09\",\n" +
-                "  \"lastLogin\": \"2017-04-09\",\n" +
-                "  \"gender\": \"Other\",\n" +
-                "  \"dateOfBirth\": \"2017-04-08\",\n" +
-                "  \"height\": 67,\n" +
-                "  \"unitOfMeasure\": \"Imperial\",\n" +
-                "  \"userId\": 2802,\n" +
-                "  \"userLogin\": \"admin\",\n" +
-                "  \"gyms\": [],\n" +
-                "  \"skillLevelId\": 1251,\n" +
-                "  \"skillLevelLevel\": \"Beginner\"\n" +
-                "}";
-
-        final String USER_RESPONSE = "{\n" +
-                "  \"id\": 2802,\n" +
-                "  \"login\": \"admin\",\n" +
-                "  \"firstName\": \"admin\",\n" +
-                "  \"lastName\": \"admin\",\n" +
-                "  \"email\": \"admin@admin.com\",\n" +
-                "  \"imageUrl\": null,\n" +
-                "  \"activated\": true,\n" +
-                "  \"langKey\": \"en\",\n" +
-                "  \"createdBy\": \"kyle\",\n" +
-                "  \"createdDate\": \"2017-03-13T01:59:24.183Z\",\n" +
-                "  \"lastModifiedBy\": \"admin\",\n" +
-                "  \"lastModifiedDate\": \"2017-03-19T19:04:27.062Z\",\n" +
-                "  \"authorities\": [\n" +
-                "    \"ROLE_USER\",\n" +
-                "    \"ROLE_ADMIN\"\n" +
-                "  ]\n" +
-                "}";
-
-        final String WEIGHT_RESPONSE = "[\n" +
-                "{\n" +
-                "    \"id\": 11663,\n" +
-                "    \"weightDate\": \"2017-04-15\",\n" +
-                "    \"weight\": 456,\n" +
-                "    \"userDemographicId\": 3154\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"id\": 11664,\n" +
-                "    \"weightDate\": \"2017-04-15\",\n" +
-                "    \"weight\": 567,\n" +
-                "    \"userDemographicId\": 3154\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"id\": 11665,\n" +
-                "    \"weightDate\": \"2017-04-15\",\n" +
-                "    \"weight\": 678,\n" +
-                "    \"userDemographicId\": 3154\n" +
-                "  }\n" +
-                "]";
-
-        final String INVALID_TOKEN = "{\n" +
-                "  \"error\": \"invalid_token\",\n" +
-                "  \"error_description\": \"Invalid access token: \"" + FAILURE_AUTH_TOKEN + "\"\n" +
-                "}";
-
-        final String SKILL_LEVELS_RESPONSE = "[\n" +
-                "  {\n" +
-                "    \"id\": 1251,\n" +
-                "    \"level\": \"Beginner\"\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"id\": 1252,\n" +
-                "    \"level\": \"Intermediate\"\n" +
-                "  },\n" +
-                "  {\n" +
-                "    \"id\": 1253,\n" +
-                "    \"level\": \"Advanced\"\n" +
-                "  }\n" +
-                "]";
-
-        final String USER_DEMO_PUT_RESPONSE = "{\"id\":3154,\"" +
-                "createdOn\":\"2017-04-17\",\"" +
-                "lastLogin\":\"2017-04-18\",\"" +
-                "gender\":\"Other\",\"" +
-                "dateOfBirth\":\"2017-04-17\",\"" +
-                "height\":80,\"" +
-                "unitOfMeasure\":\"" +
-                "Imperial\",\"" +
-                "userId\":2802,\"" +
-                "userLogin\":\"admin\",\"" +
-                "gyms\":[],\"" +
-                "skillLevelId\":1251,\"" +
-                "skillLevelLevel\":\"Beginner\"" +
-                "}";
-
-        final String WEIGHT_POST_RESPONSE = "{\"id\":15101,\"" +
-                "weightDate\":\"2017-04-17\",\"" +
-                "weight\":150,\"" +
-                "userDemographicId\":3154}";
-
-
-        final String EMPTY_WEIGHT_RESPONSE = "[]";
-
-        final MockResponse imperial_user_demo_response = new MockResponse().setResponseCode(200).setBody(IMPERIAL_USERDEMO_RESPONSE);
-        final MockResponse good_user_demo_response = new MockResponse().setResponseCode(200).setBody(USERDEMOGRAPHIC_RESPONSE);
-        final MockResponse good_weights_response = new MockResponse().setResponseCode(200).setBody(WEIGHT_RESPONSE);
-        final MockResponse empty_weight_response = new MockResponse().setResponseCode(200).setBody(EMPTY_WEIGHT_RESPONSE);
-        final MockResponse good_user_response = new MockResponse().setResponseCode(200).setBody(USER_RESPONSE);
-        final MockResponse skill_levels_response = new MockResponse().setResponseCode(200).setBody(SKILL_LEVELS_RESPONSE);
-        final MockResponse user_demo_put_response = new MockResponse().setResponseCode(200).setBody(USER_DEMO_PUT_RESPONSE);
-        final MockResponse user_weight_post_response = new MockResponse().setResponseCode(200).setBody(WEIGHT_POST_RESPONSE);
-
-
-        final Dispatcher dispatcher = new Dispatcher() {
-            @Override
-            public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
-                if (request.toString().contains(USER_WEIGHT_PATH)
-                        && (request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN) ||
-                            request.getPath().toLowerCase().contains(TOKEN_FOR_IMPERIAL))) {
-                    return good_weights_response;
-                } else if (request.getPath().toLowerCase().contains(USER_WEIGHT_PATH)
-                        && request.getHeaders().toString().contains(FAILURE_AUTH_TOKEN)) {
-                    return empty_weight_response;
-                } else if (request.getPath().toLowerCase().contains(USER_DEMO_BY_LOGGED_IN_PATH)
-                        && request.getHeaders().toString().contains(TOKEN_FOR_IMPERIAL)) {
-                    return imperial_user_demo_response;
-                } else if (request.getPath().toLowerCase().contains(USER_DEMO_BY_LOGGED_IN_PATH)
-                        && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)) {
-                    return good_user_demo_response;
-                } else if (request.getPath().toLowerCase().contains(USER_DEMO_BY_LOGGED_IN_PATH)
-                        && request.getHeaders().toString().contains(FAILURE_AUTH_TOKEN)) {
-                    return good_user_demo_response;
-                } else if (request.getPath().toLowerCase().contains(USER_PATH)
-                        && (request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN) ||
-                            request.getPath().toLowerCase().contains(TOKEN_FOR_IMPERIAL))) {
-                    return good_user_response;
-                } else if (request.getPath().toLowerCase().contains(SKILL_LEVELS_PATH)) {
-                    return skill_levels_response;
-                } else if (request.getPath().toLowerCase().contains(USER_DEMO_PUT_PATH)
-                        && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)) {
-                    return user_demo_put_response;
-                } else if (request.getPath().toLowerCase().contains(USER_WEIGHT_PATH)
-                        && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)
-                        && request.toString().contains("PUT")) {
-                    return user_weight_post_response;
-                }
-                    else return new MockResponse().setResponseCode(404);
-            }
-        };
-
-        mockWebServer.setDispatcher(dispatcher);
-        mockWebServer.start();
-        Environment environment = new Environment(mockWebServer.url("").toString());
-        EnvironmentManager.getInstance().setEnvironment(environment);
-        SystemClock.sleep(500);
-        UserLogins.setUserDemographicId("3154");
-        UserLogins.setUserLogin("admin");
-        UserLogins.setUserId("2802");
     }
+
+
 
     @Test
     public void dateFragmentTest(){
@@ -327,6 +249,8 @@ public class ProfileScreenTest extends InstrumentationTest {
         onView(withId(android.R.id.button2)).check(matches(isDisplayed())).perform(click());
         SystemClock.sleep(DELAY_TIME);
     }
+
+
 
     @Test
     public void navigationActivityDisplayed() {
