@@ -133,7 +133,7 @@ public class ProfileFragment extends BaseFragment implements ProfileContract.Vie
     @OnClick({R.id.birthdayEditText, R.id.ageText})
     public void onDobClicked(){
         dateFragment = new DatePickerFragment();
-        dateFragment.setFragment(this);
+        dateFragment.setOnDateSetListener(this);
         mPresenter.openDatePicker(dateFragment);
     }
 

@@ -115,10 +115,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
 
     @Test
     public void testCreateWorkoutScreenLaunchedOkay() throws Exception {
-
-
         verifyCreateWorkoutScreenVisible();
-
     }
 
     private void verifyCreateWorkoutScreenVisible() {

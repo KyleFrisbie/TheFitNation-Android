@@ -23,7 +23,6 @@ public interface ProfileContract {
     }
 
     interface Presenter extends BasePresenter {
-        void start();
         void saveProfileData();
         void getProfileData();
         void scaleFocusChanged(TextView mSwitchMeasurementButton, EditText heightText, EditText weightText, boolean imperial);

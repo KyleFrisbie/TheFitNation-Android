@@ -17,7 +17,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Information about a mUser and their data
+ * Information about a user and their data
  */
 public class UserDemographic extends RealmObject implements Cloneable {
     private static final String TAG = UserDemographic.class.getSimpleName();
