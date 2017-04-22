@@ -7,6 +7,7 @@ import com.fitnation.base.BaseActivity;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.model.UserWorkoutInstance;
+import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.workout.edit.EditWorkoutFragment;
 import com.fitnation.workout.edit.EditWorkoutPresenter;
@@ -44,8 +45,8 @@ public class Navigator {
         }
     }
 
-    public static void navigateToEditWorkout(BaseActivity activity, UserWorkoutInstance userWorkoutInstance, int containterId) {
-        EditWorkoutFragment editWorkoutFragment = EditWorkoutFragment.newInstance(userWorkoutInstance);
+    public static void navigateToEditWorkout(BaseActivity activity, UserWorkoutInstance userWorkoutInstance, UserWorkoutTemplate userWorkoutTemplate, int containterId) {
+        EditWorkoutFragment editWorkoutFragment = EditWorkoutFragment.newInstance(userWorkoutInstance, userWorkoutTemplate);
 
         editWorkoutFragment.setPresenter(new EditWorkoutPresenter(editWorkoutFragment));
         activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment ).commit();
@@ -58,8 +59,8 @@ public class Navigator {
         activity.getSupportFragmentManager().beginTransaction().add(containerId, viewExerciseFragment).addToBackStack(null).commit();
     }
 
-    public static void navigateToSaveUserWorkoutInstance(BaseActivity activity, UserWorkoutInstance userWorkoutInstance, int containerId) {
-        SaveUserWorkoutInstanceFragment saveUserWorkoutInstanceFragment = SaveUserWorkoutInstanceFragment.newInstance(userWorkoutInstance);
+    public static void navigateToSaveUserWorkoutInstance(BaseActivity activity, UserWorkoutInstance userWorkoutInstance, UserWorkoutTemplate userWorkoutTemplate, int containerId) {
+        SaveUserWorkoutInstanceFragment saveUserWorkoutInstanceFragment = SaveUserWorkoutInstanceFragment.newInstance(userWorkoutInstance, userWorkoutTemplate);
 
         saveUserWorkoutInstanceFragment.setPresenter(new SaveWorkoutPresenter(saveUserWorkoutInstanceFragment));
         activity.getSupportFragmentManager().beginTransaction().replace(containerId, saveUserWorkoutInstanceFragment ).commit();

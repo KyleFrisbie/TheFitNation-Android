@@ -6,6 +6,7 @@ import com.fitnation.R;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.model.UserExerciseInstance;
 import com.fitnation.model.UserWorkoutInstance;
+import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
@@ -23,6 +24,7 @@ import io.realm.RealmList;
 
 public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnExerciseUpdatedCallback {
     private UserWorkoutInstance mUserWorkoutInstance;
+    private UserWorkoutTemplate mUserWorkoutTemplate;
     private EditWorkoutContract.View mView;
     private ExercisesListFragment mListFragment;
     private UserExerciseInstance mUserExerciseBeingEdited;
@@ -46,13 +48,15 @@ public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnEx
     }
 
     @Override
-    public void setUserWorkoutInstance(UserWorkoutInstance userWorkoutInstance) {
+    public void setUserWorkout(UserWorkoutInstance userWorkoutInstance, UserWorkoutTemplate userWorkoutTemplate) {
         mUserWorkoutInstance = userWorkoutInstance;
+        mUserWorkoutTemplate = userWorkoutTemplate;
     }
+
 
     @Override
     public void onSavePressed() {
-        //show save fragment
+        Navigator.navigateToSaveUserWorkoutInstance(mView.getBaseActivity(), mUserWorkoutInstance, mUserWorkoutTemplate, R.id.content_main_container);
     }
 
     @Override
@@ -71,7 +75,8 @@ public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnEx
     public void exerciseUpdated(@Nullable ExerciseView updatedExerciseView) {
         UserExerciseInstance updatedExerciseInstance = (UserExerciseInstance) updatedExerciseView;
         RealmList<UserExerciseInstance> userExerciseInstances = mUserWorkoutInstance.getUserExerciseInstances();
-        userExerciseInstances.remove(mUserExerciseBeingEdited);userExerciseInstances.add(updatedExerciseInstance);
+        userExerciseInstances.remove(mUserExerciseBeingEdited);
+        userExerciseInstances.add(updatedExerciseInstance);
         Collections.sort(userExerciseInstances);
 
         mUserWorkoutInstance.setExerciseInstanceSets(userExerciseInstances);

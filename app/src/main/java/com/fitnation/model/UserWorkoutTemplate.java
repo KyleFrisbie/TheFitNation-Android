@@ -1,7 +1,10 @@
 package com.fitnation.model;
 
 
+import com.fitnation.utils.PrimaryKeyFactory;
 import com.google.gson.annotations.Expose;
+
+import org.parceler.Parcel;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -11,21 +14,25 @@ import java.util.Objects;
 import io.realm.RealmCollection;
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.UserWorkoutTemplateRealmProxy;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * A workout template that a user owns
  */
+@Parcel(implementations = {UserWorkoutTemplateRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { UserWorkoutTemplate.class })
 public class UserWorkoutTemplate extends RealmObject {
     @PrimaryKey
     @Expose(serialize = false)
     private Long androidId;
     private Long id;
-    private Date createdOn;
-    private WorkoutLog workoutLog;
-    private WorkoutTemplate workoutTemplate;
-    private RealmList<UserWorkoutInstance> userWorkoutInstances;
-    private Date lastUpdated;
+    private String createdOn;
+    private String lastUpdated;
+    private boolean isPrivate;
+    private String notes;
+    private String skillLevelLevel;
+    private Long skillLevelId;
+    private String name;
 
 
     public void setId(Long id) {
@@ -33,7 +40,17 @@ public class UserWorkoutTemplate extends RealmObject {
     }
 
     public UserWorkoutTemplate() {
-        createdOn = new Date();
+
+    }
+
+    public UserWorkoutTemplate(WorkoutTemplate workoutTemplate) {
+        skillLevelLevel = workoutTemplate.getSkillLevelLevel();
+        skillLevelId = workoutTemplate.getSkillLevelId();
+        name = workoutTemplate.getName();
+    }
+
+    public void initAndroidId() {
+        androidId = PrimaryKeyFactory.getInstance().nextKey(UserWorkoutTemplate.class);
     }
 
     @Override
@@ -56,11 +73,4 @@ public class UserWorkoutTemplate extends RealmObject {
         return Objects.hashCode(id);
     }
 
-    @Override
-    public String toString() {
-        return "UserWorkoutTemplate{" +
-            "id=" + id +
-            ", createdOn='" + createdOn.toString() + "'" +
-            '}';
-    }
 }

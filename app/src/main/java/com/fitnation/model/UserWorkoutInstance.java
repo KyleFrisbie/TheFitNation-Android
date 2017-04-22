@@ -1,6 +1,7 @@
 package com.fitnation.model;
 
 import com.fitnation.utils.DateFormatter;
+import com.fitnation.utils.PrimaryKeyFactory;
 import com.google.gson.annotations.Expose;
 
 import org.parceler.Parcel;
@@ -44,6 +45,10 @@ public class UserWorkoutInstance extends RealmObject {
 
     public UserWorkoutInstance() {
         //required default constructor
+    }
+
+    public void initAndroidId() {
+        androidId = PrimaryKeyFactory.getInstance().nextKey(UserWorkoutInstance.class);
     }
 
     public UserWorkoutInstance(WorkoutInstance workoutInstance) {

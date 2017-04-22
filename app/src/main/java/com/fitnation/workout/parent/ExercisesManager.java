@@ -34,7 +34,8 @@ import io.realm.RealmResults;
 /**
  * Manages the Exercise/ExerciseInstance Data
  */
-public class ExercisesManager extends DataManager {
+public class
+ExercisesManager extends DataManager {
     private static final String TAG = ExercisesManager.class.getSimpleName();
     private static String mAuthToken;
     private RequestQueue mRequestQueue;
@@ -44,6 +45,7 @@ public class ExercisesManager extends DataManager {
     private List<ExerciseInstance> mExerciseInstancesTab2;
     private List<ExerciseInstance> mExerciseInstancesTab3;
     private WorkoutInstance mWorkoutInstance;
+    private WorkoutTemplate mWorkoutTemplate;
 
 
     public ExercisesManager(Context context) {
@@ -137,7 +139,7 @@ public class ExercisesManager extends DataManager {
      * @param name - The name of the workout
      */
     public void createWorkoutAndSave(final String name, final SaveWorkoutCallback saveWorkoutCallback) {
-        final WorkoutTemplate workoutTemplate = getWorkoutTemplate();
+        final WorkoutTemplate workoutTemplate = getSingletonWorkoutTemplate();
         addSkillLevelToWorkout(workoutTemplate);
         new Thread(new Runnable() {
             @Override
@@ -145,6 +147,7 @@ public class ExercisesManager extends DataManager {
                 postWorkoutTemplateToWeb(workoutTemplate, new WorkoutTemplatePostCallback() {
                     @Override
                     public void onSuccess(final WorkoutTemplate updatedTemplate) {
+                        mWorkoutTemplate = updatedTemplate;
                         WorkoutInstance workoutInstance = buildWorkoutInstance(updatedTemplate, name);
 
                         postWorkoutInstanceToWeb(workoutInstance, new WorkoutInstancePostCallback() {
@@ -176,6 +179,10 @@ public class ExercisesManager extends DataManager {
 
     public WorkoutInstance getWorkoutInstance() {
         return mWorkoutInstance;
+    }
+
+    public WorkoutTemplate getWorkoutTemplate() {
+        return mWorkoutTemplate;
     }
 
 
@@ -263,7 +270,7 @@ public class ExercisesManager extends DataManager {
         });
     }
 
-    private WorkoutTemplate getWorkoutTemplate() {
+    private WorkoutTemplate getSingletonWorkoutTemplate() {
         Realm realm = null;
         WorkoutTemplate workoutTemplate = null;
         Log.i(TAG, "Determining workout template");

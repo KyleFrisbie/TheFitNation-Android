@@ -13,6 +13,7 @@ import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.UserWorkoutInstance;
+import com.fitnation.model.UserWorkoutTemplate;
 
 import org.parceler.Parcels;
 
@@ -26,18 +27,21 @@ import butterknife.OnTextChanged;
  */
 public class SaveUserWorkoutInstanceFragment extends BaseFragment implements SaveWorkoutContract.View {
     private static final String USER_WORKOUT_INSTANCE = "USER_WORKOUT_INSTANCE";
+    private static final String USER_WORKOUT_TEMPLATE = "USER_WORKOUT_TEMPLATE";
     @BindView(R.id.save_user_workout_instance_button)
     public Button mActionButton;
     private SaveWorkoutContract.Presenter mPresenter;
     private UserWorkoutInstance mUserWorkoutInstance;
+    private UserWorkoutTemplate mUserWorkoutTemplate;
 
     public SaveUserWorkoutInstanceFragment() {
         // Required empty public constructor
     }
 
-    public static SaveUserWorkoutInstanceFragment newInstance(UserWorkoutInstance userWorkoutInstance) {
+    public static SaveUserWorkoutInstanceFragment newInstance(UserWorkoutInstance userWorkoutInstance, UserWorkoutTemplate userWorkoutTemplate) {
         Bundle args = new Bundle();
         args.putParcelable(USER_WORKOUT_INSTANCE, Parcels.wrap(userWorkoutInstance));
+        args.putParcelable(USER_WORKOUT_TEMPLATE, Parcels.wrap(userWorkoutTemplate));
 
         SaveUserWorkoutInstanceFragment saveUserWorkoutInstanceFragment = new SaveUserWorkoutInstanceFragment();
         saveUserWorkoutInstanceFragment.setArguments(args);
@@ -52,9 +56,10 @@ public class SaveUserWorkoutInstanceFragment extends BaseFragment implements Sav
 
         if(args != null) {
             mUserWorkoutInstance = Parcels.unwrap(args.getParcelable(USER_WORKOUT_INSTANCE));
+            mUserWorkoutTemplate = Parcels.unwrap(args.getParcelable(USER_WORKOUT_TEMPLATE));
         }
 
-        mPresenter.setUserWorkoutInstance(mUserWorkoutInstance);
+        mPresenter.setWorkoutData(mUserWorkoutInstance, mUserWorkoutTemplate);
     }
 
     @Override

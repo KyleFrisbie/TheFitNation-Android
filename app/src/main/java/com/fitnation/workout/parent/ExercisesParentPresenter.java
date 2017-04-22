@@ -8,6 +8,7 @@ import android.util.Log;
 import com.fitnation.R;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.model.UserWorkoutInstance;
+import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.networking.tasks.callbacks.ExercisesRequestCallback;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.workout.callbacks.SaveDialogCallback;
@@ -108,7 +109,10 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
                             UserWorkoutInstance userWorkoutInstance = new UserWorkoutInstance(mExerciseManager.getWorkoutInstance());
-                            Navigator.navigateToEditWorkout(mView.getBaseActivity(), userWorkoutInstance, R.id.content_main_container);
+                            userWorkoutInstance.initAndroidId();
+                            UserWorkoutTemplate userWorkoutTemplate = new UserWorkoutTemplate(mExerciseManager.getWorkoutTemplate());
+                            userWorkoutTemplate.initAndroidId();
+                            Navigator.navigateToEditWorkout(mView.getBaseActivity(), userWorkoutInstance, userWorkoutTemplate, R.id.content_main_container);
                         }
                     }));
 

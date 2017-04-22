@@ -169,7 +169,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         if (successDialog.waitForExists(TEST_WAIT_TIME)) {
             UiObject button = uiDevice.findObject(new UiSelector().text("OK"));
             if (button.exists()) {
-                button.click();
+
             }
         } else {
             throw new Exception();

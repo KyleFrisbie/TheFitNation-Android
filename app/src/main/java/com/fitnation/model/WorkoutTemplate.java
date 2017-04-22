@@ -60,6 +60,14 @@ public class WorkoutTemplate extends RealmObject implements Cloneable {
         return workoutInstances;
     }
 
+    public Long getSkillLevelId() {
+        return skillLevelId;
+    }
+
+    public String getSkillLevelLevel() {
+        return skillLevelLevel;
+    }
+
     public void setUserDemographicId(String userDemographicId) {
         this.userDemographicId = userDemographicId;
     }

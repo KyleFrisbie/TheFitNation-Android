@@ -3,6 +3,7 @@ package com.fitnation.workout.edit;
 import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
 import com.fitnation.model.UserWorkoutInstance;
+import com.fitnation.model.UserWorkoutTemplate;
 
 /**
  * Created by Ryan on 4/16/2017.
@@ -14,7 +15,7 @@ public interface EditWorkoutContract {
     }
 
     interface Presenter extends BasePresenter{
-        void setUserWorkoutInstance(UserWorkoutInstance userWorkoutInstance);
+        void setUserWorkout(UserWorkoutInstance userWorkoutInstance, UserWorkoutTemplate userWorkoutTemplate);
         void onSavePressed();
     }
 }
