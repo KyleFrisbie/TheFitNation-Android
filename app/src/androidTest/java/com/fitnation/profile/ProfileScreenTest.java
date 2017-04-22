@@ -14,6 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.android.volley.RequestQueue;
 import com.fitnation.R;
 import com.fitnation.model.User;
 import com.fitnation.model.UserDemographic;
@@ -81,14 +82,17 @@ public class ProfileScreenTest extends InstrumentationTest {
     @Before
     public void setUp() {
         super.unlockScreen(mActivityRule.getActivity());
-
+        //delete realm entries between tests.
+        final RealmResults tempUD = testRealm.where(UserDemographic.class).findAll();
+        final RealmResults tempU = testRealm.where(User.class).findAll();
+        final RealmResults tempUW = testRealm.where(UserWeight.class).findAll();
 
         testRealm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                testRealm.where(UserDemographic.class).findAll().deleteAllFromRealm();
-                testRealm.where(User.class).findAll().deleteAllFromRealm();
-                testRealm.where(UserWeight.class).findAll().deleteAllFromRealm();
+                tempUD.deleteAllFromRealm();
+                tempU.deleteAllFromRealm();
+                tempUW.deleteAllFromRealm();
             }
         });
     }
@@ -274,11 +278,7 @@ public class ProfileScreenTest extends InstrumentationTest {
                         && (request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN) ||
                             request.getPath().toLowerCase().contains(TOKEN_FOR_IMPERIAL))) {
                     return good_user_response;
-                } else if ((request.getPath().toLowerCase().contains(SKILL_LEVELS_PATH)                       )
-                        &&
-                        (request.getHeaders().toString().contains(TOKEN_FOR_IMPERIAL)
-                        ||
-                        request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN))) {
+                } else if (request.getPath().toLowerCase().contains(SKILL_LEVELS_PATH)) {
                     return skill_levels_response;
                 } else if (request.getPath().toLowerCase().contains(USER_DEMO_PUT_PATH)
                         && request.getHeaders().toString().contains(SUCCESS_AUTH_TOKEN)) {
@@ -314,17 +314,17 @@ public class ProfileScreenTest extends InstrumentationTest {
 
         SystemClock.sleep(DELAY_TIME);
 
-        onView(withId(android.R.id.button1)).check(matches(isDisplayed())).perform(longClick());
+        onView(withId(android.R.id.button1)).check(matches(isDisplayed())).perform(click());
 
-        SystemClock.sleep(DELAY_TIME*2);
+        SystemClock.sleep(DELAY_TIME);
 
         onView(allOf(withId(R.id.ageText),
                 withParent(withId(R.id.fragment_profile))))
                 .perform(scrollTo(), click());
 
-        SystemClock.sleep(DELAY_TIME*3);
+        SystemClock.sleep(DELAY_TIME);
 
-        onView(withId(android.R.id.button2)).check(matches(isDisplayed())).perform(longClick());
+        onView(withId(android.R.id.button2)).check(matches(isDisplayed())).perform(click());
         SystemClock.sleep(DELAY_TIME);
     }
 
@@ -397,7 +397,22 @@ public class ProfileScreenTest extends InstrumentationTest {
         pressBack();
     }
 
-
+    @Test
+    public void emptyRealmDataTest(){
+        AuthToken.getInstance().setAccessToken(FAILURE_AUTH_TOKEN);
+        onNavMyProfilePressed();
+        profilePageIsDisplayed();
+        onView(allOf(withId(R.id.saveButton),
+                withText("Save"),
+                withParent(withId(R.id.fragment_profile)))).
+                perform(scrollTo(), click());
+        pressBack();
+        SystemClock.sleep(DELAY_TIME);
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withText("My Workouts")).perform(click());
+        onNavMyProfilePressed();
+        profilePageIsDisplayed();
+    }
 
     public void onNavMyProfilePressed(){
         SystemClock.sleep(DELAY_TIME);

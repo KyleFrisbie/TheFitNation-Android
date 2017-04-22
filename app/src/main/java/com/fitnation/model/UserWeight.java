@@ -62,18 +62,6 @@ public class UserWeight extends RealmObject implements Cloneable{
         return weight;
     }
 
-    public Object clone() {
-        UserWeight clone = null;
-
-        try {
-            clone = (UserWeight) super.clone();
-        } catch (CloneNotSupportedException ex) {
-            Log.d("USERDEMOGRAPHIC", ex.toString());
-        }
-
-        return clone;
-    }
-
     @Override
     public String toString() {
         return "UserWeight{" +

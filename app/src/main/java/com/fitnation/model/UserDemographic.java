@@ -163,13 +163,6 @@ public class UserDemographic extends RealmObject implements Cloneable {
 
     }
 
-    public RealmList<UserWeight> getUserWeights(){
-        return userWeights;
-    }
-
-    public Float getUserWeight() {
-        return Float.valueOf(userWeights.last().getWeight());
-    }
 
     public void setSkillLevelLevel(String skillLevel) { skillLevelLevel = skillLevel; }
 
@@ -188,18 +181,6 @@ public class UserDemographic extends RealmObject implements Cloneable {
     public String getUserLogin(){ return userLogin; }
 
     public void setUserLogin(String userLogin) {this.userLogin = userLogin;}
-
-    public Object clone() {
-        UserDemographic clone = null;
-
-        try {
-            clone = (UserDemographic) super.clone();
-        } catch (CloneNotSupportedException ex) {
-            Log.d(TAG, ex.toString());
-        }
-
-        return clone;
-    }
 
     @Override
     public String toString() {
@@ -222,10 +203,6 @@ public class UserDemographic extends RealmObject implements Cloneable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public Long getSkillLevelId() {
-        return skillLevelId;
     }
 
     public void setSkillLevelId(Long skillLevelId) {

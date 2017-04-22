@@ -59,7 +59,7 @@ public class ProfileDataManager extends DataManager {
         return profileData;
     }
 
-    public void SaveUserDemographicData(final UserDemographic userDemographic){
+    public void saveUserDemographicData(final UserDemographic userDemographic){
         if (userDemographic.getId()==null) {
             try{
                 userDemographic.setId(Long.parseLong(UserLogins.getInstance().getUserDemographicId()));
@@ -95,7 +95,7 @@ public class ProfileDataManager extends DataManager {
         return null;
     }
 
-    public void SaveUserData(final User user){
+    public void saveUserData(final User user){
 
         //save data to local data store
         saveData(user, new DataResult() {
@@ -120,7 +120,7 @@ public class ProfileDataManager extends DataManager {
         Log.i("PROFILE", "Realm Result empty for User");     return null;
     }
 
-    public void SaveWeightData(final UserWeight weight){
+    public void saveWeightData(final UserWeight weight){
 
         //save data to local data store
         saveData(weight, new DataResult() {

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.fitnation.Factory.FactoryCallback;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.model.User;
@@ -380,9 +379,9 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
     public void saveProfileData() {
         //LOCAL DATE STORE
 
-        mProfileDataManager.SaveUserDemographicData(mUserdemo);
-        mProfileDataManager.SaveUserData(mUser);
-        mProfileDataManager.SaveWeightData(mUserWeight);
+        mProfileDataManager.saveUserDemographicData(mUserdemo);
+        mProfileDataManager.saveUserData(mUser);
+        mProfileDataManager.saveWeightData(mUserWeight);
 
         mProfileDataManager.saveUserDemographicToWeb(mUserdemo);
         //mProfileDataManager.saveUserToWeb(mUser);
