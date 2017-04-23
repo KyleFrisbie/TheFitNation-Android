@@ -47,6 +47,14 @@ public class UserWorkoutInstance extends RealmObject {
         return id;
     }
 
+    public Long getAndroidId() {
+        return androidId;
+    }
+
+    public void setAndroidId(Long androidId) {
+        this.androidId = androidId;
+    }
+
     public UserWorkoutInstance() {
         //required default constructor
     }

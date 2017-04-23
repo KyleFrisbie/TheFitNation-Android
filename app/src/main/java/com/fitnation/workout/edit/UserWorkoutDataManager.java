@@ -62,6 +62,18 @@ public class UserWorkoutDataManager extends DataManager {
             @Override
             public void onSuccess(UserWorkoutTemplate updatedUserWorkoutTemplate) {
                 Log.i(TAG, "User Workout Template posted to web success!");
+                updatedUserWorkoutTemplate.setAndroidId(userWorkoutTemplate.getAndroidId());
+                saveData(updatedUserWorkoutTemplate, new DataResult() {
+                    @Override
+                    public void onError() {
+                        Log.e(TAG, "Error updating User Workout Template");
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        Log.i(TAG, "Updated User Workout Template");
+                    }
+                });
 
                 userWorkoutInstance.setUserWorkoutTemplateId(updatedUserWorkoutTemplate.getId());
                 PostUserWorkoutInstanceTask postUserWorkoutInstanceTask = new PostUserWorkoutInstanceTask(authToken, mRequestQueue);
@@ -69,6 +81,18 @@ public class UserWorkoutDataManager extends DataManager {
                     @Override
                     public void onSuccess(UserWorkoutInstance updatedUserWorkoutInstance) {
                         Log.i(TAG, "User Workout Instance posted to web success!");
+                        updatedUserWorkoutInstance.setAndroidId(userWorkoutInstance.getAndroidId());
+                        saveData(updatedUserWorkoutInstance, new DataResult() {
+                            @Override
+                            public void onError() {
+                                Log.e(TAG, "Error when updating User Workout Instance");
+                            }
+
+                            @Override
+                            public void onSuccess() {
+                                Log.i(TAG, "Updated User Workout Instance");
+                            }
+                        });
                         saveWorkoutCallback.onSuccess();
                     }
 

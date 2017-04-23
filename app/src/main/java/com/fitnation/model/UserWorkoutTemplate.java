@@ -59,6 +59,14 @@ public class UserWorkoutTemplate extends RealmObject {
         return id;
     }
 
+    public Long getAndroidId() {
+        return androidId;
+    }
+
+    public void setAndroidId(Long androidId) {
+        this.androidId = androidId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
