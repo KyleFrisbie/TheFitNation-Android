@@ -47,7 +47,7 @@
         android:id="@+id/userName_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/register_button"
+        android:layout_above="@+id/first_name_editText"
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/login_vertical_margin"
         android:layout_marginLeft="@dimen/login_blocks_horizontal_margin"
@@ -58,16 +58,46 @@
         android:inputType="textPersonName"
         android:padding="6dp" />
 
+    <EditText
+        android:id="@+id/first_name_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/first_name"
+        android:inputType="textPersonName"
+        android:layout_above="@+id/last_name_editText"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/login_vertical_margin"
+        android:layout_marginLeft="@dimen/login_blocks_horizontal_margin"
+        android:layout_marginRight="@dimen/login_blocks_horizontal_margin"
+        android:background="@color/loginEditText"
+        android:padding="6dp"/>
+
+    <EditText
+        android:id="@+id/last_name_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="@string/last_name"
+        android:inputType="textPersonName"
+        android:layout_above="@+id/register_button"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/login_vertical_margin"
+        android:layout_marginLeft="@dimen/login_blocks_horizontal_margin"
+        android:layout_marginRight="@dimen/login_blocks_horizontal_margin"
+        android:background="@color/loginEditText"
+        android:padding="6dp" />
+
     <Button
         android:id="@+id/register_button"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:background="@color/actionable"
-        android:textColor="@color/loginButtonText"
         android:text="@string/register"
-        android:layout_marginTop="@dimen/login_vertical_margin"
-        android:layout_marginBottom="@dimen/login_vertical_margin"
+        android:textColor="@color/loginButtonText"
         android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/userName_editText"
-        android:layout_alignEnd="@+id/userName_editText" />
+        android:layout_alignEnd="@id/last_name_editText"
+        android:layout_alignStart="@id/last_name_editText"/>
+
 </RelativeLayout>
