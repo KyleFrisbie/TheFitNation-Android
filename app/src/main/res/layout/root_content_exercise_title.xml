@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/first_entry_header"
             style="@style/TextView.Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:layout_marginTop="7dp"
             tools:layout_constraintLeft_creator="1"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/textView9"
+            app:layout_constraintLeft_toRightOf="@+id/first_entry_header"
             android:layout_marginLeft="36dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="8dp"
@@ -57,7 +57,7 @@
             app:layout_constraintVertical_bias="0.555" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/textView9"
             style="@style/TextView.Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +68,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.555" />
 
-
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextView.Header"
+            android:text=""
+            tools:layout_constraintRight_creator="1"
+            android:layout_marginEnd="1dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView9"
+            tools:layout_constraintBaseline_creator="1" />
     </android.support.constraint.ConstraintLayout>
 
 
