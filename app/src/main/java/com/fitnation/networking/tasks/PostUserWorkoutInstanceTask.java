@@ -39,7 +39,7 @@ public class PostUserWorkoutInstanceTask extends NetworkTask {
     public void  postUserWorkoutInstance(final UserWorkoutInstance userWorkoutInstance, final UserWorkoutInstancePostCallback callback) {
         final String resourceRoute = "user-workout-instances";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getApiUrl() + resourceRoute;
-        final StringRequest postWorkoutInstance = new StringRequest(Request.Method.POST, url,
+        final StringRequest postWorkoutInstance = new StringRequest(Request.Method.PUT, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
