@@ -33,7 +33,7 @@ android {
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
             debug {
-                testCoverageEnabled false
+                testCoverageEnabled true
                 testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
             }
         }
