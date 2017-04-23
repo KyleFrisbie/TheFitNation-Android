@@ -50,32 +50,26 @@ dependencies {
     }
 
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile 'com.android.support:support-annotations:25.3.0'
-    //Testing
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
-    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 
-
-    testCompile 'junit:junit:4.12'
     // Espresso-contrib for DatePicker, RecyclerView, Drawer actions, Accessibility checks, CountingIdlingResource
     androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.2') {
         exclude group: 'com.android.support', module: 'appcompat'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude module: 'recyclerview-v7'
     }
+    //Testing
     testCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
-    androidTestCompile 'com.android.support:recyclerview-v7:25.3.0'
-    androidTestCompile 'com.android.support:appcompat-v7:25.3.0'
-    androidTestCompile 'com.android.support:design:25.3.0'
-    androidTestCompile 'com.android.support:recyclerview-v7:25.3.0'
-    androidTestCompile 'com.android.support:support-v4:25.3.0'
-    androidTestCompile 'com.android.support:appcompat-v7:25.3.0'
-    androidTestCompile 'com.android.support:design:25.3.0'
-
     testCompile 'junit:junit:4.12'
 
+    androidTestCompile 'com.android.support:support-annotations:25.3.0'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.6.0'
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
+    androidTestCompile 'com.android.support:recyclerview-v7:25.3.0'
+    androidTestCompile 'com.android.support:appcompat-v7:25.3.0'
+    androidTestCompile 'com.android.support:design:25.3.0'
+    androidTestCompile 'com.android.support:support-v4:25.3.0'
 
     //Realm dataAdapters
     compile 'io.realm:android-adapters:1.4.0'
