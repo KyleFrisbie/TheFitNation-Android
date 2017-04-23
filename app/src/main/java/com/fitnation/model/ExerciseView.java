@@ -12,6 +12,7 @@ import java.util.List;
 public interface ExerciseView extends Comparable{
     List<ExerciseSetView> getExerciseSetView();
     void setExerciseSetViews(List<ExerciseSetView> sets);
+    void addExerciseSetView(ExerciseView exercise, int orderNumber);
     boolean isSelected();
     boolean isSelectable();
     String getName();

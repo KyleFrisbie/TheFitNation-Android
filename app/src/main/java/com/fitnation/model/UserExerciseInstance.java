@@ -91,6 +91,11 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView {
     }
 
     @Override
+    public void addExerciseSetView(ExerciseView exercise, int orderNumber) {
+        userExerciseInstanceSets.add(new UserExerciseInstanceSet(orderNumber));
+    }
+
+    @Override
     public boolean isSelected() {
         return false;
     }

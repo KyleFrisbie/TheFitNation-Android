@@ -51,12 +51,8 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
     public void onAddSetClicked() {
         List<ExerciseSetView> sets =  mExercise.getExerciseSetView();
         int orderNumber = sets.size() + 1;
-        if(mExerciseType.equals(ExerciseType.TEMPLATE)) {
-            sets.add(new ExerciseInstanceSet((ExerciseInstance)mExercise, orderNumber));
-        } else {
-            sets.add(new UserExerciseInstanceSet(orderNumber));
-        }
-        mExercise.setExerciseSetViews(sets);
+
+        mExercise.addExerciseSetView(mExercise, orderNumber);
 
         mView.bindExerciseInstanceToView(mExercise, this);
     }

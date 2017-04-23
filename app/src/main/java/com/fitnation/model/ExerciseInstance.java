@@ -100,6 +100,11 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
         }
     }
 
+    @Override
+    public void addExerciseSetView(ExerciseView exercise, int orderNumber) {
+        exerciseInstanceSets.add(new ExerciseInstanceSet((ExerciseInstance)exercise, orderNumber));
+    }
+
     public static List<ExerciseView> convertExercisesToExerciseViews(List<ExerciseInstance> exerciseInstances) {
         List<ExerciseView> exerciseViews = null;
 

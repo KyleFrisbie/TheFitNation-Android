@@ -11,7 +11,6 @@ import com.fitnation.model.UserWorkoutTemplate;
 /**
  * Created by Ryan on 4/16/2017.
  */
-
 public interface SaveWorkoutContract {
     interface View extends BaseView<SaveWorkoutContract.Presenter> {
         Context getContext();
