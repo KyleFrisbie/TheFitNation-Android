@@ -27,33 +27,35 @@ public class UserWorkoutDataManager extends DataManager {
         mRequestQueue = Volley.newRequestQueue(context);
     }
 
-    public void saveUserWorkout(final UserWorkoutInstance userWorkoutInstance, final UserWorkoutTemplate userWorkoutTemplate, SaveWorkoutCallback saveWorkoutCallback) {
+    public void saveUserWorkout(final UserWorkoutInstance userWorkoutInstance, final UserWorkoutTemplate userWorkoutTemplate, final SaveWorkoutCallback saveWorkoutCallback) {
         saveData(userWorkoutTemplate, new DataResult() {
             @Override
             public void onError() {
                 Log.e(TAG, "Saving user workout template failed");
+                saveWorkoutCallback.onFailure("Unable to save Workout Template to Local Storage");
             }
 
             @Override
             public void onSuccess() {
-                Log.e(TAG, "Saving user workout template success!");
+                Log.i(TAG, "Saving user workout template to local storage success!");
                 saveData(userWorkoutInstance, new DataResult() {
                     @Override
                     public void onError() {
-                        Log.e(TAG, "Saving user workout instance failed");
+                        Log.e(TAG, "Saving user workout instance to local storage failed");
+                        saveWorkoutCallback.onFailure("Unable to save Workout Instance to Local Storage");
                     }
 
                     @Override
                     public void onSuccess() {
-                        Log.e(TAG, "Saving user workout instance success!");
-                        postToWebServices(userWorkoutTemplate, userWorkoutInstance);
+                        Log.i(TAG, "Saving user workout instance to local storage success!");
+                        postToWebServices(userWorkoutTemplate, userWorkoutInstance, saveWorkoutCallback);
                     }
                 });
             }
         });
     }
 
-    private void postToWebServices(final UserWorkoutTemplate userWorkoutTemplate, final UserWorkoutInstance userWorkoutInstance) {
+    private void postToWebServices(final UserWorkoutTemplate userWorkoutTemplate, final UserWorkoutInstance userWorkoutInstance, final SaveWorkoutCallback saveWorkoutCallback) {
         final String authToken = AuthToken.getInstance().getAccessToken();
         PostUserWorkoutTemplateTask postUserWorkoutTemplateTask = new PostUserWorkoutTemplateTask(authToken, mRequestQueue);
         postUserWorkoutTemplateTask.postUserWorkoutTemplate(userWorkoutTemplate, new UserWorkoutTemplatePostCallback() {
@@ -67,11 +69,13 @@ public class UserWorkoutDataManager extends DataManager {
                     @Override
                     public void onSuccess(UserWorkoutInstance updatedUserWorkoutInstance) {
                         Log.i(TAG, "User Workout Instance posted to web success!");
+                        saveWorkoutCallback.onSuccess();
                     }
 
                     @Override
                     public void onFailure(String error) {
                         Log.e(TAG, "User Workout Instance posted to web failure" + error);
+                        saveWorkoutCallback.onFailure("Unable to save to the web. Error code: " + error);
                     }
                 });
             }
@@ -79,6 +83,7 @@ public class UserWorkoutDataManager extends DataManager {
             @Override
             public void onFailure(String error) {
                 Log.e(TAG, "User Workout Template posted to web failure" + error);
+                saveWorkoutCallback.onFailure("Unable to save to the web. Error code: " + error);
             }
         });
     }

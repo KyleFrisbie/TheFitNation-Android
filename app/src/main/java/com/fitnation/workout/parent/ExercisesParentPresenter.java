@@ -104,7 +104,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
                 @Override
                 public void onSuccess() {
                     mView.stopProgress();
-                    mView.showSuccess(ExerciseAlertDialogFactory.getSuccess(mView.getBaseActivity(), new DialogInterface.OnClickListener() {
+                    mView.showSuccess(ExerciseAlertDialogFactory.getBuildWorkoutSuccess(mView.getBaseActivity(), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
@@ -121,11 +121,11 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
                 @Override
                 public void onFailure(String error) {
                     mView.stopProgress();
-                    mView.showFailure(ExerciseAlertDialogFactory.getErrorDialog(error, mView.getBaseActivity()));
+                    mView.showFailure(ExerciseAlertDialogFactory.getBuildWorkoutError(error, mView.getBaseActivity()));
                 }
             });
         } else {
-            mView.showFailure(ExerciseAlertDialogFactory.getErrorDialog("A Workout name must be provided", mView.getBaseActivity()));
+            mView.showFailure(ExerciseAlertDialogFactory.getBuildWorkoutError("A Workout name must be provided", mView.getBaseActivity()));
         }
     }
 

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
+import com.fitnation.workout.common.ExerciseAlertDialogFactory;
 
 /**
  * Created by Ryan on 4/16/2017.
@@ -39,20 +40,23 @@ public class SaveWorkoutPresenter implements SaveWorkoutContract.Presenter{
 
     @Override
     public void onSavePressed() {
+        mView.showProgress();
         new Thread(new Runnable() {
             @Override
             public void run() {
                 mDataManager.saveUserWorkout(mUserWorkoutInstance, mUserWorkoutTemplate, new SaveWorkoutCallback() {
                     @Override
                     public void onSuccess() {
-                        //TODO notify view
-                        Log.i(TAG, "User Workout Instance saved succesfully");
+                        mView.stopProgress();
+                        Log.i(TAG, "User Workout saved succesfully");
+                        //TODO take user to saved user workout instances page
                     }
 
                     @Override
                     public void onFailure(String error) {
-                        //TODO notify of error
-                        Log.i(TAG, "User Workout Instance save failed" + error);
+                        mView.stopProgress();
+                        mView.showError(ExerciseAlertDialogFactory.getCreateWorkoutInstanceError(error, mView.getBaseActivity()));
+                        Log.i(TAG, "User Workout save failed" + error);
                     }
                 });
             }

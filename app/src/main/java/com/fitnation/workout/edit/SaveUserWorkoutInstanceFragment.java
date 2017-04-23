@@ -1,6 +1,7 @@
 package com.fitnation.workout.edit;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,7 +25,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Allows a user to save a User Workout Instance
  */
 public class SaveUserWorkoutInstanceFragment extends BaseFragment implements SaveWorkoutContract.View {
     private static final String USER_WORKOUT_INSTANCE = "USER_WORKOUT_INSTANCE";
@@ -84,6 +85,11 @@ public class SaveUserWorkoutInstanceFragment extends BaseFragment implements Sav
         mPresenter.onSavePressed();
     }
 
+    @OnTextChanged(R.id.notes_edittext)
+    public void onTextChanged(CharSequence charSequence) {
+        mUserWorkoutInstance.setNotes(charSequence.toString());
+    }
+
     @Override
     public void setPresenter(SaveWorkoutContract.Presenter presenter) {
         mPresenter = presenter;
@@ -92,5 +98,26 @@ public class SaveUserWorkoutInstanceFragment extends BaseFragment implements Sav
     @Override
     public BaseActivity getBaseActivity() {
         return (BaseActivity) getActivity();
+    }
+
+    @Override
+    public void showProgress() {
+        Activity activity = getActivity();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getBaseActivity().showProgress(null);
+            }
+        });    }
+
+    @Override
+    public void stopProgress() {
+        Activity activity = getActivity();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getBaseActivity().stopProgress();
+            }
+        });
     }
 }

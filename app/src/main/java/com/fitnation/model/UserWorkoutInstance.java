@@ -95,6 +95,10 @@ public class UserWorkoutInstance extends RealmObject {
         this.wasCompleted = wasCompleted;
     }
 
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     public List<ExerciseView> getExerciseViews() {
         List<ExerciseView> exerciseViews = new ArrayList<>(userExerciseInstances.size());
         for (UserExerciseInstance exercise : userExerciseInstances) {

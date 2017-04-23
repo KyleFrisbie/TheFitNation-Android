@@ -1,14 +1,29 @@
 <resources>
+    <!--App-->
     <string name="app_name">Fit Nation</string>
+    <string name="fit_nation">Fit Nation</string>
 
+    <!--Nav-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="logout">Logout</string>
-
     <string name="action_settings">Settings</string>
+
+    <!--Menu-->
+    <string name="login_screen">Login Fragment</string>
+    <string name="start_workout">Start Workout</string>
+    <string name="my_workouts">My Workouts</string>
+    <string name="trends">Trends</string>
+    <string name="workout_regimens">Workout Regimens</string>
+    <string name="my_profile">My Profile</string>
+    <string name="title_activity_create_exercise">Create Your Exercise</string>
+    <string name="build_workout">Create A Workout</string>
+
+    <!--Splash-->
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="background_image">Background Image</string>
 
+    <!--Login-->
     <string name="login">Login</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -25,19 +40,18 @@
 
     <string name="reset_password">Reset Password</string>
     <string name="resend_email">Resend email</string>
+    <string name="email_success_title">Success</string>
 
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="username">User Name</string>
 
-    <string name="login_screen">Login Fragment</string>
-    <string name="start_workout">Start Workout</string>
-    <string name="my_workouts">My Workouts</string>
-    <string name="trends">Trends</string>
-    <string name="workout_regimens">Workout Regimens</string>
-    <string name="my_profile">My Profile</string>
-    <string name="title_activity_create_exercise">Create Your Exercise</string>
-    <string name="build_workout">Create A Workout</string>
+    <string name="register_success_title">Success!</string>
+    <string name="register_success_message">Welcome to the Fit Nation! To complete the regestration process please confirm your email</string>
+
+    <string name="bottom_bar">Bottom Bar Color</string>
+
+    <!--Build Workout-->
     <string name="beginner">BEGINNER</string>
     <string name="intermediate">INTERMEDIATE</string>
     <string name="advanced">ADVANCED</string>
@@ -45,19 +59,20 @@
     <string name="save_button">Save</string>
     <string name="completed">Complete</string>
     <string name="build_workout_title">Create a Workout</string>
-    <string name="dialog_success_title">Success</string>
-    <string name="dialog_error_title">Error</string>
     <string name="dialog_build_workout_success_message">Your workout was successfully created!</string>
     <string name="dialog_build_workout_failure_message">"Workout save failed. Error: "</string>
     <string name="edit_workout_title">Edit</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ipsum">Lyft hashtag godard, tote bag skateboard ennui biodiesel wolf cold-pressed chia irony. Master cleanse tbh pop-up viral forage, pitchfork banh mi. Scenester unicorn franzen locavore chia listicle. Pug vinyl chicharrones portland. Sartorial green juice bitters, drinking vinegar fam yuccie hella forage craft beer. Irony authentic salvia celiac, hot chicken twee ethical meh chicharrones. Art party readymade pitchfork, shoreditch enamel pin bespoke tofu pork belly squid beard jean shorts.
         \n\nKitsch waistcoat celiac, microdosing tumblr copper mug bushwick art party retro before they sold out church-key. Cray asymmetrical trust fund, craft beer celiac leggings four loko viral 8-bit activated charcoal snackwave. Blue bottle kombucha succulents organic direct trade, kale chips iPhone quinoa gastropub pabst hoodie wayfarers. Thundercats tattooed food truck hammock. Offal mixtape yr cliche. Jean shorts selfies swag viral, ethical biodiesel echo park actually crucifix letterpress kale chips portland chicharrones mumblecore tilde. Seitan kickstarter whatever keffiyeh forage yuccie.</string>
 
+    <!--Create Workout Instance-->
+    <string name="dialog_create_workout_instance_failure_message">"Workout save failed. Error: "</string>
 
-    <string name="bottom_bar">Bottom Bar Color</string>
 
+    <!--Error/Success/Progress Dialogs-->
+    <string name="progress_message">Please wait...</string>
+    <string name="dialog_success_title">Success</string>
+    <string name="dialog_error_title">Error</string>
     <string name="alert_dialog_ok_button">OK</string>
     <string name="volley_title_access_refreshed">Access Refreshed</string>
     <string name="volley_message_access_refreshed">Authorization has been refreshed</string>
@@ -200,10 +215,4 @@
     <string name="volley_message_508">508: Loop Detected</string>
     <string name="volley_message_510">510: Not Extended</string>
     <string name="volley_message_511">511: Network Authentication Required</string>
-
-    <string name="register_success_title">Success!</string>
-    <string name="register_success_message">Welcome to the Fit Nation! To complete the regestration process please confirm your email</string>
-    <string name="progress_message">Please wait...</string>
-    <string name="email_success_title">Success</string>
-    <string name="fit_nation">Fit Nation</string>
 </resources>
