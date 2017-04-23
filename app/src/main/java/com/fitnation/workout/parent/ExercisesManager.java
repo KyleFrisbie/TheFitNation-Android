@@ -96,16 +96,17 @@ public class ExercisesManager extends DataManager {
                                 mExerciseInstancesTab1.add(copy1);
                                 mExerciseInstancesTab2.add(copy2);
                                 mExerciseInstancesTab3.add(copy3);
-
-                                mExerciseInstancesTab1 = filterExerciseBySkillLevel(mExerciseInstancesTab1, SkillLevel.BEGINNER);
-                                mExerciseInstancesTab2 = filterExerciseBySkillLevel(mExerciseInstancesTab2, SkillLevel.INTERMEDIATE);
-                                mExerciseInstancesTab3 = filterExerciseBySkillLevel(mExerciseInstancesTab3, SkillLevel.ADVANCED);
-
-                                Collections.sort(mExerciseInstances);
-                                Collections.sort(mExerciseInstancesTab1);
-                                Collections.sort(mExerciseInstancesTab2);
-                                Collections.sort(mExerciseInstancesTab3);
                             }
+
+                            mExerciseInstancesTab1 = filterExerciseBySkillLevel(mExerciseInstancesTab1, SkillLevel.BEGINNER);
+                            mExerciseInstancesTab2 = filterExerciseBySkillLevel(mExerciseInstancesTab2, SkillLevel.INTERMEDIATE);
+                            mExerciseInstancesTab3 = filterExerciseBySkillLevel(mExerciseInstancesTab3, SkillLevel.ADVANCED);
+
+                            Collections.sort(mExerciseInstances);
+                            Collections.sort(mExerciseInstancesTab1);
+                            Collections.sort(mExerciseInstancesTab2);
+                            Collections.sort(mExerciseInstancesTab3);
+
                             callback.onExercisesRetrieved(mExerciseInstancesTab1, mExerciseInstancesTab2, mExerciseInstancesTab3);
                         }
 
