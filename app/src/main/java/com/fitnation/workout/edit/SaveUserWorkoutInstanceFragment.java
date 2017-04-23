@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
@@ -33,6 +34,8 @@ public class SaveUserWorkoutInstanceFragment extends BaseFragment implements Sav
     private static final String USER_WORKOUT_TEMPLATE = "USER_WORKOUT_TEMPLATE";
     @BindView(R.id.save_user_workout_instance_button)
     public Button mActionButton;
+    @BindView(R.id.notes_edittext)
+    public EditText mNotedEditText;
     private SaveWorkoutContract.Presenter mPresenter;
     private UserWorkoutInstance mUserWorkoutInstance;
     private UserWorkoutTemplate mUserWorkoutTemplate;
@@ -72,6 +75,11 @@ public class SaveUserWorkoutInstanceFragment extends BaseFragment implements Sav
 
         View v = inflater.inflate(R.layout.workout_fragment_save_user_workout_instance, container, false);
         ButterKnife.bind(this, v);
+        
+        String notes = mUserWorkoutInstance.getNotes();
+        if(notes != null) {
+            mNotedEditText.setText(notes);
+        }
 
         return v;
     }
