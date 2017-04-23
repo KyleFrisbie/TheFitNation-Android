@@ -4,12 +4,12 @@ package com.fitnation.workout.edit;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.fitnation.R;
@@ -35,7 +35,9 @@ public class SaveUserWorkoutInstanceFragment extends BaseFragment implements Sav
     @BindView(R.id.save_user_workout_instance_button)
     public Button mActionButton;
     @BindView(R.id.notes_edittext)
-    public EditText mNotedEditText;
+    public EditText mNotesEditText;
+    @BindView(R.id.completed_checkbox)
+    public CheckBox mCompletedCheckBox;
     private SaveWorkoutContract.Presenter mPresenter;
     private UserWorkoutInstance mUserWorkoutInstance;
     private UserWorkoutTemplate mUserWorkoutTemplate;
@@ -75,10 +77,14 @@ public class SaveUserWorkoutInstanceFragment extends BaseFragment implements Sav
 
         View v = inflater.inflate(R.layout.workout_fragment_save_user_workout_instance, container, false);
         ButterKnife.bind(this, v);
-        
+
         String notes = mUserWorkoutInstance.getNotes();
         if(notes != null) {
-            mNotedEditText.setText(notes);
+            mNotesEditText.setText(notes);
+        }
+
+        if(mUserWorkoutInstance.wasCompleted()) {
+            mCompletedCheckBox.setChecked(true);
         }
 
         return v;

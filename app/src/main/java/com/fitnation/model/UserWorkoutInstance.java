@@ -35,6 +35,10 @@ public class UserWorkoutInstance extends RealmObject {
     private String notes;
     private RealmList<UserExerciseInstance> userExerciseInstances;
 
+    public UserWorkoutInstance() {
+        //required default constructor
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -55,8 +59,8 @@ public class UserWorkoutInstance extends RealmObject {
         this.androidId = androidId;
     }
 
-    public UserWorkoutInstance() {
-        //required default constructor
+    public boolean wasCompleted() {
+        return wasCompleted;
     }
 
     public void initAndroidId() {
