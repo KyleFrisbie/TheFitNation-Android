@@ -69,6 +69,11 @@ public class UserWorkoutInstance extends RealmObject {
         }
     }
 
+    public String getCreatedOn() {
+        return DateFormatter.getUIDate(createdOn);
+
+    }
+
     @ParcelPropertyConverter(UserExerciseInstanceParcelConverter.class)
     public void setExerciseInstanceSets(RealmList<UserExerciseInstance> userExerciseInstances) {
         this.userExerciseInstances = userExerciseInstances;

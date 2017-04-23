@@ -51,10 +51,9 @@
             android:layout_height="wrap_content"
             android:text="Set"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/textView11"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginRight="115dp"
-            app:layout_constraintVertical_bias="0.555" />
+            app:layout_constraintVertical_bias="0.555"
+            tools:layout_editor_absoluteX="269dp" />
 
         <TextView
             android:id="@+id/textView11"
@@ -68,17 +67,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.555" />
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/TextView.Header"
-            android:text=""
-            tools:layout_constraintRight_creator="1"
-            android:layout_marginEnd="1dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBaseline_toBaselineOf="@+id/textView11"
-            tools:layout_constraintBaseline_creator="1" />
     </android.support.constraint.ConstraintLayout>
 
 

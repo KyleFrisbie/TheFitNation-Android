@@ -59,7 +59,7 @@ public class EditWorkoutFragment extends BaseFragment implements EditWorkoutCont
         View v = inflater.inflate(R.layout.workout_fragment_edit_workout, container, false);
         ButterKnife.bind(this, v);
         Navigationable navigationable =  (Navigationable) getBaseActivity();
-        navigationable.updateToolbar(true, getString(R.string.edit_workout_title) + " " + mUserWorkoutInstance.getWorkoutInstanceName());
+        navigationable.updateToolbar(true, getString(R.string.edit_workout_title) + " " + mUserWorkoutInstance.getWorkoutInstanceName() + " " + mUserWorkoutInstance.getCreatedOn());
 
         mPresenter.onViewReady();
 
