@@ -147,6 +147,7 @@ ExercisesManager extends DataManager {
                 postWorkoutTemplateToWeb(workoutTemplate, new WorkoutTemplatePostCallback() {
                     @Override
                     public void onSuccess(final WorkoutTemplate updatedTemplate) {
+                        updatedTemplate.setAndroidId(workoutTemplate.getAndroidId());
                         mWorkoutTemplate = updatedTemplate;
                         WorkoutInstance workoutInstance = buildWorkoutInstance(updatedTemplate, name);
 

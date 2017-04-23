@@ -60,6 +60,10 @@ public class WorkoutTemplate extends RealmObject implements Cloneable {
         return lastUpdated;
     }
 
+    public Long getAndroidId() {
+        return androidId;
+    }
+
     public String getNotes() {
         return notes;
     }
