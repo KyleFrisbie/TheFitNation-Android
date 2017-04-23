@@ -59,6 +59,7 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
         exerciseId = exercise.getId();
         exerciseName = exercise.getName();
         exerciseInstanceSets = new RealmList<>();
+        notes = exercise.getNotes();
         exerciseInstanceSets.add(new ExerciseInstanceSet(this, 1, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
         exerciseInstanceSets.add(new ExerciseInstanceSet(this, 2, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
         exerciseInstanceSets.add(new ExerciseInstanceSet(this, 3, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
