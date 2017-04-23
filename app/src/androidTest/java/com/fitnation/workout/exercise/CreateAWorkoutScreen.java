@@ -42,6 +42,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.fitnation.test.RecyclerViewMatcher.*;
 import static org.hamcrest.Matchers.allOf;
@@ -151,26 +152,12 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         onView(withId(R.id.exercise_list_action)).perform(click());
         onView(withId(R.id.exercise_name_to_save)).perform(typeText("Arnolds Workout"));
         closeSoftKeyboard();
-        UiDevice uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        UiObject dialog = uiDevice.findObject(new UiSelector().text("Name your workout:"));
-        if (dialog.waitForExists(dialogWaitTime)) {
-            UiObject button = uiDevice.findObject(new UiSelector().text("SAVE"));
-            if (button.exists()) {
-                button.click();
-            }
-        } else {
-            throw new Exception();
-        }
+        SystemClock.sleep(TEST_WAIT_TIME/10);
+        onView(allOf(withId(android.R.id.button1), withText("SAVE"))).perform(scrollTo(), click());
+        SystemClock.sleep(TEST_WAIT_TIME/10);
 
-        UiObject successDialog = uiDevice.findObject(new UiSelector().text("Success"));
-        if (successDialog.waitForExists(TEST_WAIT_TIME)) {
-            UiObject button = uiDevice.findObject(new UiSelector().text("OK"));
-            if (button.exists()) {
-                button.click();
-            }
-        } else {
-            throw new Exception();
-        }
+        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(scrollTo(), click());
+
     }
 
     @Test
