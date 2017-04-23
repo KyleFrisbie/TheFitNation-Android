@@ -55,7 +55,7 @@ public class UserWorkoutInstance extends RealmObject {
         androidId = PrimaryKeyFactory.getInstance().nextKey(UserWorkoutInstance.class);
     }
 
-    public UserWorkoutInstance(WorkoutInstance workoutInstance) {
+    public UserWorkoutInstance(WorkoutInstance workoutInstance, long androidId) {
         createdOn = DateFormatter.getFormattedDate(new Date());
         lastUpdated = DateFormatter.getFormattedDate(new Date());
         workoutInstanceId = workoutInstance.getId();
@@ -67,6 +67,10 @@ public class UserWorkoutInstance extends RealmObject {
             UserExerciseInstance userExerciseInstance = new UserExerciseInstance(exerciseInstance, this);
             userExerciseInstances.add(userExerciseInstance);
         }
+    }
+
+    public static long getNextAndroidKey() {
+        return PrimaryKeyFactory.getInstance().nextKey(UserWorkoutInstance.class);
     }
 
     public String getCreatedOn() {

@@ -39,15 +39,16 @@ public class UserWorkoutTemplate extends RealmObject {
 
     }
 
-    public UserWorkoutTemplate(WorkoutTemplate workoutTemplate) {
+    public UserWorkoutTemplate(WorkoutTemplate workoutTemplate, long androidId) {
         workoutTemplateId = workoutTemplate.getId();
         workoutTemplateName = workoutTemplate.getName();
         createdOn = workoutTemplate.getCreatedOn();
         lastUpdated = workoutTemplate.getLastUpdated();
+        this.androidId = androidId;
     }
 
-    public void initAndroidId() {
-        androidId = PrimaryKeyFactory.getInstance().nextKey(UserWorkoutTemplate.class);
+    public static long getNextAndroidIdForClass() {
+        return PrimaryKeyFactory.getInstance().nextKey(UserWorkoutTemplate.class);
     }
 
     public void setId(Long id) {

@@ -108,14 +108,11 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
-                            UserWorkoutInstance userWorkoutInstance = new UserWorkoutInstance(mExerciseManager.getWorkoutInstance());
-                            userWorkoutInstance.initAndroidId();
-                            UserWorkoutTemplate userWorkoutTemplate = new UserWorkoutTemplate(mExerciseManager.getWorkoutTemplate());
-                            userWorkoutTemplate.initAndroidId();
+                            UserWorkoutInstance userWorkoutInstance = new UserWorkoutInstance(mExerciseManager.getWorkoutInstance(), UserWorkoutInstance.getNextAndroidKey());
+                            UserWorkoutTemplate userWorkoutTemplate = WorkoutTemplateManager.getSingletonUserWorkoutTemplate(mExerciseManager.getWorkoutTemplate());
                             Navigator.navigateToEditWorkout(mView.getBaseActivity(), userWorkoutInstance, userWorkoutTemplate, R.id.content_main_container);
                         }
                     }));
-
                 }
 
                 @Override
