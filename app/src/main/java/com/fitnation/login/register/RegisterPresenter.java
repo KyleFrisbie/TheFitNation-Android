@@ -1,16 +1,10 @@
-package com.fitnation.login;
+package com.fitnation.login.register;
 
 import android.app.ProgressDialog;
 import android.support.v7.app.AlertDialog;
 
-<<<<<<< HEAD
 import com.fitnation.networking.tasks.loginTasks.TaskCallback;
 import com.fitnation.networking.tasks.loginTasks.RegisterUserTask;
-=======
-import com.android.volley.toolbox.StringRequest;
-import com.fitnation.networking.tasks.TaskCallback;
-import com.fitnation.networking.tasks.RegisterUserTask;
->>>>>>> refs/remotes/origin/master
 
 /**
  * Presenter for register screen that contains all the business logic associated with the screen

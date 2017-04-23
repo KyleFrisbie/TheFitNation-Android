@@ -1,4 +1,4 @@
-package com.fitnation.login;
+package com.fitnation.login.login;
 
 import android.app.ProgressDialog;
 import android.support.v7.app.AlertDialog;
@@ -7,10 +7,11 @@ import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
 
 /**
- * An interface between the view and the presenter
+ * Interface between view and presenter
  */
-public interface RegisterContract {
+public interface LoginContract {
     interface View extends BaseView<Presenter> {
+        void loginSuccess();
         void showSuccess(AlertDialog.Builder successDialog);
         void showProgress(ProgressDialog progressDialog);
         void stopProgress();
@@ -18,6 +19,10 @@ public interface RegisterContract {
     }
 
     interface Presenter extends BasePresenter {
-        void onRegisterCreatePressed(String email, String password, String userName, String firstName, String lastName, String language);
+        void onFacebookLoginPressed();
+        void onGoogleLoginPressed();
+        void onForgotLoginButtonPressed();
+        void onLoginPressed(String userName, String password);
+        void onSignUpButtonPressed();
     }
 }
