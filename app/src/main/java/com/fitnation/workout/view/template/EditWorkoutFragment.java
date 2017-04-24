@@ -34,10 +34,10 @@ public class EditWorkoutFragment extends BaseFragment implements EditWorkoutCont
         // Required empty public constructor
     }
 
-    public static EditUserWorkoutFragment newInstance(UserWorkoutInstance userWorkoutInstance) {
+    public static EditWorkoutFragment newInstance(WorkoutInstance workoutInstance) {
         Bundle args = new Bundle();
-        args.putParcelable(WORKOUT_INSTANCE, Parcels.wrap(userWorkoutInstance));
-        EditUserWorkoutFragment editWorkoutFragment = new EditUserWorkoutFragment();
+        args.putParcelable(WORKOUT_INSTANCE, Parcels.wrap(workoutInstance));
+        EditWorkoutFragment editWorkoutFragment = new EditWorkoutFragment();
         editWorkoutFragment.setArguments(args);
 
         return editWorkoutFragment;
@@ -75,7 +75,7 @@ public class EditWorkoutFragment extends BaseFragment implements EditWorkoutCont
         return (BaseActivity) getActivity();
     }
 
-    @OnClick(R.id.edit_user_workout_action_button)
+    @OnClick(R.id.edit_workout_instance_action_button)
     public void onActionRequested() {
         mPresenter.onSavePressed();
     }

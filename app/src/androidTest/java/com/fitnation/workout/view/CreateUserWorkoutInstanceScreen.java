@@ -48,7 +48,7 @@ public class CreateUserWorkoutInstanceScreen extends InstrumentationTest {
         UserWorkoutTemplate userWorkoutTemplate = new UserWorkoutTemplate(workoutTemplate, UserWorkoutTemplate.getNextAndroidIdForClass());
         UserWorkoutInstance userWorkoutInstance = new UserWorkoutInstance(workoutInstance, UserWorkoutInstance.getNextAndroidKey());
 
-        Navigator.navigateToEditWorkout(mActivityRule.getActivity(), userWorkoutInstance, userWorkoutTemplate, R.id.content_main_container);
+        Navigator.navigateToEditUserWorkout(mActivityRule.getActivity(), userWorkoutInstance, userWorkoutTemplate, R.id.content_main_container);
     }
 
     @Test

@@ -209,7 +209,7 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
     public int compareTo(@NonNull Object o) {
         ExerciseInstance exerciseInstance = (ExerciseInstance) o;
         String nameThis = this.exerciseName;
-        String nameOther = exerciseInstance.getExercise().getName();
+        String nameOther = exerciseInstance.getName();
 
         return nameThis.compareTo(nameOther);
     }

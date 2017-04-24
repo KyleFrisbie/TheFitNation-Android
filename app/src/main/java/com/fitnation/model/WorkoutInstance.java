@@ -2,6 +2,8 @@ package com.fitnation.model;
 
 import com.google.gson.annotations.Expose;
 
+import org.parceler.Parcel;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,11 +12,13 @@ import java.util.Objects;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.WorkoutInstanceRealmProxy;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * A workout that has been performed by the User
  */
+@Parcel(implementations = {WorkoutInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { WorkoutInstance.class })
 public class WorkoutInstance extends RealmObject {
     @PrimaryKey
     @Expose(serialize = false)
