@@ -58,10 +58,10 @@ public class Navigator {
         activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment ).commit();
     }
 
-    public static void navigateToEditExercise(BaseActivity activity, ExerciseView exerciseView, ExerciseType exerciseType, OnExerciseUpdatedCallback callback, int containerId) {
+    public static void navigateToEditExercise(BaseActivity activity, ExerciseView exerciseView, OnExerciseUpdatedCallback callback, int containerId) {
         ViewExerciseFragment viewExerciseFragment = ViewExerciseFragment.newInstance(exerciseView);
 
-        viewExerciseFragment.setPresenter(new ViewExercisePresenter(exerciseView, exerciseType, viewExerciseFragment, callback));
+        viewExerciseFragment.setPresenter(new ViewExercisePresenter(exerciseView, viewExerciseFragment, callback));
         activity.getSupportFragmentManager().beginTransaction().add(containerId, viewExerciseFragment).addToBackStack(null).commit();
     }
 

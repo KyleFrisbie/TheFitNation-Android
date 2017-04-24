@@ -55,7 +55,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void onEditPressed(ExerciseInstance exercise) {
         mExerciseInstanceBeingEdited = exercise;
-        Navigator.navigateToEditExercise(mView.getBaseActivity(), exercise, ExerciseType.TEMPLATE, this, R.id.content_main_container);
+        Navigator.navigateToEditExercise(mView.getBaseActivity(), exercise, this, R.id.content_main_container);
     }
 
     //----------------------------------ExercisesRequestCallback----------------------------------//

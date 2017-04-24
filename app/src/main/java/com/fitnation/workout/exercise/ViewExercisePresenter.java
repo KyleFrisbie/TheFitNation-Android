@@ -21,12 +21,10 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
     private ViewExerciseContract.View mView;
     private OnExerciseUpdatedCallback mOnExerciseUpdatedCallback;
     private ExerciseInstance mOriginalExerciseInstance;
-    private ExerciseType mExerciseType;
 
 
-    public ViewExercisePresenter(ExerciseView exercise, ExerciseType exerciseType, ViewExerciseContract.View view, OnExerciseUpdatedCallback onExerciseUpdatedCallback) {
+    public ViewExercisePresenter(ExerciseView exercise, ViewExerciseContract.View view, OnExerciseUpdatedCallback onExerciseUpdatedCallback) {
         mExercise = exercise;
-        mExerciseType = exerciseType;
         mView = view;
         mOnExerciseUpdatedCallback = onExerciseUpdatedCallback;
         mOriginalExerciseInstance = (ExerciseInstance) exercise.clone();

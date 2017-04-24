@@ -59,7 +59,7 @@ public class ExercisesListFragment extends BaseFragment {
         Log.i(TAG, "onHiddenChanged()");
         if(mHasUpdatedData) {
             mHasUpdatedData = false;
-            mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+            mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressedCallback, mElementsSelectable);
             mRecyclerView.setAdapter(mAdapter);
         }
     }
@@ -143,7 +143,7 @@ public class ExercisesListFragment extends BaseFragment {
         mRecyclerView.setFocusable(false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
-        mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+        mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressedCallback, mElementsSelectable);
         mRecyclerView.setAdapter(mAdapter);
 
         if(mElementsSelectable) {
@@ -161,7 +161,7 @@ public class ExercisesListFragment extends BaseFragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+                    mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressedCallback, mElementsSelectable);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             });

@@ -29,16 +29,18 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
     private List<ExerciseView> mExercises;
     private ExerciseSelectedCallback mSelectedExercisesCallback;
     private OnEditExercisePressedCallback mEditPressedCallback;
+    private boolean mElementsSelectable;
 
     /**
      * Constructor
      * @param exercises - exercises to be shown
      * @param callback - notified when an exercise is selected/unselected
      */
-    public ExerciseAdapter(List<ExerciseView> exercises, ExerciseSelectedCallback callback, OnEditExercisePressedCallback onEditExercisePressedCallback) {
+    public ExerciseAdapter(List<ExerciseView> exercises, ExerciseSelectedCallback callback, OnEditExercisePressedCallback onEditExercisePressedCallback, boolean elementsSelectable) {
         mExercises = exercises;
         mSelectedExercisesCallback = callback;
         mEditPressedCallback = onEditExercisePressedCallback;
+        mElementsSelectable = elementsSelectable;
     }
 
     @Override
@@ -73,7 +75,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
             }
         }
 
-        if(!exerciseInstance.isSelectable()) {
+        if(!mElementsSelectable) {
             holder.addExerciseBox.setVisibility(View.GONE);
         } else {
             holder.addExerciseBox.setVisibility(View.VISIBLE);

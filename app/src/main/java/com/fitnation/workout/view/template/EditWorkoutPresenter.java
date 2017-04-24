@@ -40,7 +40,7 @@ public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnEx
                     @Override
                     public void onEditPressed(ExerciseView exercise) {
                         mExerciseBeingEdited = (ExerciseInstance) exercise;
-                        Navigator.navigateToEditExercise(mView.getBaseActivity(), exercise, ExerciseType.TEMPLATE, EditWorkoutPresenter.this, R.id.content_main_container);
+                        Navigator.navigateToEditExercise(mView.getBaseActivity(), exercise, EditWorkoutPresenter.this, R.id.content_main_container);
                     }
                 });
         mView.getBaseActivity().getSupportFragmentManager().beginTransaction().add(R.id.edit_workout_instance_container, mListFragment).commit();
