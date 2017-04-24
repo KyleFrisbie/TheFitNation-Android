@@ -28,7 +28,6 @@ public class UserWeight extends RealmObject implements Cloneable{
         try {
             id = Long.parseLong(UserLogins.getUserDemographicId());
         } catch (Exception ex){
-            Log.d("UserWeight", ex.toString());
         }
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         weightDate = dateFormat.format(new Date());
