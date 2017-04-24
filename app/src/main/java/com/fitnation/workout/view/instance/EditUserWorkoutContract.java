@@ -1,4 +1,4 @@
-package com.fitnation.workout.edit;
+package com.fitnation.workout.view.instance;
 
 import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
@@ -9,7 +9,7 @@ import com.fitnation.model.UserWorkoutTemplate;
  * Created by Ryan on 4/16/2017.
  */
 
-public interface EditWorkoutContract {
+public interface EditUserWorkoutContract {
     interface View extends BaseView<Presenter> {
         void updateData(UserWorkoutInstance userWorkoutInstance);
     }

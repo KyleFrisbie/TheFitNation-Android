@@ -1,4 +1,4 @@
-package com.fitnation.workout.edit;
+package com.fitnation.workout.view.instance;
 
 
 import android.app.Activity;
@@ -29,7 +29,7 @@ import butterknife.OnTextChanged;
 /**
  * Allows a user to save a User Workout Instance
  */
-public class SaveUserWorkoutInstanceFragment extends BaseFragment implements SaveWorkoutContract.View {
+public class SaveUserWorkoutInstanceFragment extends BaseFragment implements SaveUserWorkoutContract.View {
     private static final String USER_WORKOUT_INSTANCE = "USER_WORKOUT_INSTANCE";
     private static final String USER_WORKOUT_TEMPLATE = "USER_WORKOUT_TEMPLATE";
     @BindView(R.id.save_user_workout_instance_button)
@@ -38,7 +38,7 @@ public class SaveUserWorkoutInstanceFragment extends BaseFragment implements Sav
     public EditText mNotesEditText;
     @BindView(R.id.completed_checkbox)
     public CheckBox mCompletedCheckBox;
-    private SaveWorkoutContract.Presenter mPresenter;
+    private SaveUserWorkoutContract.Presenter mPresenter;
     private UserWorkoutInstance mUserWorkoutInstance;
     private UserWorkoutTemplate mUserWorkoutTemplate;
 
@@ -106,7 +106,7 @@ public class SaveUserWorkoutInstanceFragment extends BaseFragment implements Sav
     }
 
     @Override
-    public void setPresenter(SaveWorkoutContract.Presenter presenter) {
+    public void setPresenter(SaveUserWorkoutContract.Presenter presenter) {
         mPresenter = presenter;
     }
 

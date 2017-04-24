@@ -1,4 +1,4 @@
-package com.fitnation.workout.edit;
+package com.fitnation.workout.view.instance;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,14 +11,14 @@ import com.fitnation.workout.common.ExerciseAlertDialogFactory;
 /**
  * Created by Ryan on 4/16/2017.
  */
-public class SaveWorkoutPresenter implements SaveWorkoutContract.Presenter{
-    private static final String TAG = SaveWorkoutPresenter.class.getSimpleName();
+public class SaveUserWorkoutPresenter implements SaveUserWorkoutContract.Presenter{
+    private static final String TAG = SaveUserWorkoutPresenter.class.getSimpleName();
     private UserWorkoutDataManager mDataManager;
     private UserWorkoutInstance mUserWorkoutInstance;
     private UserWorkoutTemplate mUserWorkoutTemplate;
-    private SaveWorkoutContract.View mView;
+    private SaveUserWorkoutContract.View mView;
 
-    public SaveWorkoutPresenter(SaveWorkoutContract.View view, Context context) {
+    public SaveUserWorkoutPresenter(SaveUserWorkoutContract.View view, Context context) {
         mView = view;
         mDataManager = new UserWorkoutDataManager(context);
     }

@@ -1,4 +1,4 @@
-package com.fitnation.workout.edit;
+package com.fitnation.workout.view.instance;
 
 import android.support.annotation.Nullable;
 
@@ -7,7 +7,6 @@ import com.fitnation.model.ExerciseView;
 import com.fitnation.model.UserExerciseInstance;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.UserWorkoutTemplate;
-import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.navigation.Navigator;
@@ -22,14 +21,14 @@ import io.realm.RealmList;
  * Created by Ryan on 4/16/2017.
  */
 
-public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnExerciseUpdatedCallback {
+public class EditUserWorkoutPresenter implements EditUserWorkoutContract.Presenter, OnExerciseUpdatedCallback {
     private UserWorkoutInstance mUserWorkoutInstance;
     private UserWorkoutTemplate mUserWorkoutTemplate;
-    private EditWorkoutContract.View mView;
+    private EditUserWorkoutContract.View mView;
     private ExercisesListFragment mListFragment;
     private UserExerciseInstance mUserExerciseBeingEdited;
 
-    public EditWorkoutPresenter (EditWorkoutContract.View view) {
+    public EditUserWorkoutPresenter(EditUserWorkoutContract.View view) {
         mView = view;
     }
 
@@ -41,10 +40,10 @@ public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnEx
             @Override
             public void onEditPressed(ExerciseView exercise) {
                 mUserExerciseBeingEdited = (UserExerciseInstance) exercise;
-                Navigator.navigateToEditExercise(mView.getBaseActivity(), exercise, ExerciseType.USER, EditWorkoutPresenter.this, R.id.content_main_container);
+                Navigator.navigateToEditExercise(mView.getBaseActivity(), exercise, ExerciseType.USER, EditUserWorkoutPresenter.this, R.id.content_main_container);
             }
         });
-        mView.getBaseActivity().getSupportFragmentManager().beginTransaction().add(R.id.edit_workout_container, mListFragment).commit();
+        mView.getBaseActivity().getSupportFragmentManager().beginTransaction().add(R.id.edit_user_workout_container, mListFragment).commit();
     }
 
     @Override

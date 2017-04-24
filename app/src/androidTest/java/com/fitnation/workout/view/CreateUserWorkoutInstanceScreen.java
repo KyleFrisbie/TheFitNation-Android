@@ -1,4 +1,4 @@
-package com.fitnation.workout.edit;
+package com.fitnation.workout.view;
 
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -53,7 +53,7 @@ public class CreateUserWorkoutInstanceScreen extends InstrumentationTest {
 
     @Test
     public void testUserWorkoutInstanceScreenLoadedOkay() {
-        onView(withId(R.id.edit_workout_action_button)).check(matches(isDisplayed()));
+        onView(withId(R.id.edit_user_workout_action_button)).check(matches(isDisplayed()));
     }
 
     //TODO test edit works

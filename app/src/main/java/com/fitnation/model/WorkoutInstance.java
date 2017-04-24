@@ -3,7 +3,9 @@ package com.fitnation.model;
 import com.google.gson.annotations.Expose;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import io.realm.RealmList;
@@ -85,6 +87,15 @@ public class WorkoutInstance extends RealmObject {
 
     public RealmList<ExerciseInstance> getExerciseInstances() {
         return exerciseInstances;
+    }
+
+    public List<ExerciseView> getExerciseViews() {
+        List<ExerciseView> exerciseViews = new ArrayList<>();
+        for (ExerciseInstance exerciseInstance : exerciseInstances) {
+            exerciseViews.add(exerciseInstance);
+        }
+
+        return exerciseViews;
     }
 
     @Override

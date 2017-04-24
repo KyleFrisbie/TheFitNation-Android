@@ -1,4 +1,4 @@
-package com.fitnation.workout.edit;
+package com.fitnation.workout.view.instance;
 
 
 import android.os.Bundle;
@@ -22,22 +22,22 @@ import butterknife.OnClick;
 
 /**
  */
-public class EditWorkoutFragment extends BaseFragment implements EditWorkoutContract.View {
+public class EditUserWorkoutFragment extends BaseFragment implements EditUserWorkoutContract.View {
     private static final String USER_WORKOUT_INSTANCE = "USER_WORKOUT_INSTANCE";
     private static final String USER_WORKOUT_TEMPLATE = "USER_WORKOUT_TEMPLATE";
     private UserWorkoutInstance mUserWorkoutInstance;
     private UserWorkoutTemplate mUserWorkoutTemplate;
-    private EditWorkoutContract.Presenter mPresenter;
+    private EditUserWorkoutContract.Presenter mPresenter;
 
-    public EditWorkoutFragment() {
+    public EditUserWorkoutFragment() {
         // Required empty public constructor
     }
 
-    public static EditWorkoutFragment newInstance(UserWorkoutInstance userWorkoutInstance, UserWorkoutTemplate userWorkoutTemplate) {
+    public static EditUserWorkoutFragment newInstance(UserWorkoutInstance userWorkoutInstance, UserWorkoutTemplate userWorkoutTemplate) {
         Bundle args = new Bundle();
         args.putParcelable(USER_WORKOUT_INSTANCE, Parcels.wrap(userWorkoutInstance));
         args.putParcelable(USER_WORKOUT_TEMPLATE, Parcels.wrap(userWorkoutTemplate));
-        EditWorkoutFragment editWorkoutFragment = new EditWorkoutFragment();
+        EditUserWorkoutFragment editWorkoutFragment = new EditUserWorkoutFragment();
         editWorkoutFragment.setArguments(args);
 
         return editWorkoutFragment;
@@ -56,7 +56,7 @@ public class EditWorkoutFragment extends BaseFragment implements EditWorkoutCont
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.workout_fragment_edit_workout, container, false);
+        View v = inflater.inflate(R.layout.workout_fragment_edit_user_workout_instance, container, false);
         ButterKnife.bind(this, v);
         Navigationable navigationable =  (Navigationable) getBaseActivity();
         navigationable.updateToolbar(true, getString(R.string.edit_workout_title) + " " + mUserWorkoutInstance.getWorkoutInstanceName() + " " + mUserWorkoutInstance.getCreatedOn());
@@ -67,7 +67,7 @@ public class EditWorkoutFragment extends BaseFragment implements EditWorkoutCont
     }
 
     @Override
-    public void setPresenter(EditWorkoutContract.Presenter presenter) {
+    public void setPresenter(EditUserWorkoutContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
@@ -82,7 +82,7 @@ public class EditWorkoutFragment extends BaseFragment implements EditWorkoutCont
 
     }
 
-    @OnClick(R.id.edit_workout_action_button)
+    @OnClick(R.id.edit_user_workout_action_button)
     public void onActionRequested() {
         mPresenter.onSavePressed();
     }

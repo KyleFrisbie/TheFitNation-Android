@@ -215,4 +215,7 @@
     <string name="volley_message_508">508: Loop Detected</string>
     <string name="volley_message_510">510: Not Extended</string>
     <string name="volley_message_511">511: Network Authentication Required</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

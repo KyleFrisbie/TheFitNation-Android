@@ -1,4 +1,4 @@
-package com.fitnation.workout.edit;
+package com.fitnation.workout.view.instance;
 
 import android.content.Context;
 
@@ -11,8 +11,8 @@ import com.fitnation.model.UserWorkoutTemplate;
 /**
  * Created by Ryan on 4/16/2017.
  */
-public interface SaveWorkoutContract {
-    interface View extends BaseView<SaveWorkoutContract.Presenter> {
+public interface SaveUserWorkoutContract {
+    interface View extends BaseView<SaveUserWorkoutContract.Presenter> {
         Context getContext();
         void showProgress();
         void stopProgress();
