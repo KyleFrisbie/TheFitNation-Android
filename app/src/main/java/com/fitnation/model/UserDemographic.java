@@ -34,7 +34,6 @@ public class UserDemographic extends RealmObject implements Cloneable {
     private String unitOfMeasure;
     private Boolean isActive;
     private RealmList<Gym> gyms;
-    private RealmList<UserWeight> userWeights;
     private Long user_weight_id;
     private WorkoutLog workoutLog;
     private RealmList<WorkoutTemplate> workoutTemplates;
@@ -69,16 +68,11 @@ public class UserDemographic extends RealmObject implements Cloneable {
     }
 
     public void setId(Long id) {
-        UserLogins.getInstance().setUserDemographicId(id.toString());
         this.id = id;
     }
 
     public Long getId() {
-        if (id==null||id.equals("")) return null;
-
-        UserLogins.getInstance().setUserDemographicId(String.valueOf(id));
-
-        return Long.parseLong(UserLogins.getInstance().getUserDemographicId());
+        return id;
     }
 
 
@@ -145,24 +139,6 @@ public class UserDemographic extends RealmObject implements Cloneable {
     public Float getHeight(){
         return height;
     }
-
-    public void setUserWeights(String weights){
-        UserWeight uWeight = new UserWeight();
-
-        if (userWeights == null) {
-            userWeights = new RealmList<UserWeight>();
-        }
-
-        try {
-            Float weight = Float.parseFloat(weights);
-            uWeight.setWeight(weight);
-            userWeights.add(uWeight);
-        } catch (Exception e){
-            Log.d(TAG, e.toString());
-        }
-
-    }
-
 
     public void setSkillLevelLevel(String skillLevel) { skillLevelLevel = skillLevel; }
 

@@ -1,5 +1,7 @@
 package com.fitnation.networking.tasks;
 
+import android.nfc.Tag;
+import android.support.design.widget.TabLayout;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -28,7 +30,7 @@ import io.realm.Realm;
 
 public class UserDemographicTask extends NetworkTask{
 
-
+    private final String TAG = getClass().getSimpleName().toString();
 
     public UserDemographicTask(String authToken, RequestQueue queue) {
         super(authToken, queue);
@@ -48,6 +50,7 @@ public class UserDemographicTask extends NetworkTask{
                     public void onResponse(JSONObject response) {
                         Log.i("GET", response.toString());
                         UserDemographic userdemo = JsonParser.convertJsonStringToPojo(response.toString(), UserDemographic.class);
+                        Log.i(TAG, "User Login, User Id, Updating Userdemo Id " + userdemo.getUserLogin() + " " + userdemo.getUserId().toString() + " " + userdemo.getId().toString());
                         UserLogins.setUserLogin(userdemo.getUserLogin());
                         UserLogins.setUserDemographicId(String.valueOf(userdemo.getId()));
                         UserLogins.setUserId(userdemo.getUserId().toString());
@@ -56,8 +59,7 @@ public class UserDemographicTask extends NetworkTask{
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        callback.onFailure(error.toString());
-
+                        callback.onFailure(error.toString() + " " + error.networkResponse.statusCode);
                     }
                 }) {
                     @Override
@@ -74,7 +76,7 @@ public class UserDemographicTask extends NetworkTask{
         mRequestQueue.add(jsonRequestUserDemo);
     }
 
-    public void putUserDemographicData(UserDemographic userdemo, UserDemographicsCallback callback){
+    public void putUserDemographicData(UserDemographic userdemo, final UserDemographicsCallback callback){
         //save data to web
         String resourceRoute = "user-demographics";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment()
@@ -85,9 +87,9 @@ public class UserDemographicTask extends NetworkTask{
         JSONObject udjObj;
         try {
             udjObj = new JSONObject(jString);
-            Log.i("JSON", "User Demographic Successfully PUT to Web");
+            Log.i(TAG, udjObj.toString());
         } catch (org.json.JSONException e) {
-            Log.d("JSON", "Failed to convert User Demographic to JSON String");
+            Log.d(TAG, "Failed to convert User Demographic to JSON String");
             udjObj = new JSONObject();
         }
 
@@ -101,6 +103,7 @@ public class UserDemographicTask extends NetworkTask{
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("PUT", error.toString());
+                callback.onFailure(error.toString() + " " + error.networkResponse.statusCode);
             }
         }) {
             @Override
@@ -117,5 +120,6 @@ public class UserDemographicTask extends NetworkTask{
         Log.d("JSON REQUEST", jsonRequest.toString());
         mRequestQueue.add(jsonRequest);
     }
+
 
 }

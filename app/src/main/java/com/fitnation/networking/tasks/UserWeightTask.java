@@ -24,6 +24,11 @@ import com.google.gson.JsonArray;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +40,6 @@ import java.util.Map;
 public class UserWeightTask extends NetworkTask{
 
     private List<UserWeight> weightList;
-    private Environment env;
 
     private String TAG = UserWeightTask.class.getSimpleName();
 
@@ -89,19 +93,21 @@ public class UserWeightTask extends NetworkTask{
                 getApiUrl()+"user-weights";
 
         String jString = JsonParser.convertPojoToJsonString(weight);
-        JSONArray udjObj;
+
+        JSONObject udjObj;
         try {
-            udjObj = new JSONArray(jString);
-            Log.i(TAG, "User Weight Successfully POST to Web");
+            udjObj = new JSONObject(jString);
+            Log.i(TAG, udjObj.toString());
         } catch (org.json.JSONException e) {
-            Log.d(TAG, "Failed to convert User Demographic to JSON String");
-            udjObj = new JSONArray();
+            Log.d(TAG, e.toString() + " Failed to convert User Weight to JSON String");
+            udjObj = new JSONObject();
+            return;
         }
 
-        JsonArrayRequest jsonWeightRequest =
-                new JsonArrayRequest(Request.Method.PUT, url, udjObj, new Response.Listener<JSONArray> () {
+        JsonObjectRequest jsonWeightRequest =
+                new JsonObjectRequest(Request.Method.PUT, url, udjObj, new Response.Listener<JSONObject> () {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         Log.i("PUT", response.toString());
                     }
                 }, new Response.ErrorListener() {

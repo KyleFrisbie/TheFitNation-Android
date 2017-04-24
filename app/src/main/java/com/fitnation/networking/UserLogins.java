@@ -34,7 +34,9 @@ public class UserLogins {
     }
 
     public synchronized static void setUserLogin(String userLogin) {
-        if(!(userLogin==null||userLogin.equals(""))) UserLogins.userLogin = userLogin;
+        if(!(userLogin==null||userLogin.equals(""))){
+            UserLogins.userLogin = userLogin;
+        }
     }
 
     public synchronized static void setUserDemographicId(String id){

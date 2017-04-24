@@ -352,7 +352,6 @@ public class ProfilePresenter implements ProfileContract.Presenter, TaskCallback
             mUserdemo.setUnitOfMeasure("Imperial");
             Log.i(TAG, "Setting measurement to Imperial");
             mUserdemo.setHeight(getNumValue(mHeightTextBox).toString());
-            mUserdemo.setUserWeights(getNumValue(mWeightTextBox).toString());
             mUserWeight.setWeight(new Float(weight));
         } else { //METRIC MEASUREMENTS
             mUserdemo.setUnitOfMeasure("Metric");

@@ -1,6 +1,9 @@
 package com.fitnation.model;
 
+import android.nfc.Tag;
 import android.util.Log;
+
+import com.fitnation.networking.UserLogins;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -22,6 +25,11 @@ public class UserWeight extends RealmObject implements Cloneable{
     private Float weight;
 
     public UserWeight() {
+        try {
+            id = Long.parseLong(UserLogins.getUserDemographicId());
+        } catch (Exception ex){
+            Log.d("UserWeight", ex.toString());
+        }
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         weightDate = dateFormat.format(new Date());
     }
@@ -66,7 +74,7 @@ public class UserWeight extends RealmObject implements Cloneable{
     public String toString() {
         return "UserWeight{" +
             "id=" + userDemographicId +
-            ", weightDate='" + weightDate.toString() + "'" +
+            ", weightDate='" + weightDate + "'" +
             ", mUserWeight='" + weight + "'" +
             '}';
     }

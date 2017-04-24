@@ -64,8 +64,8 @@ public class ProfileDataManager extends DataManager {
             try{
                 userDemographic.setId(Long.parseLong(UserLogins.getInstance().getUserDemographicId()));
                 userDemographic.setUserId(Long.parseLong(UserLogins.getInstance().getUserId()));
-                userDemographic.setUserLogin(UserLogins.getInstance().getUserId());
-            } catch (NullPointerException ex){
+                userDemographic.setUserLogin(UserLogins.getInstance().getUserLogin());
+            } catch (Exception ex){
                 Log.d(TAG, ex.toString());
             }
         }
@@ -205,13 +205,14 @@ public class ProfileDataManager extends DataManager {
 
                             @Override
                             public void onFailure(String error) {
-                                Log.d(TAG, error.toString() +
+                                Log.d(TAG, error +
                                 " Failed to Save UserDemographic to Web");
                             }
                         });
             }
         }).start();
     }
+
 
     public void saveUserWeightToWeb(final UserWeight userWeight){
 
