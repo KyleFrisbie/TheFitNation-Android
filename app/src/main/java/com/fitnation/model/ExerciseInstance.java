@@ -78,6 +78,10 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
         repUnitName = repUnit.getName();
     }
 
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
+
     public void setSelected(boolean selected) {
         this.selected = selected;
     }

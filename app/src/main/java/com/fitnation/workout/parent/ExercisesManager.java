@@ -149,11 +149,23 @@ public class ExercisesManager extends DataManager {
                     public void onSuccess(final WorkoutTemplate updatedTemplate) {
                         updatedTemplate.setAndroidId(workoutTemplate.getAndroidId());
                         mWorkoutTemplate = updatedTemplate;
-                        WorkoutInstance workoutInstance = buildWorkoutInstance(updatedTemplate, name);
+                        final WorkoutInstance workoutInstance = buildWorkoutInstance(updatedTemplate, name);
 
                         postWorkoutInstanceToWeb(workoutInstance, new WorkoutInstancePostCallback() {
                             @Override
                             public void onSuccess(WorkoutInstance updatedWorkoutInstance) {
+                                mWorkoutInstance = updatedWorkoutInstance;
+                                RealmList<ExerciseInstance> updatedExerciseInstances = updatedWorkoutInstance.getExerciseInstances();
+                                RealmList<ExerciseInstance> exerciseInstances = workoutInstance.getExerciseInstances();
+
+                                for (int i =0; i <exerciseInstances.size(); i++) {
+                                    ExerciseInstance updated = updatedExerciseInstances.get(i);
+                                    ExerciseInstance old = exerciseInstances.get(i);
+
+                                    updated.setExercise(old.getExercise());
+
+                                }
+
                                 updatedTemplate.addWorkoutInstance(updatedWorkoutInstance);
                                 saveWorkoutToDatabase(updatedTemplate, saveWorkoutCallback);
                             }
@@ -163,6 +175,7 @@ public class ExercisesManager extends DataManager {
                                 saveWorkoutCallback.onFailure("Unable to save individual Workout Instances. ErrorCode: " + error);
                             }
                         });
+
                     }
 
                     @Override
