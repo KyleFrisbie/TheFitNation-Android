@@ -44,7 +44,7 @@ public class EditAnExerciseScreen extends InstrumentationTest {
         Exercise exercise = JsonParser.convertJsonStringToPojo(exerciseJson, Exercise.class);
         ExerciseInstance exerciseInstance = new ExerciseInstance(exercise);
 
-        Navigator.navigateToEditExercise(mActivityRule.getActivity(), exerciseInstance, ExerciseType.TEMPLATE, new OnExerciseUpdatedCallback() {
+        Navigator.navigateToEditExercise(mActivityRule.getActivity(), exerciseInstance, new OnExerciseUpdatedCallback() {
             @Override
             public void exerciseUpdated(@Nullable ExerciseView updatedExerciseInstance) {
 

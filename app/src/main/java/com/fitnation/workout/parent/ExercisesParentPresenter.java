@@ -7,17 +7,17 @@ import android.util.Log;
 
 import com.fitnation.R;
 import com.fitnation.model.ExerciseView;
-import com.fitnation.model.UserWorkoutInstance;
-import com.fitnation.model.UserWorkoutTemplate;
+import com.fitnation.model.WorkoutInstance;
+import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.networking.tasks.callbacks.ExercisesRequestCallback;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.workout.callbacks.SaveDialogCallback;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
 import com.fitnation.workout.common.ExerciseAlertDialogFactory;
 import com.fitnation.navigation.Navigator;
-import com.fitnation.workout.exercise.ExerciseType;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.enums.ExerciseAction;
+import com.fitnation.datamanagers.WorkoutDataManager;
 
 import java.util.List;
 
@@ -27,12 +27,14 @@ import java.util.List;
 public class ExercisesParentPresenter implements ExercisesParentContract.Presenter, ExercisesRequestCallback, SaveDialogCallback, OnExerciseUpdatedCallback {
     private static final String TAG = ExercisesParentPresenter.class.getSimpleName();
     private ExercisesManager mExerciseManager;
+    private WorkoutDataManager mWorkoutDataManager;
     private ExercisesParentContract.View mView;
     private ExerciseInstance mExerciseInstanceBeingEdited;
 
     public ExercisesParentPresenter(Context context, ExercisesParentContract.View view) {
         mView = view;
         mExerciseManager = new ExercisesManager(context);
+        mWorkoutDataManager = new WorkoutDataManager(context);
     }
 
     @Override
@@ -98,9 +100,13 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void onSaveRequested(String name) {
         Log.i(TAG, "User requested to save workout with name: " + name);
+        List<ExerciseInstance> selectedExercises = mExerciseManager.getSelectedExercises();
+        final WorkoutTemplate workoutTemplate = WorkoutTemplateManager.getSingletonWorkoutTemplate();
+        final WorkoutInstance workoutInstance = new WorkoutInstance(selectedExercises, name);
+
         if(name != null && !name.isEmpty()) {
             mView.showProgress();
-            mExerciseManager.createWorkoutAndSave(name, new SaveWorkoutCallback() {
+            mWorkoutDataManager.saveWorkout(workoutTemplate, workoutInstance, new SaveWorkoutCallback() {
                 @Override
                 public void onSuccess() {
                     mView.stopProgress();
@@ -114,7 +120,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
 //                            Navigator.navigateToEditUserWorkout(mView.getBaseActivity(), userWorkoutInstance, userWorkoutTemplate, R.id.content_main_container);
 
                             //TODO move to LAUNCH button for WorkoutInstance list view
-                            Navigator.navigateToEditWorkout(mView.getBaseActivity(), mExerciseManager.getWorkoutInstance(), R.id.content_main_container);
+                            Navigator.navigateToEditWorkout(mView.getBaseActivity(), mWorkoutDataManager.getWorkoutInstance(), R.id.content_main_container);
 
                         }
                     }));

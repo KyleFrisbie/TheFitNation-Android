@@ -5,6 +5,7 @@ import com.fitnation.base.BaseView;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.model.WorkoutInstance;
+import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.workout.view.instance.EditUserWorkoutContract;
 
 /**

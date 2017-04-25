@@ -65,6 +65,29 @@ public class WorkoutInstance extends RealmObject {
         lastUpdated = dateFormat.format(lastUpdatedObj);
     }
 
+    public WorkoutInstance (List<ExerciseInstance> exerciseInstances, String name) {
+        this.exerciseInstances = new RealmList<>();
+
+        for (ExerciseInstance exerciseInstance : exerciseInstances) {
+            this.exerciseInstances.add(exerciseInstance);
+        }
+
+        this.name = name;
+        this.restBetweenInstances = 0f;
+        this.orderNumber = 1;
+        this.notes = "";
+        createdOnObj = new Date();
+        lastUpdatedObj = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+        if(createdOnObj != null) {
+            createdOn = dateFormat.format(createdOnObj);
+        }
+
+        if(lastUpdatedObj != null) {
+            lastUpdated = dateFormat.format(lastUpdatedObj);
+        }
+    }
+
     public void setAndroidId(Long androidId) {
         this.androidId = androidId;
     }
@@ -131,5 +154,14 @@ public class WorkoutInstance extends RealmObject {
             ", restBetweenInstances='" + restBetweenInstances + "'" +
             ", orderNumber='" + orderNumber + "'" +
             '}';
+    }
+
+    public Long getAndroidId() {
+        return androidId;
+    }
+
+    public void setWorkoutTemplate(WorkoutTemplate workoutTemplate) {
+        this.workoutTemplateId = workoutTemplate.getId();
+        this.workoutTemplateName = workoutTemplate.getName();
     }
 }
