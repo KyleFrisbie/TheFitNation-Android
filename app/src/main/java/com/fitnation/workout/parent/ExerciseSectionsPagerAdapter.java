@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.fitnation.R;
-import com.fitnation.workout.exerciseList.ExercisesListFragment;
+import com.fitnation.workout.exercise.list.ExercisesListFragment;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 import com.fitnation.model.ExerciseInstance;

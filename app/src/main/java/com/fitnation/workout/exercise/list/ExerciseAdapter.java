@@ -1,4 +1,4 @@
-package com.fitnation.workout.exerciseList;
+package com.fitnation.workout.exercise.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,9 +12,6 @@ import com.fitnation.R;
 import com.fitnation.model.ExerciseSetView;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
-import com.fitnation.model.Exercise;
-import com.fitnation.model.ExerciseInstance;
-import com.fitnation.model.ExerciseInstanceSet;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 
 import java.util.List;

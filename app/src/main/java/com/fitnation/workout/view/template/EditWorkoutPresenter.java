@@ -16,7 +16,7 @@ import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
 import com.fitnation.workout.common.WorkoutAlertDialogFactory;
-import com.fitnation.workout.exerciseList.ExercisesListFragment;
+import com.fitnation.workout.exercise.list.ExercisesListFragment;
 import com.fitnation.workout.parent.WorkoutTemplateManager;
 
 import java.util.Collections;

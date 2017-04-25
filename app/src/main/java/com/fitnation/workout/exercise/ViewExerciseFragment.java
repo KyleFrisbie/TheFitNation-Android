@@ -14,10 +14,8 @@ import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.ExerciseView;
-import com.fitnation.model.UserExerciseInstance;
 import com.fitnation.workout.callbacks.OnSetSelectedCallback;
 import com.fitnation.navigation.NavigationActivity;
-import com.fitnation.workout.exerciseList.ExerciseAdapter;
 
 import org.parceler.Parcels;
 

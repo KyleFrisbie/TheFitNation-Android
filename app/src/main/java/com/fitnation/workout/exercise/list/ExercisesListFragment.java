@@ -1,4 +1,4 @@
-package com.fitnation.workout.exerciseList;
+package com.fitnation.workout.exercise.list;
 
 
 import android.os.Bundle;
@@ -13,16 +13,13 @@ import android.widget.TextView;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseFragment;
-import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseSetView;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
-import com.fitnation.model.ExerciseInstance;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 
 import org.parceler.Parcels;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

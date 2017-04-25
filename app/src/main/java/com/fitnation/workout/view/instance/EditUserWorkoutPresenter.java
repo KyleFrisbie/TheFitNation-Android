@@ -10,8 +10,7 @@ import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.navigation.Navigator;
-import com.fitnation.workout.exercise.ExerciseType;
-import com.fitnation.workout.exerciseList.ExercisesListFragment;
+import com.fitnation.workout.exercise.list.ExercisesListFragment;
 
 import java.util.Collections;
 
