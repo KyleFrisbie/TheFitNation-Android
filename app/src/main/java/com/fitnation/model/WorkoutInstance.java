@@ -59,6 +59,18 @@ public class WorkoutInstance extends RealmObject {
         lastUpdated = dateFormat.format(lastUpdatedObj);
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCreatedOn(String createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public void setLastUpdated(String lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
     public Long getAndroidId() {
         return androidId;
     }

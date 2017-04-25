@@ -73,10 +73,5 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
 
     @Override
     public void workoutUpdated(@Nullable WorkoutInstance updatedWorkoutInstance) {
-        if(updatedWorkoutInstance != null) {
-            mWorkoutInstance = (WorkoutInstance) updatedWorkoutInstance.clone();
-            mWorkoutManager.updateWorkoutList(mWorkoutInstance, updatedWorkoutInstance, mView);
-            mView.displayUpdatedWorkouts(mWorkoutManager.getExercises());
-        }
     }
 }

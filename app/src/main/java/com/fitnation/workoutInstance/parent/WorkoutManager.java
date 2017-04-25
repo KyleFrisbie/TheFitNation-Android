@@ -7,28 +7,25 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.fitnation.base.DataManager;
 import com.fitnation.base.DataResult;
-import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.model.WorkoutTemplate;
-import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.utils.PrimaryKeyFactory;
-import com.fitnation.workout.callbacks.ExerciseInstanceRequestCallback;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
 import com.fitnation.workout.callbacks.WorkoutInstancePostCallback;
 import com.fitnation.workout.callbacks.WorkoutTemplatePostCallback;
-import com.fitnation.workout.parent.tasks.GetExerciseInstancesFromExercisesTask;
 import com.fitnation.workout.parent.tasks.PostWorkoutInstanceTask;
 import com.fitnation.workout.parent.tasks.PostWorkoutTemplateTask;
+import com.fitnation.workoutInstance.callbacks.WorkoutInstanceRequestCallback;
 import com.fitnation.workoutInstance.callbacks.WorkoutsRequestCallback;
+import com.fitnation.workoutInstance.parent.tasks.GetWorkoutInstancesFromWorkoutsTask;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 
 /**
@@ -62,22 +59,11 @@ public class WorkoutManager extends DataManager {
             @Override
             public void run() {
                 if(mWorkoutInstances == null) {
-                    GetWorkoutInstancesFromExercisesTask getWorkoutInstancesTask = new GetWorkoutInstancesFromWorkoutTask(mAuthToken, mRequestQueue);
+                    GetWorkoutInstancesFromWorkoutsTask getWorkoutInstancesTask = new GetWorkoutInstancesFromWorkoutsTask(mAuthToken, mRequestQueue);
                     getWorkoutInstancesTask.getWorkoutInstancesFromWorkouts(new WorkoutInstanceRequestCallback() {
                         @Override
                         public void onSuccess(List<WorkoutInstance> workoutInstances) {
-                            mWorkoutInstances = workoutInstances;
-                            mWorkoutInstances = new ArrayList<ExerciseInstance>(workoutInstances.size());
-
-                            WorkoutInstance copy;
-
-                            copy = (WorkoutInstance) instance.clone;
-
-                            mWorkoutInstances.add(copy);
-
-                            Collections.sort(mWorkoutInstances);
-
-                            callback.onWorkoutsRetrieved(mWorkoutInstances);
+                            callback.onWorkoutsRetrieved(workoutInstances);
                         }
 
                         @Override
@@ -90,90 +76,6 @@ public class WorkoutManager extends DataManager {
                 }
             }
         }).start();
-    }
-
-    public void workoutInstanceSelected(WorkoutInstance workoutInstance, boolean isSelected) {
-        if(isSelected) {
-            Log.i(TAG, "Exercise was selected: " + workoutInstance.getWorkout().getName());
-            mSelectedWorkouts.add(workoutInstance);
-        } else {
-            Log.i(TAG, "Attempting to remove Exercise");
-            if(mSelectedWorkouts.remove(workoutInstance)){
-                Log.i(TAG, "Exercise was removed: " + workoutInstance.getWorkout().getName());
-            }
-        }
-    }
-
-    public boolean atLeastOneExerciseSelected() {
-        return mSelectedWorkouts.size() >= 1;
-    }
-
-
-    private WorkoutInstance buildWorkoutInstance(WorkoutTemplate updatedTemplate, String name) {
-        WorkoutInstance workoutInstance = new WorkoutInstance(name, 0f, 1, updatedTemplate, "");
-        RealmList<ExerciseInstance> selectedExercises = new RealmList<>();
-
-        for (WorkoutInstance workoutInstance1 : mSelectedWorkouts) {
-            selectedExercises.add(workoutInstance1);
-        }
-
-        workoutInstance.setExercises(selectedExercises);
-        workoutInstance.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutInstance.class));
-        return workoutInstance;
-    }
-
-    private void addSkillLevelToWorkout(WorkoutTemplate workoutTemplate) {
-        int beginnerCount = 0;
-        int intermediateCount = 0;
-        int advancedCount= 0;
-        long beginnerSkillLevelId = 0;
-        long intermediateSkillLevelId = 0;
-        long advancedSkillLevelId = 0;
-
-        for (ExerciseInstance exerciseInstance : mSelectedWorkouts) {
-            Exercise exercise = exerciseInstance.getExercise();
-            String skillLevel = exercise.getSkillLevelLevel();
-
-            switch(skillLevel) {
-                case SkillLevel.BEGINNER:
-                    beginnerCount++;
-                    if(beginnerSkillLevelId == 0) {
-                        beginnerSkillLevelId = exercise.getSkillLevelId();
-                    }
-                    break;
-                case SkillLevel.INTERMEDIATE:
-                    intermediateCount++;
-                    if(intermediateSkillLevelId == 0) {
-                        intermediateSkillLevelId = exercise.getSkillLevelId();
-                    }
-                    break;
-                case SkillLevel.ADVANCED:
-                    advancedCount++;
-                    if(advancedSkillLevelId == 0) {
-                        advancedSkillLevelId = exercise.getSkillLevelId();
-                    }
-                    break;
-            }
-        }
-
-        if (beginnerCount > intermediateCount && beginnerCount > advancedCount) {
-            workoutTemplate.setSkillLevelLevel(SkillLevel.BEGINNER);
-            workoutTemplate.setSkillLevelId(beginnerSkillLevelId);
-        } else if ( intermediateCount > beginnerCount && intermediateCount > advancedCount ) {
-            workoutTemplate.setSkillLevelLevel(SkillLevel.INTERMEDIATE);
-            workoutTemplate.setSkillLevelId(intermediateSkillLevelId);
-        } else if ( advancedCount > beginnerCount && advancedCount > intermediateCount ) {
-            workoutTemplate.setSkillLevelLevel(SkillLevel.ADVANCED);
-            workoutTemplate.setSkillLevelId(advancedSkillLevelId);
-        } else {
-            if(intermediateSkillLevelId != 0) {
-                workoutTemplate.setSkillLevelLevel(SkillLevel.INTERMEDIATE);
-                workoutTemplate.setSkillLevelId(intermediateSkillLevelId);
-            } else {
-                workoutTemplate.setSkillLevelLevel(SkillLevel.ADVANCED);
-                workoutTemplate.setSkillLevelId(advancedSkillLevelId);
-            }
-        }
     }
 
     private void saveWorkoutToDatabase(WorkoutTemplate workoutTemplate, final SaveWorkoutCallback callback) {
@@ -251,42 +153,5 @@ public class WorkoutManager extends DataManager {
                 postWorkoutInstanceTask.postWorkoutInstance(workoutInstance, callback);
             }
         }).start();
-    }
-
-    public void updateExerciseList(ExerciseInstance original, ExerciseInstance updated, int tab) {
-        mWorkoutInstances.remove(original);
-        mWorkoutInstances.add(updated);
-        Collections.sort(mWorkoutInstances);
-
-        switch(tab) {
-            case 0:
-                mExerciseInstances.remove(original);
-                mExerciseInstances.add(updated);
-                Collections.sort(mExerciseInstances);
-                break;
-            case 1:
-                mExerciseInstancesTab2.remove(original);
-                mExerciseInstancesTab2.add(updated);
-                Collections.sort(mExerciseInstancesTab2);
-                break;
-            case 2:
-                mExerciseInstancesTab3.remove(original);
-                mExerciseInstancesTab3.add(updated);
-                Collections.sort(mExerciseInstancesTab3);
-                break;
-        }
-
-    }
-
-    public static List<ExerciseInstance> filterExerciseBySkillLevel(List<ExerciseInstance> exerciseInstances, String filter) {
-        List<ExerciseInstance> filteredList = new ArrayList<>();
-
-        for (ExerciseInstance exerciseInstance: exerciseInstances) {
-            if(exerciseInstance.getExercise().getSkillLevelLevel().equalsIgnoreCase(filter)) {
-                filteredList.add(exerciseInstance);
-            }
-        }
-
-        return filteredList;
     }
 }
