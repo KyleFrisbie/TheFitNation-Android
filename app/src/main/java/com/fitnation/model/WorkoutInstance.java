@@ -59,6 +59,58 @@ public class WorkoutInstance extends RealmObject {
         lastUpdated = dateFormat.format(lastUpdatedObj);
     }
 
+    public Long getAndroidId() {
+        return androidId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public String getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public Date getCreatedOnObj() {
+        return createdOnObj;
+    }
+
+    public Date getLastUpdatedObj() {
+        return lastUpdatedObj;
+    }
+
+    public Float getRestBetweenInstances() {
+        return restBetweenInstances;
+    }
+
+    public Integer getOrderNumber() {
+        return orderNumber;
+    }
+
+    public Long getWorkoutTemplateId() {
+        return workoutTemplateId;
+    }
+
+    public String getWorkoutTemplateName() {
+        return workoutTemplateName;
+    }
+
+    public RealmList<ExerciseInstance> getExerciseInstances() {
+        return exerciseInstances;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
     public void setAndroidId(Long androidId) {
         this.androidId = androidId;
     }
