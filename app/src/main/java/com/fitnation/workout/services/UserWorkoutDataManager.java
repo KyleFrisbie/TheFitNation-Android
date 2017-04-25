@@ -1,4 +1,4 @@
-package com.fitnation.workout.view.instance;
+package com.fitnation.workout.services;
 
 import android.content.Context;
 import android.util.Log;

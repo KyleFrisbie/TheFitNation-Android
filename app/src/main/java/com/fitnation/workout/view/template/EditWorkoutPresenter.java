@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.fitnation.R;
-import com.fitnation.datamanagers.WorkoutDataManager;
+import com.fitnation.workout.services.WorkoutDataManager;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.model.WorkoutInstance;

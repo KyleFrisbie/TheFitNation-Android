@@ -17,7 +17,7 @@ import com.fitnation.workout.common.WorkoutAlertDialogFactory;
 import com.fitnation.navigation.Navigator;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.enums.ExerciseAction;
-import com.fitnation.datamanagers.WorkoutDataManager;
+import com.fitnation.workout.services.WorkoutDataManager;
 
 import java.util.List;
 

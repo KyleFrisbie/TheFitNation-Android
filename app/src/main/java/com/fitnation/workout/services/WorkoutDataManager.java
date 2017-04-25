@@ -1,7 +1,6 @@
-package com.fitnation.datamanagers;
+package com.fitnation.workout.services;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
@@ -20,7 +19,6 @@ import com.fitnation.networking.tasks.callbacks.WorkoutInstancePostCallback;
 import com.fitnation.networking.tasks.callbacks.WorkoutTemplatePostCallback;
 import com.fitnation.utils.PrimaryKeyFactory;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
-import com.fitnation.workout.parent.WorkoutTemplateManager;
 
 import java.util.List;
 

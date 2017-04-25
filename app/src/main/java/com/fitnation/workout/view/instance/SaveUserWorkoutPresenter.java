@@ -3,6 +3,7 @@ package com.fitnation.workout.view.instance;
 import android.content.Context;
 import android.util.Log;
 
+import com.fitnation.workout.services.UserWorkoutDataManager;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
