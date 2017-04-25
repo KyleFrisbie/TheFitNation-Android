@@ -13,7 +13,7 @@ import com.fitnation.networking.tasks.callbacks.ExercisesRequestCallback;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.workout.callbacks.SaveDialogCallback;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
-import com.fitnation.workout.common.ExerciseAlertDialogFactory;
+import com.fitnation.workout.common.WorkoutAlertDialogFactory;
 import com.fitnation.navigation.Navigator;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.enums.ExerciseAction;
@@ -110,7 +110,8 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
                 @Override
                 public void onSuccess() {
                     mView.stopProgress();
-                    mView.showSuccess(ExerciseAlertDialogFactory.getBuildWorkoutSuccess(mView.getBaseActivity(), new DialogInterface.OnClickListener() {
+                    mView.showSuccess(WorkoutAlertDialogFactory.getBuildWorkoutSuccess(mView.getBaseActivity(),
+                            mView.getBaseActivity().getString(R.string.created), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
@@ -129,11 +130,11 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
                 @Override
                 public void onFailure(String error) {
                     mView.stopProgress();
-                    mView.showFailure(ExerciseAlertDialogFactory.getBuildWorkoutError(error, mView.getBaseActivity()));
+                    mView.showFailure(WorkoutAlertDialogFactory.getBuildWorkoutError(error, mView.getBaseActivity()));
                 }
             });
         } else {
-            mView.showFailure(ExerciseAlertDialogFactory.getBuildWorkoutError("A Workout name must be provided", mView.getBaseActivity()));
+            mView.showFailure(WorkoutAlertDialogFactory.getBuildWorkoutError("A Workout name must be provided", mView.getBaseActivity()));
         }
     }
 

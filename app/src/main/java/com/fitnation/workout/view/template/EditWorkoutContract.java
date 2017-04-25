@@ -1,12 +1,12 @@
 package com.fitnation.workout.view.template;
 
+import android.support.v7.app.AlertDialog;
+
 import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
-import com.fitnation.model.UserWorkoutInstance;
-import com.fitnation.model.UserWorkoutTemplate;
+
 import com.fitnation.model.WorkoutInstance;
-import com.fitnation.model.WorkoutTemplate;
-import com.fitnation.workout.view.instance.EditUserWorkoutContract;
+
 
 /**
  * Created by Ryan on 4/23/2017.
@@ -14,7 +14,10 @@ import com.fitnation.workout.view.instance.EditUserWorkoutContract;
 
 public interface EditWorkoutContract {
     interface View extends BaseView<EditWorkoutContract.Presenter> {
-        void updateData(WorkoutInstance workoutInstance);
+        void showSuccess(AlertDialog alertDialog);
+        void showFailure(AlertDialog alertDialog);
+        void showProgress();
+        void hideProgress();
     }
 
     interface Presenter extends BasePresenter {

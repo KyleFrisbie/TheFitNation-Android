@@ -4,6 +4,7 @@ package com.fitnation.workout.view.template;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +82,32 @@ public class EditWorkoutFragment extends BaseFragment implements EditWorkoutCont
     }
 
     @Override
-    public void updateData(WorkoutInstance workoutInstance) {
+    public void showSuccess(final AlertDialog alertDialog) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                alertDialog.show();
+            }
+        });
+    }
 
+    @Override
+    public void showFailure(final AlertDialog alertDialog) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                alertDialog.show();
+            }
+        });
+    }
+
+    @Override
+    public void showProgress() {
+        getBaseActivity().showProgress("Saving...");
+    }
+
+    @Override
+    public void hideProgress() {
+        getBaseActivity().stopProgress();
     }
 }

@@ -1,6 +1,7 @@
 package com.fitnation.workout.view.template;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -14,6 +15,7 @@ import com.fitnation.navigation.Navigator;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
+import com.fitnation.workout.common.WorkoutAlertDialogFactory;
 import com.fitnation.workout.exerciseList.ExercisesListFragment;
 import com.fitnation.workout.parent.WorkoutTemplateManager;
 
@@ -71,20 +73,28 @@ public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnEx
 
     @Override
     public void onSavePressed() {
-        //TODO save WorkoutInstance to DB
-        //TODO save WorkoutInstance to WebServices
+        mView.showProgress();
         mWorkoutDataManager.saveWorkout(mWorkoutTemplate, mWorkoutInstance, new SaveWorkoutCallback() {
             @Override
             public void onSuccess() {
-                Log.i(TAG, "Workout updated succesfully!");
+                Log.i(TAG, "Workout updated successfully!");
+                mView.hideProgress();
+                mView.showSuccess(WorkoutAlertDialogFactory.getBuildWorkoutSuccess(mView.getBaseActivity(),
+                        mView.getBaseActivity().getString(R.string.updated), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }));
             }
 
             @Override
             public void onFailure(String error) {
                 Log.e(TAG, "Workout update failed");
+                mView.hideProgress();
+                mView.showFailure(WorkoutAlertDialogFactory.getBuildWorkoutError(error, mView.getBaseActivity()));
             }
         });
-
     }
 
     @Override

@@ -59,7 +59,7 @@
     <string name="save_button">Save</string>
     <string name="completed">Complete</string>
     <string name="build_workout_title">Create a Workout</string>
-    <string name="dialog_build_workout_success_message">Your workout was successfully created!</string>
+    <string name="dialog_build_workout_success_message">"Your workout was successfully "</string>
     <string name="dialog_build_workout_failure_message">"Workout save failed. Error: "</string>
     <string name="edit_workout_title">Edit</string>
     <string name="ipsum">Lyft hashtag godard, tote bag skateboard ennui biodiesel wolf cold-pressed chia irony. Master cleanse tbh pop-up viral forage, pitchfork banh mi. Scenester unicorn franzen locavore chia listicle. Pug vinyl chicharrones portland. Sartorial green juice bitters, drinking vinegar fam yuccie hella forage craft beer. Irony authentic salvia celiac, hot chicken twee ethical meh chicharrones. Art party readymade pitchfork, shoreditch enamel pin bespoke tofu pork belly squid beard jean shorts.
@@ -218,4 +218,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="created">created!</string>
+    <string name="updated">updated!</string>
 </resources>

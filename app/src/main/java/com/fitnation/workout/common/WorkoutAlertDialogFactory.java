@@ -9,13 +9,13 @@ import com.fitnation.R;
 /**
  * Created by Ryan on 4/8/2017.
  */
-public class ExerciseAlertDialogFactory {
-    private ExerciseAlertDialogFactory(){};
+public class WorkoutAlertDialogFactory {
+    private WorkoutAlertDialogFactory(){};
 
-    public static AlertDialog getBuildWorkoutSuccess(Context context, DialogInterface.OnClickListener onClickListener) {
+    public static AlertDialog getBuildWorkoutSuccess(Context context, String action, DialogInterface.OnClickListener onClickListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(context.getString(R.string.dialog_success_title));
-        builder.setMessage(context.getString(R.string.dialog_build_workout_success_message));
+        builder.setMessage(context.getString(R.string.dialog_build_workout_success_message) + action);
         builder.setPositiveButton("OK", onClickListener);
         builder.setCancelable(false);
 

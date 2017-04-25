@@ -48,7 +48,7 @@ public class Navigator {
         EditWorkoutFragment editWorkoutFragment = EditWorkoutFragment.newInstance(workoutInstance);
 
         editWorkoutFragment.setPresenter(new EditWorkoutPresenter(editWorkoutFragment, activity));
-        activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment ).commit();
+        activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment).commit();
     }
 
     public static void navigateToEditUserWorkout(BaseActivity activity, UserWorkoutInstance userWorkoutInstance, UserWorkoutTemplate userWorkoutTemplate, int containterId) {
