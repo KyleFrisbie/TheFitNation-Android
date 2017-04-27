@@ -73,27 +73,25 @@ public class ProfileDataManager extends DataManager {
         saveData(userDemographic, new DataResult() {
             @Override
             public void onSuccess() {
-                Log.i("REALM SAVE", "User Demographic Saved Successfully to Realm.");
+                Log.i(TAG, "User Demographic Saved Successfully to Realm.");
             }
 
             @Override
             public void onError() {
-                Log.d("REALM SAVE", "Error saving User Demographic to Realm");
+                Log.d(TAG, "Error saving User Demographic to Realm");
             }
         });
     }
 
     public static UserDemographic getLocalUserDemographic(){
         Realm realm = Realm.getDefaultInstance();
-        RealmResults<UserDemographic> userDemoResults = realm.where(UserDemographic.class)
-                .equalTo("id", getUserdemographicId()).findAll();
-
+        RealmResults<UserDemographic> userDemoResults = realm.where(UserDemographic.class).findAll();
 
         realm.close();
         if (!userDemoResults.isEmpty()){
             return userDemoResults.last();
         }
-        Log.i("PROFILE", "Realm Result empty for UserDemographic");
+        Log.i(TAG, "Realm Result empty for UserDemographic");
         return null;
     }
 
@@ -103,12 +101,12 @@ public class ProfileDataManager extends DataManager {
         saveData(user, new DataResult() {
             @Override
             public void onSuccess() {
-                Log.i("REALM SAVE", "User Saved Successfully to Realm.");
+                Log.i(TAG, "User Saved Successfully to Realm.");
             }
 
             @Override
             public void onError() {
-                Log.d("REALM SAVE", "Error saving User to Realm");
+                Log.d(TAG, "Error saving User to Realm");
             }
         });
     }
@@ -116,12 +114,12 @@ public class ProfileDataManager extends DataManager {
     public static User getLocalUser(){
         Realm realm = Realm.getDefaultInstance();
         RealmResults<User> userResults =
-                realm.where(User.class).equalTo("id", getUserId()).findAll();
+                realm.where(User.class).findAll();
         realm.close();
         if (!userResults.isEmpty()){
             return userResults.last();
         }
-        Log.i("PROFILE", "Realm Result empty for User");
+        Log.i(TAG, "Realm Result empty for User");
         return null;
     }
 
@@ -130,9 +128,7 @@ public class ProfileDataManager extends DataManager {
         //save data to local data store
         saveData(weight, new DataResult() {
             @Override
-            public void onSuccess() {
-                Log.i("REALM SAVE", "Weight Saved Successfully to Realm.");
-            }
+            public void onSuccess() { Log.i(TAG, "Weight Saved Successfully to Realm."); }
 
             @Override
             public void onError() {
@@ -145,13 +141,12 @@ public class ProfileDataManager extends DataManager {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<UserWeight> weightResults =
                 realm.where(UserWeight.class)
-                        .equalTo("userDemographicId", getUserdemographicId())
                         .findAll();
         realm.close();
         if (!weightResults.isEmpty()){
             return weightResults.last();
         }
-        Log.i("PROFILE", "Realm Result empty for UserWeight");
+        Log.i(TAG, "Realm Result empty for UserWeight");
         return null;
     }
 
@@ -180,7 +175,7 @@ public class ProfileDataManager extends DataManager {
 
                     @Override
                     public void onFailure(String error) {
-                        Log.d("PROFILE DATA MANAGER", error.toString() +
+                        Log.d(TAG, error.toString() +
                         " Failed to get Skill Levels from web");
                     }
                 });

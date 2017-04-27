@@ -48,9 +48,9 @@ public class UserDemographicTask extends NetworkTask{
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("GET", response.toString());
+                        Log.i(TAG, response.toString());
                         UserDemographic userdemo = JsonParser.convertJsonStringToPojo(response.toString(), UserDemographic.class);
-                        Log.i(TAG, "User Login, User Id, Updating Userdemo Id " + userdemo.getUserLogin() + " " + userdemo.getUserId().toString() + " " + userdemo.getId().toString());
+                        Log.i(TAG, "Updating User Login, User Id, Userdemographic Id " + userdemo.getUserLogin() + " " + userdemo.getUserId().toString() + " " + userdemo.getId().toString());
                         UserLogins.setUserLogin(userdemo.getUserLogin());
                         UserLogins.setUserDemographicId(String.valueOf(userdemo.getId()));
                         UserLogins.setUserId(userdemo.getUserId().toString());
