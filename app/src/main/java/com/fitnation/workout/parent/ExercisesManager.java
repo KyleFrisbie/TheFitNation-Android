@@ -12,7 +12,7 @@ import com.fitnation.workout.callbacks.ExerciseInstanceRequestCallback;
 import com.fitnation.workout.callbacks.ExercisesRequestCallback;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
 import com.fitnation.workout.callbacks.WorkoutInstancePostCallback;
-import com.fitnation.workout.callbacks.WorkoutTemplatePostCallback;
+import com.fitnation.workout.callbacks.WorkoutTemplateRequestCallback;
 import com.fitnation.workout.parent.tasks.GetExerciseInstancesFromExercisesTask;
 import com.fitnation.workout.parent.tasks.PostWorkoutInstanceTask;
 import com.fitnation.workout.parent.tasks.PostWorkoutTemplateTask;
@@ -25,7 +25,6 @@ import com.fitnation.model.enums.SkillLevel;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import io.realm.Realm;
@@ -142,7 +141,7 @@ public class ExercisesManager extends DataManager {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                postWorkoutTemplateToWeb(workoutTemplate, new WorkoutTemplatePostCallback() {
+                postWorkoutTemplateToWeb(workoutTemplate, new WorkoutTemplateRequestCallback() {
                     @Override
                     public void onSuccess(final WorkoutTemplate updatedTemplate) {
                         WorkoutInstance workoutInstance = buildWorkoutInstance(updatedTemplate, name);
@@ -299,7 +298,7 @@ public class ExercisesManager extends DataManager {
         return workoutTemplate;
     }
 
-    private void postWorkoutTemplateToWeb(final WorkoutTemplate template, final WorkoutTemplatePostCallback callback) {
+    private void postWorkoutTemplateToWeb(final WorkoutTemplate template, final WorkoutTemplateRequestCallback callback) {
         new Thread(new Runnable() {
             @Override
             public void run() {

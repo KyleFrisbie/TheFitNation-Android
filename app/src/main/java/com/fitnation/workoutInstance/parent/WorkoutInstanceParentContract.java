@@ -5,6 +5,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
+import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutInstance;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public interface WorkoutInstanceParentContract {
         void showProgress();
         void stopProgress();
         void displayWorkouts(List<WorkoutInstance> workouts);
+        void displayUserWorkouts(List<UserWorkoutInstance> userWorkouts);
         void displayUpdatedWorkouts(List<WorkoutInstance> workoutList);
         void showSuccess(AlertDialog alertDialog);
         void showFailure(AlertDialog alertDialog);

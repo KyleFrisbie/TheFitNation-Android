@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.fitnation.R;
+import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDeletePressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDetailsPressedCallback;
@@ -16,6 +17,7 @@ import com.fitnation.workoutInstance.callbacks.OnWorkoutLaunchPressedCallback;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Adapter for displaying workout instance's
@@ -23,6 +25,7 @@ import butterknife.BindView;
 
 public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstanceAdapter.ViewHolder> {
     private List<WorkoutInstance> mWorkouts;
+    private List<UserWorkoutInstance> mUserWorkouts;
     private OnWorkoutDeletePressedCallback mOnWorkoutDeletePressedCallback;
     private OnWorkoutLaunchPressedCallback mOnWorkoutLaunchPressedCallback;
     private OnWorkoutDetailsPressedCallback mOnWorkoutDetailsPressedCallback;
@@ -89,6 +92,7 @@ public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstance
 
         public ViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

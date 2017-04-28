@@ -1,6 +1,9 @@
 package com.fitnation.workoutInstance.callbacks;
 
+import com.fitnation.model.UserWorkoutInstance;
+import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.model.WorkoutInstance;
+import com.fitnation.model.WorkoutTemplate;
 
 import java.util.List;
 
@@ -8,14 +11,14 @@ import java.util.List;
  * Created by Ryan on 4/6/2017.
  */
 
-public interface WorkoutInstanceRequestCallback {
+public interface WorkoutTemplateRequestCallback {
     interface getAll {
-        void onGetAllSuccess(List<WorkoutInstance> workoutInstances);
+        void onGetAllSuccess(List<WorkoutTemplate> userWorkoutInstances);
         void onGetAllFailure(String error);
     }
 
     interface update {
-        void onUpdateSuccess(WorkoutInstance workoutInstance);
+        void onUpdateSuccess(WorkoutTemplate workoutInstance);
         void onUpdateFailure(String error);
     }
     interface delete {

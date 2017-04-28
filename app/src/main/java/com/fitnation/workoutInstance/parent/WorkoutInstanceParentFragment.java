@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDeletePressedCallback;
@@ -111,6 +112,11 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     public void displayWorkouts(List<WorkoutInstance> workouts) {
         WorkoutInstanceListFragment workoutInstanceListFragment = new WorkoutInstanceListFragment();
         workoutInstanceListFragment.displayWorkouts(workouts);
+    }
+
+    @Override
+    public void displayUserWorkouts(List<UserWorkoutInstance> userWorkouts) {
+
     }
 
     @Override

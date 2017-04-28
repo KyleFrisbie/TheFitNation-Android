@@ -1,5 +1,6 @@
 package com.fitnation.workoutInstance.callbacks;
 
+import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutInstance;
 
 import java.util.List;
@@ -8,9 +9,9 @@ import java.util.List;
  * Created by Ryan on 4/6/2017.
  */
 
-public interface WorkoutInstanceRequestCallback {
+public interface UserWorkoutInstanceRequestCallback {
     interface getAll {
-        void onGetAllSuccess(List<WorkoutInstance> workoutInstances);
+        void onGetAllSuccess(List<UserWorkoutInstance> userWorkoutInstances);
         void onGetAllFailure(String error);
     }
 

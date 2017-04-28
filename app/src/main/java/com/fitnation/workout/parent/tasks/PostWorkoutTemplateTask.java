@@ -10,7 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.fitnation.workout.callbacks.WorkoutTemplatePostCallback;
+import com.fitnation.workout.callbacks.WorkoutTemplateRequestCallback;
 import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.networking.JsonParser;
 import com.fitnation.utils.EnvironmentManager;
@@ -28,7 +28,7 @@ public class PostWorkoutTemplateTask extends NetworkTask{
     public PostWorkoutTemplateTask(String authToken, RequestQueue requestQueue) {
         super(authToken, requestQueue);
     }
-    public void postWorkoutTemplate(final WorkoutTemplate workoutTemplate, final WorkoutTemplatePostCallback callback) {
+    public void postWorkoutTemplate(final WorkoutTemplate workoutTemplate, final WorkoutTemplateRequestCallback callback) {
         final String resourceRoute = "workout-templates";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getApiUrl() + resourceRoute;
         final StringRequest postWorkoutTemplate = new StringRequest(Request.Method.PUT, url,

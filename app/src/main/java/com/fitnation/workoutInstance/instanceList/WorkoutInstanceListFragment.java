@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.workout.exerciseList.ExercisesListFragment;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDeletePressedCallback;
@@ -32,6 +33,7 @@ public class WorkoutInstanceListFragment extends BaseFragment{
     private static final String TAG = WorkoutInstanceListFragment.class.getSimpleName();
     private static final String WORKOUT_LIST = "WORKOUT_LIST";
     List<WorkoutInstance> mWorkouts;
+    List<UserWorkoutInstance> mUserWorkouts;
     @BindView(R.id.workout_recycler_view) public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -131,8 +133,25 @@ public class WorkoutInstanceListFragment extends BaseFragment{
         return v;
     }
 
-    public void displayWorkouts(final List<WorkoutInstance> exercises) {
-        mWorkouts = exercises;
+//    public void displayUserWorkouts(final List<UserWorkoutInstance> userWorkouts) {
+//        mUserWorkouts = userWorkouts;
+//        if(getView() != null) {
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mAdapter = new WorkoutInstanceAdapter(mUserWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
+//                    mRecyclerView.setAdapter(mAdapter);
+//                }
+//            });
+//
+//        } else {
+//            mHasUpdatedData = true;
+//        }
+//
+//    }
+
+    public void displayWorkouts(final List<WorkoutInstance> workouts) {
+        mWorkouts = workouts;
         if(getView() != null) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
