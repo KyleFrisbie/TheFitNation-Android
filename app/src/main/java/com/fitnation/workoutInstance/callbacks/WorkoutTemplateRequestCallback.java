@@ -8,7 +8,7 @@ import com.fitnation.model.WorkoutTemplate;
 import java.util.List;
 
 /**
- * Created by Ryan on 4/6/2017.
+ * Callback for WorkoutTemplate endpoint transactions
  */
 
 public interface WorkoutTemplateRequestCallback {

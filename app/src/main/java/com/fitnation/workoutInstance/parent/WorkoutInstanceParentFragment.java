@@ -34,6 +34,7 @@ import butterknife.OnClick;
 public class WorkoutInstanceParentFragment extends BaseFragment implements WorkoutInstanceParentContract.View, OnWorkoutDeletePressedCallback, OnWorkoutLaunchPressedCallback, OnWorkoutDetailsPressedCallback {
     private static final String TAG = WorkoutInstanceParentFragment.class.getSimpleName();
     private WorkoutInstanceParentContract.Presenter mPresenter;
+    private WorkoutInstanceListFragment mWorkoutInstanceListFragment;
 
     public WorkoutInstanceParentFragment() {
         //required empty constructor
@@ -57,6 +58,8 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
         View v = inflater.inflate(R.layout.workout_instance_fragment, container, false);
         ButterKnife.bind(this, v);
 
+        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(null, this, this, this);
+
         return v;
     }
 
@@ -67,14 +70,20 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     }
 
     @Override
-    public void setPresenter(WorkoutInstanceParentContract.Presenter presenter) {
-        mPresenter = presenter;
+    public void onStart() {
+        Log.i(TAG, "onStart()");
+        super.onStart();
+        mPresenter.onViewReady();
+        ((NavigationActivity) getActivity()).displayBackArrow(false, "My Workouts");
     }
 
     @Override
-    public BaseActivity getBaseActivity() {
-        return (BaseActivity) getActivity();
+    public void onResume() {
+        Log.i(TAG, "onResume()");
+        super.onResume();
     }
+
+    //------------------------------WorkoutInstanceParentContract.View----------------------------//
 
     @Override
     public void showProgress() {
@@ -98,23 +107,8 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     }
 
     @Override
-    public void onStart() {
-        Log.i(TAG, "onStart()");
-        super.onStart();
-        mPresenter.onViewReady();
-        ((NavigationActivity) getActivity()).displayBackArrow(false, "My Workouts");
-    }
-
-    @Override
-    public void onResume() {
-        Log.i(TAG, "onResume()");
-        super.onResume();
-    }
-
-    @Override
     public void displayWorkouts(List<WorkoutInstance> workouts) {
-        WorkoutInstanceListFragment workoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(workouts, this, this, this);
-        workoutInstanceListFragment.displayWorkouts(workouts);
+        mWorkoutInstanceListFragment.displayWorkouts(workouts);
         Log.i(TAG, "displayWorkouts()");
     }
 
@@ -125,8 +119,7 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
 
     @Override
     public void displayUpdatedWorkouts(List<WorkoutInstance> workoutList) {
-        WorkoutInstanceListFragment workoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(workoutList, this, this, this);
-        workoutInstanceListFragment.displayWorkouts(workoutList);
+        mWorkoutInstanceListFragment.displayWorkouts(workoutList);
     }
 
     @Override
@@ -149,6 +142,8 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
         });
     }
 
+    //----------------------------------OnButtonsPressedCallbacks---------------------------------//
+
     @Override
     public void onDeletePressed(WorkoutInstance workout) {
         mPresenter.onDeletePressed(workout);
@@ -162,5 +157,18 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     @Override
     public void onDetailsPressed(WorkoutInstance workout) {
         mPresenter.onDetailsPressed(workout);
+    }
+
+
+    //-----------------------------------------BaseActivity---------------------------------------//
+
+    @Override
+    public void setPresenter(WorkoutInstanceParentContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public BaseActivity getBaseActivity() {
+        return (BaseActivity) getActivity();
     }
 }

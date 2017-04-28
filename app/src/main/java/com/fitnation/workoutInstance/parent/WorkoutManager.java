@@ -19,14 +19,11 @@ import com.fitnation.workout.callbacks.WorkoutTemplateRequestCallback;
 import com.fitnation.workout.parent.tasks.PostWorkoutInstanceTask;
 import com.fitnation.workout.parent.tasks.PostWorkoutTemplateTask;
 import com.fitnation.workoutInstance.callbacks.UserWorkoutInstanceRequestCallback;
-import com.fitnation.workoutInstance.callbacks.UserWorkoutInstancesRequestCallback;
 import com.fitnation.workoutInstance.callbacks.WorkoutInstanceRequestCallback;
-import com.fitnation.workoutInstance.callbacks.WorkoutInstancesRequestCallback;
-import com.fitnation.workoutInstance.callbacks.WorkoutsRequestCallback;
+import com.fitnation.workoutInstance.callbacks.WorkoutManagerWorkoutsCallback;
 import com.fitnation.workoutInstance.parent.tasks.UserWorkoutInstancesTasks;
 import com.fitnation.workoutInstance.parent.tasks.WorkoutInstancesTasks;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
@@ -61,7 +58,7 @@ public class WorkoutManager extends DataManager {
      * as a deep clone has been done before passing them in the callback.
      * @param callback - Callback to be invoked upon success/failure
      */
-    public void getAllUserWorkoutInstances(final UserWorkoutInstancesRequestCallback callback) {
+    public void getAllUserWorkoutInstances(final WorkoutManagerWorkoutsCallback.userInstance callback) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -75,7 +72,7 @@ public class WorkoutManager extends DataManager {
 
                         @Override
                         public void onGetAllFailure(String error) {
-                            callback.onError();
+                            callback.onUserError();
                         }
                     });
                 } else {
@@ -85,7 +82,7 @@ public class WorkoutManager extends DataManager {
         }).start();
     }
 
-    public void getAllWorkoutInstances(final WorkoutInstancesRequestCallback callback) {
+    public void getAllWorkoutInstances(final WorkoutManagerWorkoutsCallback.instance callback) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -107,6 +104,10 @@ public class WorkoutManager extends DataManager {
                 }
             }
         }).start();
+    }
+
+    public void deleteWorkoutInstance(WorkoutInstance workoutInstance){
+        //TODO build delete logic
     }
 
     private UserWorkoutTemplate getUserWorkoutTemplate() {
@@ -184,44 +185,6 @@ public class WorkoutManager extends DataManager {
                 realm.close();
             }
         }
-
-
         return workoutTemplate;
-    }
-
-    private void saveWorkoutToDatabase(WorkoutTemplate workoutTemplate, final SaveWorkoutCallback callback) {
-        saveData(workoutTemplate, new DataResult() {
-            @Override
-            public void onError() {
-                Log.e(TAG, "WorkoutTemplate was not succesfully saved");
-                callback.onFailure("Unable to save to local data store.");
-            }
-
-            @Override
-            public void onSuccess() {
-                callback.onSuccess();
-                Log.e(TAG, "WorkoutTemplate was succesfully saved");
-            }
-        });
-    }
-
-    private void postWorkoutTemplateToWeb(final WorkoutTemplate template, final WorkoutTemplateRequestCallback callback) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                PostWorkoutTemplateTask postWorkoutTemplateTask = new PostWorkoutTemplateTask(mAuthToken, mRequestQueue);
-                postWorkoutTemplateTask.postWorkoutTemplate(template, callback);
-            }
-        }).start();
-    }
-
-    private void postWorkoutInstanceToWeb(final WorkoutInstance workoutInstance, final WorkoutInstancePostCallback callback) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                PostWorkoutInstanceTask postWorkoutInstanceTask = new PostWorkoutInstanceTask(mAuthToken, mRequestQueue);
-                postWorkoutInstanceTask.postWorkoutInstance(workoutInstance, callback);
-            }
-        }).start();
     }
 }

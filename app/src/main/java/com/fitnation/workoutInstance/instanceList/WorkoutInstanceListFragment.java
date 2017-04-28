@@ -1,5 +1,6 @@
 package com.fitnation.workoutInstance.instanceList;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -106,6 +107,12 @@ public class WorkoutInstanceListFragment extends BaseFragment{
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
     public void onResume() {
         Log.i(TAG, "onResume()");
         super.onResume();
@@ -141,40 +148,6 @@ public class WorkoutInstanceListFragment extends BaseFragment{
         return v;
     }
 
-//    public void displayUserWorkouts(final List<UserWorkoutInstance> userWorkouts) {
-//        mUserWorkouts = userWorkouts;
-//        if(getView() != null) {
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    mAdapter = new WorkoutInstanceAdapter(mUserWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
-//                    mRecyclerView.setAdapter(mAdapter);
-//                }
-//            });
-//
-//        } else {
-//            mHasUpdatedData = true;
-//        }
-//
-//    }
-
-    public void displayWorkouts(final List<WorkoutInstance> workouts) {
-        mWorkouts = workouts;
-        if(getView() != null) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mAdapter = new WorkoutInstanceAdapter(mWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
-                    mRecyclerView.setAdapter(mAdapter);
-                }
-            });
-
-        } else {
-            mHasUpdatedData = true;
-        }
-
-    }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onViewCreated()");
@@ -194,4 +167,36 @@ public class WorkoutInstanceListFragment extends BaseFragment{
         super.onSaveInstanceState(outState);
     }
 
+    public void displayWorkouts(final List<WorkoutInstance> workouts) {
+        mWorkouts = workouts;
+        if(getView() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter = new WorkoutInstanceAdapter(mWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+            });
+
+        } else {
+            mHasUpdatedData = true;
+        }
+
+    }
+
+    //      public void displayUserWorkouts(final List<UserWorkoutInstance> userWorkouts) {
+//        mUserWorkouts = userWorkouts;
+//        if(getView() != null) {
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mAdapter = new WorkoutInstanceAdapter(mUserWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
+//                    mRecyclerView.setAdapter(mAdapter);
+//                }
+//            });
+//
+//        } else {
+//            mHasUpdatedData = true;
+//        }
+//    }
 }

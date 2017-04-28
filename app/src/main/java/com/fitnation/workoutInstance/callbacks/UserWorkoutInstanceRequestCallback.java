@@ -6,7 +6,7 @@ import com.fitnation.model.WorkoutInstance;
 import java.util.List;
 
 /**
- * Created by Ryan on 4/6/2017.
+ * Callback for userWorkoutInstance endpoint transactions
  */
 
 public interface UserWorkoutInstanceRequestCallback {
