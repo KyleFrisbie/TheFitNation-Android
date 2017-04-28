@@ -27,10 +27,10 @@ public class WorkoutInstance extends RealmObject {
     private Date lastUpdatedObj;
     private Float restBetweenInstances;
     private Integer orderNumber;
+    private String notes;
     private Long workoutTemplateId;
     private String workoutTemplateName;
     private RealmList<ExerciseInstance> exerciseInstances;
-    private String notes;
 
     public WorkoutInstance() {
         createdOnObj = new Date();

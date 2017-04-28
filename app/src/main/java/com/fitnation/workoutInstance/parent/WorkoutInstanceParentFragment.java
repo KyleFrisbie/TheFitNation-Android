@@ -18,10 +18,12 @@ import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDeletePressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDetailsPressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutLaunchPressedCallback;
+import com.fitnation.workoutInstance.instanceList.WorkoutInstanceAdapter;
 import com.fitnation.workoutInstance.instanceList.WorkoutInstanceListFragment;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -40,6 +42,7 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     public static WorkoutInstanceParentFragment newInstance(Context context){
         WorkoutInstanceParentFragment fragment = new WorkoutInstanceParentFragment();
         fragment.setPresenter(new WorkoutInstanceParentPresenter(context, fragment));
+
         return fragment;
     }
 
@@ -110,8 +113,9 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
 
     @Override
     public void displayWorkouts(List<WorkoutInstance> workouts) {
-        WorkoutInstanceListFragment workoutInstanceListFragment = new WorkoutInstanceListFragment();
+        WorkoutInstanceListFragment workoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(workouts, this, this, this);
         workoutInstanceListFragment.displayWorkouts(workouts);
+        Log.i(TAG, "displayWorkouts()");
     }
 
     @Override
@@ -121,7 +125,7 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
 
     @Override
     public void displayUpdatedWorkouts(List<WorkoutInstance> workoutList) {
-        WorkoutInstanceListFragment workoutInstanceListFragment = new WorkoutInstanceListFragment();
+        WorkoutInstanceListFragment workoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(workoutList, this, this, this);
         workoutInstanceListFragment.displayWorkouts(workoutList);
     }
 

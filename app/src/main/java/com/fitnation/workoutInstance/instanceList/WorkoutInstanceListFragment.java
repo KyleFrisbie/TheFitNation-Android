@@ -34,7 +34,8 @@ public class WorkoutInstanceListFragment extends BaseFragment{
     private static final String WORKOUT_LIST = "WORKOUT_LIST";
     List<WorkoutInstance> mWorkouts;
     List<UserWorkoutInstance> mUserWorkouts;
-    @BindView(R.id.workout_recycler_view) public RecyclerView mRecyclerView;
+    @BindView(R.id.workout_recycler_view)
+    public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private OnWorkoutDetailsPressedCallback mOnWorkoutDetailsPressedCallback;
@@ -43,12 +44,19 @@ public class WorkoutInstanceListFragment extends BaseFragment{
     private boolean mHasUpdatedData;
 
     public WorkoutInstanceListFragment() {
+        Log.i(TAG, "in constructor");
         //Required empty public constructor
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        Log.i(TAG, "onHiddenChanged()");
+        if(mHasUpdatedData) {
+            mHasUpdatedData = false;
+            mAdapter = new WorkoutInstanceAdapter(mWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
 
     public static WorkoutInstanceListFragment newInstance(List<WorkoutInstance> workoutInstances,

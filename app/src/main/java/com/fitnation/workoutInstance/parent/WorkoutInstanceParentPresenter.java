@@ -21,7 +21,6 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
     private Context mContext;
     private WorkoutManager mWorkoutManager;
     private WorkoutInstanceParentContract.View mView;
-    private WorkoutInstance mWorkoutInstance;
 
     public WorkoutInstanceParentPresenter(Context mContext, WorkoutInstanceParentContract.View mView) {
         mWorkoutManager = new WorkoutManager(mContext);
@@ -82,6 +81,7 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
 
     @Override
     public void onWorkoutInstancesRetrieved(List<WorkoutInstance> workoutList) {
+        mView.stopProgress();
         mView.displayWorkouts(workoutList);
     }
 
