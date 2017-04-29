@@ -12,7 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * A workout template that a user owns
+ * A workout template that a mUser owns
  */
 public class UserWorkoutTemplate extends RealmObject {
     @PrimaryKey

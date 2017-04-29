@@ -42,6 +42,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.fitnation.test.RecyclerViewMatcher.*;
 import static org.hamcrest.Matchers.allOf;
@@ -115,10 +116,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
 
     @Test
     public void testCreateWorkoutScreenLaunchedOkay() throws Exception {
-
-
         verifyCreateWorkoutScreenVisible();
-        ;
     }
 
     private void verifyCreateWorkoutScreenVisible() {
@@ -153,12 +151,12 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         onView(withId(R.id.exercise_list_action)).perform(click());
         onView(withId(R.id.exercise_name_to_save)).perform(typeText("Arnolds Workout"));
         closeSoftKeyboard();
+
         SystemClock.sleep(TEST_WAIT_TIME);
         onView(allOf(withId(android.R.id.button1), withText("SAVE"))).perform(scrollTo(), click());
         SystemClock.sleep(TEST_WAIT_TIME);
 
         onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(scrollTo(), click());
-
     }
 
     @Test

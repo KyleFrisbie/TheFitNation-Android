@@ -42,7 +42,7 @@ public class RegisterUserTask implements FactoryCallback.FactoryReturn{
     }
 
     /**
-     * Request to the server to register a new user account
+     * Request to the server to register a new mUser account
      * @param email The email entered
      * @param password The password entered
      * @param userName The username entered
@@ -115,7 +115,7 @@ public class RegisterUserTask implements FactoryCallback.FactoryReturn{
     }
 
     /**
-     * returns the successful registration alert dialog which informs user to activate email
+     * returns the successful registration alert dialog which informs mUser to activate email
      */
     private void handleJsonResponse(){
         android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(mActivity);
