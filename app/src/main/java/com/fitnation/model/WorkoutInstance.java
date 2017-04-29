@@ -108,6 +108,10 @@ public class WorkoutInstance extends RealmObject {
         return notes;
     }
 
+    public String getLastUpdated() {
+        return lastUpdated;
+    }
+
     public void setExercises(RealmList<ExerciseInstance> exercises) {
         this.exerciseInstances  = exercises;
     }
@@ -148,12 +152,12 @@ public class WorkoutInstance extends RealmObject {
     @Override
     public String toString() {
         return "WorkoutInstance{" +
-            "id=" + id +
-            ", name='" + name + "'" +
-            ", createdOn='" + createdOn.toString() + "'" +
-            ", restBetweenInstances='" + restBetweenInstances + "'" +
-            ", orderNumber='" + orderNumber + "'" +
-            '}';
+                "id=" + id +
+                ", name='" + name + "'" +
+                ", createdOn='" + createdOn.toString() + "'" +
+                ", restBetweenInstances='" + restBetweenInstances + "'" +
+                ", orderNumber='" + orderNumber + "'" +
+                '}';
     }
 
     public Long getAndroidId() {

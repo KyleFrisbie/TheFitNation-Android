@@ -1,4 +1,4 @@
-package com.fitnation.login;
+package com.fitnation.login.resetLogin;
 
 import android.app.ProgressDialog;
 

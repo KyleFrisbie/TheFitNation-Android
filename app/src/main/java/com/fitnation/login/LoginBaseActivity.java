@@ -3,11 +3,10 @@ package com.fitnation.login;
 import android.os.Bundle;
 
 import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.ContentViewEvent;
-import com.crashlytics.android.answers.CustomEvent;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
+import com.fitnation.login.login.LoginFragment;
+import com.fitnation.login.login.LoginPresenter;
 
 import io.fabric.sdk.android.Fabric;
 

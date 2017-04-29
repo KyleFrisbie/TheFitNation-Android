@@ -1,4 +1,4 @@
-package com.fitnation.networking.tasks;
+package com.fitnation.networking.tasks.loginTasks;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -18,42 +18,34 @@ import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.utils.EnvironmentManager;
 
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Handles the register request
+ * handles the email reset password request
  */
 
-public class RegisterUserTask implements FactoryCallback.FactoryReturn{
-    private BaseActivity mActivity;
+public class EmailResetPasswordTask implements FactoryCallback.FactoryReturn{
     private TaskCallback.Presenter mPresenter;
+    private BaseActivity mActivity;
 
     /**
      * Constructor
      * @param activity The base calling activity
      * @param presenter The interface to be used
      */
-    public RegisterUserTask(BaseActivity activity, TaskCallback.Presenter presenter) {
-        this.mActivity = activity;
+    public EmailResetPasswordTask(BaseActivity activity, TaskCallback.Presenter presenter) {
         this.mPresenter = presenter;
+        this.mActivity = activity;
     }
 
     /**
-     * Request to the server to register a new mUser account
-     * @param email The email entered
-     * @param password The password entered
-     * @param userName The username entered
-     * @param language The language which by default is english for now
+     * Request to the server to reset a users password by an email address
+     * @param email The email associated with the account
      */
-     // TODO: allow for different languages
-    public void requestRegistration(final String email, final String password,
-                                    final String userName, final String firstName,
-                                    final String lastName, final String language){
+    public void resetPasswordRequest(final String email){
         RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-        String endpoint = "api/register";
+        String endpoint = "api/account/reset_password/init";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getBaseUrl() + endpoint;
 
         ProgressDialog progressDialog = new ProgressDialog(mActivity);
@@ -62,65 +54,45 @@ public class RegisterUserTask implements FactoryCallback.FactoryReturn{
         progressDialog.setIndeterminate(true);
         mPresenter.showProgress(progressDialog);
 
-        StringRequest jsonObjectPost = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
+        StringRequest resetPasswordWithEmailRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>()
         {
             @Override
             public void onResponse(String response) {
                 mPresenter.stopProgress();
-                handleJsonResponse();
-
+                successfulResponse(response);
             }
-        },  new Response.ErrorListener() {
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mPresenter.stopProgress();
                 errorResponseMessage(error);
             }
-        }
-        ){
+        }){
             @Override
-            public byte[] getBody() {
-                Map<String, String> map = new HashMap<>();
-                map.put("email", email);
-                map.put("langKey", language);
-                map.put("login", userName);
-                map.put("password", password);
-                map.put("firstName", firstName);
-                map.put("lastName", lastName);
-
-                JSONObject jsonObject = new JSONObject(map);
-                return jsonObject.toString().getBytes();
+            public byte[] getBody() throws AuthFailureError {
+                return email.getBytes();
             }
-
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/json");
+                params.put("Accept", "text/plain");
                 return params;
             }
-
         };
 
-        jsonObjectPost.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
-        requestQueue.add(jsonObjectPost);
+        resetPasswordWithEmailRequest.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
+        requestQueue.add(resetPasswordWithEmailRequest);
     }
 
     /**
-     * Error response to be generated from volleyErrorFactory
-     * @param error Volleys error object
+     * Shows a success alert dialog indicating to user that an email has been sent
+     * @param response The response from the server
      */
-    private void errorResponseMessage(VolleyError error) {
-        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(mActivity, this);
-        volleyErrorMessage.getErrorMessage(error);
-    }
-
-    /**
-     * returns the successful registration alert dialog which informs mUser to activate email
-     */
-    private void handleJsonResponse(){
-        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(mActivity);
-        alertDialog.setTitle(R.string.register_success_title);
-        alertDialog.setMessage(R.string.register_success_message);
+    private void successfulResponse(String response) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mActivity);
+        alertDialog.setTitle(R.string.email_success_title);
+        alertDialog.setMessage(response);
         alertDialog.setPositiveButton(R.string.alert_dialog_ok_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -131,11 +103,20 @@ public class RegisterUserTask implements FactoryCallback.FactoryReturn{
         mPresenter.showSuccess(alertDialog);
     }
 
+    /**
+     * Error response to be generated from volleyErrorFactory
+     * @param error Volleys error object
+     */
+    private void errorResponseMessage(VolleyError error){
+        VolleyErrorMessage volleyErrorMessage = new VolleyErrorMessage(mActivity, this);
+        volleyErrorMessage.getErrorMessage(error);
+    }
+
     /*--------------------------------------FactoryCallback--------------------------------------*/
 
     @Override
     public void showSuccessDialog(AlertDialog.Builder alertDialog) {
-        mPresenter.showSuccess(alertDialog);
+            mPresenter.showSuccess(alertDialog);
     }
 
     @Override

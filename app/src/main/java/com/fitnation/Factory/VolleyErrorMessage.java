@@ -6,8 +6,8 @@ import android.support.v7.app.AlertDialog;
 
 import com.android.volley.VolleyError;
 import com.fitnation.R;
-import com.fitnation.networking.tasks.RefreshAuthTokenTask;
-import com.fitnation.networking.tasks.TaskCallback;
+import com.fitnation.networking.tasks.loginTasks.RefreshAuthTokenTask;
+import com.fitnation.networking.tasks.loginTasks.TaskCallback;
 
 /**
  * A factory for generating alert dialog messages for HTTP response codes from the server.

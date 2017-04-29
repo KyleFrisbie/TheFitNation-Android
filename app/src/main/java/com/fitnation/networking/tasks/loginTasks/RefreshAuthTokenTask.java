@@ -1,4 +1,4 @@
-package com.fitnation.networking.tasks;
+package com.fitnation.networking.tasks.loginTasks;
 
 import android.content.Context;
 import android.util.Log;

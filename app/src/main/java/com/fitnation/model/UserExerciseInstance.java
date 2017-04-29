@@ -101,6 +101,11 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView {
     }
 
     @Override
+    public boolean hasExerciseParent() {
+        return exerciseInstance.hasExerciseParent();
+    }
+
+    @Override
     public boolean isSelectable() {
         return false;
     }
@@ -128,6 +133,11 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView {
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public Long getParentExerciseId() {
+        return exerciseInstance.getParentExerciseId();
     }
 
     @Override

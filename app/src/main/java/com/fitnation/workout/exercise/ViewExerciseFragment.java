@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.callbacks.OnSetSelectedCallback;
 import com.fitnation.navigation.NavigationActivity;
@@ -101,6 +102,11 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
         mNotesView.setText(exerciseInstance.getNotes());
         mAdapter = new SetAdapter(exerciseInstance.getExerciseSetView(), callback);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void bindExerciseToView(Exercise exercise) {
+        mLevelView.setText(exercise.getSkillLevelLevel());
     }
 
     @Override

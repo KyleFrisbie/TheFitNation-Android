@@ -14,11 +14,13 @@ public interface ExerciseView extends Comparable{
     void setExerciseSetViews(List<ExerciseSetView> sets);
     void addExerciseSetView(ExerciseView exercise, int orderNumber);
     boolean isSelected();
+    boolean hasExerciseParent();
     boolean isSelectable();
     String getName();
     String getSkillLevelLevel();
     String getNotes();
     void setSelected(boolean checked);
     Long getId();
+    Long getParentExerciseId();
     Object clone();
 }

@@ -130,6 +130,11 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
     }
 
     @Override
+    public boolean hasExerciseParent() {
+        return exercise != null;
+    }
+
+    @Override
     public boolean isSelectable() {
         return true;
     }
@@ -141,7 +146,12 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
 
     @Override
     public String getSkillLevelLevel() {
-        return exercise.getSkillLevelLevel();
+        if(exercise != null) {
+            return exercise.getSkillLevelLevel();
+        }
+        else {
+            return null;
+        }
     }
 
     public RealmList<ExerciseInstanceSet> getExerciseInstanceSets() {
@@ -207,6 +217,11 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public Long getParentExerciseId() {
+        return exerciseId;
     }
 
     @Override

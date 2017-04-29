@@ -48,14 +48,14 @@ public class Navigator {
         EditWorkoutFragment editWorkoutFragment = EditWorkoutFragment.newInstance(workoutInstance);
 
         editWorkoutFragment.setPresenter(new EditWorkoutPresenter(editWorkoutFragment, activity));
-        activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment).commit();
+        activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment).addToBackStack(null).commit();
     }
 
     public static void navigateToEditUserWorkout(BaseActivity activity, UserWorkoutInstance userWorkoutInstance, UserWorkoutTemplate userWorkoutTemplate, int containterId) {
         EditUserWorkoutFragment editWorkoutFragment = EditUserWorkoutFragment.newInstance(userWorkoutInstance, userWorkoutTemplate);
 
         editWorkoutFragment.setPresenter(new EditUserWorkoutPresenter(editWorkoutFragment));
-        activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment ).commit();
+        activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment ).addToBackStack(null).commit();
     }
 
     public static void navigateToEditExercise(BaseActivity activity, ExerciseView exerciseView, OnExerciseUpdatedCallback callback, int containerId) {
