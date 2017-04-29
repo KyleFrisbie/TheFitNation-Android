@@ -3,16 +3,245 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="logout">Logout</string>
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="background_image">Background Image</string>
+
+    <!-- USER INFO STRINGS -->
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="nameField">Name:</string>
+    <string name="name">Name</string>
+    <string name="emailField">Email:</string>
+    <string name="email">Email</string>
+
+    <string name="heightField">Height:</string>
+    <string name="weightField">Weight:</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+
+    <string name="lifterType">Skill:</string>
+    <string-array name="lifterTypeArray">
+        <item>Beginner</item>
+        <item>Intermediate</item>
+        <item>Advanced</item>
+    </string-array>
+    <string name="gender">Gender</string>
+
+    <string-array name="genderArray">
+        <item>Other</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string name="genderField">Gender:</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="birthday">Birthday</string>
+    <string name="birthdayField">Birthday:</string>
+    <string name="unitOfMeasure">Unit of Measure</string>
+    <string name="age">Age</string>
+    <string name="switchMeasureToMetric">Switch to Metric</string>
+    <string name="switchMeasureToImperial">Switch to Imperial</string>
 
     <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="sign_up">Sign up!</string>
+    <string name="no_account">Dont have an account?</string>
+    <string name="forgot_password">Forgot login details</string>
+    <string name="fit_nation_logo">Fit Nation Logo</string>
+
+    <string name="facebook">Login with Facebook</string>
+    <string name="google">Login with Google</string>
+    <string name="github">Login with GitHub</string>
+    <string name="twitter">Login with Twitter</string>
+
+    <string name="reset_password">Reset Password</string>
+    <string name="resend_email">Resend email</string>
+
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="username">User Name</string>
+
     <string name="login_screen">Login Fragment</string>
-    <string name="main_container">Main Container</string>
     <string name="start_workout">Start Workout</string>
     <string name="my_workouts">My Workouts</string>
     <string name="trends">Trends</string>
     <string name="workout_regimens">Workout Regimens</string>
     <string name="my_profile">My Profile</string>
+    <string name="title_activity_create_exercise">Create Your Exercise</string>
+    <string name="build_workout">Create A Workout</string>
+    <string name="beginner">BEGINNER</string>
+    <string name="intermediate">INTERMEDIATE</string>
+    <string name="advanced">ADVANCED</string>
+    <string name="save_workout_title">Name your workout:</string>
+    <string name="build_workout_title">Create a Workout</string>
+    <string name="dialog_success_title">Success</string>
+    <string name="dialog_error_title">Error</string>
+    <string name="dialog_build_workout_success_message">Your workout was successfully created!</string>
+    <string name="dialog_build_workout_failure_message">"Workout save failed. Error: "</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ipsum">Lyft hashtag godard, tote bag skateboard ennui biodiesel wolf cold-pressed chia irony. Master cleanse tbh pop-up viral forage, pitchfork banh mi. Scenester unicorn franzen locavore chia listicle. Pug vinyl chicharrones portland. Sartorial green juice bitters, drinking vinegar fam yuccie hella forage craft beer. Irony authentic salvia celiac, hot chicken twee ethical meh chicharrones. Art party readymade pitchfork, shoreditch enamel pin bespoke tofu pork belly squid beard jean shorts.
+        \n\nKitsch waistcoat celiac, microdosing tumblr copper mug bushwick art party retro before they sold out church-key. Cray asymmetrical trust fund, craft beer celiac leggings four loko viral 8-bit activated charcoal snackwave. Blue bottle kombucha succulents organic direct trade, kale chips iPhone quinoa gastropub pabst hoodie wayfarers. Thundercats tattooed food truck hammock. Offal mixtape yr cliche. Jean shorts selfies swag viral, ethical biodiesel echo park actually crucifix letterpress kale chips portland chicharrones mumblecore tilde. Seitan kickstarter whatever keffiyeh forage yuccie.</string>
+
+
+    <string name="bottom_bar">Bottom Bar Color</string>
+
+    <string name="alert_dialog_ok_button">OK</string>
+    <string name="volley_title_access_refreshed">Access Refreshed</string>
+    <string name="volley_message_access_refreshed">Authorization has been refreshed</string>
+    <string name="volley_title_no_response">No Response</string>
+    <string name="volley_message_no_response">There was no response from the server. Please make sure that you are connected to the internet</string>
+
+    <string name="volley_title_100">Success</string>
+    <string name="volley_title_101">Error</string>
+    <string name="volley_title_102">Error</string>
+
+    <string name="volley_title_200">Success</string>
+    <string name="volley_title_201">Success</string>
+    <string name="volley_title_202">Success</string>
+    <string name="volley_title_203">Error</string>
+    <string name="volley_title_204">Error</string>
+    <string name="volley_title_205">Error</string>
+    <string name="volley_title_206">Error</string>
+    <string name="volley_title_207">Error</string>
+    <string name="volley_title_208">Error</string>
+    <string name="volley_title_226">Error</string>
+
+    <string name="volley_title_300">Error</string>
+    <string name="volley_title_301">Error</string>
+    <string name="volley_title_302">Error</string>
+    <string name="volley_title_303">Error</string>
+    <string name="volley_title_304">Error</string>
+    <string name="volley_title_305">Error</string>
+    <string name="volley_title_306">Error</string>
+    <string name="volley_title_307">Error</string>
+    <string name="volley_title_308">Error</string>
+
+    <string name="volley_title_400">Error</string>
+    <string name="volley_title_401">Error</string>
+    <string name="volley_title_402">Error</string>
+    <string name="volley_title_403">Error</string>
+    <string name="volley_title_404">Error</string>
+    <string name="volley_title_405">Error</string>
+    <string name="volley_title_406">Error</string>
+    <string name="volley_title_407">Error</string>
+    <string name="volley_title_408">Error</string>
+    <string name="volley_title_409">Error</string>
+    <string name="volley_title_410">Error</string>
+    <string name="volley_title_411">Error</string>
+    <string name="volley_title_412">Error</string>
+    <string name="volley_title_413">Error</string>
+    <string name="volley_title_414">Error</string>
+    <string name="volley_title_415">Error</string>
+    <string name="volley_title_416">Error</string>
+    <string name="volley_title_417">Error</string>
+    <string name="volley_title_418">Error</string>
+    <string name="volley_title_421">Error</string>
+    <string name="volley_title_422">Error</string>
+    <string name="volley_title_423">Error</string>
+    <string name="volley_title_424">Error</string>
+    <string name="volley_title_426">Error</string>
+    <string name="volley_title_428">Error</string>
+    <string name="volley_title_429">Error</string>
+    <string name="volley_title_431">Error</string>
+    <string name="volley_title_451">Error</string>
+    <string name="volley_title_498">Error</string>
+    <string name="volley_title_499">Error</string>
+
+    <string name="volley_title_500">Error</string>
+    <string name="volley_title_501">Error</string>
+    <string name="volley_title_502">Error</string>
+    <string name="volley_title_503">Error</string>
+    <string name="volley_title_504">Error</string>
+    <string name="volley_title_505">Error</string>
+    <string name="volley_title_506">Error</string>
+    <string name="volley_title_507">Error</string>
+    <string name="volley_title_508">Error</string>
+    <string name="volley_title_510">Error</string>
+    <string name="volley_title_511">Error</string>
+
+
+    <string name="volley_message_100">100: Continue</string>
+    <string name="volley_message_101">101: Switching Protocols</string>
+    <string name="volley_message_102">102: Processing</string>
+
+    <string name="volley_message_200">200: Success</string>
+    <string name="volley_message_201">201: Created</string>
+    <string name="volley_message_202">202: Accepted</string>
+    <string name="volley_message_203">203: Non-Authoritative Information</string>
+    <string name="volley_message_204">204: No Content</string>
+    <string name="volley_message_205">205: Reset Content</string>
+    <string name="volley_message_206">206: Partial Content</string>
+    <string name="volley_message_207">207: Multi-Status</string>
+    <string name="volley_message_208">208: Already Reported</string>
+    <string name="volley_message_226">226: IM used</string>
+
+    <string name="volley_message_300">300 Multiple choices</string>
+    <string name="volley_message_301">301: Moved Permanently</string>
+    <string name="volley_message_302">302: Found</string>
+    <string name="volley_message_303">303: See Other</string>
+    <string name="volley_message_304">304: Modified</string>
+    <string name="volley_message_305">305: Use Proxy</string>
+    <string name="volley_message_306">306: Switch Proxy</string>
+    <string name="volley_message_307">307: Temporary Redirect</string>
+    <string name="volley_message_308">308: Permanent Redirect</string>
+
+    <string name="volley_message_400">400: Bad Request</string>
+    <string name="volley_message_401">401: Unauthorised</string>
+    <string name="volley_message_402">402: Payment Required</string>
+    <string name="volley_message_403">403: Forbidden</string>
+    <string name="volley_message_404">404: Not Found</string>
+    <string name="volley_message_405">405: Method Not Allowed</string>
+    <string name="volley_message_406">406: Not Acceptable</string>
+    <string name="volley_message_407">407: Proxy Authentication Required</string>
+    <string name="volley_message_408">408: Request Time-Out</string>
+    <string name="volley_message_409">409: Conflict</string>
+    <string name="volley_message_410">410: Gone</string>
+    <string name="volley_message_411">411: Length Required</string>
+    <string name="volley_message_412">412: Precondition Failed</string>
+    <string name="volley_message_413">413: Payload To Large</string>
+    <string name="volley_message_414">414: URI Too Long</string>
+    <string name="volley_message_415">415: Unsupported Media Type</string>
+    <string name="volley_message_416">416: Range Not Satisfiable</string>
+    <string name="volley_message_417">417: Expectation Failed</string>
+    <string name="volley_message_418">418: I am a Teapot</string>
+    <string name="volley_message_421">421: Misdirect Request</string>
+    <string name="volley_message_422">422: Unprocessable Entity</string>
+    <string name="volley_message_423">423: Locked</string>
+    <string name="volley_message_424">424: Failed Dependency</string>
+    <string name="volley_message_426">426: Upgrade Required</string>
+    <string name="volley_message_428">428: Precondition Required</string>
+    <string name="volley_message_429">429: Too Many Requests</string>
+    <string name="volley_message_431">431: Request Header Fields Too Large</string>
+    <string name="volley_message_451">451: Unavailable for Legal Reasons</string>
+    <string name="volley_message_498">498: Invalid Token</string>
+    <string name="volley_message_499">499: Token Required</string>
+
+    <string name="volley_message_500">500: Internal Server</string>
+    <string name="volley_message_501">501: Not Implemented</string>
+    <string name="volley_message_502">502: Bad Gateway</string>
+    <string name="volley_message_503">503: Service Unavailable</string>
+    <string name="volley_message_504">504: Gateway Time-out</string>
+    <string name="volley_message_505">505: HTTP Version Not Supported</string>
+    <string name="volley_message_506">506: Variant Also Negotiates</string>
+    <string name="volley_message_507">507: Insufficient Storage</string>
+    <string name="volley_message_508">508: Loop Detected</string>
+    <string name="volley_message_510">510: Not Extended</string>
+    <string name="volley_message_511">511: Network Authentication Required</string>
+
+    <string name="register_success_title">Success!</string>
+    <string name="register_success_message">Welcome to the Fit Nation! To complete the regestration process please confirm your email</string>
+    <string name="progress_message">Please wait...</string>
+    <string name="email_success_title">Success</string>
+    <string name="user_workout_launch">Launch</string>
+    <string name="user_workout_delete">Delete</string>
+    <string name="user_workout_details">Details</string>
+    <string name="user_workout_line">line for separation</string>
+    <string name="last_updated_lable">Last Updated:</string>
 </resources>
