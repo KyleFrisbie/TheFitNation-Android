@@ -1,11 +1,15 @@
 package com.fitnation.navigation;
 
+import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.model.WorkoutInstance;
+import com.fitnation.model.enums.ExerciseAction;
+import com.fitnation.profile.ProfileFragment;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
+import com.fitnation.workout.parent.ExercisesParentFragment;
 import com.fitnation.workout.view.instance.EditUserWorkoutFragment;
 import com.fitnation.workout.view.instance.EditUserWorkoutPresenter;
 import com.fitnation.workout.view.instance.SaveUserWorkoutInstanceFragment;
@@ -42,6 +46,15 @@ public class Navigator {
         } {
             return null;
         }
+    }
+
+    public static void navigateToBuildWorkout(BaseActivity activity, int containerId) {
+        activity.getSupportFragmentManager().beginTransaction().replace(containerId, ExercisesParentFragment.newInstance(activity, ExerciseAction.SAVE)).addToBackStack(null).commit();
+    }
+
+    public static void navigateToProfileScreen(BaseActivity activity, int containerId) {
+        activity.getSupportFragmentManager().beginTransaction().replace(containerId,
+                ProfileFragment.newInstance()).addToBackStack(null).commit();
     }
 
     public static void navigateToEditWorkout(BaseActivity activity, WorkoutInstance workoutInstance, int containterId) {

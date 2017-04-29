@@ -123,13 +123,12 @@ public class NavigationActivity extends BaseActivity
 
         } else if (id == R.id.nav_build_workout) {
             if(!item.isChecked()) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_container, ExercisesParentFragment.newInstance(this, ExerciseAction.SAVE)).commit();
+                Navigator.navigateToBuildWorkout(this, R.id.content_main_container);
             } else {
                 Log.i(TAG, "Nav Build Workout is already selected");
             }
         } else if (id == R.id.nav_my_profile) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_container,
-                    ProfileFragment.newInstance()).addToBackStack(null).commit();
+            Navigator.navigateToProfileScreen(this, R.id.content_main_container);
         } else if (id == R.id.nav_logout){
             Intent loginIntent = new Intent(this, LoginBaseActivity.class);
             startActivity(loginIntent);
