@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.fitnation.R;
 import com.fitnation.model.ExerciseView;
+import com.fitnation.model.UserWorkoutInstance;
+import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.networking.tasks.callbacks.ExercisesRequestCallback;
@@ -116,12 +118,12 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
                             //TODO move to LAUNCH button for UserWorkoutInstance list view
-//                            UserWorkoutInstance userWorkoutInstance = new UserWorkoutInstance(mExerciseManager.getWorkoutInstance(), UserWorkoutInstance.getNextAndroidKey());
-//                            UserWorkoutTemplate userWorkoutTemplate = WorkoutTemplateManager.getSingletonUserWorkoutTemplate(mExerciseManager.getWorkoutTemplate());
-//                            Navigator.navigateToEditUserWorkout(mView.getBaseActivity(), userWorkoutInstance, userWorkoutTemplate, R.id.content_main_container);
+                            UserWorkoutInstance userWorkoutInstance = new UserWorkoutInstance(mWorkoutDataManager.getWorkoutInstance(), UserWorkoutInstance.getNextAndroidKey());
+                            UserWorkoutTemplate userWorkoutTemplate = WorkoutTemplateManager.getSingletonUserWorkoutTemplate(WorkoutTemplateManager.getSingletonWorkoutTemplate());
+                            Navigator.navigateToEditUserWorkout(mView.getBaseActivity(), userWorkoutInstance, userWorkoutTemplate, R.id.content_main_container);
 
                             //TODO move to LAUNCH button for WorkoutInstance list view
-                            Navigator.navigateToEditWorkout(mView.getBaseActivity(), mWorkoutDataManager.getWorkoutInstance(), R.id.content_main_container);
+//                            Navigator.navigateToEditWorkout(mView.getBaseActivity(), mWorkoutDataManager.getWorkoutInstance(), R.id.content_main_container);
 
                         }
                     }));
