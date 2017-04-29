@@ -1,11 +1,11 @@
-package com.fitnation.login;
+package com.fitnation.login.resetLogin;
 
 
 import android.app.ProgressDialog;
 import android.support.v7.app.AlertDialog;
 
-import com.fitnation.networking.tasks.TaskCallback;
-import com.fitnation.networking.tasks.EmailResetPasswordTask;
+import com.fitnation.networking.tasks.loginTasks.TaskCallback;
+import com.fitnation.networking.tasks.loginTasks.EmailResetPasswordTask;
 
 /**
  * contains the business logic for the view

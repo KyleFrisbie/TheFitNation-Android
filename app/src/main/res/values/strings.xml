@@ -239,4 +239,9 @@
     <string name="register_success_message">Welcome to the Fit Nation! To complete the regestration process please confirm your email</string>
     <string name="progress_message">Please wait...</string>
     <string name="email_success_title">Success</string>
+    <string name="user_workout_launch">Launch</string>
+    <string name="user_workout_delete">Delete</string>
+    <string name="user_workout_details">Details</string>
+    <string name="user_workout_line">line for separation</string>
+    <string name="last_updated_lable">Last Updated:</string>
 </resources>

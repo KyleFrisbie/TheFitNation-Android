@@ -24,6 +24,9 @@ public class UserWorkoutTemplate extends RealmObject {
     private RealmList<UserWorkoutInstance> userWorkoutInstances;
     private Date lastUpdated;
 
+    public void setAndroidId(Long androidId) {
+        this.androidId = androidId;
+    }
 
     public void setId(Long id) {
         this.id = id;

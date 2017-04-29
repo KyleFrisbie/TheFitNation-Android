@@ -1,7 +1,6 @@
-package com.fitnation.networking.tasks;
+package com.fitnation.networking.tasks.loginTasks;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -15,7 +14,6 @@ import com.fitnation.Factory.FactoryCallback;
 import com.fitnation.Factory.VolleyErrorMessage;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
-import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.utils.EnvironmentManager;
 import com.fitnation.utils.NetworkUtils;
 

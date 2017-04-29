@@ -17,7 +17,7 @@ import com.fitnation.model.User;
 import com.fitnation.model.UserWeight;
 import com.fitnation.model.UserDemographic;
 import com.fitnation.networking.AuthToken;
-import com.fitnation.networking.tasks.TaskCallback;
+import com.fitnation.networking.tasks.loginTasks.TaskCallback;
 import com.fitnation.networking.tasks.UserDemographicTask;
 import com.fitnation.networking.tasks.UserTask;
 import com.fitnation.networking.tasks.UserWeightTask;

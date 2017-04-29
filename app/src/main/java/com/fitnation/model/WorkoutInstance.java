@@ -2,17 +2,21 @@ package com.fitnation.model;
 
 import com.google.gson.annotations.Expose;
 
+import org.parceler.Parcel;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.WorkoutInstanceRealmProxy;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * A workout that has been performed by the User
  */
+@Parcel(implementations = { WorkoutInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { WorkoutInstance.class })
 public class WorkoutInstance extends RealmObject {
     @PrimaryKey
     @Expose(serialize = false)
@@ -27,10 +31,10 @@ public class WorkoutInstance extends RealmObject {
     private Date lastUpdatedObj;
     private Float restBetweenInstances;
     private Integer orderNumber;
+    private String notes;
     private Long workoutTemplateId;
     private String workoutTemplateName;
     private RealmList<ExerciseInstance> exerciseInstances;
-    private String notes;
 
     public WorkoutInstance() {
         createdOnObj = new Date();
@@ -57,6 +61,70 @@ public class WorkoutInstance extends RealmObject {
         SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
         createdOn = dateFormat.format(createdOnObj);
         lastUpdated = dateFormat.format(lastUpdatedObj);
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCreatedOn(String createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public void setLastUpdated(String lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public Long getAndroidId() {
+        return androidId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public String getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public Date getCreatedOnObj() {
+        return createdOnObj;
+    }
+
+    public Date getLastUpdatedObj() {
+        return lastUpdatedObj;
+    }
+
+    public Float getRestBetweenInstances() {
+        return restBetweenInstances;
+    }
+
+    public Integer getOrderNumber() {
+        return orderNumber;
+    }
+
+    public Long getWorkoutTemplateId() {
+        return workoutTemplateId;
+    }
+
+    public String getWorkoutTemplateName() {
+        return workoutTemplateName;
+    }
+
+    public RealmList<ExerciseInstance> getExerciseInstances() {
+        return exerciseInstances;
+    }
+
+    public String getNotes() {
+        return notes;
     }
 
     public void setAndroidId(Long androidId) {
