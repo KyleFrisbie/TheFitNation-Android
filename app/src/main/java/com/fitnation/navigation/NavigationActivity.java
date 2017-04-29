@@ -118,7 +118,7 @@ public class NavigationActivity extends BaseActivity
 
         } else if (id == R.id.nav_my_workouts) {
             if(!item.isChecked()){
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_container, WorkoutInstanceParentFragment.newInstance(this)).commit();
+                Navigator.navigateToWorkouts(this, R.id.content_main_container);
             }else{
                 Log.i(TAG, "Nav My Workouts is already started");
             }

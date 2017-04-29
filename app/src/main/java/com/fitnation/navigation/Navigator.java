@@ -1,5 +1,6 @@
 package com.fitnation.navigation;
 
+import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.model.UserWorkoutInstance;
@@ -15,6 +16,7 @@ import com.fitnation.workout.exercise.ViewExerciseFragment;
 import com.fitnation.workout.exercise.ViewExercisePresenter;
 import com.fitnation.workout.view.template.EditWorkoutFragment;
 import com.fitnation.workout.view.template.EditWorkoutPresenter;
+import com.fitnation.workoutInstance.parent.WorkoutInstanceParentFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,10 @@ public class Navigator {
         } {
             return null;
         }
+    }
+
+    public static void navigateToWorkouts(BaseActivity activity, int containerId) {
+        activity.getSupportFragmentManager().beginTransaction().replace(containerId, WorkoutInstanceParentFragment.newInstance(activity)).commit();
     }
 
     public static void navigateToEditWorkout(BaseActivity activity, WorkoutInstance workoutInstance, int containterId) {

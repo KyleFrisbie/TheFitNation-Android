@@ -117,6 +117,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
+                            Navigator.navigateToWorkouts(mView.getBaseActivity(), R.id.content_main_container);
                         }
                     }));
                 }
