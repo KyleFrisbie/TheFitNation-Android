@@ -1,13 +1,17 @@
 package com.fitnation.model;
 
+import org.parceler.Parcel;
+
 import java.util.Date;
 import java.util.Objects;
 
 import io.realm.RealmObject;
+import io.realm.UserWorkoutInstanceRealmProxy;
 
 /**
  * A workout that has/will been/be performed by a User
  */
+@Parcel(implementations = {UserWorkoutInstanceRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {UserWorkoutInstance.class})
 public class UserWorkoutInstance extends RealmObject {
     private Long id;
     private Date createdOn;

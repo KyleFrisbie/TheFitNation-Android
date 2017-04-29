@@ -1,5 +1,7 @@
 package com.fitnation.model;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 
 import org.parceler.Parcel;
@@ -17,7 +19,7 @@ import io.realm.annotations.PrimaryKey;
  * A workout that has been performed by the User
  */
 @Parcel(implementations = { WorkoutInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { WorkoutInstance.class })
-public class WorkoutInstance extends RealmObject {
+public class WorkoutInstance extends RealmObject implements Cloneable, Comparable {
     @PrimaryKey
     @Expose(serialize = false)
     private Long androidId;
@@ -63,36 +65,44 @@ public class WorkoutInstance extends RealmObject {
         lastUpdated = dateFormat.format(lastUpdatedObj);
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCreatedOn(String createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public void setLastUpdated(String lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
-
     public Long getAndroidId() {
         return androidId;
+    }
+
+    public void setAndroidId(Long androidId) {
+        this.androidId = androidId;
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCreatedOn() {
         return createdOn;
     }
 
+    public void setCreatedOn(String createdOn) {
+        this.createdOn = createdOn;
+    }
+
     public String getLastUpdated() {
         return lastUpdated;
+    }
+
+    public void setLastUpdated(String lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 
     public Date getCreatedOnObj() {
@@ -127,16 +137,14 @@ public class WorkoutInstance extends RealmObject {
         return notes;
     }
 
-    public void setAndroidId(Long androidId) {
-        this.androidId = androidId;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setExercises(RealmList<ExerciseInstance> exercises) {
         this.exerciseInstances  = exercises;
+    }
+
+    //TODO impliment cloning if want to
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     @Override
@@ -168,5 +176,14 @@ public class WorkoutInstance extends RealmObject {
             ", restBetweenInstances='" + restBetweenInstances + "'" +
             ", orderNumber='" + orderNumber + "'" +
             '}';
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        WorkoutInstance workoutInstance = (WorkoutInstance) o;
+        String nameThis = this.name;
+        String nameOther = workoutInstance.getName();
+
+        return nameThis.compareTo(nameOther);
     }
 }

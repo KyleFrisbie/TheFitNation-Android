@@ -2,17 +2,22 @@ package com.fitnation.model;
 
 import com.google.gson.annotations.Expose;
 
+import org.parceler.Parcel;
+import org.parceler.ParcelPropertyConverter;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.WorkoutTemplateRealmProxy;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * A WorkoutTemplate.
  */
+@Parcel(implementations = {WorkoutTemplateRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {WorkoutTemplate.class})
 public class WorkoutTemplate extends RealmObject implements Cloneable {
     @PrimaryKey
     @Expose(serialize = false)
@@ -59,6 +64,11 @@ public class WorkoutTemplate extends RealmObject implements Cloneable {
         return workoutInstances;
     }
 
+    @ParcelPropertyConverter(WorkoutInstanceParcelConverter.class)
+    public void setWorkoutInstances(RealmList<WorkoutInstance> workoutInstances) {
+        this.workoutInstances = workoutInstances;
+    }
+
     public void setUserDemographicId(String userDemographicId) {
         this.userDemographicId = userDemographicId;
     }
@@ -75,20 +85,24 @@ public class WorkoutTemplate extends RealmObject implements Cloneable {
         return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setAndroidId(Long androidId) {
         this.androidId = androidId;
+    }
+
+    public RealmList<WorkoutInstance> workoutInstances() {
+        return workoutInstances;
     }
 
     @Override
