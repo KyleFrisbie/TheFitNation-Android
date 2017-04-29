@@ -18,7 +18,7 @@ import io.realm.UserWorkoutTemplateRealmProxy;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * A workout template that a user owns
+ * A workout template that a mUser owns
  */
 @Parcel(implementations = {UserWorkoutTemplateRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { UserWorkoutTemplate.class })
 public class UserWorkoutTemplate extends RealmObject {

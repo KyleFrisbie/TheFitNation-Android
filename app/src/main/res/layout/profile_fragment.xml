@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragment_profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--  NAME -->
+        <TextView
+            android:id="@+id/nameView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:text="@string/nameField"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/nameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/nameView"
+            android:layout_alignBottom="@+id/nameView"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_toEndOf="@+id/nameView"
+            android:hint="@string/name"
+            android:inputType="textPersonName"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="18sp"
+            />
+
+        <!-- EMAIL -->
+        <TextView
+            android:id="@+id/emailView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameView"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="35dp"
+            android:inputType="textEmailAddress"
+            android:text="@string/emailField"
+            android:textAlignment="viewStart"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/emailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/emailView"
+            android:layout_alignBottom="@+id/emailView"
+            android:layout_alignEnd="@+id/nameText"
+            android:layout_alignStart="@+id/nameText"
+            android:hint="@string/email"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textSize="18sp" />
+
+        <!-- GENDER -->
+        <TextView
+            android:id="@+id/genderView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailView"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="35dp"
+            android:text="@string/genderField"
+            android:textAlignment="viewStart"
+            android:textSize="18sp" />
+
+
+        <Spinner
+            android:id="@+id/genderEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/genderView"
+            android:layout_alignEnd="@+id/emailText"
+            android:layout_alignStart="@+id/emailText"
+            android:hint="@string/gender"
+            android:textSize="18sp"
+            android:layout_alignTop="@+id/genderView" />
+
+        <!-- BIRTHDAY -->
+        <TextView
+            android:id="@+id/birthdayView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/genderView"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="35dp"
+            android:text="@string/birthdayField"
+            android:textAlignment="viewStart"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/birthdayEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/birthdayView"
+            android:layout_alignBottom="@+id/birthdayView"
+            android:layout_alignStart="@+id/genderEditText"
+            android:layout_toStartOf="@+id/ageText"
+            android:hint="@string/birthday"
+            android:textSize="18sp"
+            android:clickable="true"
+            android:inputType="date"
+            android:focusable="false"
+            android:maxLines="1"
+            android:lines="1"/>
+
+        <!-- AGE -->
+        <EditText
+            android:id="@+id/ageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/birthdayEditText"
+            android:layout_alignBottom="@+id/birthdayEditText"
+            android:layout_alignEnd="@+id/genderEditText"
+            android:hint="@string/age"
+            android:textSize="18sp"
+            android:clickable="true"
+            android:inputType="date"
+            android:focusable="false"
+            android:maxLines="1"
+            android:lines="1"/>
+
+        <!-- WEIGHT -->
+        <TextView
+            android:id="@+id/weightView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/birthdayView"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="35dp"
+            android:text="@string/weightField"
+            android:textAlignment="viewStart"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/weightEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/weightView"
+            android:layout_alignBottom="@+id/weightView"
+            android:layout_alignStart="@+id/birthdayEditText"
+            android:layout_toStartOf="@+id/switchMeasurement"
+            android:inputType="numberDecimal"
+            android:hint="@string/weight"
+            android:textSize="18sp"
+            android:lines="1"
+            android:maxLines="1"
+            />
+
+        <TextView
+            android:id="@+id/switchMeasurement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/weightEditText"
+            android:layout_alignBottom="@+id/weightEditText"
+            android:layout_alignEnd="@+id/ageText"
+            android:text="@string/switchMeasureToMetric"
+            android:textAlignment="textEnd"
+            android:textSize="18sp" />
+
+        <!-- HEIGHT -->
+        <TextView
+            android:id="@+id/heightView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/weightView"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="35dp"
+            android:text="@string/heightField"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/heightEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/heightView"
+            android:layout_alignBottom="@+id/heightView"
+            android:layout_alignEnd="@+id/weightEditText"
+            android:layout_alignStart="@+id/weightEditText"
+            android:hint="@string/height"
+            android:inputType="numberDecimal"
+            android:lines="1"
+            android:maxLines="1"
+            android:textSize="18sp" />
+
+        <!-- LIFTER TYPE -->
+        <TextView
+            android:id="@+id/lifterTypeView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/lifterType"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:layout_below="@+id/heightView"
+            android:layout_alignStart="@+id/heightView" />
+
+        <Spinner
+            android:id="@+id/lifterTypeSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/gender"
+            android:textSize="18sp"
+            android:layout_alignTop="@+id/lifterTypeView"
+            android:layout_alignStart="@+id/heightEditText"
+            android:layout_alignEnd="@+id/switchMeasurement" />
+
+        <!-- SAVE -->
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="Save"
+            android:layout_below="@+id/lifterTypeSpinner"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
+</ScrollView>
