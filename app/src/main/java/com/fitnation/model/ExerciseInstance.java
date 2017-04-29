@@ -87,6 +87,11 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
     }
 
     @Override
+    public void setParentExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
+
+    @Override
     public List<ExerciseSetView> getExerciseSetView() {
         List<ExerciseSetView> exerciseSetView = new ArrayList<>();
         for (ExerciseInstanceSet set : exerciseInstanceSets) {

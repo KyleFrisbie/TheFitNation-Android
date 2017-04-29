@@ -20,6 +20,7 @@ public interface ExerciseView extends Comparable{
     String getSkillLevelLevel();
     String getNotes();
     void setSelected(boolean checked);
+    void setParentExercise(Exercise exercise);
     Long getId();
     Long getParentExerciseId();
     Object clone();

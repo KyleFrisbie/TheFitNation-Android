@@ -49,7 +49,8 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
                 @Override
                 public void onSuccess(Exercise exercise) {
                     Log.i(TAG, "Success retrieving parent exercise" + exercise);
-                    mView.bindExerciseToView(exercise);
+                    mExercise.setParentExercise(exercise);
+                    mView.bindExerciseInstanceToView(mExercise, ViewExercisePresenter.this);
                 }
             });
         }
@@ -78,6 +79,7 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
     @Override
     public void onSaveClicked(ExerciseView exerciseInstance) {
         onExit(exerciseInstance);
+        mView.getBaseActivity().onBackPressed();
     }
 
     @Override
@@ -90,11 +92,6 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
     @Override
     public void onExit(ExerciseView exerciseInstance) {
         mOnExerciseUpdatedCallback.exerciseUpdated(exerciseInstance);
-        try {
-            mView.getBaseActivity().onBackPressed();
-        } catch (IllegalStateException ise) {
-            Log.e(TAG, "Error onExit(): " + ise.getMessage());
-        }
     }
 
     @Override

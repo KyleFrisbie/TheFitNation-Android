@@ -52,7 +52,9 @@ public class WorkoutDataManager extends DataManager {
         }
 
         if(exercisesSelected != null) {
-            addSkillLevelToWorkout(exercisesSelected, workoutTemplate);
+            if(workoutTemplate.getSkillLevelLevel() == null) {
+                addSkillLevelToWorkout(exercisesSelected, workoutTemplate);
+            }
         }
 
         new Thread(new Runnable() {

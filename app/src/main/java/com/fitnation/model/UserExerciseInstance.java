@@ -131,6 +131,11 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView {
     }
 
     @Override
+    public void setParentExercise(Exercise exercise) {
+        this.exerciseInstance.setParentExercise(exercise);
+    }
+
+    @Override
     public Long getId() {
         return id;
     }

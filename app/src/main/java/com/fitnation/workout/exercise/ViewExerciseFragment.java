@@ -105,11 +105,6 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
     }
 
     @Override
-    public void bindExerciseToView(Exercise exercise) {
-        mLevelView.setText(exercise.getSkillLevelLevel());
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         NavigationActivity navigationActivity = (NavigationActivity) getBaseActivity();
