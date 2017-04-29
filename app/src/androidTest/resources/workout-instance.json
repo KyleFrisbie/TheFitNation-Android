@@ -1,0 +1,151 @@
+{
+  "id": 9251,
+  "name": "Arnolds Workout",
+  "createdOn": "2017-04-09",
+  "lastUpdated": "2017-04-09",
+  "restBetweenInstances": 0.0,
+  "orderNumber": 1,
+  "notes": "",
+  "workoutTemplateId": 9201,
+  "workoutTemplateName": "Individual Workout's",
+  "exerciseInstances": [
+    {
+      "id": 9301,
+      "notes": null,
+      "workoutInstanceId": 9251,
+      "exerciseId": 1651,
+      "exerciseName": "Bench Press",
+      "repUnitId": 8101,
+      "repUnitName": "Reps",
+      "effortUnitId": 8102,
+      "effortUnitName": "Pounds",
+      "exerciseInstanceSets": [
+        {
+          "id": 9351,
+          "orderNumber": 1,
+          "reqQuantity": 8.0,
+          "effortQuantity": 20.0,
+          "restTime": 30.0,
+          "notes": null,
+          "exerciseInstanceId": 9301
+        },
+        {
+          "id": 9352,
+          "orderNumber": 2,
+          "reqQuantity": 6.0,
+          "effortQuantity": 26.0,
+          "restTime": 30.0,
+          "notes": null,
+          "exerciseInstanceId": 9301
+        }
+      ]
+    },
+    {
+      "id": 9302,
+      "notes": null,
+      "workoutInstanceId": 9251,
+      "exerciseId": 2351,
+      "exerciseName": "Curls",
+      "repUnitId": 8101,
+      "repUnitName": "Reps",
+      "effortUnitId": 8102,
+      "effortUnitName": "Pounds",
+      "exerciseInstanceSets": [
+        {
+          "id": 9353,
+          "orderNumber": 1,
+          "reqQuantity": 8.0,
+          "effortQuantity": 20.0,
+          "restTime": 30.0,
+          "notes": null,
+          "exerciseInstanceId": 9302
+        },
+        {
+          "id": 9354,
+          "orderNumber": 2,
+          "reqQuantity": 8.0,
+          "effortQuantity": 20.0,
+          "restTime": 30.0,
+          "notes": null,
+          "exerciseInstanceId": 9302
+        },
+        {
+          "id": 9355,
+          "orderNumber": 3,
+          "reqQuantity": 8.0,
+          "effortQuantity": 20.0,
+          "restTime": 30.0,
+          "notes": null,
+          "exerciseInstanceId": 9302
+        },
+        {
+          "id": 9356,
+          "orderNumber": 4,
+          "reqQuantity": 8.0,
+          "effortQuantity": 20.0,
+          "restTime": 30.0,
+          "notes": null,
+          "exerciseInstanceId": 9302
+        }
+      ]
+    },
+    {
+      "id": 9303,
+      "notes": null,
+      "workoutInstanceId": 9251,
+      "exerciseId": 2604,
+      "exerciseName": "Squats",
+      "repUnitId": 8101,
+      "repUnitName": "Reps",
+      "effortUnitId": 8102,
+      "effortUnitName": "Pounds",
+      "exerciseInstanceSets": [
+        {
+          "id": 9360,
+          "orderNumber": 4,
+          "reqQuantity": 8.0,
+          "effortQuantity": 20.0,
+          "restTime": 30.0,
+          "notes": null,
+          "exerciseInstanceId": 9303
+        },
+        {
+          "id": 9361,
+          "orderNumber": 5,
+          "reqQuantity": 8.0,
+          "effortQuantity": 20.0,
+          "restTime": 30.0,
+          "notes": null,
+          "exerciseInstanceId": 9303
+        },
+        {
+          "id": 9357,
+          "orderNumber": 1,
+          "reqQuantity": 8.0,
+          "effortQuantity": 20.0,
+          "restTime": 30.0,
+          "notes": null,
+          "exerciseInstanceId": 9303
+        },
+        {
+          "id": 9358,
+          "orderNumber": 2,
+          "reqQuantity": 8.0,
+          "effortQuantity": 20.0,
+          "restTime": 30.0,
+          "notes": null,
+          "exerciseInstanceId": 9303
+        },
+        {
+          "id": 9359,
+          "orderNumber": 3,
+          "reqQuantity": 8.0,
+          "effortQuantity": 20.0,
+          "restTime": 30.0,
+          "notes": null,
+          "exerciseInstanceId": 9303
+        }
+      ]
+    }
+  ]
+}
