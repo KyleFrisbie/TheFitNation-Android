@@ -75,6 +75,6 @@ public class Navigator {
         SaveUserWorkoutInstanceFragment saveUserWorkoutInstanceFragment = SaveUserWorkoutInstanceFragment.newInstance(userWorkoutInstance, userWorkoutTemplate);
 
         saveUserWorkoutInstanceFragment.setPresenter(new SaveUserWorkoutPresenter(saveUserWorkoutInstanceFragment, activity.getBaseContext()));
-        activity.getSupportFragmentManager().beginTransaction().replace(containerId, saveUserWorkoutInstanceFragment ).commit();
+        activity.getSupportFragmentManager().beginTransaction().add(containerId, saveUserWorkoutInstanceFragment ).addToBackStack(null).commit();
     }
 }
