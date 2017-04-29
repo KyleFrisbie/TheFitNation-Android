@@ -25,14 +25,14 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
     private ExerciseView mExercise;
     private ViewExerciseContract.View mView;
     private OnExerciseUpdatedCallback mOnExerciseUpdatedCallback;
-    private ExerciseInstance mOriginalExerciseInstance;
+    private ExerciseView mOriginalExerciseInstance;
 
 
     public ViewExercisePresenter(ExerciseView exercise, ViewExerciseContract.View view, OnExerciseUpdatedCallback onExerciseUpdatedCallback) {
         mExercise = exercise;
         mView = view;
         mOnExerciseUpdatedCallback = onExerciseUpdatedCallback;
-        mOriginalExerciseInstance = (ExerciseInstance) exercise.clone();
+        mOriginalExerciseInstance = (ExerciseView) exercise.clone();
     }
 
     @Override
@@ -84,7 +84,7 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
 
     @Override
     public void onResetClicked() {
-        mExercise = (ExerciseInstance) mOriginalExerciseInstance.clone();
+        mExercise = (ExerciseView) mOriginalExerciseInstance.clone();
 
         mView.bindExerciseInstanceToView(mExercise, this);
     }

@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Ryan on 4/15/2017.
  */
 
-public interface ExerciseView extends Comparable{
+public interface ExerciseView extends Comparable, Cloneable{
     List<ExerciseSetView> getExerciseSetView();
     void setExerciseSetViews(List<ExerciseSetView> sets);
     void addExerciseSetView(ExerciseView exercise, int orderNumber);
