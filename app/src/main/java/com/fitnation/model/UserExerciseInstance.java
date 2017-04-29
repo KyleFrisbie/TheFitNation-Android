@@ -100,10 +100,6 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView {
         return false;
     }
 
-    @Override
-    public boolean isSelectable() {
-        return false;
-    }
 
     @Override
     public String getName() {

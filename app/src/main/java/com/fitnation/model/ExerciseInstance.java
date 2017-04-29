@@ -129,10 +129,6 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
         return selected;
     }
 
-    @Override
-    public boolean isSelectable() {
-        return true;
-    }
 
     @Override
     public String getName() {

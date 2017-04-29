@@ -14,7 +14,6 @@ public interface ExerciseView extends Comparable{
     void setExerciseSetViews(List<ExerciseSetView> sets);
     void addExerciseSetView(ExerciseView exercise, int orderNumber);
     boolean isSelected();
-    boolean isSelectable();
     String getName();
     String getSkillLevelLevel();
     String getNotes();
