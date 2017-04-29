@@ -225,7 +225,9 @@
             android:layout_marginTop="35dp"
             android:text="Save"
             android:layout_below="@+id/lifterTypeSpinner"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:theme="@style/Button"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
 
     </RelativeLayout>
