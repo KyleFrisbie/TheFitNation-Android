@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
+import com.fitnation.profile.ProfileFragment;
 import com.fitnation.workout.parent.ExercisesParentFragment;
 import com.fitnation.model.enums.ExerciseAction;
 
@@ -130,7 +131,8 @@ public class NavigationActivity extends BaseActivity
                 Log.i(TAG, "Nav Build Workout is already selected");
             }
         } else if (id == R.id.nav_my_profile) {
-
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_container,
+                    ProfileFragment.newInstance()).addToBackStack(null).commit();
         } else if (id == R.id.nav_logout){
             Intent loginIntent = new Intent(this, LoginBaseActivity.class);
             startActivity(loginIntent);

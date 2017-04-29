@@ -197,7 +197,7 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.last_name_editText)).perform(typeText("name"));
         pressBack();
         onView(withId(R.id.register_button)).perform(click());
-        SystemClock.sleep(DELAY_TIME);
+        SystemClock.sleep(DELAY_TIME*2);
         onView((withText("Success!"))).check(matches(isDisplayed()));
         onView((withText("OK"))).perform(click());
     }
@@ -208,6 +208,7 @@ public class LoginScreenTest extends InstrumentationTest {
         onView(withId(R.id.forgot_login_button)).perform(click());
         forgotLoginScreenIsDisplayed();
         onView(withId(R.id.resetPassword_editText)).perform(typeText("bad@email.com"));
+        SystemClock.sleep(DELAY_TIME);
         pressBack();
         onView(withId(R.id.resetPassword_button)).perform(click());
         SystemClock.sleep(DELAY_TIME);

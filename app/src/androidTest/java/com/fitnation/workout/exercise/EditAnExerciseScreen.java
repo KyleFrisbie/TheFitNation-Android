@@ -1,5 +1,6 @@
 package com.fitnation.workout.exercise;
 
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.test.rule.ActivityTestRule;
 
@@ -59,6 +60,7 @@ public class EditAnExerciseScreen extends InstrumentationTest {
 
     @Test
     public void testEditExerciseScreenElementsVisible() throws Exception {
+        SystemClock.sleep(TEST_WAIT_TIME);
         onView(withId(R.id.reset_button)).check(matches(isDisplayed()));
         onView(withId(R.id.save_button)).check(matches(isDisplayed()));
         onView(withId(R.id.add_set_button)).check(matches(isDisplayed()));
