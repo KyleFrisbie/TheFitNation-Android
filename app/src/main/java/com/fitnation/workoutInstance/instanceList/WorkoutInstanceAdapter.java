@@ -1,6 +1,7 @@
 package com.fitnation.workoutInstance.instanceList;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import butterknife.ButterKnife;
  */
 
 public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstanceAdapter.ViewHolder> {
+    private static final String TAG = WorkoutInstanceAdapter.class.getSimpleName();
     private List<WorkoutInstance> mWorkouts;
     private List<UserWorkoutInstance> mUserWorkouts;
     private OnWorkoutDeletePressedCallback mOnWorkoutDeletePressedCallback;
@@ -38,7 +40,7 @@ public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstance
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public WorkoutInstanceAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.workout_instance_in_list, parent, false);
         return new ViewHolder(view);
     }
@@ -76,6 +78,7 @@ public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstance
 
     @Override
     public int getItemCount() {
+        Log.i(TAG, "getItemCount()" + " array size: " + mWorkouts.size());
         if(mWorkouts != null) {
             return mWorkouts.size();
         } else {
@@ -83,7 +86,7 @@ public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstance
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.workout_name_textView) TextView workoutName;
         @BindView(R.id.modified_date_textView) TextView modifiedDate;
         @BindView(R.id.delete_button) Button deleteWorkoutButton;

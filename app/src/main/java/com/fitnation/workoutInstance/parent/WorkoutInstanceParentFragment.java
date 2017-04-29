@@ -55,10 +55,8 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.workout_instance_fragment, container, false);
+        View v = inflater.inflate(R.layout.workout_instance_parent_fragment, container, false);
         ButterKnife.bind(this, v);
-
-        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(null, this, this, this);
 
         return v;
     }
@@ -82,6 +80,8 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
         Log.i(TAG, "onResume()");
         super.onResume();
     }
+
+
 
     //------------------------------WorkoutInstanceParentContract.View----------------------------//
 
@@ -108,6 +108,8 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
 
     @Override
     public void displayWorkouts(List<WorkoutInstance> workouts) {
+        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(workouts, this, this, this);
+        getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
         mWorkoutInstanceListFragment.displayWorkouts(workouts);
         Log.i(TAG, "displayWorkouts()");
     }
@@ -119,6 +121,8 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
 
     @Override
     public void displayUpdatedWorkouts(List<WorkoutInstance> workoutList) {
+        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(workoutList, this, this, this);
+        getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
         mWorkoutInstanceListFragment.displayWorkouts(workoutList);
     }
 

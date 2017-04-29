@@ -19,6 +19,7 @@ import com.fitnation.workoutInstance.callbacks.OnWorkoutDeletePressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDetailsPressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutLaunchPressedCallback;
 
+import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -66,12 +67,13 @@ public class WorkoutInstanceListFragment extends BaseFragment{
                                                           OnWorkoutDetailsPressedCallback onWorkoutDetailsPressedCallback){
         WorkoutInstanceListFragment workoutInstanceListFragment = new WorkoutInstanceListFragment();
 
-        if(workoutInstances != null && !workoutInstances.isEmpty()) {
-            Bundle bundle = new Bundle();
+//        if(workoutInstances != null && !workoutInstances.isEmpty()) {
+//            Bundle bundle = new Bundle();
+//
+//            bundle.putParcelable(WORKOUT_LIST, Parcels.wrap(workoutInstances));
+//            workoutInstanceListFragment.setArguments(bundle);
+//        }
 
-            bundle.putParcelable(WORKOUT_LIST, Parcels.wrap(workoutInstances));
-            workoutInstanceListFragment.setArguments(bundle);
-        }
         workoutInstanceListFragment.setOnWorkoutDeletePressed(onWorkoutDeletePressedCallback);
         workoutInstanceListFragment.setOnWorkoutLaunchPressed(onWorkoutLaunchPressedCallback);
         workoutInstanceListFragment.setOnWorkoutDetailsPressed(onWorkoutDetailsPressedCallback);
@@ -109,7 +111,7 @@ public class WorkoutInstanceListFragment extends BaseFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mRecyclerView.setAdapter(mAdapter);
+        //mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -138,7 +140,7 @@ public class WorkoutInstanceListFragment extends BaseFragment{
         ButterKnife.bind(this, v);
 
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setFocusable(false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
