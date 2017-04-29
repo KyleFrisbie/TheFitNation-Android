@@ -11,7 +11,7 @@ import org.junit.Before;
  */
 
 public class InstrumentationTest {
-    protected static final long TEST_WAIT_TIME = 5000;
+    protected static final long TEST_WAIT_TIME = 500;
 
     public void unlockScreen(final Activity activity) {
         Runnable wakeUpDevice = new Runnable() {
