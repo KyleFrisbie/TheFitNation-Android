@@ -128,7 +128,6 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
 
     @Test
     public void testCanBuildAndSaveWorkout() throws Exception {
-        final long dialogWaitTime = 10000;
         onView(withRecyclerView(R.id.exercise_recycler_view)
                 .atPositionOnView(0, R.id.add_exercise_box))
                 .perform(scrollTo())
@@ -152,12 +151,12 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         onView(withId(R.id.exercise_list_action)).perform(click());
         onView(withId(R.id.exercise_name_to_save)).perform(typeText("Arnolds Workout"));
         closeSoftKeyboard();
-        SystemClock.sleep(TEST_WAIT_TIME/10);
+
+        SystemClock.sleep(TEST_WAIT_TIME);
         onView(allOf(withId(android.R.id.button1), withText("SAVE"))).perform(scrollTo(), click());
-        SystemClock.sleep(TEST_WAIT_TIME/10);
+        SystemClock.sleep(TEST_WAIT_TIME);
 
         onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(scrollTo(), click());
-
     }
 
     @Test
