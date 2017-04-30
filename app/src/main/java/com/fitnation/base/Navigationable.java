@@ -6,4 +6,5 @@ package com.fitnation.base;
 
 public interface Navigationable {
     public void updateToolbar(boolean show, String title);
+    public void updateMenuItemSelected(int id);
 }

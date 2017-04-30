@@ -65,6 +65,11 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
         Navigator.navigateToEditWorkout(mView.getBaseActivity(), workoutInstance, R.id.content_main_container);
     }
 
+    @Override
+    public void onBuildWorkoutPressed() {
+        Navigator.navigateToBuildWorkout(mView.getBaseActivity(), R.id.content_main_container);
+    }
+
     //---------------------------WorkoutManagerWorkoutsCallback.instance--------------------------//
 
     @Override

@@ -17,6 +17,7 @@ import android.widget.Button;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.base.Navigationable;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.exercise.list.ExercisesListFragment;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
@@ -151,7 +152,8 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
         Log.i(TAG, "onStart()");
         super.onStart();
         mPresenter.onViewReady();
-        ((NavigationActivity) getActivity()).updateToolbar(false, "Build A Workout");
+        ((Navigationable) getActivity()).updateToolbar(false, "Build A Workout");
+        ((Navigationable) getActivity()).updateMenuItemSelected(R.id.nav_build_workout);
     }
 
     @Override

@@ -109,7 +109,7 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     @Override
     public void displayWorkouts(List<WorkoutInstance> workouts) {
         mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(workouts, this, this, this);
-        getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
+        getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_container, mWorkoutInstanceListFragment).commit();
         mWorkoutInstanceListFragment.displayWorkouts(workouts);
         Log.i(TAG, "displayWorkouts()");
     }
@@ -122,7 +122,7 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     @Override
     public void displayUpdatedWorkouts(List<WorkoutInstance> workoutList) {
         mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(workoutList, this, this, this);
-        getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
+        getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_container, mWorkoutInstanceListFragment).commit();
         mWorkoutInstanceListFragment.displayWorkouts(workoutList);
     }
 
@@ -161,6 +161,11 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     @Override
     public void onDetailsPressed(WorkoutInstance workout) {
         mPresenter.onDetailsPressed(workout);
+    }
+
+    @OnClick(R.id.build_workout_button)
+    public void onBuildWorkoutPressed() {
+        mPresenter.onBuildWorkoutPressed();
     }
 
 

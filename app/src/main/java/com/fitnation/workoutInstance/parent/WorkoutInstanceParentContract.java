@@ -30,5 +30,6 @@ public interface WorkoutInstanceParentContract {
         void onDeletePressed(WorkoutInstance workoutInstance);
         void onLaunchPressed(WorkoutInstance workoutInstance);
         void onDetailsPressed(WorkoutInstance workoutInstance);
+        void onBuildWorkoutPressed();
     }
 }
