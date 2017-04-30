@@ -73,8 +73,8 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
         Log.i(TAG, "onStart()");
         super.onStart();
         mPresenter.onViewReady();
-        ((Navigationable) getActivity()).updateToolbar(false, "My Workouts");
-        ((Navigationable) getActivity()).updateMenuItemSelected(R.id.nav_my_workouts);
+        ((Navigationable) getActivity()).updateToolbar(false, getString(R.string.workout_regimens));
+        ((Navigationable) getActivity()).updateMenuItemSelected(R.id.nav_workout_regimens);
     }
 
     @Override

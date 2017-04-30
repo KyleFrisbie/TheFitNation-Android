@@ -120,13 +120,13 @@ public class NavigationActivity extends BaseActivity
         if (id == R.id.nav_start_workout) {
 
         } else if (id == R.id.nav_my_workouts) {
-            if(!item.isChecked()){
-                Navigator.navigateToWorkouts(this, R.id.content_main_container);
-            }
+
         } else if (id == R.id.nav_trends) {
 
         } else if (id == R.id.nav_workout_regimens) {
-
+            if(!item.isChecked()){
+                Navigator.navigateToWorkouts(this, R.id.content_main_container);
+            }
         } else if (id == R.id.nav_my_profile) {
             if(!item.isChecked()) {
                 Navigator.navigateToProfileScreen(this, R.id.content_main_container);
