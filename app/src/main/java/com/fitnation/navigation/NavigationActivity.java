@@ -122,21 +122,15 @@ public class NavigationActivity extends BaseActivity
         } else if (id == R.id.nav_my_workouts) {
             if(!item.isChecked()){
                 Navigator.navigateToWorkouts(this, R.id.content_main_container);
-            }else{
-                Log.i(TAG, "Nav My Workouts is already started");
             }
         } else if (id == R.id.nav_trends) {
 
         } else if (id == R.id.nav_workout_regimens) {
 
-        } else if (id == R.id.nav_build_workout) {
-            if(!item.isChecked()) {
-                Navigator.navigateToBuildWorkout(this, R.id.content_main_container);
-            } else {
-                Log.i(TAG, "Nav Build Workout is already selected");
-            }
         } else if (id == R.id.nav_my_profile) {
-            Navigator.navigateToProfileScreen(this, R.id.content_main_container);
+            if(!item.isChecked()) {
+                Navigator.navigateToProfileScreen(this, R.id.content_main_container);
+            }
         } else if (id == R.id.nav_logout){
             Intent loginIntent = new Intent(this, LoginBaseActivity.class);
             startActivity(loginIntent);

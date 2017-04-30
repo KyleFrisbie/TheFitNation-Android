@@ -14,11 +14,6 @@
             android:title="@string/my_workouts" />
 
         <item
-            android:id="@+id/nav_build_workout"
-            android:icon="@drawable/build_workout"
-            android:title="@string/build_workout" />
-
-        <item
             android:id="@+id/nav_workout_regimens"
             android:icon="@drawable/workout_regimens"
             android:title="@string/workout_regimens" />

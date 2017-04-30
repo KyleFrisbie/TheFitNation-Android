@@ -83,8 +83,6 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
         super.onResume();
     }
 
-
-
     //------------------------------WorkoutInstanceParentContract.View----------------------------//
 
     @Override
