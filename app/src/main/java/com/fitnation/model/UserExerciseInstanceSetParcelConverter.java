@@ -15,7 +15,7 @@ public class UserExerciseInstanceSetParcelConverter extends RealmListParcelConve
 
     @Override
     public UserExerciseInstanceSet itemFromParcel(android.os.Parcel parcel) {
-        return Parcels.unwrap(parcel.readParcelable(ExerciseInstanceSet.class.getClassLoader()));
+        return Parcels.unwrap(parcel.readParcelable(UserExerciseInstanceSet.class.getClassLoader()));
 
     }
 }
