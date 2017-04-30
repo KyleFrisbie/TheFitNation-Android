@@ -1,4 +1,4 @@
-[![Build Status]https://travis-ci.com/RyanNewsom/TheFitNation-Android.svg?token=7sEgaTzpK1qDeq9U7zYw&branch=master](https://travis-ci.com/RyanNewsom/TheFitNation-Android)
+[![Build Status](https://travis-ci.com/RyanNewsom/TheFitNation-Android.svg?token=7sEgaTzpK1qDeq9U7zYw&branch=master)](https://travis-ci.com/RyanNewsom/TheFitNation-Android)
 [![codecov](https://codecov.io/gh/RyanNewsom/TheFitNation-Android/branch/master/graph/badge.svg?token=y1GuaVo4BA)](https://codecov.io/gh/RyanNewsom/TheFitNation-Android)
 
 # The Fit Nation
