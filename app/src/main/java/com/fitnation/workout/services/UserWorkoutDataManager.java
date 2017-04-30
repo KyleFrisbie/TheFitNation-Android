@@ -27,6 +27,20 @@ public class UserWorkoutDataManager extends DataManager {
         mRequestQueue = Volley.newRequestQueue(context);
     }
 
+    public void saveUserWorkoutTemplate(final UserWorkoutTemplate userWorkoutTemplate, final SaveWorkoutCallback saveWorkoutCallback) {
+        saveData(userWorkoutTemplate, new DataResult() {
+            @Override
+            public void onError() {
+                saveWorkoutCallback.onFailure("Failed to save to realm");
+            }
+
+            @Override
+            public void onSuccess() {
+                saveWorkoutCallback.onSuccess();
+            }
+        });
+    }
+
     public void saveUserWorkout(final UserWorkoutInstance userWorkoutInstance, final UserWorkoutTemplate userWorkoutTemplate, final SaveWorkoutCallback saveWorkoutCallback) {
         saveData(userWorkoutTemplate, new DataResult() {
             @Override

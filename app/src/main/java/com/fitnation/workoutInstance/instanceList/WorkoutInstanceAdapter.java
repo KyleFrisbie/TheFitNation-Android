@@ -48,7 +48,7 @@ public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstance
         final WorkoutView Workouts = mWorkouts.get(position);
 
         holder.workoutName.setText(Workouts.getName());
-        holder.modifiedDate.setText(Workouts.getLastUpdated());
+        holder.modifiedDate.setText(Workouts.getCreatedOn());
         holder.deleteWorkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

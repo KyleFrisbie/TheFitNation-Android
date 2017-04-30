@@ -13,11 +13,18 @@ import com.fitnation.model.WorkoutInstance;
 import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.utils.PrimaryKeyFactory;
+import com.fitnation.workout.callbacks.SaveWorkoutCallback;
+import com.fitnation.workout.services.UserWorkoutDataManager;
+import com.fitnation.workout.services.WorkoutDataManager;
 import com.fitnation.workoutInstance.callbacks.UserWorkoutInstanceRequestCallback;
+import com.fitnation.workoutInstance.callbacks.UserWorkoutTemplateRequestCallback;
 import com.fitnation.workoutInstance.callbacks.WorkoutInstanceRequestCallback;
 import com.fitnation.workoutInstance.callbacks.WorkoutManagerWorkoutsCallback;
+import com.fitnation.workoutInstance.callbacks.WorkoutTemplateRequestCallback;
 import com.fitnation.workoutInstance.parent.tasks.UserWorkoutInstancesTasks;
+import com.fitnation.workoutInstance.parent.tasks.UserWorkoutTemplateTasks;
 import com.fitnation.workoutInstance.parent.tasks.WorkoutInstancesTasks;
+import com.fitnation.workoutInstance.parent.tasks.WorkoutTemplateTasks;
 
 import java.util.List;
 
@@ -31,11 +38,13 @@ public class WorkoutManager extends DataManager {
     private static final String TAG = WorkoutManager.class.getSimpleName();
     private static String mAuthToken;
     private RequestQueue mRequestQueue;
+    private Context mContext;
     private List<UserWorkoutInstance> mUserWorkoutInstances;
     private List<WorkoutInstance> mWorkoutInstances;
 
 
     public WorkoutManager(Context context) {
+        mContext = context;
         mRequestQueue = Volley.newRequestQueue(context);
         mAuthToken = AuthToken.getInstance().getAccessToken();
     }
@@ -105,7 +114,11 @@ public class WorkoutManager extends DataManager {
         //TODO build delete logic
     }
 
-    private UserWorkoutTemplate getUserWorkoutTemplate() {
+    public void deleteUserWorkoutInstance(UserWorkoutInstance userWorkoutInstance){
+        //TODO build delete logic
+    }
+
+    public UserWorkoutTemplate getUserWorkoutTemplate() {
         Realm realm = null;
         UserWorkoutTemplate userWorkoutTemplate = null;
         Log.i(TAG, "Determining workout template");
@@ -123,9 +136,31 @@ public class WorkoutManager extends DataManager {
                 Log.i(TAG, "We have at least one workout template in the DB");
                 RealmResults<UserWorkoutTemplate> query = realm.where(UserWorkoutTemplate.class).findAll();
                 if (query.size() == 0) {
-                    Log.i(TAG, "No workout template's found in query, making a new one");
-                    userWorkoutTemplate = new UserWorkoutTemplate();
-                    userWorkoutTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(UserWorkoutTemplate.class));
+                    Log.i(TAG, "No workout template's found in query, getting a new one");
+                    UserWorkoutTemplateTasks userWorkoutTemplateTasks = new UserWorkoutTemplateTasks(mAuthToken, mRequestQueue);
+                    userWorkoutTemplateTasks.getAllUserWorkoutTemplates(new UserWorkoutTemplateRequestCallback.getAll() {
+                        @Override
+                        public void onGetAllSuccess(List<UserWorkoutTemplate> workoutInstances) {
+                            UserWorkoutDataManager userWorkoutDataManager = new UserWorkoutDataManager(mContext);
+                            UserWorkoutTemplate userWorkoutTemplate1 = workoutInstances.get(0);
+                            userWorkoutDataManager.saveUserWorkoutTemplate(userWorkoutTemplate1, new SaveWorkoutCallback() {
+                                @Override
+                                public void onSuccess() {
+                                    Log.i(TAG, "onUserWorkoutTemplateSaveSuccess()");
+                                }
+
+                                @Override
+                                public void onFailure(String error) {
+                                    Log.i(TAG, "onUserWorkoutTemplateSaveFailure()");
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onGetAllFailure(String error) {
+                            Log.i(TAG, "Failed to get UserWorkoutTemplate form server");
+                        }
+                    });
                 } else {
                     Log.i(TAG, "Found the workout template");
                     userWorkoutTemplate = query.first();
@@ -144,7 +179,7 @@ public class WorkoutManager extends DataManager {
         return userWorkoutTemplate;
     }
 
-    private WorkoutTemplate getWorkoutTemplate() {
+    public WorkoutTemplate getWorkoutTemplate() {
         Realm realm = null;
         WorkoutTemplate workoutTemplate = null;
         Log.i(TAG, "Determining workout template");
@@ -163,10 +198,32 @@ public class WorkoutManager extends DataManager {
                 Log.i(TAG, "We have at least one workout template in the DB");
                 RealmResults<WorkoutTemplate> query = realm.where(WorkoutTemplate.class).findAll();
                 if (query.size() == 0) {
-                    Log.i(TAG, "No workout template's found in query, making a new one");
-                    workoutTemplate = new WorkoutTemplate();
-                    workoutTemplate.setName("Individual Workout's");
-                    workoutTemplate.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class));
+                    Log.i(TAG, "No workout template's found in query, getting a new one");
+                    WorkoutTemplateTasks workoutTemplateTasks = new WorkoutTemplateTasks(mAuthToken, mRequestQueue);
+                    workoutTemplateTasks.getAllWorkoutTemplates(new WorkoutTemplateRequestCallback.getAll() {
+                        @Override
+                        public void onGetAllSuccess(List<WorkoutTemplate> workoutTemplates) {
+                            WorkoutDataManager workoutDataManager = new WorkoutDataManager(mContext);
+                            WorkoutTemplate workoutTemplate1 = workoutTemplates.get(0);
+
+                            workoutDataManager.saveWorkoutTemplate(workoutTemplate1, new SaveWorkoutCallback() {
+                                @Override
+                                public void onSuccess() {
+                                    Log.i(TAG, "onWorkoutTemplateSaveSuccess()");
+                                }
+
+                                @Override
+                                public void onFailure(String error) {
+                                    Log.i(TAG, "onWorkoutTemplateSaveFailure()");
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onGetAllFailure(String error) {
+                            Log.i(TAG, "Failed to get workout template");
+                        }
+                    });
                 } else {
                     Log.i(TAG, "Found the workout template");
                     workoutTemplate = query.first();

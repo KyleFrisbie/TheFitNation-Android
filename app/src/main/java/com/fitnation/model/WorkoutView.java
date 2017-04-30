@@ -7,7 +7,7 @@ package com.fitnation.model;
 public interface WorkoutView extends Comparable, Cloneable {
     String getName();
 
-    String getLastUpdated();
+    String getCreatedOn();
 
     String getNotes();
 

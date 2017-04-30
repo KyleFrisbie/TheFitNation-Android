@@ -2,6 +2,7 @@ package com.fitnation.model;
 
 import android.support.annotation.NonNull;
 
+import com.fitnation.utils.DateFormatter;
 import com.google.gson.annotations.Expose;
 
 import org.parceler.Parcel;
@@ -66,6 +67,11 @@ public class WorkoutInstance extends RealmObject implements Cloneable, Comparabl
         SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
         createdOn = dateFormat.format(createdOnObj);
         lastUpdated = dateFormat.format(lastUpdatedObj);
+    }
+
+    @Override
+    public String getCreatedOn() {
+        return DateFormatter.getUIDate(createdOn);
     }
 
     public WorkoutInstance (List<ExerciseInstance> exerciseInstances, String name) {

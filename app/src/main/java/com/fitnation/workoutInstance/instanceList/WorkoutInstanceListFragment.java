@@ -19,6 +19,7 @@ import com.fitnation.workoutInstance.callbacks.OnWorkoutLaunchPressedCallback;
 
 import org.parceler.Parcels;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -52,13 +53,13 @@ public class WorkoutInstanceListFragment extends BaseFragment{
                                                           OnWorkoutLaunchPressedCallback onWorkoutLaunchPressedCallback,
                                                           OnWorkoutDetailsPressedCallback onWorkoutDetailsPressedCallback){
         WorkoutInstanceListFragment workoutInstanceListFragment = new WorkoutInstanceListFragment();
+        Bundle bundle = new Bundle();
 
-//        if(workoutInstances != null && !workoutInstances.isEmpty()) {
-//            Bundle bundle = new Bundle();
-//
-//            bundle.putParcelable(WORKOUT_LIST, Parcels.wrap(workoutInstances));
-//            workoutInstanceListFragment.setArguments(bundle);
-//        }
+        if(workoutInstances != null && !workoutInstances.isEmpty()) {
+            bundle.putParcelable(WORKOUT_LIST, Parcels.wrap(workoutInstances));
+        }
+
+        workoutInstanceListFragment.setArguments(bundle);
 
         workoutInstanceListFragment.setOnWorkoutDeletePressed(onWorkoutDeletePressedCallback);
         workoutInstanceListFragment.setOnWorkoutLaunchPressed(onWorkoutLaunchPressedCallback);
@@ -97,7 +98,8 @@ public class WorkoutInstanceListFragment extends BaseFragment{
         Bundle bundle = getArguments();
 
         if(bundle != null) {
-            mWorkouts = (List<WorkoutView>) bundle.get(WORKOUT_LIST);
+            mWorkouts = Parcels.unwrap(bundle.getParcelable(WORKOUT_LIST));
+
         }
 
         if(savedInstanceState != null) {

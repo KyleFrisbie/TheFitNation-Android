@@ -36,8 +36,12 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
         //get the workouts
         mView.showProgress();
         if (Objects.equals(mWorkoutTypeToReturn, "WORKOUT_INSTANCE")) {
+            Log.i(TAG, "getting template");
+            mWorkoutManager.getWorkoutTemplate();
             mWorkoutManager.getAllWorkoutInstances(this);
         } else if (Objects.equals(mWorkoutTypeToReturn, "USER_WORKOUT_INSTANCE")) {
+            Log.i(TAG, "getting template");
+            mWorkoutManager.getUserWorkoutTemplate();
             mWorkoutManager.getAllUserWorkoutInstances(this);
         } else {
             Log.i(TAG, "no workout type set error.");
@@ -62,7 +66,7 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
         if (Objects.equals(mWorkoutTypeToReturn, "WORKOUT_INSTANCE")) {
             mWorkoutManager.deleteWorkoutInstance((WorkoutInstance) workoutInstance);
         } else if (Objects.equals(mWorkoutTypeToReturn, "USER_WORKOUT_INSTANCE")) {
-
+            mWorkoutManager.deleteUserWorkoutInstance((UserWorkoutInstance) workoutInstance);
         } else {
             Log.i(TAG, "no Workout type set error");
         }
@@ -78,7 +82,11 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
     @Override
     public void onDetailsPressed(WorkoutView workoutInstance) {
         Log.i(TAG, "onDetailsPressed()");
-        Navigator.navigateToEditWorkout(mView.getBaseActivity(), (WorkoutInstance) workoutInstance, R.id.content_main_container);
+        if(Objects.equals(mWorkoutTypeToReturn, "WORKOUT_INSTANCE")) {
+            Navigator.navigateToEditWorkout(mView.getBaseActivity(), (WorkoutInstance) workoutInstance, R.id.content_main_container);
+        }else {
+            //TODO: link user details stuff.
+        }
     }
 
     //---------------------------WorkoutManagerWorkoutsCallback.instance--------------------------//

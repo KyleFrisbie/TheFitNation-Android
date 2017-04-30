@@ -135,11 +135,6 @@ public class UserWorkoutInstance extends RealmObject implements Cloneable, Compa
         return workoutInstanceName;
     }
 
-    @Override
-    public String getLastUpdated() {
-        return null;
-    }
-
     public String getNotes() {
         return notes;
     }
