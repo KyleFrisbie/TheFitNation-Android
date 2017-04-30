@@ -10,12 +10,18 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
+import com.fitnation.model.UserExerciseInstance;
+import com.fitnation.model.UserWorkoutInstance;
+import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.JsonParser;
 import com.fitnation.networking.tasks.callbacks.GetExerciseInstanceCallback;
+import com.fitnation.networking.tasks.callbacks.GetExerciseInstancesForListCallback;
 import com.fitnation.utils.EnvironmentManager;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,6 +32,28 @@ public class ExerciseInstanceTask extends NetworkTask {
 
     public ExerciseInstanceTask(String authToken, RequestQueue requestQueue) {
         super(authToken, requestQueue);
+    }
+
+    public void getExerciseInstancesForList(final List<UserExerciseInstance> userExerciseInstances, final GetExerciseInstancesForListCallback callback) {
+        for (int i = 0; i < userExerciseInstances.size(); i++) {
+            final UserExerciseInstance userExerciseInstance = userExerciseInstances.get(i);
+            final boolean lastOne = (i+1 == userExerciseInstances.size());
+
+            getExerciseInstance(userExerciseInstance.getExerciseInstanceId(), new GetExerciseInstanceCallback() {
+                @Override
+                public void onSuccess(ExerciseInstance exerciseInstance) {
+                    userExerciseInstance.setExerciseInstance(exerciseInstance);
+                    if(lastOne) {
+                        callback.onSuccess(userExerciseInstances);
+                    }
+                }
+
+                @Override
+                public void onFailure(String error) {
+                    Log.e(TAG, "Failed while trying to get ExerciseInstance for UserExerciseInstance");
+                }
+            });
+        }
     }
 
     public void getExerciseInstance(long id, final GetExerciseInstanceCallback callback) {
