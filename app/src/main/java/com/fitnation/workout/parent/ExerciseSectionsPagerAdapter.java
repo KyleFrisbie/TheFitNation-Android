@@ -48,9 +48,15 @@ public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
     }
 
     public void refresh(List<ExerciseInstance> exerciseListTab1, List<ExerciseInstance> exerciseListTab2, List<ExerciseInstance> exerciseListTab3) {
-        mFragmentTab1.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(exerciseListTab1));
-        mFragmentTab2.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(exerciseListTab2));
-        mFragmentTab3.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(exerciseListTab3));
+        if(mFragmentTab1 != null) {
+            mFragmentTab1.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(exerciseListTab1));
+        }
+        if(mFragmentTab2 != null) {
+            mFragmentTab2.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(exerciseListTab2));
+        }
+        if(mExerciseListTab3 != null) {
+            mFragmentTab3.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(exerciseListTab3));
+        }
     }
 
     @Override
