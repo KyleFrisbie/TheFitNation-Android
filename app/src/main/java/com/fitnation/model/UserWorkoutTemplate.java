@@ -32,9 +32,6 @@ public class UserWorkoutTemplate extends RealmObject {
     private String workoutTemplateName;
     private Long workoutTemplateId;
 
-
-
-
     public UserWorkoutTemplate() {
 
     }

@@ -84,6 +84,7 @@ public class EditWorkoutPresenter implements EditWorkoutContract.Presenter, OnEx
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        Navigator.navigateToWorkouts(mView.getBaseActivity(), R.id.content_main_container);
                     }
                 }));
             }

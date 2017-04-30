@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.callbacks.OnSetSelectedCallback;
 import com.fitnation.navigation.NavigationActivity;

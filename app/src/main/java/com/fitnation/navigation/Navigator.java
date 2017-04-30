@@ -19,6 +19,7 @@ import com.fitnation.workout.exercise.ViewExerciseFragment;
 import com.fitnation.workout.exercise.ViewExercisePresenter;
 import com.fitnation.workout.view.template.EditWorkoutFragment;
 import com.fitnation.workout.view.template.EditWorkoutPresenter;
+import com.fitnation.workoutInstance.parent.WorkoutInstanceParentFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,19 +57,22 @@ public class Navigator {
         activity.getSupportFragmentManager().beginTransaction().replace(containerId,
                 ProfileFragment.newInstance()).addToBackStack(null).commit();
     }
+    public static void navigateToWorkouts(BaseActivity activity, int containerId) {
+        activity.getSupportFragmentManager().beginTransaction().replace(containerId, WorkoutInstanceParentFragment.newInstance(activity)).commit();
+    }
 
     public static void navigateToEditWorkout(BaseActivity activity, WorkoutInstance workoutInstance, int containterId) {
         EditWorkoutFragment editWorkoutFragment = EditWorkoutFragment.newInstance(workoutInstance);
 
         editWorkoutFragment.setPresenter(new EditWorkoutPresenter(editWorkoutFragment, activity));
-        activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment).commit();
+        activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment).addToBackStack(null).commit();
     }
 
     public static void navigateToEditUserWorkout(BaseActivity activity, UserWorkoutInstance userWorkoutInstance, UserWorkoutTemplate userWorkoutTemplate, int containterId) {
         EditUserWorkoutFragment editWorkoutFragment = EditUserWorkoutFragment.newInstance(userWorkoutInstance, userWorkoutTemplate);
 
         editWorkoutFragment.setPresenter(new EditUserWorkoutPresenter(editWorkoutFragment));
-        activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment ).commit();
+        activity.getSupportFragmentManager().beginTransaction().replace(containterId, editWorkoutFragment ).addToBackStack(null).commit();
     }
 
     public static void navigateToEditExercise(BaseActivity activity, ExerciseView exerciseView, OnExerciseUpdatedCallback callback, int containerId) {
@@ -82,6 +86,6 @@ public class Navigator {
         SaveUserWorkoutInstanceFragment saveUserWorkoutInstanceFragment = SaveUserWorkoutInstanceFragment.newInstance(userWorkoutInstance, userWorkoutTemplate);
 
         saveUserWorkoutInstanceFragment.setPresenter(new SaveUserWorkoutPresenter(saveUserWorkoutInstanceFragment, activity.getBaseContext()));
-        activity.getSupportFragmentManager().beginTransaction().replace(containerId, saveUserWorkoutInstanceFragment ).commit();
+        activity.getSupportFragmentManager().beginTransaction().add(containerId, saveUserWorkoutInstanceFragment ).addToBackStack(null).commit();
     }
 }

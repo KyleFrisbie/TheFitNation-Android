@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.fitnation.networking.tasks.callbacks.WorkoutTemplatePostCallback;
+
 import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.networking.JsonParser;
 import com.fitnation.utils.EnvironmentManager;

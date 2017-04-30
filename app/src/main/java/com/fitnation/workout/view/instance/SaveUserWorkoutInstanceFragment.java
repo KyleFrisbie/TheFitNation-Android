@@ -17,6 +17,7 @@ import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.UserWorkoutTemplate;
+import com.fitnation.navigation.NavigationActivity;
 
 import org.parceler.Parcels;
 
@@ -88,6 +89,12 @@ public class SaveUserWorkoutInstanceFragment extends BaseFragment implements Sav
         }
 
         return v;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((NavigationActivity)getBaseActivity()).updateToolbar(true, "Save " + mUserWorkoutInstance.getWorkoutInstanceName() + " " + mUserWorkoutInstance.getCreatedOn());
     }
 
     @OnCheckedChanged(R.id.completed_checkbox)

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 
 import org.parceler.Parcel;
+import org.parceler.ParcelPropertyConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import io.realm.UserExerciseInstanceRealmProxy;
  * Created by Ryan on 3/22/2017.
  */
 @Parcel(implementations = {UserExerciseInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { UserExerciseInstance.class })
-public class UserExerciseInstance extends RealmObject implements ExerciseView {
+public class UserExerciseInstance extends RealmObject implements ExerciseView, Cloneable {
     private Long id;
     private Long userWorkoutInstanceId;
     private Long exerciseInstanceId;
@@ -100,6 +101,10 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView {
         return false;
     }
 
+    @Override
+    public boolean hasExerciseParent() {
+        return exerciseInstance.hasExerciseParent();
+    }
 
     @Override
     public String getName() {
@@ -122,13 +127,41 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView {
     }
 
     @Override
+    public void setParentExercise(Exercise exercise) {
+        this.exerciseInstance.setParentExercise(exercise);
+    }
+
+    @Override
     public Long getId() {
         return id;
     }
 
     @Override
+    public Long getParentExerciseId() {
+        return exerciseInstance.getParentExerciseId();
+    }
+
+    @Override
     public Object clone() {
-        return null;
+        UserExerciseInstance cloned = null;
+        try {
+            cloned = (UserExerciseInstance) super.clone();
+            RealmList<UserExerciseInstanceSet> setsClones = new RealmList<>();
+            for (UserExerciseInstanceSet set : userExerciseInstanceSets) {
+                UserExerciseInstanceSet clone = (UserExerciseInstanceSet) set.clone();
+                setsClones.add(clone);
+            }
+            cloned.setUserExerciseInstanceSets(setsClones);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+        return cloned;
+    }
+
+    @ParcelPropertyConverter(UserExerciseInstanceSetParcelConverter.class)
+    public void setUserExerciseInstanceSets(RealmList<UserExerciseInstanceSet> userExerciseInstanceSets) {
+        this.userExerciseInstanceSets = userExerciseInstanceSets;
     }
 
     @Override

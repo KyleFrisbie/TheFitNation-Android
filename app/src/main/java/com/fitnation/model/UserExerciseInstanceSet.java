@@ -140,4 +140,9 @@ public class UserExerciseInstanceSet extends RealmObject implements ExerciseSetV
 
         return this.orderNumber - otherInstanceSet.getOrderNumber();
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

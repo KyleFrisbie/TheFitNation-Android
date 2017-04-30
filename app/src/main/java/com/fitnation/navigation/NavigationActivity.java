@@ -22,6 +22,7 @@ import com.fitnation.model.enums.ExerciseAction;
 
 import java.util.List;
 import com.fitnation.login.LoginBaseActivity;
+import com.fitnation.workoutInstance.parent.WorkoutInstanceParentFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -116,7 +117,11 @@ public class NavigationActivity extends BaseActivity
         if (id == R.id.nav_start_workout) {
 
         } else if (id == R.id.nav_my_workouts) {
-
+            if(!item.isChecked()){
+                Navigator.navigateToWorkouts(this, R.id.content_main_container);
+            }else{
+                Log.i(TAG, "Nav My Workouts is already started");
+            }
         } else if (id == R.id.nav_trends) {
 
         } else if (id == R.id.nav_workout_regimens) {

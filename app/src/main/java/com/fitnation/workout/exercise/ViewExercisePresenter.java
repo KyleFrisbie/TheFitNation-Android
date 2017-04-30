@@ -2,9 +2,14 @@ package com.fitnation.workout.exercise;
 
 import android.util.Log;
 
+import com.android.volley.toolbox.Volley;
+import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseSetView;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.model.UserExerciseInstanceSet;
+import com.fitnation.networking.AuthToken;
+import com.fitnation.networking.tasks.ExerciseTask;
+import com.fitnation.networking.tasks.callbacks.ExerciseRequestCallback;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.workout.callbacks.OnSetSelectedCallback;
 import com.fitnation.model.ExerciseInstance;
@@ -20,19 +25,35 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
     private ExerciseView mExercise;
     private ViewExerciseContract.View mView;
     private OnExerciseUpdatedCallback mOnExerciseUpdatedCallback;
-    private ExerciseInstance mOriginalExerciseInstance;
+    private ExerciseView mOriginalExerciseInstance;
 
 
     public ViewExercisePresenter(ExerciseView exercise, ViewExerciseContract.View view, OnExerciseUpdatedCallback onExerciseUpdatedCallback) {
         mExercise = exercise;
         mView = view;
         mOnExerciseUpdatedCallback = onExerciseUpdatedCallback;
-        mOriginalExerciseInstance = (ExerciseInstance) exercise.clone();
+        mOriginalExerciseInstance = (ExerciseView) exercise.clone();
     }
 
     @Override
     public void onViewReady() {
         mView.bindExerciseInstanceToView(mExercise, this);
+        if(!mExercise.hasExerciseParent()) {
+            ExerciseTask exerciseTask = new ExerciseTask(AuthToken.getInstance().getAccessToken(), Volley.newRequestQueue(mView.getBaseActivity()));
+            exerciseTask.getExerciseInstance(mExercise.getParentExerciseId(), new ExerciseRequestCallback() {
+                @Override
+                public void onError(String error) {
+                    Log.e(TAG, "Error retrieving parent exercise" + error);
+                }
+
+                @Override
+                public void onSuccess(Exercise exercise) {
+                    Log.i(TAG, "Success retrieving parent exercise" + exercise);
+                    mExercise.setParentExercise(exercise);
+                    mView.bindExerciseInstanceToView(mExercise, ViewExercisePresenter.this);
+                }
+            });
+        }
     }
 
     @Override
@@ -58,11 +79,12 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
     @Override
     public void onSaveClicked(ExerciseView exerciseInstance) {
         onExit(exerciseInstance);
+        mView.getBaseActivity().onBackPressed();
     }
 
     @Override
     public void onResetClicked() {
-        mExercise = (ExerciseInstance) mOriginalExerciseInstance.clone();
+        mExercise = (ExerciseView) mOriginalExerciseInstance.clone();
 
         mView.bindExerciseInstanceToView(mExercise, this);
     }
@@ -70,11 +92,6 @@ public class ViewExercisePresenter implements ViewExerciseContract.Presenter, On
     @Override
     public void onExit(ExerciseView exerciseInstance) {
         mOnExerciseUpdatedCallback.exerciseUpdated(exerciseInstance);
-        try {
-            mView.getBaseActivity().onBackPressed();
-        } catch (IllegalStateException ise) {
-            Log.e(TAG, "Error onExit(): " + ise.getMessage());
-        }
     }
 
     @Override
