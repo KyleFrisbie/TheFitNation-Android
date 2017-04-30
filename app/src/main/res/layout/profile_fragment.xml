@@ -167,6 +167,7 @@
             android:layout_alignBottom="@+id/weightEditText"
             android:layout_alignEnd="@+id/ageText"
             android:text="@string/switchMeasureToMetric"
+            android:textColor="@color/actionable"
             android:textAlignment="textEnd"
             android:textSize="18sp" />
 
@@ -225,7 +226,11 @@
             android:layout_marginTop="35dp"
             android:text="Save"
             android:layout_below="@+id/lifterTypeSpinner"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:theme="@style/Button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:paddingLeft="80dp"
+            android:paddingRight="80dp"/>
 
 
     </RelativeLayout>

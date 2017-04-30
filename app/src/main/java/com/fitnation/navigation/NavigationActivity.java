@@ -34,8 +34,12 @@ public class NavigationActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, Navigationable {
     private static final String TAG = NavigationActivity.class.getSimpleName();
 
-    @BindView(R.id.toolbar) public Toolbar mToolbar;
-    @BindView(R.id.drawer_layout) public DrawerLayout mDrawerLayout;
+    @BindView(R.id.toolbar)
+    public Toolbar mToolbar;
+    @BindView(R.id.drawer_layout)
+    public DrawerLayout mDrawerLayout;
+    @BindView(R.id.nav_view)
+    public NavigationView mNavigationView;
     private ActionBarDrawerToggle mToggle;
 
     @Override
@@ -44,8 +48,7 @@ public class NavigationActivity extends BaseActivity
         setContentView(R.layout.root_activity_navigation);
         ButterKnife.bind(this);
         setUpActionBar();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     private void setUpActionBar() {
@@ -117,24 +120,17 @@ public class NavigationActivity extends BaseActivity
         if (id == R.id.nav_start_workout) {
 
         } else if (id == R.id.nav_my_workouts) {
-            if(!item.isChecked()){
-                Navigator.navigateToWorkouts(this, R.id.content_main_container);
-            }else{
-                Log.i(TAG, "Nav My Workouts is already started");
-            }
+
         } else if (id == R.id.nav_trends) {
 
         } else if (id == R.id.nav_workout_regimens) {
-
-        } else if (id == R.id.nav_build_workout) {
-            if(!item.isChecked()) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_container, ExercisesParentFragment.newInstance(this, ExerciseAction.SAVE)).commit();
-            } else {
-                Log.i(TAG, "Nav Build Workout is already selected");
+            if(!item.isChecked()){
+                Navigator.navigateToWorkouts(this, R.id.content_main_container);
             }
         } else if (id == R.id.nav_my_profile) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_main_container,
-                    ProfileFragment.newInstance()).addToBackStack(null).commit();
+            if(!item.isChecked()) {
+                Navigator.navigateToProfileScreen(this, R.id.content_main_container);
+            }
         } else if (id == R.id.nav_logout){
             Intent loginIntent = new Intent(this, LoginBaseActivity.class);
             startActivity(loginIntent);
@@ -151,11 +147,18 @@ public class NavigationActivity extends BaseActivity
         }
     }
 
+    //---------------------------------Navigationable---------------------------------------------//
+
     @Override
     public void updateToolbar(boolean show, String title) {
         Navigator.addNavigationState(new NavigationState(show, title));
 
         updateToolbarView(show, title);
+    }
+
+    @Override
+    public void updateMenuItemSelected(int id) {
+        mNavigationView.setCheckedItem(id);
     }
 
     private void updateToolbarView(boolean show, String title) {

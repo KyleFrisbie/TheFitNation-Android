@@ -289,10 +289,9 @@ public class ProfileScreenTest extends InstrumentationTest {
                 perform(scrollTo(), click());
         SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withText("Trends")).perform(click());
-        onNavMyProfilePressed();
-        profilePageIsDisplayed();
-        pressBack();
+//        onNavMyProfilePressed();
+//        profilePageIsDisplayed();
+//        pressBack();
     }
 
 
@@ -334,8 +333,8 @@ public class ProfileScreenTest extends InstrumentationTest {
         SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withText("Trends")).perform(click());
-        onNavMyProfilePressed();
-        profilePageIsDisplayed();
+//        onNavMyProfilePressed();
+//        profilePageIsDisplayed();
     }
 
     public void onNavMyProfilePressed(){

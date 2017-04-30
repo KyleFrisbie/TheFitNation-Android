@@ -81,7 +81,6 @@ public class NavigationScreenTest extends InstrumentationTest{
     public void onNavWorkoutRegimensPressed(){
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
-        onView(withText("Workout Regimens")).perform(click());
     }
 
     public void onNavMyProfilePressed(){
@@ -100,19 +99,5 @@ public class NavigationScreenTest extends InstrumentationTest{
         onView(withId(R.id.password_editText)).check(matches(isDisplayed()));
         onView(withId(R.id.signUp_textView)).check(matches(isDisplayed()));
         onView(withId(R.id.logo_imageView)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void onNavItemCreateWorkoutSelected() {
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withText(R.string.build_workout)).check(matches(isDisplayed()));
-        onView(withText(R.string.build_workout)).perform(ViewActions.click());
-
-        //TODO mock web service
-//        SystemClock.sleep(1000);
-//        onView(withId(R.id.tabs)).check(matches(isDisplayed()));
-//        onView(withText(R.string.beginner)).check(matches(isDisplayed()));
-//        onView(withText(R.string.intermediate)).check(matches(isDisplayed()));
-//        onView(withText(R.string.advanced)).check(matches(isDisplayed()));
     }
 }

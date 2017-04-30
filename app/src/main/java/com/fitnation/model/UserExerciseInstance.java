@@ -107,11 +107,6 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView, C
     }
 
     @Override
-    public boolean isSelectable() {
-        return false;
-    }
-
-    @Override
     public String getName() {
         return exerciseInstance.getName();
     }
