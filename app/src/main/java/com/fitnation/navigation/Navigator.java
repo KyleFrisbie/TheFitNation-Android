@@ -46,11 +46,13 @@ public class Navigator {
     }
 
     public static void navigateToWorkouts(BaseActivity activity, int containerId) {
-        activity.getSupportFragmentManager().beginTransaction().replace(containerId, WorkoutInstanceParentFragment.newInstance(activity, "WORKOUT_INSTANCE")).commit();
+        activity.getSupportFragmentManager().beginTransaction().replace(containerId, WorkoutInstanceParentFragment.newInstance(
+                activity, WorkoutInstanceParentFragment.WORKOUT_INSTANCE_FRAGMENT)).commit();
     }
 
     public static void navigateToPastWorkouts(BaseActivity activity, int containerId) {
-        activity.getSupportFragmentManager().beginTransaction().replace(containerId, WorkoutInstanceParentFragment.newInstance(activity, "USER_WORKOUT_INSTANCE")).commit();
+        activity.getSupportFragmentManager().beginTransaction().replace(containerId, WorkoutInstanceParentFragment.newInstance(
+                activity, WorkoutInstanceParentFragment.USER_WORKOUT_INSTANCE_FRAGMENT)).commit();
     }
 
     public static void navigateToEditWorkout(BaseActivity activity, WorkoutInstance workoutInstance, int containterId) {

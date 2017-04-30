@@ -31,8 +31,12 @@ import butterknife.ButterKnife;
 
 public class WorkoutInstanceParentFragment extends BaseFragment implements WorkoutInstanceParentContract.View, OnWorkoutDeletePressedCallback, OnWorkoutLaunchPressedCallback, OnWorkoutDetailsPressedCallback {
     private static final String TAG = WorkoutInstanceParentFragment.class.getSimpleName();
+    public static final String WORKOUT_FRAGMENT_TYPE = "WorkoutType";
+    public static final String WORKOUT_INSTANCE_FRAGMENT = "WORKOUT_INSTANCE";
+    public static final String USER_WORKOUT_INSTANCE_FRAGMENT = "USER_WORKOUT_INSTANCE";
     private WorkoutInstanceParentContract.Presenter mPresenter;
     private WorkoutInstanceListFragment mWorkoutInstanceListFragment;
+    private String mFragmentType;
 
     public WorkoutInstanceParentFragment() {
         //required empty constructor
@@ -41,7 +45,7 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     public static WorkoutInstanceParentFragment newInstance(Context context, String workoutInstanceType) {
         WorkoutInstanceParentFragment fragment = new WorkoutInstanceParentFragment();
         Bundle args = new Bundle();
-        args.putString("WorkoutType", workoutInstanceType);
+        args.putString(WORKOUT_FRAGMENT_TYPE, workoutInstanceType);
         fragment.setArguments(args);
         fragment.setPresenter(new WorkoutInstanceParentPresenter(context, fragment, workoutInstanceType));
 
@@ -51,6 +55,9 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        mFragmentType = args.getString(WORKOUT_FRAGMENT_TYPE, null);
     }
 
     @Nullable
@@ -73,7 +80,11 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
         Log.i(TAG, "onStart()");
         super.onStart();
         mPresenter.onViewReady();
-        ((NavigationActivity) getActivity()).updateToolbar(false, "My Workouts");
+        if(mFragmentType.equals(WORKOUT_INSTANCE_FRAGMENT)) {
+            ((NavigationActivity) getActivity()).updateToolbar(false, getString(R.string.workout_regimens));
+        } else if(mFragmentType.equals(USER_WORKOUT_INSTANCE_FRAGMENT)) {
+            ((NavigationActivity) getActivity()).updateToolbar(false, getString(R.string.my_workouts));
+        }
     }
 
     @Override
@@ -109,33 +120,33 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
 
     @Override
     public void displayWorkouts(List<WorkoutInstance> workouts) {
-        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(WorkoutInstance.convertWorkoutsToWorkoutViews(workouts), this, this, this);
+        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(WORKOUT_INSTANCE_FRAGMENT, WorkoutInstance.convertWorkoutsToWorkoutViews(workouts), this, this, this);
         getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
-        mWorkoutInstanceListFragment.displayWorkouts(WorkoutInstance.convertWorkoutsToWorkoutViews(workouts));
+        mWorkoutInstanceListFragment.displayWorkouts(WORKOUT_INSTANCE_FRAGMENT, WorkoutInstance.convertWorkoutsToWorkoutViews(workouts));
         Log.i(TAG, "displayWorkouts()");
     }
 
     @Override
     public void displayUserWorkouts(List<UserWorkoutInstance> userWorkouts) {
-        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(UserWorkoutInstance.convertWorkoutsToWorkoutViews(userWorkouts), this, this, this);
+        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(USER_WORKOUT_INSTANCE_FRAGMENT, UserWorkoutInstance.convertWorkoutsToWorkoutViews(userWorkouts), this, this, this);
         getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
-        mWorkoutInstanceListFragment.displayWorkouts(UserWorkoutInstance.convertWorkoutsToWorkoutViews(userWorkouts));
+        mWorkoutInstanceListFragment.displayWorkouts(USER_WORKOUT_INSTANCE_FRAGMENT, UserWorkoutInstance.convertWorkoutsToWorkoutViews(userWorkouts));
         Log.i(TAG, "displayWorkouts()");
     }
 
     @Override
     public void displayUpdatedWorkouts(List<WorkoutInstance> workoutList) {
-        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(WorkoutInstance.convertWorkoutsToWorkoutViews(workoutList), this, this, this);
+        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(WORKOUT_INSTANCE_FRAGMENT, WorkoutInstance.convertWorkoutsToWorkoutViews(workoutList), this, this, this);
         getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
-        mWorkoutInstanceListFragment.displayWorkouts(WorkoutInstance.convertWorkoutsToWorkoutViews(workoutList));
+        mWorkoutInstanceListFragment.displayWorkouts(WORKOUT_INSTANCE_FRAGMENT, WorkoutInstance.convertWorkoutsToWorkoutViews(workoutList));
         Log.i(TAG, "displayUpdatedWorkouts()");
     }
 
     @Override
     public void displayUpdatedUserWorkouts(List<UserWorkoutInstance> userWorkoutsList) {
-        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(UserWorkoutInstance.convertWorkoutsToWorkoutViews(userWorkoutsList), this, this, this);
+        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(USER_WORKOUT_INSTANCE_FRAGMENT, UserWorkoutInstance.convertWorkoutsToWorkoutViews(userWorkoutsList), this, this, this);
         getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
-        mWorkoutInstanceListFragment.displayWorkouts(UserWorkoutInstance.convertWorkoutsToWorkoutViews(userWorkoutsList));
+        mWorkoutInstanceListFragment.displayWorkouts(USER_WORKOUT_INSTANCE_FRAGMENT, UserWorkoutInstance.convertWorkoutsToWorkoutViews(userWorkoutsList));
         Log.i(TAG, "displayWorkouts()");
     }
 

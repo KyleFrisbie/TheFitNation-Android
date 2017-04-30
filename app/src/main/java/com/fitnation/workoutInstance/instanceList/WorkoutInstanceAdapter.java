@@ -13,6 +13,7 @@ import com.fitnation.model.WorkoutView;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDeletePressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDetailsPressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutLaunchPressedCallback;
+import com.fitnation.workoutInstance.parent.WorkoutInstanceParentFragment;
 
 import java.util.List;
 
@@ -29,8 +30,10 @@ public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstance
     private OnWorkoutDeletePressedCallback mOnWorkoutDeletePressedCallback;
     private OnWorkoutLaunchPressedCallback mOnWorkoutLaunchPressedCallback;
     private OnWorkoutDetailsPressedCallback mOnWorkoutDetailsPressedCallback;
+    private String mWorkoutType;
 
-    public WorkoutInstanceAdapter(List<WorkoutView> mWorkouts, OnWorkoutDeletePressedCallback mOnWorkoutDeletePressedCallback, OnWorkoutLaunchPressedCallback mOnWorkoutLaunchPressedCallback, OnWorkoutDetailsPressedCallback mOnWorkoutDetailsPressedCallback) {
+    public WorkoutInstanceAdapter(String workoutType, List<WorkoutView> mWorkouts, OnWorkoutDeletePressedCallback mOnWorkoutDeletePressedCallback, OnWorkoutLaunchPressedCallback mOnWorkoutLaunchPressedCallback, OnWorkoutDetailsPressedCallback mOnWorkoutDetailsPressedCallback) {
+        this.mWorkoutType = workoutType;
         this.mWorkouts = mWorkouts;
         this.mOnWorkoutDeletePressedCallback = mOnWorkoutDeletePressedCallback;
         this.mOnWorkoutLaunchPressedCallback = mOnWorkoutLaunchPressedCallback;
@@ -67,6 +70,10 @@ public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstance
                 mOnWorkoutDetailsPressedCallback.onDetailsPressed(Workouts);
             }
         });
+
+        if(mWorkoutType.equals(WorkoutInstanceParentFragment.USER_WORKOUT_INSTANCE_FRAGMENT)) {
+            holder.launchWorkoutButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
