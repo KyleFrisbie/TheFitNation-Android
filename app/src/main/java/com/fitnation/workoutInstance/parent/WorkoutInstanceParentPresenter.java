@@ -3,12 +3,18 @@ package com.fitnation.workoutInstance.parent;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.toolbox.Volley;
 import com.fitnation.R;
+import com.fitnation.model.ExerciseInstance;
+import com.fitnation.model.UserExerciseInstance;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.model.WorkoutView;
 import com.fitnation.navigation.Navigator;
+import com.fitnation.networking.AuthToken;
+import com.fitnation.networking.tasks.ExerciseInstanceTask;
+import com.fitnation.networking.tasks.callbacks.GetExerciseInstanceCallback;
 import com.fitnation.workout.parent.WorkoutTemplateManager;
 import com.fitnation.workoutInstance.callbacks.WorkoutManagerWorkoutsCallback;
 
@@ -85,7 +91,26 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
         if(Objects.equals(mWorkoutTypeToReturn, "WORKOUT_INSTANCE")) {
             Navigator.navigateToEditWorkout(mView.getBaseActivity(), (WorkoutInstance) workoutInstance, R.id.content_main_container);
         }else {
-            //TODO: link user details stuff.
+            //TODO get exercise instance for each UserExerciseInstance
+            ExerciseInstanceTask exerciseInstanceTask = new ExerciseInstanceTask(AuthToken.getInstance().getAccessToken(),
+                    Volley.newRequestQueue(mView.getBaseActivity()));
+            UserWorkoutInstance userWorkoutInstance = (UserWorkoutInstance) workoutInstance;
+            List<UserExerciseInstance> userExerciseInstances = userWorkoutInstance.getUserExerciseInstances();
+            for (final UserExerciseInstance userExerciseInstance : userExerciseInstances) {
+                exerciseInstanceTask.getExerciseInstance(userExerciseInstance.getExerciseInstanceId(), new GetExerciseInstanceCallback() {
+                    @Override
+                    public void onSuccess(ExerciseInstance exerciseInstance) {
+                        userExerciseInstance.setExerciseInstance(exerciseInstance);
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        Log.e(TAG, "Failed while trying to get ExerciseInstance for UserExerciseInstance");
+                    }
+                });
+            }
+
+            Navigator.navigateToEditUserWorkout(mView.getBaseActivity(), userWorkoutInstance, WorkoutTemplateManager.getSingletonUserWorkoutTemplate(WorkoutTemplateManager.getSingletonWorkoutTemplate()), R.id.content_main_container);
         }
     }
 
