@@ -15,9 +15,9 @@ import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.UserLogins;
 import com.fitnation.networking.tasks.UserDemographicTask;
 import com.fitnation.networking.tasks.UserWeightTask;
+import com.fitnation.networking.tasks.callbacks.GetSkillLevelsCallback;
 import com.fitnation.profile.callbacks.PutUserWeightCallback;
 import com.fitnation.profile.callbacks.UserDemographicsCallback;
-import com.fitnation.workout.callbacks.GetSkillLevelsCallback;
 import com.fitnation.workout.parent.GetSkillLevelsTask;
 
 import java.util.List;

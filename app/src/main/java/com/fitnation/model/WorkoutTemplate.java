@@ -1,5 +1,6 @@
 package com.fitnation.model;
 
+import com.fitnation.utils.DateFormatter;
 import com.google.gson.annotations.Expose;
 
 import java.text.SimpleDateFormat;
@@ -37,18 +38,30 @@ public class WorkoutTemplate extends RealmObject implements Cloneable {
         createdOnObj = new Date();
         lastUpdatedObj = new Date();
         workoutInstances = new RealmList<>();
-        SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+
         if(createdOnObj != null) {
-            createdOn = dateFormat.format(createdOnObj);
+            createdOn = DateFormatter.getFormattedDate(createdOnObj);
         }
 
         if(lastUpdatedObj != null) {
-            lastUpdated = dateFormat.format(lastUpdatedObj);
+            lastUpdated = DateFormatter.getFormattedDate(lastUpdatedObj);
         }
     }
 
     public void addWorkoutInstance(WorkoutInstance workoutInstance) {
         workoutInstances.add(workoutInstance);
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public String getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public Long getAndroidId() {
+        return androidId;
     }
 
     public String getNotes() {
@@ -57,6 +70,14 @@ public class WorkoutTemplate extends RealmObject implements Cloneable {
 
     public RealmList<WorkoutInstance> getWorkoutInstances() {
         return workoutInstances;
+    }
+
+    public Long getSkillLevelId() {
+        return skillLevelId;
+    }
+
+    public String getSkillLevelLevel() {
+        return skillLevelLevel;
     }
 
     public void setUserDemographicId(String userDemographicId) {

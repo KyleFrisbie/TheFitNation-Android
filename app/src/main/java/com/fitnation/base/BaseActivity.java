@@ -1,6 +1,7 @@
 package com.fitnation.base;
 
 import android.app.ProgressDialog;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -15,7 +16,7 @@ public class BaseActivity extends AppCompatActivity {
      * Shows a progress dialog
      * @param message - message to be displayed to the user
      */
-    public void showProgress(String message) {
+    public void showProgress(@Nullable  String message) {
         if(message == null) {
             message = "Loading...";
         }

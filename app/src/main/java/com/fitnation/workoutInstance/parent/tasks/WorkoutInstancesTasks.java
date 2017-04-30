@@ -12,9 +12,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.networking.JsonParser;
+import com.fitnation.networking.tasks.NetworkTask;
 import com.fitnation.utils.EnvironmentManager;
-import com.fitnation.workout.callbacks.WorkoutInstancePostCallback;
-import com.fitnation.workout.parent.tasks.NetworkTask;
 import com.fitnation.workoutInstance.callbacks.WorkoutInstanceRequestCallback;
 
 import java.io.UnsupportedEncodingException;

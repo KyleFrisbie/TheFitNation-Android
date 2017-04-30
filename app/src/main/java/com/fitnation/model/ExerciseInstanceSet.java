@@ -1,5 +1,7 @@
 package com.fitnation.model;
 
+import android.support.annotation.NonNull;
+
 import org.parceler.Parcel;
 
 import io.realm.ExerciseInstanceSetRealmProxy;
@@ -11,7 +13,7 @@ import io.realm.RealmObject;
 @Parcel(implementations = { ExerciseInstanceSetRealmProxy.class },
         value = Parcel.Serialization.BEAN,
         analyze = { ExerciseInstanceSet.class })
-public class ExerciseInstanceSet extends RealmObject implements Cloneable{
+public class ExerciseInstanceSet extends RealmObject implements Cloneable, ExerciseSetView{
     private Long id;
     private Long androidId;
     private Integer orderNumber;
@@ -53,8 +55,8 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
         //required default constructor
     }
 
-    public void setReqQuantity(Float reqQuantity) {
-        this.reqQuantity = reqQuantity;
+    public void setRepQuantity(Float repQuantity) {
+        this.reqQuantity = repQuantity;
     }
 
     public Long getId() {
@@ -73,6 +75,10 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
         return effortQuantity;
     }
 
+    public String getNotes() {
+        return notes;
+    }
+
     public Float getRestTime() {
         return restTime;
     }
@@ -81,7 +87,7 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
         return reqQuantity;
     }
 
-    public int getRepQuantityAsInt() {
+    public Integer getRepQuantityAsInt() {
         return Math.round(reqQuantity);
     }
 
@@ -137,5 +143,12 @@ public class ExerciseInstanceSet extends RealmObject implements Cloneable{
         result = 31 * result + (exerciseInstanceId != null ? exerciseInstanceId.hashCode() : 0);
         result = 31 * result + (notes != null ? notes.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        ExerciseInstanceSet otherInstanceSet = (ExerciseInstanceSet) o;
+
+        return this.orderNumber - otherInstanceSet.getOrderNumber();
     }
 }

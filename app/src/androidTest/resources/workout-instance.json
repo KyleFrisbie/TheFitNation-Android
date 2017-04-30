@@ -14,11 +14,11 @@
       "notes": null,
       "workoutInstanceId": 9251,
       "exerciseId": 1651,
-      "exerciseName": null,
+      "exerciseName": "Bench Press",
       "repUnitId": 8101,
-      "repUnitName": null,
+      "repUnitName": "Reps",
       "effortUnitId": 8102,
-      "effortUnitName": null,
+      "effortUnitName": "Pounds",
       "exerciseInstanceSets": [
         {
           "id": 9351,
@@ -45,11 +45,11 @@
       "notes": null,
       "workoutInstanceId": 9251,
       "exerciseId": 2351,
-      "exerciseName": null,
+      "exerciseName": "Curls",
       "repUnitId": 8101,
-      "repUnitName": null,
+      "repUnitName": "Reps",
       "effortUnitId": 8102,
-      "effortUnitName": null,
+      "effortUnitName": "Pounds",
       "exerciseInstanceSets": [
         {
           "id": 9353,
@@ -94,11 +94,11 @@
       "notes": null,
       "workoutInstanceId": 9251,
       "exerciseId": 2604,
-      "exerciseName": null,
+      "exerciseName": "Squats",
       "repUnitId": 8101,
-      "repUnitName": null,
+      "repUnitName": "Reps",
       "effortUnitId": 8102,
-      "effortUnitName": null,
+      "effortUnitName": "Pounds",
       "exerciseInstanceSets": [
         {
           "id": 9360,

@@ -14,7 +14,6 @@ import com.fitnation.R;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutInstance;
-import com.fitnation.workout.exerciseList.ExercisesListFragment;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDeletePressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDetailsPressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutLaunchPressedCallback;

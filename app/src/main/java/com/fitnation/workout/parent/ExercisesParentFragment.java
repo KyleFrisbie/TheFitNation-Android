@@ -17,7 +17,8 @@ import android.widget.Button;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
-import com.fitnation.workout.exerciseList.ExercisesListFragment;
+import com.fitnation.model.ExerciseView;
+import com.fitnation.workout.exercise.list.ExercisesListFragment;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 import com.fitnation.model.ExerciseInstance;
@@ -95,7 +96,7 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new ExerciseSectionsPagerAdapter(getFragmentManager(), getContext(), this, this);
+        mSectionsPagerAdapter = new ExerciseSectionsPagerAdapter(getChildFragmentManager(), getContext(), this, this);
         // Set up the ViewPager with the sections adapter.
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mSectionsPagerAdapter.notifyDataSetChanged();
@@ -150,7 +151,7 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
         Log.i(TAG, "onStart()");
         super.onStart();
         mPresenter.onViewReady();
-        ((NavigationActivity) getActivity()).displayBackArrow(false, "Build A Workout");
+        ((NavigationActivity) getActivity()).updateToolbar(false, "Build A Workout");
     }
 
     @Override
@@ -173,9 +174,9 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
 
         mSectionsPagerAdapter.setExerciseData(tabOneExercises, tabTwoExercises, tabThreeExercises);
 
-        beginnerFragment.displayExercises(tabOneExercises);
-        intermediatFragment.displayExercises(tabTwoExercises);
-        advancedFragment.displayExercises(tabThreeExercises);
+        beginnerFragment.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(tabOneExercises));
+        intermediatFragment.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(tabTwoExercises));
+        advancedFragment.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(tabThreeExercises));
     }
 
     @Override
@@ -226,12 +227,13 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
     }
 
     @Override
-    public void onExerciseSelected(ExerciseInstance exerciseInstance, boolean isSelected) {
+    public void onExerciseSelected(ExerciseView exerciseView, boolean isSelected) {
+        ExerciseInstance exerciseInstance = (ExerciseInstance) exerciseView;
         mPresenter.onExerciseSelected(exerciseInstance, isSelected);
     }
 
     @Override
-    public void onEditPressed(ExerciseInstance exercise) {
-        mPresenter.onEditPressed(exercise);
+    public void onEditPressed(ExerciseView exercise) {
+        mPresenter.onEditPressed((ExerciseInstance) exercise);
     }
 }
