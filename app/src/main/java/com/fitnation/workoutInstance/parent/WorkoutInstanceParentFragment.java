@@ -14,18 +14,16 @@ import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutInstance;
+import com.fitnation.model.WorkoutView;
 import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDeletePressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDetailsPressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutLaunchPressedCallback;
-import com.fitnation.workoutInstance.instanceList.WorkoutInstanceAdapter;
 import com.fitnation.workoutInstance.instanceList.WorkoutInstanceListFragment;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Erik on 4/24/2017.
@@ -108,22 +106,25 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
 
     @Override
     public void displayWorkouts(List<WorkoutInstance> workouts) {
-        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(workouts, this, this, this);
+        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(WorkoutInstance.convertWorkoutsToWorkoutViews(workouts), this, this, this);
         getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
-        mWorkoutInstanceListFragment.displayWorkouts(workouts);
+        mWorkoutInstanceListFragment.displayWorkouts(WorkoutInstance.convertWorkoutsToWorkoutViews(workouts));
         Log.i(TAG, "displayWorkouts()");
     }
 
     @Override
     public void displayUserWorkouts(List<UserWorkoutInstance> userWorkouts) {
-
+//        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(WorkoutInstance.convertWorkoutsToWorkoutViews(userWorkouts), this, this, this);
+//        getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
+//        mWorkoutInstanceListFragment.displayWorkouts(userWorkouts);
+        Log.i(TAG, "displayWorkouts()");
     }
 
     @Override
     public void displayUpdatedWorkouts(List<WorkoutInstance> workoutList) {
-        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(workoutList, this, this, this);
+        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(WorkoutInstance.convertWorkoutsToWorkoutViews(workoutList), this, this, this);
         getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
-        mWorkoutInstanceListFragment.displayWorkouts(workoutList);
+        mWorkoutInstanceListFragment.displayWorkouts(WorkoutInstance.convertWorkoutsToWorkoutViews(workoutList));
     }
 
     @Override
@@ -149,18 +150,18 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     //----------------------------------OnButtonsPressedCallbacks---------------------------------//
 
     @Override
-    public void onDeletePressed(WorkoutInstance workout) {
-        mPresenter.onDeletePressed(workout);
+    public void onDeletePressed(WorkoutView workout) {
+        mPresenter.onDeletePressed((WorkoutInstance) workout);
     }
 
     @Override
-    public void onLaunchPressed(WorkoutInstance workout) {
-        mPresenter.onLaunchPressed(workout);
+    public void onLaunchPressed(WorkoutView workout) {
+        mPresenter.onLaunchPressed((WorkoutInstance) workout);
     }
 
     @Override
-    public void onDetailsPressed(WorkoutInstance workout) {
-        mPresenter.onDetailsPressed(workout);
+    public void onDetailsPressed(WorkoutView workout) {
+        mPresenter.onDetailsPressed((WorkoutInstance) workout);
     }
 
 

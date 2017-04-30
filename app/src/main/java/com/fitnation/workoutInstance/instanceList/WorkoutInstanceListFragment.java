@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.fitnation.R;
 import com.fitnation.base.BaseFragment;
 import com.fitnation.model.UserWorkoutInstance;
-import com.fitnation.model.WorkoutInstance;
+import com.fitnation.model.WorkoutView;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDeletePressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDetailsPressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutLaunchPressedCallback;
@@ -34,7 +34,7 @@ public class WorkoutInstanceListFragment extends BaseFragment{
     private static final String WORKOUT_LIST = "WORKOUT_LIST";
     @BindView(R.id.workout_recycler_view)
     public RecyclerView mRecyclerView;
-    List<WorkoutInstance> mWorkouts;
+    List<WorkoutView> mWorkouts;
     List<UserWorkoutInstance> mUserWorkouts;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -48,7 +48,7 @@ public class WorkoutInstanceListFragment extends BaseFragment{
         //Required empty public constructor
     }
 
-    public static WorkoutInstanceListFragment newInstance(List<WorkoutInstance> workoutInstances,
+    public static WorkoutInstanceListFragment newInstance(List<WorkoutView> workoutInstances,
                                                           OnWorkoutDeletePressedCallback onWorkoutDeletePressedCallback,
                                                           OnWorkoutLaunchPressedCallback onWorkoutLaunchPressedCallback,
                                                           OnWorkoutDetailsPressedCallback onWorkoutDetailsPressedCallback){
@@ -98,7 +98,7 @@ public class WorkoutInstanceListFragment extends BaseFragment{
         Bundle bundle = getArguments();
 
         if(bundle != null) {
-            mWorkouts = (List<WorkoutInstance>) bundle.get(WORKOUT_LIST);
+            mWorkouts = (List<WorkoutView>) bundle.get(WORKOUT_LIST);
         }
 
         if(savedInstanceState != null) {
@@ -167,7 +167,7 @@ public class WorkoutInstanceListFragment extends BaseFragment{
         super.onSaveInstanceState(outState);
     }
 
-    public void displayWorkouts(final List<WorkoutInstance> workouts) {
+    public void displayWorkouts(final List<WorkoutView> workouts) {
         mWorkouts = workouts;
         if(getView() != null) {
             getActivity().runOnUiThread(new Runnable() {

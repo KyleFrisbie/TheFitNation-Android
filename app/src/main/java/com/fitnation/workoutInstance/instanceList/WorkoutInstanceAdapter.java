@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.fitnation.R;
 import com.fitnation.model.UserWorkoutInstance;
-import com.fitnation.model.WorkoutInstance;
+import com.fitnation.model.WorkoutView;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDeletePressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDetailsPressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutLaunchPressedCallback;
@@ -26,13 +26,13 @@ import butterknife.ButterKnife;
 
 public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstanceAdapter.ViewHolder> {
     private static final String TAG = WorkoutInstanceAdapter.class.getSimpleName();
-    private List<WorkoutInstance> mWorkouts;
+    private List<WorkoutView> mWorkouts;
     private List<UserWorkoutInstance> mUserWorkouts;
     private OnWorkoutDeletePressedCallback mOnWorkoutDeletePressedCallback;
     private OnWorkoutLaunchPressedCallback mOnWorkoutLaunchPressedCallback;
     private OnWorkoutDetailsPressedCallback mOnWorkoutDetailsPressedCallback;
 
-    public WorkoutInstanceAdapter(List<WorkoutInstance> mWorkouts, OnWorkoutDeletePressedCallback mOnWorkoutDeletePressedCallback, OnWorkoutLaunchPressedCallback mOnWorkoutLaunchPressedCallback, OnWorkoutDetailsPressedCallback mOnWorkoutDetailsPressedCallback) {
+    public WorkoutInstanceAdapter(List<WorkoutView> mWorkouts, OnWorkoutDeletePressedCallback mOnWorkoutDeletePressedCallback, OnWorkoutLaunchPressedCallback mOnWorkoutLaunchPressedCallback, OnWorkoutDetailsPressedCallback mOnWorkoutDetailsPressedCallback) {
         this.mWorkouts = mWorkouts;
         this.mOnWorkoutDeletePressedCallback = mOnWorkoutDeletePressedCallback;
         this.mOnWorkoutLaunchPressedCallback = mOnWorkoutLaunchPressedCallback;
@@ -47,7 +47,7 @@ public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstance
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final WorkoutInstance workoutInstance = mWorkouts.get(position);
+        final WorkoutView workoutInstance = mWorkouts.get(position);
 
         holder.workoutName.setText(workoutInstance.getName());
         holder.modifiedDate.setText(workoutInstance.getLastUpdated());

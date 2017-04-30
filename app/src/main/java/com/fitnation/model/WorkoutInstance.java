@@ -1,5 +1,7 @@
 package com.fitnation.model;
 
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 
 import org.parceler.Parcel;
@@ -19,7 +21,7 @@ import io.realm.annotations.PrimaryKey;
  * A workout that has been performed by the User
  */
 @Parcel(implementations = {WorkoutInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { WorkoutInstance.class })
-public class WorkoutInstance extends RealmObject {
+public class WorkoutInstance extends RealmObject implements Cloneable, Comparable, WorkoutView {
     @PrimaryKey
     @Expose(serialize = false)
     private Long androidId;
@@ -88,16 +90,30 @@ public class WorkoutInstance extends RealmObject {
         }
     }
 
-    public void setAndroidId(Long androidId) {
-        this.androidId = androidId;
+    public static List<WorkoutView> convertWorkoutsToWorkoutViews(List<WorkoutInstance> workoutInstances) {
+        List<WorkoutView> workoutViews = null;
+
+        if (workoutInstances != null) {
+            workoutViews = new ArrayList<>();
+            for (WorkoutInstance workoutInstance : workoutInstances) {
+                workoutViews.add(workoutInstance);
+            }
+        }
+
+        return workoutViews;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public Long getWorkoutTemplateId() {
+        return workoutTemplateId;
     }
 
     public String getName() {
@@ -164,8 +180,17 @@ public class WorkoutInstance extends RealmObject {
         return androidId;
     }
 
+    public void setAndroidId(Long androidId) {
+        this.androidId = androidId;
+    }
+
     public void setWorkoutTemplate(WorkoutTemplate workoutTemplate) {
         this.workoutTemplateId = workoutTemplate.getId();
         this.workoutTemplateName = workoutTemplate.getName();
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        return 0;
     }
 }
