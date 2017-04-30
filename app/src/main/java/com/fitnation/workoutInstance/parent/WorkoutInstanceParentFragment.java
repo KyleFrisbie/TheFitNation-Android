@@ -114,9 +114,9 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
 
     @Override
     public void displayUserWorkouts(List<UserWorkoutInstance> userWorkouts) {
-//        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(WorkoutInstance.convertWorkoutsToWorkoutViews(userWorkouts), this, this, this);
-//        getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
-//        mWorkoutInstanceListFragment.displayWorkouts(userWorkouts);
+        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(UserWorkoutInstance.convertWorkoutsToWorkoutViews(userWorkouts), this, this, this);
+        getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
+        mWorkoutInstanceListFragment.displayWorkouts(UserWorkoutInstance.convertWorkoutsToWorkoutViews(userWorkouts));
         Log.i(TAG, "displayWorkouts()");
     }
 

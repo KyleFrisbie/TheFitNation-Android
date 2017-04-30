@@ -1,5 +1,7 @@
 package com.fitnation.model;
 
+import android.support.annotation.NonNull;
+
 import com.fitnation.utils.DateFormatter;
 import com.fitnation.utils.PrimaryKeyFactory;
 import com.google.gson.annotations.Expose;
@@ -10,7 +12,6 @@ import org.parceler.ParcelPropertyConverter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -21,7 +22,7 @@ import io.realm.annotations.PrimaryKey;
  * A workout that has/will been/be performed by a User
  */
 @Parcel(implementations = {UserWorkoutInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { UserWorkoutInstance.class })
-public class UserWorkoutInstance extends RealmObject {
+public class UserWorkoutInstance extends RealmObject implements Cloneable, Comparable, WorkoutView {
     @PrimaryKey
     @Expose(serialize = false)
     private Long androidId;
@@ -37,34 +38,6 @@ public class UserWorkoutInstance extends RealmObject {
 
     public UserWorkoutInstance() {
         //required default constructor
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setUserWorkoutTemplateId(Long userWorkoutTemplateId) {
-        this.userWorkoutTemplateId = userWorkoutTemplateId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Long getAndroidId() {
-        return androidId;
-    }
-
-    public void setAndroidId(Long androidId) {
-        this.androidId = androidId;
-    }
-
-    public boolean wasCompleted() {
-        return wasCompleted;
-    }
-
-    public void initAndroidId() {
-        androidId = PrimaryKeyFactory.getInstance().nextKey(UserWorkoutInstance.class);
     }
 
     public UserWorkoutInstance(WorkoutInstance workoutInstance, long androidId) {
@@ -83,6 +56,52 @@ public class UserWorkoutInstance extends RealmObject {
 
     public static long getNextAndroidKey() {
         return PrimaryKeyFactory.getInstance().nextKey(UserWorkoutInstance.class);
+    }
+
+    public static List<WorkoutView> convertWorkoutsToWorkoutViews(List<UserWorkoutInstance> userWorkoutInstances) {
+        List<WorkoutView> workoutViews = null;
+
+        if (userWorkoutInstances != null) {
+            workoutViews = new ArrayList<>();
+            for (UserWorkoutInstance userWorkoutInstance : userWorkoutInstances) {
+                workoutViews.add(userWorkoutInstance);
+            }
+        }
+
+        return workoutViews;
+    }
+
+    public void setUserWorkoutTemplateId(Long userWorkoutTemplateId) {
+        this.userWorkoutTemplateId = userWorkoutTemplateId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public Long getWorkoutTemplateId() {
+        return null;
+    }
+
+    public Long getAndroidId() {
+        return androidId;
+    }
+
+    public void setAndroidId(Long androidId) {
+        this.androidId = androidId;
+    }
+
+    public boolean wasCompleted() {
+        return wasCompleted;
+    }
+
+    public void initAndroidId() {
+        androidId = PrimaryKeyFactory.getInstance().nextKey(UserWorkoutInstance.class);
     }
 
     public String getCreatedOn() {
@@ -111,12 +130,22 @@ public class UserWorkoutInstance extends RealmObject {
         this.wasCompleted = wasCompleted;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    @Override
+    public String getName() {
+        return workoutInstanceName;
+    }
+
+    @Override
+    public String getLastUpdated() {
+        return null;
     }
 
     public String getNotes() {
         return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public List<ExerciseView> getExerciseViews() {
@@ -152,5 +181,10 @@ public class UserWorkoutInstance extends RealmObject {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (workoutInstanceId != null ? workoutInstanceId.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        return 0;
     }
 }
