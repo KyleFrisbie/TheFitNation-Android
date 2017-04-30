@@ -35,7 +35,6 @@ public class WorkoutInstanceListFragment extends BaseFragment{
     @BindView(R.id.workout_recycler_view)
     public RecyclerView mRecyclerView;
     List<WorkoutView> mWorkouts;
-    List<WorkoutView> mUserWorkouts;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private OnWorkoutDetailsPressedCallback mOnWorkoutDetailsPressedCallback;
