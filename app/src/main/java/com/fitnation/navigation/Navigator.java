@@ -1,19 +1,17 @@
 package com.fitnation.navigation;
 
-import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
+import com.fitnation.workout.exercise.ViewExerciseFragment;
+import com.fitnation.workout.exercise.ViewExercisePresenter;
 import com.fitnation.workout.view.instance.EditUserWorkoutFragment;
 import com.fitnation.workout.view.instance.EditUserWorkoutPresenter;
 import com.fitnation.workout.view.instance.SaveUserWorkoutInstanceFragment;
 import com.fitnation.workout.view.instance.SaveUserWorkoutPresenter;
-import com.fitnation.workout.exercise.ExerciseType;
-import com.fitnation.workout.exercise.ViewExerciseFragment;
-import com.fitnation.workout.exercise.ViewExercisePresenter;
 import com.fitnation.workout.view.template.EditWorkoutFragment;
 import com.fitnation.workout.view.template.EditWorkoutPresenter;
 import com.fitnation.workoutInstance.parent.WorkoutInstanceParentFragment;
@@ -26,9 +24,10 @@ import java.util.List;
  */
 
 public class Navigator {
-    private Navigator(){}
-
     private static List<NavigationState> mNavigationStateList = new ArrayList<>();
+
+    private Navigator() {
+    }
 
     public static void addNavigationState(NavigationState navigationState) {
         mNavigationStateList.add(navigationState);
@@ -47,7 +46,11 @@ public class Navigator {
     }
 
     public static void navigateToWorkouts(BaseActivity activity, int containerId) {
-        activity.getSupportFragmentManager().beginTransaction().replace(containerId, WorkoutInstanceParentFragment.newInstance(activity)).commit();
+        activity.getSupportFragmentManager().beginTransaction().replace(containerId, WorkoutInstanceParentFragment.newInstance(activity, "WORKOUT_INSTANCE")).commit();
+    }
+
+    public static void navigateToPastWorkouts(BaseActivity activity, int containerId) {
+        activity.getSupportFragmentManager().beginTransaction().replace(containerId, WorkoutInstanceParentFragment.newInstance(activity, "USER_WORKOUT_INSTANCE")).commit();
     }
 
     public static void navigateToEditWorkout(BaseActivity activity, WorkoutInstance workoutInstance, int containterId) {

@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseFragment;
-import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutView;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDeletePressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDetailsPressedCallback;
@@ -35,7 +34,7 @@ public class WorkoutInstanceListFragment extends BaseFragment{
     @BindView(R.id.workout_recycler_view)
     public RecyclerView mRecyclerView;
     List<WorkoutView> mWorkouts;
-    List<UserWorkoutInstance> mUserWorkouts;
+    List<WorkoutView> mUserWorkouts;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private OnWorkoutDetailsPressedCallback mOnWorkoutDetailsPressedCallback;
@@ -183,20 +182,4 @@ public class WorkoutInstanceListFragment extends BaseFragment{
         }
 
     }
-
-    //      public void displayUserWorkouts(final List<UserWorkoutInstance> userWorkouts) {
-//        mUserWorkouts = userWorkouts;
-//        if(getView() != null) {
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    mAdapter = new WorkoutInstanceAdapter(mUserWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
-//                    mRecyclerView.setAdapter(mAdapter);
-//                }
-//            });
-//
-//        } else {
-//            mHasUpdatedData = true;
-//        }
-//    }
 }

@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.fitnation.R;
-import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutView;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDeletePressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDetailsPressedCallback;
@@ -27,7 +26,6 @@ import butterknife.ButterKnife;
 public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstanceAdapter.ViewHolder> {
     private static final String TAG = WorkoutInstanceAdapter.class.getSimpleName();
     private List<WorkoutView> mWorkouts;
-    private List<UserWorkoutInstance> mUserWorkouts;
     private OnWorkoutDeletePressedCallback mOnWorkoutDeletePressedCallback;
     private OnWorkoutLaunchPressedCallback mOnWorkoutLaunchPressedCallback;
     private OnWorkoutDetailsPressedCallback mOnWorkoutDetailsPressedCallback;
@@ -47,26 +45,26 @@ public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstance
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final WorkoutView workoutInstance = mWorkouts.get(position);
+        final WorkoutView Workouts = mWorkouts.get(position);
 
-        holder.workoutName.setText(workoutInstance.getName());
-        holder.modifiedDate.setText(workoutInstance.getLastUpdated());
+        holder.workoutName.setText(Workouts.getName());
+        holder.modifiedDate.setText(Workouts.getLastUpdated());
         holder.deleteWorkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnWorkoutDeletePressedCallback.onDeletePressed(workoutInstance);
+                mOnWorkoutDeletePressedCallback.onDeletePressed(Workouts);
             }
         });
         holder.launchWorkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnWorkoutLaunchPressedCallback.onLaunchPressed(workoutInstance);
+                mOnWorkoutLaunchPressedCallback.onLaunchPressed(Workouts);
             }
         });
         holder.workoutDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mOnWorkoutDetailsPressedCallback.onDetailsPressed(workoutInstance);
+                mOnWorkoutDetailsPressedCallback.onDetailsPressed(Workouts);
             }
         });
     }
@@ -78,10 +76,11 @@ public class WorkoutInstanceAdapter extends RecyclerView.Adapter<WorkoutInstance
 
     @Override
     public int getItemCount() {
-        Log.i(TAG, "getItemCount()" + " array size: " + mWorkouts.size());
         if(mWorkouts != null) {
+            Log.i(TAG, "getItemCount()" + " array size: " + mWorkouts.size());
             return mWorkouts.size();
         } else {
+            Log.i(TAG, "getItemCount()" + " array size: 0");
             return 0;
         }
     }

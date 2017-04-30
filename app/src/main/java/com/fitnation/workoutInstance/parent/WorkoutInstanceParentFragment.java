@@ -38,9 +38,12 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
         //required empty constructor
     }
 
-    public static WorkoutInstanceParentFragment newInstance(Context context){
+    public static WorkoutInstanceParentFragment newInstance(Context context, String workoutInstanceType) {
         WorkoutInstanceParentFragment fragment = new WorkoutInstanceParentFragment();
-        fragment.setPresenter(new WorkoutInstanceParentPresenter(context, fragment));
+        Bundle args = new Bundle();
+        args.putString("WorkoutType", workoutInstanceType);
+        fragment.setArguments(args);
+        fragment.setPresenter(new WorkoutInstanceParentPresenter(context, fragment, workoutInstanceType));
 
         return fragment;
     }
@@ -125,6 +128,15 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
         mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(WorkoutInstance.convertWorkoutsToWorkoutViews(workoutList), this, this, this);
         getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
         mWorkoutInstanceListFragment.displayWorkouts(WorkoutInstance.convertWorkoutsToWorkoutViews(workoutList));
+        Log.i(TAG, "displayUpdatedWorkouts()");
+    }
+
+    @Override
+    public void displayUpdatedUserWorkouts(List<UserWorkoutInstance> userWorkoutsList) {
+        mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(UserWorkoutInstance.convertWorkoutsToWorkoutViews(userWorkoutsList), this, this, this);
+        getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
+        mWorkoutInstanceListFragment.displayWorkouts(UserWorkoutInstance.convertWorkoutsToWorkoutViews(userWorkoutsList));
+        Log.i(TAG, "displayWorkouts()");
     }
 
     @Override
@@ -151,7 +163,7 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
 
     @Override
     public void onDeletePressed(WorkoutView workout) {
-        mPresenter.onDeletePressed((WorkoutInstance) workout);
+        mPresenter.onDeletePressed(workout);
     }
 
     @Override
@@ -161,7 +173,7 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
 
     @Override
     public void onDetailsPressed(WorkoutView workout) {
-        mPresenter.onDetailsPressed((WorkoutInstance) workout);
+        mPresenter.onDetailsPressed(workout);
     }
 
 

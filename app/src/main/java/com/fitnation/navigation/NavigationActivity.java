@@ -3,7 +3,6 @@ package com.fitnation.navigation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,13 +15,10 @@ import android.view.View;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.Navigationable;
+import com.fitnation.login.LoginBaseActivity;
+import com.fitnation.model.enums.ExerciseAction;
 import com.fitnation.profile.ProfileFragment;
 import com.fitnation.workout.parent.ExercisesParentFragment;
-import com.fitnation.model.enums.ExerciseAction;
-
-import java.util.List;
-import com.fitnation.login.LoginBaseActivity;
-import com.fitnation.workoutInstance.parent.WorkoutInstanceParentFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -123,7 +119,11 @@ public class NavigationActivity extends BaseActivity
                 Log.i(TAG, "Nav My Workouts is already started");
             }
         } else if (id == R.id.nav_trends) {
-
+            if (!item.isChecked()) {
+                Navigator.navigateToPastWorkouts(this, R.id.content_main_container);
+            } else {
+                Log.i(TAG, "Nav Trends is already started");
+            }
         } else if (id == R.id.nav_workout_regimens) {
 
         } else if (id == R.id.nav_build_workout) {
