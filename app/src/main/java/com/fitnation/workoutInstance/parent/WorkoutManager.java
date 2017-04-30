@@ -14,6 +14,7 @@ import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.utils.PrimaryKeyFactory;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
+import com.fitnation.workout.parent.WorkoutTemplateManager;
 import com.fitnation.workout.services.UserWorkoutDataManager;
 import com.fitnation.workout.services.WorkoutDataManager;
 import com.fitnation.workoutInstance.callbacks.UserWorkoutInstanceRequestCallback;
@@ -142,18 +143,35 @@ public class WorkoutManager extends DataManager {
                         @Override
                         public void onGetAllSuccess(List<UserWorkoutTemplate> workoutInstances) {
                             UserWorkoutDataManager userWorkoutDataManager = new UserWorkoutDataManager(mContext);
-                            UserWorkoutTemplate userWorkoutTemplate1 = workoutInstances.get(0);
-                            userWorkoutDataManager.saveUserWorkoutTemplate(userWorkoutTemplate1, new SaveWorkoutCallback() {
-                                @Override
-                                public void onSuccess() {
-                                    Log.i(TAG, "onUserWorkoutTemplateSaveSuccess()");
-                                }
+                            if(!workoutInstances.isEmpty()) {
+                                UserWorkoutTemplate userWorkoutTemplate1 = workoutInstances.get(0);
+                                userWorkoutDataManager.saveUserWorkoutTemplate(userWorkoutTemplate1, new SaveWorkoutCallback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Log.i(TAG, "onUserWorkoutTemplateSaveSuccess()");
+                                    }
 
-                                @Override
-                                public void onFailure(String error) {
-                                    Log.i(TAG, "onUserWorkoutTemplateSaveFailure()");
-                                }
-                            });
+                                    @Override
+                                    public void onFailure(String error) {
+                                        Log.i(TAG, "onUserWorkoutTemplateSaveFailure()");
+                                    }
+                                });
+                            }else{
+                                final WorkoutTemplate workoutTemplateSingleton = WorkoutTemplateManager.getSingletonWorkoutTemplate();
+                                UserWorkoutTemplate userWorkoutTemplateSingleton = WorkoutTemplateManager.getSingletonUserWorkoutTemplate(workoutTemplateSingleton);
+                                saveData(userWorkoutTemplateSingleton, new DataResult() {
+                                    @Override
+                                    public void onError() {
+                                        Log.i(TAG, "onUserWorkoutTemplateSaveFailure()");
+                                    }
+
+                                    @Override
+                                    public void onSuccess() {
+                                        Log.i(TAG, "onUserWorkoutTemplateSaveSuccess()");
+
+                                    }
+                                });
+                            }
                         }
 
                         @Override
@@ -204,19 +222,36 @@ public class WorkoutManager extends DataManager {
                         @Override
                         public void onGetAllSuccess(List<WorkoutTemplate> workoutTemplates) {
                             WorkoutDataManager workoutDataManager = new WorkoutDataManager(mContext);
-                            WorkoutTemplate workoutTemplate1 = workoutTemplates.get(0);
+                            if(!workoutTemplates.isEmpty()) {
+                                WorkoutTemplate workoutTemplate1 = workoutTemplates.get(0);
+                                workoutTemplate1.setAndroidId(PrimaryKeyFactory.getInstance().nextKey(WorkoutTemplate.class));
+                                workoutDataManager.saveWorkoutTemplate(workoutTemplate1, new SaveWorkoutCallback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Log.i(TAG, "onWorkoutTemplateSaveSuccess()");
+                                    }
 
-                            workoutDataManager.saveWorkoutTemplate(workoutTemplate1, new SaveWorkoutCallback() {
-                                @Override
-                                public void onSuccess() {
-                                    Log.i(TAG, "onWorkoutTemplateSaveSuccess()");
-                                }
+                                    @Override
+                                    public void onFailure(String error) {
+                                        Log.i(TAG, "onWorkoutTemplateSaveFailure()");
+                                    }
+                                });
+                            }else{
+                                WorkoutTemplate workoutTemplateSingleton = WorkoutTemplateManager.getSingletonWorkoutTemplate();
+                                saveData(workoutTemplateSingleton, new DataResult() {
+                                    @Override
+                                    public void onError() {
+                                        Log.i(TAG, "onWorkoutTemplateSaveFailure()");
 
-                                @Override
-                                public void onFailure(String error) {
-                                    Log.i(TAG, "onWorkoutTemplateSaveFailure()");
-                                }
-                            });
+                                    }
+
+                                    @Override
+                                    public void onSuccess() {
+                                        Log.i(TAG, "onWorkoutTemplateSaveSuccess()");
+
+                                    }
+                                });
+                            }
                         }
 
                         @Override
