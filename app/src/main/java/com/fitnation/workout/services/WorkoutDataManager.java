@@ -36,6 +36,20 @@ public class WorkoutDataManager extends DataManager {
         mRequestQueue = Volley.newRequestQueue(context);
     }
 
+    public void saveWorkoutTemplate(final WorkoutTemplate workoutTemplate, final SaveWorkoutCallback saveWorkoutCallback) {
+        saveData(workoutTemplate, new DataResult() {
+            @Override
+            public void onError() {
+                saveWorkoutCallback.onFailure("Failed to save to realm");
+            }
+
+            @Override
+            public void onSuccess() {
+                saveWorkoutCallback.onSuccess();
+            }
+        });
+    }
+
     /**
      * Creates a workout out of the currently selected exercises and saves it under the given name
      */

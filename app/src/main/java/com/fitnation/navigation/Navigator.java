@@ -57,8 +57,13 @@ public class Navigator {
         activity.getSupportFragmentManager().beginTransaction().replace(containerId,
                 ProfileFragment.newInstance()).addToBackStack(null).commit();
     }
+
     public static void navigateToWorkouts(BaseActivity activity, int containerId) {
-        activity.getSupportFragmentManager().beginTransaction().replace(containerId, WorkoutInstanceParentFragment.newInstance(activity)).commit();
+        activity.getSupportFragmentManager().beginTransaction().replace(containerId, WorkoutInstanceParentFragment.newInstance(activity, "WORKOUT_INSTANCE")).commit();
+    }
+
+    public static void navigateToPastWorkouts(BaseActivity activity, int containerId) {
+        activity.getSupportFragmentManager().beginTransaction().replace(containerId, WorkoutInstanceParentFragment.newInstance(activity, "USER_WORKOUT_INSTANCE")).commit();
     }
 
     public static void navigateToEditWorkout(BaseActivity activity, WorkoutInstance workoutInstance, int containterId) {
@@ -88,4 +93,6 @@ public class Navigator {
         saveUserWorkoutInstanceFragment.setPresenter(new SaveUserWorkoutPresenter(saveUserWorkoutInstanceFragment, activity.getBaseContext()));
         activity.getSupportFragmentManager().beginTransaction().add(containerId, saveUserWorkoutInstanceFragment ).addToBackStack(null).commit();
     }
+
+
 }
