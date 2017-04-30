@@ -32,7 +32,7 @@ public interface WorkoutInstanceParentContract {
     interface Presenter extends BasePresenter{
         void onDeletePressed(WorkoutView workoutInstance);
         void onLaunchPressed(WorkoutInstance workoutInstance);
-
         void onDetailsPressed(WorkoutView workoutInstance);
+        void onBuildWorkoutPressed();
     }
 }

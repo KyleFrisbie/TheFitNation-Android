@@ -89,6 +89,11 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
         }
     }
 
+    @Override
+    public void onBuildWorkoutPressed() {
+        Navigator.navigateToBuildWorkout(mView.getBaseActivity(), R.id.content_main_container);
+    }
+
     //---------------------------WorkoutManagerWorkoutsCallback.instance--------------------------//
 
     @Override

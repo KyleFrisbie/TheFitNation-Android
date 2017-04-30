@@ -14,10 +14,10 @@
     <string name="start_workout">Start Workout</string>
     <string name="my_workouts">My Workouts</string>
     <string name="trends">Trends</string>
-    <string name="workout_regimens">Workout Regimens</string>
+    <string name="workout_regimens">My Workout Regimens</string>
     <string name="my_profile">My Profile</string>
     <string name="title_activity_create_exercise">Create Your Exercise</string>
-    <string name="build_workout">Create A Workout</string>
+    <string name="build_workout">Build A Workout</string>
 
     <!--Splash-->
     <string name="title_activity_splash_screen">SplashScreen</string>

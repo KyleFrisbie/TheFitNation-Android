@@ -15,7 +15,6 @@ public interface ExerciseView extends Comparable, Cloneable{
     void addExerciseSetView(ExerciseView exercise, int orderNumber);
     boolean isSelected();
     boolean hasExerciseParent();
-    boolean isSelectable();
     String getName();
     String getSkillLevelLevel();
     String getNotes();

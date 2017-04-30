@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.base.Navigationable;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.model.WorkoutView;
@@ -185,6 +186,11 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     @Override
     public void onDetailsPressed(WorkoutView workout) {
         mPresenter.onDetailsPressed(workout);
+    }
+
+    @OnClick(R.id.build_workout_button)
+    public void onBuildWorkoutPressed() {
+        mPresenter.onBuildWorkoutPressed();
     }
 
 
