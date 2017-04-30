@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.base.Navigationable;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.navigation.NavigationActivity;
@@ -72,7 +73,8 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
         Log.i(TAG, "onStart()");
         super.onStart();
         mPresenter.onViewReady();
-        ((NavigationActivity) getActivity()).updateToolbar(false, "My Workouts");
+        ((Navigationable) getActivity()).updateToolbar(false, "My Workouts");
+        ((Navigationable) getActivity()).updateMenuItemSelected(R.id.nav_my_workouts);
     }
 
     @Override
