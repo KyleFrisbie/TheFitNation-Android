@@ -116,13 +116,13 @@ public class NavigationActivity extends BaseActivity
         if (id == R.id.nav_start_workout) {
 
         } else if (id == R.id.nav_my_workouts) {
-
-        } else if (id == R.id.nav_trends) {
             if (!item.isChecked()) {
                 Navigator.navigateToPastWorkouts(this, R.id.content_main_container);
             } else {
                 Log.i(TAG, "Nav Trends is already started");
             }
+        } else if (id == R.id.nav_trends) {
+
         } else if (id == R.id.nav_workout_regimens) {
             if(!item.isChecked()){
                 Navigator.navigateToWorkouts(this, R.id.content_main_container);

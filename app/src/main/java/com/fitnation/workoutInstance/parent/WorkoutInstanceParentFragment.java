@@ -25,6 +25,7 @@ import com.fitnation.workoutInstance.instanceList.WorkoutInstanceListFragment;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Erik on 4/24/2017.
