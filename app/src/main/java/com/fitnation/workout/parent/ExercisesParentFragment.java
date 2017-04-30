@@ -96,7 +96,7 @@ public class ExercisesParentFragment extends BaseFragment implements ExercisesPa
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new ExerciseSectionsPagerAdapter(getFragmentManager(), getContext(), this, this);
+        mSectionsPagerAdapter = new ExerciseSectionsPagerAdapter(getChildFragmentManager(), getContext(), this, this);
         // Set up the ViewPager with the sections adapter.
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mSectionsPagerAdapter.notifyDataSetChanged();

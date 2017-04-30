@@ -30,8 +30,6 @@ public class ExercisesManager extends DataManager {
     private List<ExerciseInstance> mExerciseInstancesTab2;
     private List<ExerciseInstance> mExerciseInstancesTab3;
 
-
-
     public ExercisesManager(Context context) {
         mRequestQueue = Volley.newRequestQueue(context);
         mSelectedExercises = new ArrayList<>();
