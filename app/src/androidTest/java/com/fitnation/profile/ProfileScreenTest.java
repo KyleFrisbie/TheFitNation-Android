@@ -1,5 +1,28 @@
 package com.fitnation.profile;
 
+import org.junit.After;
+import org.junit.AfterClass;
+
+import static android.support.test.espresso.Espresso.pressBack;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static org.hamcrest.Matchers.allOf;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import com.fitnation.R;
+import com.fitnation.model.User;
+import com.fitnation.model.UserDemographic;
+import com.fitnation.model.UserWeight;
+import com.fitnation.networking.AuthToken;
+import com.fitnation.networking.UserLogins;
+import com.fitnation.utils.Environment;
+import com.fitnation.utils.EnvironmentManager;
+
+import android.nfc.Tag;
 import android.os.SystemClock;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.filters.LargeTest;
@@ -7,27 +30,12 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
-import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
-import com.fitnation.model.User;
-import com.fitnation.model.UserDemographic;
-import com.fitnation.model.UserWeight;
 import com.fitnation.navigation.NavigationActivity;
-import com.fitnation.networking.AuthToken;
-import com.fitnation.networking.UserLogins;
-import com.fitnation.utils.Environment;
-import com.fitnation.utils.EnvironmentManager;
 import com.fitnation.utils.FileUtils;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import java.io.IOException;
+import java.io.InputStream;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -37,16 +45,12 @@ import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
 
 /**
  * Created by Jeremy on 4/16/2017.
@@ -76,33 +80,6 @@ public class ProfileScreenTest extends InstrumentationTest {
     public ActivityTestRule<NavigationActivity> mActivityRule =
             new ActivityTestRule<NavigationActivity>(NavigationActivity.class);
 
-    @AfterClass
-    public static void AfterClass() {
-        testRealm.beginTransaction();
-        testRealm.insert(udQuery);
-        testRealm.insert(uQuery);
-        testRealm.insert(uwQuery);
-        testRealm.commitTransaction();
-        testRealm.close();
-    }
-
-    @BeforeClass
-    public static void mockServer() throws IOException {
-        //get all the data out of realm and set it aside while testing.
-        testRealm = Realm.getDefaultInstance();
-        udQuery = testRealm.where(UserDemographic.class).findAll();
-        uQuery = testRealm.where(User.class).findAll();
-        uwQuery = testRealm.where(UserWeight.class).findAll();
-
-        testRealm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                udQuery.deleteAllFromRealm();
-                uQuery.deleteAllFromRealm();
-                uwQuery.deleteAllFromRealm();
-            }
-        });
-    }
 
     @Before
     public void setUp() {
@@ -217,6 +194,36 @@ public class ProfileScreenTest extends InstrumentationTest {
         super.tearDown(mActivityRule.getActivity());
     }
 
+    @AfterClass
+    public static void AfterClass(){
+        testRealm.beginTransaction();
+        testRealm.insert(udQuery);
+        testRealm.insert(uQuery);
+        testRealm.insert(uwQuery);
+        testRealm.commitTransaction();
+        testRealm.close();
+    }
+
+    @BeforeClass
+    public static void mockServer() throws IOException {
+        //get all the data out of realm and set it aside while testing.
+        testRealm = Realm.getDefaultInstance();
+        udQuery = testRealm.where(UserDemographic.class).findAll();
+        uQuery = testRealm.where(User.class).findAll();
+        uwQuery = testRealm.where(UserWeight.class).findAll();
+
+        testRealm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                udQuery.deleteAllFromRealm();
+                uQuery.deleteAllFromRealm();
+                uwQuery.deleteAllFromRealm();
+            }
+        });
+    }
+
+
+
     @Test
     public void dateFragmentTest(){
         AuthToken.getInstance().setAccessToken(SUCCESS_AUTH_TOKEN);
@@ -282,8 +289,7 @@ public class ProfileScreenTest extends InstrumentationTest {
                 perform(scrollTo(), click());
         SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        //TODO get this fixed permanently
-        onView(withText("Start Workout")).perform(click());
+        onView(withText("Trends")).perform(click());
         onNavMyProfilePressed();
         profilePageIsDisplayed();
         pressBack();
@@ -327,8 +333,7 @@ public class ProfileScreenTest extends InstrumentationTest {
         pressBack();
         SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        //TODO get this fixed permanently
-        onView(withText("Start Workout")).perform(click());
+        onView(withText("Trends")).perform(click());
         onNavMyProfilePressed();
         profilePageIsDisplayed();
     }

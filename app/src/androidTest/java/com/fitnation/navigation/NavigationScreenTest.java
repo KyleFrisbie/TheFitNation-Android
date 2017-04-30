@@ -1,5 +1,6 @@
 package com.fitnation.navigation;
 
+import android.os.SystemClock;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.DrawerActions;
 import android.support.test.filters.LargeTest;
@@ -21,6 +22,8 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -51,6 +54,7 @@ public class NavigationScreenTest extends InstrumentationTest{
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
         onNavStartWorkoutPressed();
+        onNavMyWorkoutPressed();
         onNavTrendsPressed();
         onNavWorkoutRegimensPressed();
         onNavMyProfilePressed();
@@ -61,6 +65,11 @@ public class NavigationScreenTest extends InstrumentationTest{
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
         onView(withText("Start Workout")).perform(click());
+    }
+
+    public void onNavMyWorkoutPressed(){
+        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
+        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
     }
 
     public void onNavTrendsPressed(){
@@ -78,7 +87,6 @@ public class NavigationScreenTest extends InstrumentationTest{
     public void onNavMyProfilePressed(){
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
-        onView(withText("My Profile")).perform(click());
     }
 
     public void onNavLogoutPressed(){

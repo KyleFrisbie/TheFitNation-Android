@@ -1,9 +1,7 @@
 package com.fitnation.model;
 
+import com.fitnation.utils.DateFormatter;
 import com.google.gson.annotations.Expose;
-
-import org.parceler.Parcel;
-import org.parceler.ParcelPropertyConverter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,13 +9,11 @@ import java.util.Objects;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.WorkoutTemplateRealmProxy;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * A WorkoutTemplate.
  */
-@Parcel(implementations = {WorkoutTemplateRealmProxy.class}, value = Parcel.Serialization.BEAN, analyze = {WorkoutTemplate.class})
 public class WorkoutTemplate extends RealmObject implements Cloneable {
     @PrimaryKey
     @Expose(serialize = false)
@@ -42,18 +38,30 @@ public class WorkoutTemplate extends RealmObject implements Cloneable {
         createdOnObj = new Date();
         lastUpdatedObj = new Date();
         workoutInstances = new RealmList<>();
-        SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+
         if(createdOnObj != null) {
-            createdOn = dateFormat.format(createdOnObj);
+            createdOn = DateFormatter.getFormattedDate(createdOnObj);
         }
 
         if(lastUpdatedObj != null) {
-            lastUpdated = dateFormat.format(lastUpdatedObj);
+            lastUpdated = DateFormatter.getFormattedDate(lastUpdatedObj);
         }
     }
 
     public void addWorkoutInstance(WorkoutInstance workoutInstance) {
         workoutInstances.add(workoutInstance);
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public String getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public Long getAndroidId() {
+        return androidId;
     }
 
     public String getNotes() {
@@ -64,9 +72,12 @@ public class WorkoutTemplate extends RealmObject implements Cloneable {
         return workoutInstances;
     }
 
-    @ParcelPropertyConverter(WorkoutInstanceParcelConverter.class)
-    public void setWorkoutInstances(RealmList<WorkoutInstance> workoutInstances) {
-        this.workoutInstances = workoutInstances;
+    public Long getSkillLevelId() {
+        return skillLevelId;
+    }
+
+    public String getSkillLevelLevel() {
+        return skillLevelLevel;
     }
 
     public void setUserDemographicId(String userDemographicId) {
@@ -85,24 +96,20 @@ public class WorkoutTemplate extends RealmObject implements Cloneable {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setAndroidId(Long androidId) {
         this.androidId = androidId;
-    }
-
-    public RealmList<WorkoutInstance> workoutInstances() {
-        return workoutInstances;
     }
 
     @Override

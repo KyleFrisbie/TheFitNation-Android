@@ -1,13 +1,13 @@
 package com.fitnation.model;
 
-import android.support.annotation.NonNull;
-
 import com.google.gson.annotations.Expose;
 
 import org.parceler.Parcel;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import io.realm.RealmList;
@@ -18,8 +18,8 @@ import io.realm.annotations.PrimaryKey;
 /**
  * A workout that has been performed by the User
  */
-@Parcel(implementations = { WorkoutInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { WorkoutInstance.class })
-public class WorkoutInstance extends RealmObject implements Cloneable, Comparable {
+@Parcel(implementations = {WorkoutInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { WorkoutInstance.class })
+public class WorkoutInstance extends RealmObject {
     @PrimaryKey
     @Expose(serialize = false)
     private Long androidId;
@@ -33,10 +33,10 @@ public class WorkoutInstance extends RealmObject implements Cloneable, Comparabl
     private Date lastUpdatedObj;
     private Float restBetweenInstances;
     private Integer orderNumber;
-    private String notes;
     private Long workoutTemplateId;
     private String workoutTemplateName;
     private RealmList<ExerciseInstance> exerciseInstances;
+    private String notes;
 
     public WorkoutInstance() {
         createdOnObj = new Date();
@@ -65,86 +65,68 @@ public class WorkoutInstance extends RealmObject implements Cloneable, Comparabl
         lastUpdated = dateFormat.format(lastUpdatedObj);
     }
 
-    public Long getAndroidId() {
-        return androidId;
+    public WorkoutInstance (List<ExerciseInstance> exerciseInstances, String name) {
+        this.exerciseInstances = new RealmList<>();
+
+        for (ExerciseInstance exerciseInstance : exerciseInstances) {
+            this.exerciseInstances.add(exerciseInstance);
+        }
+
+        this.name = name;
+        this.restBetweenInstances = 0f;
+        this.orderNumber = 1;
+        this.notes = "";
+        createdOnObj = new Date();
+        lastUpdatedObj = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+        if(createdOnObj != null) {
+            createdOn = dateFormat.format(createdOnObj);
+        }
+
+        if(lastUpdatedObj != null) {
+            lastUpdated = dateFormat.format(lastUpdatedObj);
+        }
     }
 
     public void setAndroidId(Long androidId) {
         this.androidId = androidId;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(String createdOn) {
-        this.createdOn = createdOn;
+    public String getNotes() {
+        return notes;
     }
 
     public String getLastUpdated() {
         return lastUpdated;
     }
 
-    public void setLastUpdated(String lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
-
-    public Date getCreatedOnObj() {
-        return createdOnObj;
-    }
-
-    public Date getLastUpdatedObj() {
-        return lastUpdatedObj;
-    }
-
-    public Float getRestBetweenInstances() {
-        return restBetweenInstances;
-    }
-
-    public Integer getOrderNumber() {
-        return orderNumber;
-    }
-
-    public Long getWorkoutTemplateId() {
-        return workoutTemplateId;
-    }
-
-    public String getWorkoutTemplateName() {
-        return workoutTemplateName;
+    public void setExercises(RealmList<ExerciseInstance> exercises) {
+        this.exerciseInstances  = exercises;
     }
 
     public RealmList<ExerciseInstance> getExerciseInstances() {
         return exerciseInstances;
     }
 
-    public String getNotes() {
-        return notes;
-    }
+    public List<ExerciseView> getExerciseViews() {
+        List<ExerciseView> exerciseViews = new ArrayList<>();
+        for (ExerciseInstance exerciseInstance : exerciseInstances) {
+            exerciseViews.add(exerciseInstance);
+        }
 
-    public void setExercises(RealmList<ExerciseInstance> exercises) {
-        this.exerciseInstances  = exercises;
-    }
-
-    //TODO impliment cloning if want to
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+        return exerciseViews;
     }
 
     @Override
@@ -170,20 +152,20 @@ public class WorkoutInstance extends RealmObject implements Cloneable, Comparabl
     @Override
     public String toString() {
         return "WorkoutInstance{" +
-            "id=" + id +
-            ", name='" + name + "'" +
-            ", createdOn='" + createdOn.toString() + "'" +
-            ", restBetweenInstances='" + restBetweenInstances + "'" +
-            ", orderNumber='" + orderNumber + "'" +
-            '}';
+                "id=" + id +
+                ", name='" + name + "'" +
+                ", createdOn='" + createdOn.toString() + "'" +
+                ", restBetweenInstances='" + restBetweenInstances + "'" +
+                ", orderNumber='" + orderNumber + "'" +
+                '}';
     }
 
-    @Override
-    public int compareTo(@NonNull Object o) {
-        WorkoutInstance workoutInstance = (WorkoutInstance) o;
-        String nameThis = this.name;
-        String nameOther = workoutInstance.getName();
+    public Long getAndroidId() {
+        return androidId;
+    }
 
-        return nameThis.compareTo(nameOther);
+    public void setWorkoutTemplate(WorkoutTemplate workoutTemplate) {
+        this.workoutTemplateId = workoutTemplate.getId();
+        this.workoutTemplateName = workoutTemplate.getName();
     }
 }
