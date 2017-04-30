@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +31,7 @@ public class SaveWorkoutDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.workout_fragment_save_workout_dialog, container);
+        return inflater.inflate(R.layout.workout_fragment_save_user_workout_instance_dialog, container);
     }
 
     @Override
@@ -62,7 +60,7 @@ public class SaveWorkoutDialogFragment extends DialogFragment {
             }
         });
         LayoutInflater i = getActivity().getLayoutInflater();
-        View v = i.inflate(R.layout.workout_fragment_save_workout_dialog, null);
+        View v = i.inflate(R.layout.workout_fragment_save_user_workout_instance_dialog, null);
         alertDialogBuilder.setView(v);
         mEditText = (EditText) v.findViewById(R.id.exercise_name_to_save);
 

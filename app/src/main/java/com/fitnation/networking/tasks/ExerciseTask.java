@@ -1,4 +1,4 @@
-package com.fitnation.workout.parent.tasks;
+package com.fitnation.networking.tasks;
 
 import android.util.ArrayMap;
 import android.util.Log;
@@ -10,43 +10,46 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.fitnation.workout.callbacks.GetUnitsTaskCallback;
+import com.fitnation.model.Exercise;
+import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.Unit;
 import com.fitnation.networking.JsonParser;
+import com.fitnation.networking.tasks.callbacks.ExerciseInstanceRequestCallback;
+import com.fitnation.networking.tasks.callbacks.ExerciseRequestCallback;
+import com.fitnation.networking.tasks.callbacks.GetUnitsTaskCallback;
 import com.fitnation.utils.EnvironmentManager;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Ryan Newsom on 4/9/17. *
+ * Created by Ryan on 4/29/2017.
  */
 
-public class GetUnitsTask extends NetworkTask{
-    private static final String TAG = GetUnitsTask.class.getSimpleName();
+public class ExerciseTask extends NetworkTask {
+    private static final String TAG = ExerciseTask.class.getSimpleName();
 
-    public GetUnitsTask(String authToken, RequestQueue requestQueue) {
+    public ExerciseTask(String authToken, RequestQueue requestQueue) {
         super(authToken, requestQueue);
     }
 
-    public void getUnits(final GetUnitsTaskCallback callback) {
-        String resourceRoute = "units";
+    public void getExerciseInstance(long id, final ExerciseRequestCallback callback) {
+        final String resourceRoute = "exercises" + "/+" + id;
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getApiUrl() + resourceRoute;
 
         StringRequest getExercisesRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        List<Unit> units = JsonParser.convertJsonStringToList(response, Unit[].class);
-
-                        callback.onSuccess(units);
+                        final Exercise exercise = JsonParser.convertJsonStringToPojo(response, Exercise.class);
+                        callback.onSuccess(exercise);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e(TAG, error.toString());
-                        callback.onFailure(String.valueOf(error.networkResponse.statusCode));
+                        callback.onError(error.getMessage());
                     }
                 }
         ) {
@@ -65,5 +68,4 @@ public class GetUnitsTask extends NetworkTask{
 
         mRequestQueue.add(getExercisesRequest);
     }
-
 }

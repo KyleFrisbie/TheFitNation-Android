@@ -12,19 +12,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.fitnation.R;
+import com.fitnation.model.ExerciseSetView;
 import com.fitnation.workout.callbacks.OnSetSelectedCallback;
-import com.fitnation.model.ExerciseInstanceSet;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.realm.RealmList;
 
 /**
  * Adapter for ExerciseInstanceSets
  */
 public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     private static final String TAG = SetAdapter.class.getSimpleName();
-    public RealmList<ExerciseInstanceSet> mSets;
+    public List<ExerciseSetView> mSets;
     private OnSetSelectedCallback mOnSetSelectedCallback;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -44,12 +45,12 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
      * Constructor
      * @param exerciseInstanceSets - the sets to be displayed
      */
-    public SetAdapter(RealmList<ExerciseInstanceSet> exerciseInstanceSets, OnSetSelectedCallback callback) {
+    public SetAdapter(List<ExerciseSetView> exerciseInstanceSets, OnSetSelectedCallback callback) {
         mSets = exerciseInstanceSets;
         mOnSetSelectedCallback = callback;
     }
 
-    public RealmList<ExerciseInstanceSet> getExerciseInstanceSets() {
+    public List<ExerciseSetView> getExerciseInstanceSets() {
         return mSets;
     }
 
@@ -61,7 +62,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(SetAdapter.ViewHolder holder, int position) {
-        final ExerciseInstanceSet set = mSets.get(position);
+        final ExerciseSetView set = mSets.get(position);
 
         holder.mSetOrderView.setText("Set " + String.valueOf(set.getOrderNumber()));
         holder.mExerciseValueView.setText(String.valueOf(set.getEffortQuantity()));
@@ -92,7 +93,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
             public void afterTextChanged(Editable editable) {
                 try {
                     Float newAmount = Float.valueOf(editable.toString());
-                    set.setReqQuantity(newAmount);
+                    set.setRepQuantity(newAmount);
                 } catch (NumberFormatException e) {
                     Log.e(TAG, e.getMessage());
                 }

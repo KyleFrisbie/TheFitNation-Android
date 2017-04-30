@@ -6,15 +6,20 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.fitnation.R;
-import com.fitnation.workout.callbacks.ExercisesRequestCallback;
+import com.fitnation.model.ExerciseView;
+import com.fitnation.model.UserWorkoutInstance;
+import com.fitnation.model.UserWorkoutTemplate;
+import com.fitnation.model.WorkoutInstance;
+import com.fitnation.model.WorkoutTemplate;
+import com.fitnation.networking.tasks.callbacks.ExercisesRequestCallback;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.workout.callbacks.SaveDialogCallback;
 import com.fitnation.workout.callbacks.SaveWorkoutCallback;
-import com.fitnation.workout.common.ExerciseAlertDialogFactory;
-import com.fitnation.workout.exercise.ViewExerciseFragment;
-import com.fitnation.workout.exercise.ViewExercisePresenter;
+import com.fitnation.workout.common.WorkoutAlertDialogFactory;
+import com.fitnation.navigation.Navigator;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.enums.ExerciseAction;
+import com.fitnation.workout.services.WorkoutDataManager;
 
 import java.util.List;
 
@@ -24,12 +29,14 @@ import java.util.List;
 public class ExercisesParentPresenter implements ExercisesParentContract.Presenter, ExercisesRequestCallback, SaveDialogCallback, OnExerciseUpdatedCallback {
     private static final String TAG = ExercisesParentPresenter.class.getSimpleName();
     private ExercisesManager mExerciseManager;
+    private WorkoutDataManager mWorkoutDataManager;
     private ExercisesParentContract.View mView;
     private ExerciseInstance mExerciseInstanceBeingEdited;
 
     public ExercisesParentPresenter(Context context, ExercisesParentContract.View view) {
         mView = view;
         mExerciseManager = new ExercisesManager(context);
+        mWorkoutDataManager = new WorkoutDataManager(context);
     }
 
     @Override
@@ -52,10 +59,7 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void onEditPressed(ExerciseInstance exercise) {
         mExerciseInstanceBeingEdited = exercise;
-        ViewExerciseFragment viewExerciseFragment = ViewExerciseFragment.newInstance(exercise);
-
-        viewExerciseFragment.setPresenter(new ViewExercisePresenter(exercise, viewExerciseFragment, this));
-        mView.getBaseActivity().getSupportFragmentManager().beginTransaction().add(R.id.content_main_container, viewExerciseFragment).addToBackStack(null).commit();
+        Navigator.navigateToEditExercise(mView.getBaseActivity(), exercise, this, R.id.content_main_container);
     }
 
     //----------------------------------ExercisesRequestCallback----------------------------------//
@@ -98,38 +102,43 @@ public class ExercisesParentPresenter implements ExercisesParentContract.Present
     @Override
     public void onSaveRequested(String name) {
         Log.i(TAG, "User requested to save workout with name: " + name);
+        List<ExerciseInstance> selectedExercises = mExerciseManager.getSelectedExercises();
+        final WorkoutTemplate workoutTemplate = WorkoutTemplateManager.getSingletonWorkoutTemplate();
+        final WorkoutInstance workoutInstance = new WorkoutInstance(selectedExercises, name);
+
         if(name != null && !name.isEmpty()) {
             mView.showProgress();
-            mExerciseManager.createWorkoutAndSave(name, new SaveWorkoutCallback() {
+            mWorkoutDataManager.saveWorkout(workoutTemplate, workoutInstance, new SaveWorkoutCallback() {
                 @Override
                 public void onSuccess() {
                     mView.stopProgress();
-                    mView.showSuccess(ExerciseAlertDialogFactory.getSuccess(mView.getBaseActivity(), new DialogInterface.OnClickListener() {
+                    mView.showSuccess(WorkoutAlertDialogFactory.getBuildWorkoutSuccess(mView.getBaseActivity(),
+                            mView.getBaseActivity().getString(R.string.created), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
-
-                            //TODO clear back stack, launch Fragment for viewing created workouts
+                            Navigator.navigateToWorkouts(mView.getBaseActivity(), R.id.content_main_container);
                         }
                     }));
-
                 }
 
                 @Override
                 public void onFailure(String error) {
                     mView.stopProgress();
-                    mView.showFailure(ExerciseAlertDialogFactory.getErrorDialog(error, mView.getBaseActivity()));
+                    mView.showFailure(WorkoutAlertDialogFactory.getBuildWorkoutError(error, mView.getBaseActivity()));
                 }
             });
         } else {
-            mView.showFailure(ExerciseAlertDialogFactory.getErrorDialog("A Workout name must be provided", mView.getBaseActivity()));
+            mView.showFailure(WorkoutAlertDialogFactory.getBuildWorkoutError("A Workout name must be provided", mView.getBaseActivity()));
         }
     }
 
     //----------------------------------OnExerciseUpdatedCallback----------------------------------//
 
     @Override
-    public void exerciseUpdated(@Nullable ExerciseInstance updatedExerciseInstance) {
+    public void exerciseUpdated(@Nullable ExerciseView updatedExerciseView) {
+        ExerciseInstance updatedExerciseInstance = (ExerciseInstance) updatedExerciseView;
+
         if(updatedExerciseInstance != null) {
             mExerciseInstanceBeingEdited = (ExerciseInstance) updatedExerciseInstance.clone();
             mExerciseManager.updateExerciseList(mExerciseInstanceBeingEdited, updatedExerciseInstance, mView.getSelectedTab());

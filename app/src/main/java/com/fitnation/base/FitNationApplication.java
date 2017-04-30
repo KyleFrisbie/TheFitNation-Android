@@ -18,6 +18,5 @@ public class FitNationApplication extends Application {
         Realm.init(getApplicationContext());
         PrimaryKeyFactory.getInstance().initialize(Realm.getDefaultInstance());
         Fabric.with(this, new Crashlytics());
-
     }
 }

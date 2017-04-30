@@ -6,12 +6,14 @@ import android.support.test.rule.ActivityTestRule;
 
 import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
+import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.navigation.NavigationActivity;
 import com.fitnation.networking.JsonParser;
 import com.fitnation.utils.FileUtils;
+import com.fitnation.navigation.Navigator;
 
 import org.junit.After;
 import org.junit.Before;
@@ -43,14 +45,12 @@ public class EditAnExerciseScreen extends InstrumentationTest {
         Exercise exercise = JsonParser.convertJsonStringToPojo(exerciseJson, Exercise.class);
         ExerciseInstance exerciseInstance = new ExerciseInstance(exercise);
 
-        ViewExerciseFragment viewExerciseFragment = ViewExerciseFragment.newInstance(exerciseInstance);
-        viewExerciseFragment.setPresenter(new ViewExercisePresenter(exerciseInstance, viewExerciseFragment, new OnExerciseUpdatedCallback() {
+        Navigator.navigateToEditExercise(mActivityRule.getActivity(), exerciseInstance, new OnExerciseUpdatedCallback() {
             @Override
-            public void exerciseUpdated(@Nullable ExerciseInstance updatedExerciseInstance) {
+            public void exerciseUpdated(@Nullable ExerciseView updatedExerciseInstance) {
 
             }
-        }));
-        mActivityRule.getActivity().getSupportFragmentManager().beginTransaction().add(R.id.content_main_container, viewExerciseFragment).addToBackStack(null).commit();
+        }, R.id.content_main_container);
     }
 
     @After

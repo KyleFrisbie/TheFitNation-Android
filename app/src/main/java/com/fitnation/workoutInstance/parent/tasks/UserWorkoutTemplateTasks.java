@@ -13,8 +13,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.networking.JsonParser;
+import com.fitnation.networking.tasks.NetworkTask;
 import com.fitnation.utils.EnvironmentManager;
-import com.fitnation.workout.parent.tasks.NetworkTask;
 import com.fitnation.workoutInstance.callbacks.UserWorkoutTemplateRequestCallback;
 
 import java.io.UnsupportedEncodingException;
@@ -25,7 +25,7 @@ import java.util.Map;
  * Created by Ryan on 4/6/2017.
  */
 
-public class UserWorkoutTemplateTasks extends NetworkTask{
+public class UserWorkoutTemplateTasks extends NetworkTask {
     private static final String TAG = UserWorkoutTemplateTasks.class.getSimpleName();
 
     public UserWorkoutTemplateTasks(String authToken, RequestQueue requestQueue) {

@@ -1,4 +1,4 @@
-package com.fitnation.workout.parent.tasks;
+package com.fitnation.networking.tasks;
 
 import android.util.ArrayMap;
 import android.util.Log;
@@ -10,32 +10,34 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.fitnation.workout.callbacks.WorkoutTemplateRequestCallback;
+import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.model.WorkoutTemplate;
 import com.fitnation.networking.JsonParser;
+import com.fitnation.networking.tasks.callbacks.UserWorkoutTemplatePostCallback;
+import com.fitnation.networking.tasks.callbacks.WorkoutTemplatePostCallback;
 import com.fitnation.utils.EnvironmentManager;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 /**
- * Created by Ryan on 4/6/2017.
+ * Created by Ryan on 4/22/2017.
  */
 
-public class PostWorkoutTemplateTask extends NetworkTask{
-    private static final String TAG = PostWorkoutTemplateTask.class.getSimpleName();
+public class PostUserWorkoutTemplateTask extends NetworkTask{
+    private static final String TAG = PostUserWorkoutTemplateTask.class.getSimpleName();
 
-    public PostWorkoutTemplateTask(String authToken, RequestQueue requestQueue) {
+    public PostUserWorkoutTemplateTask(String authToken, RequestQueue requestQueue) {
         super(authToken, requestQueue);
     }
-    public void postWorkoutTemplate(final WorkoutTemplate workoutTemplate, final WorkoutTemplateRequestCallback callback) {
-        final String resourceRoute = "workout-templates";
+    public void postUserWorkoutTemplate(final UserWorkoutTemplate userWorkoutTemplate, final UserWorkoutTemplatePostCallback callback) {
+        final String resourceRoute = "user-workout-templates";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getApiUrl() + resourceRoute;
         final StringRequest postWorkoutTemplate = new StringRequest(Request.Method.PUT, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        WorkoutTemplate updatedTemplate = JsonParser.convertJsonStringToPojo(response, WorkoutTemplate.class);
+                        UserWorkoutTemplate updatedTemplate = JsonParser.convertJsonStringToPojo(response, UserWorkoutTemplate.class);
                         callback.onSuccess(updatedTemplate);
                     }
                 },
@@ -60,7 +62,7 @@ public class PostWorkoutTemplateTask extends NetworkTask{
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                String json = JsonParser.convertPojoToJsonString(workoutTemplate);
+                String json = JsonParser.convertPojoToJsonString(userWorkoutTemplate);
                 byte[] postBody = null;
                 try
                 {
@@ -73,7 +75,7 @@ public class PostWorkoutTemplateTask extends NetworkTask{
             }
         };
 
-        postWorkoutTemplate.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
+        postWorkoutTemplate.setRetryPolicy(new DefaultRetryPolicy(10000, 2, 1));
 
         mRequestQueue.add(postWorkoutTemplate);
     }

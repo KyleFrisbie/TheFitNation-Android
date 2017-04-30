@@ -9,5 +9,6 @@
 
     <style name="CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:checkMarkTint">@color/actionable</item>
+        <item name="android:textSize">@dimen/font_normal</item>
     </style>
 </resources>
