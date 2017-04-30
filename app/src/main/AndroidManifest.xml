@@ -6,7 +6,7 @@
 
     <application
         android:name=".base.FitNationApplication"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/fit_nation_login_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
