@@ -13,6 +13,12 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/background_image"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp">
+
     <EditText
         android:id="@+id/registerEmail_editText"
         android:layout_width="match_parent"
@@ -98,6 +104,10 @@
         android:textColor="@color/loginButtonText"
         android:layout_centerVertical="true"
         android:layout_alignEnd="@id/last_name_editText"
-        android:layout_alignStart="@id/last_name_editText"/>
+        android:layout_alignStart="@id/last_name_editText"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:theme="@style/Button"
+        />
+    </RelativeLayout>
 
 </RelativeLayout>

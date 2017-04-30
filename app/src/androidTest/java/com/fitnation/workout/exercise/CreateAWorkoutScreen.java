@@ -14,6 +14,7 @@ import android.support.test.uiautomator.UiSelector;
 import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
 import com.fitnation.navigation.NavigationActivity;
+import com.fitnation.navigation.Navigator;
 import com.fitnation.test.RecyclerViewMatcher;
 import com.fitnation.utils.Environment;
 import com.fitnation.utils.EnvironmentManager;
@@ -102,10 +103,7 @@ public class CreateAWorkoutScreen extends InstrumentationTest {
         HttpUrl baseUrl = server.url("");
         String url = baseUrl.url().toString();
         EnvironmentManager.getInstance().setEnvironment(new Environment(baseUrl.url().toString()));
-        onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
-        onView(withText(R.string.build_workout)).check(matches(isDisplayed()));
-        onView(withText(R.string.build_workout)).perform(click());
+        Navigator.navigateToBuildWorkout(mActivityRule.getActivity(), R.id.content_main_container);
         SystemClock.sleep(TEST_WAIT_TIME);
     }
 
