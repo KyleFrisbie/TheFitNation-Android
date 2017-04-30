@@ -289,7 +289,7 @@ public class ProfileScreenTest extends InstrumentationTest {
                 perform(scrollTo(), click());
         SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withText("My Workouts")).perform(click());
+        onView(withText("Trends")).perform(click());
         onNavMyProfilePressed();
         profilePageIsDisplayed();
         pressBack();
@@ -333,7 +333,7 @@ public class ProfileScreenTest extends InstrumentationTest {
         pressBack();
         SystemClock.sleep(DELAY_TIME);
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
-        onView(withText("My Workouts")).perform(click());
+        onView(withText("Trends")).perform(click());
         onNavMyProfilePressed();
         profilePageIsDisplayed();
     }

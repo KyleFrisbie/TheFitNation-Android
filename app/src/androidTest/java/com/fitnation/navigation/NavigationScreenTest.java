@@ -70,7 +70,6 @@ public class NavigationScreenTest extends InstrumentationTest{
     public void onNavMyWorkoutPressed(){
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
-        onView(withText("My Workouts")).perform(click());
     }
 
     public void onNavTrendsPressed(){
@@ -88,7 +87,6 @@ public class NavigationScreenTest extends InstrumentationTest{
     public void onNavMyProfilePressed(){
         onView(withId(R.id.drawer_layout)).perform(DrawerActions.open());
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
-        onView(withText("My Profile")).perform(click());
     }
 
     public void onNavLogoutPressed(){
