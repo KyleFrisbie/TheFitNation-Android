@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 
 import org.parceler.Parcel;
+import org.parceler.ParcelPropertyConverter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -128,6 +129,7 @@ public class WorkoutInstance extends RealmObject implements Cloneable, Comparabl
         return lastUpdated;
     }
 
+    @ParcelPropertyConverter(ExerciseInstanceParcelConverter.class)
     public void setExercises(RealmList<ExerciseInstance> exercises) {
         this.exerciseInstances  = exercises;
     }
