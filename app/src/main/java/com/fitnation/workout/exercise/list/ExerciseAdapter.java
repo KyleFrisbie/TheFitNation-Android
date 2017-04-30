@@ -1,4 +1,4 @@
-package com.fitnation.workout.exerciseList;
+package com.fitnation.workout.exercise.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,10 +9,9 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.fitnation.R;
+import com.fitnation.model.ExerciseSetView;
+import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
-import com.fitnation.model.Exercise;
-import com.fitnation.model.ExerciseInstance;
-import com.fitnation.model.ExerciseInstanceSet;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 
 import java.util.List;
@@ -24,19 +23,21 @@ import butterknife.ButterKnife;
  * Adapter for displaying some ExerciseInstance's
  */
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHolder> {
-    private List<ExerciseInstance> mExercises;
+    private List<ExerciseView> mExercises;
     private ExerciseSelectedCallback mSelectedExercisesCallback;
     private OnEditExercisePressedCallback mEditPressedCallback;
+    private boolean mElementsSelectable;
 
     /**
      * Constructor
      * @param exercises - exercises to be shown
      * @param callback - notified when an exercise is selected/unselected
      */
-    public ExerciseAdapter(List<ExerciseInstance> exercises, ExerciseSelectedCallback callback, OnEditExercisePressedCallback onEditExercisePressedCallback) {
+    public ExerciseAdapter(List<ExerciseView> exercises, ExerciseSelectedCallback callback, OnEditExercisePressedCallback onEditExercisePressedCallback, boolean elementsSelectable) {
         mExercises = exercises;
         mSelectedExercisesCallback = callback;
         mEditPressedCallback = onEditExercisePressedCallback;
+        mElementsSelectable = elementsSelectable;
     }
 
     @Override
@@ -47,9 +48,8 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final ExerciseInstance exerciseInstance = mExercises.get(position);
-        final Exercise exercise = exerciseInstance.getExercise();
-        List<ExerciseInstanceSet> sets = exerciseInstance.getExerciseInstanceSets();
+        final ExerciseView exerciseInstance = mExercises.get(position);
+        List<ExerciseSetView> sets = exerciseInstance.getExerciseSetView();
         String setText = "";
         String repText = "";
         int cutOff = 3;
@@ -61,7 +61,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         }
 
         for (int i = 0; i < cutOff; i++) {
-            ExerciseInstanceSet set = sets.get(i);
+            ExerciseSetView set = sets.get(i);
 
             if(i == 0) {
                 setText = String.valueOf(set.getOrderNumber());
@@ -72,21 +72,26 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
             }
         }
 
-        holder.addExerciseBox.setChecked(exerciseInstance.isSelected());
-        holder.exerciseName.setText(exercise.getName());
+        if(!mElementsSelectable) {
+            holder.addExerciseBox.setVisibility(View.GONE);
+        } else {
+            holder.addExerciseBox.setVisibility(View.VISIBLE);
+            holder.addExerciseBox.setChecked(exerciseInstance.isSelected());
+            holder.addExerciseBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                    exerciseInstance.setSelected(checked);
+                    mSelectedExercisesCallback.onExerciseSelected(exerciseInstance, checked);
+                }
+            });
+        }
+        holder.exerciseName.setText(exerciseInstance.getName());
         holder.setOne.setText(setText);
         holder.setOneReps.setText(repText);
         holder.editExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mEditPressedCallback.onEditPressed(exerciseInstance);
-            }
-        });
-        holder.addExerciseBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                exerciseInstance.setSelected(checked);
-                mSelectedExercisesCallback.onExerciseSelected(exerciseInstance, checked);
             }
         });
     }

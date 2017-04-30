@@ -3,8 +3,12 @@ package com.fitnation.workoutInstance.parent;
 import android.content.Context;
 import android.util.Log;
 
+import com.fitnation.R;
 import com.fitnation.model.UserWorkoutInstance;
+import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.model.WorkoutInstance;
+import com.fitnation.navigation.Navigator;
+import com.fitnation.workout.parent.WorkoutTemplateManager;
 import com.fitnation.workoutInstance.callbacks.WorkoutManagerWorkoutsCallback;
 
 import java.util.List;
@@ -50,14 +54,15 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
 
     @Override
     public void onLaunchPressed(WorkoutInstance workoutInstance) {
-        // TODO: Ryan change code here to launch to your fragment/activity
-        Log.i(TAG, "onLaunchPressed()");
+        UserWorkoutInstance userWorkoutInstance = new UserWorkoutInstance(workoutInstance, UserWorkoutInstance.getNextAndroidKey());
+        UserWorkoutTemplate userWorkoutTemplate = WorkoutTemplateManager.getSingletonUserWorkoutTemplate(WorkoutTemplateManager.getSingletonWorkoutTemplate());
+        Navigator.navigateToEditUserWorkout(mView.getBaseActivity(), userWorkoutInstance, userWorkoutTemplate, R.id.content_main_container);
     }
 
     @Override
     public void onDetailsPressed(WorkoutInstance workoutInstance) {
-        // TODO: Add transition to one of ryans screens
         Log.i(TAG, "onDetailsPressed()");
+        Navigator.navigateToEditWorkout(mView.getBaseActivity(), workoutInstance, R.id.content_main_container);
     }
 
     //---------------------------WorkoutManagerWorkoutsCallback.instance--------------------------//

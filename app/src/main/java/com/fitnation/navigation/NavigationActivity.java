@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
+import com.fitnation.base.Navigationable;
 import com.fitnation.profile.ProfileFragment;
 import com.fitnation.workout.parent.ExercisesParentFragment;
 import com.fitnation.model.enums.ExerciseAction;
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
  * Handles Navigation for the flyout drawer & its container
  */
 public class NavigationActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Navigationable {
     private static final String TAG = NavigationActivity.class.getSimpleName();
 
     @BindView(R.id.toolbar) public Toolbar mToolbar;
@@ -69,6 +70,7 @@ public class NavigationActivity extends BaseActivity
         };
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
+        updateToolbar(false, getString(R.string.fit_nation));
     }
 
     @Override
@@ -77,16 +79,11 @@ public class NavigationActivity extends BaseActivity
             mDrawerLayout.closeDrawer(GravityCompat.START);
 
         } else {
-            List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
-            if (fragmentList != null) {
-                Fragment fragment = fragmentList.get(0);
-                if(fragment instanceof ExercisesParentFragment) {
-                    displayBackArrow(false, getString(R.string.build_workout_title));
-                }
-            }
             int backStackCount = getSupportFragmentManager().getBackStackEntryCount();
 
             if (backStackCount >= 1) {
+                NavigationState navigationState = Navigator.popNavigationState();
+                updateBasedOffNavigationState(navigationState);
                 getSupportFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();
@@ -121,7 +118,7 @@ public class NavigationActivity extends BaseActivity
 
         } else if (id == R.id.nav_my_workouts) {
             if(!item.isChecked()){
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_container, WorkoutInstanceParentFragment.newInstance(this)).commit();
+                Navigator.navigateToWorkouts(this, R.id.content_main_container);
             }else{
                 Log.i(TAG, "Nav My Workouts is already started");
             }
@@ -148,7 +145,20 @@ public class NavigationActivity extends BaseActivity
         return true;
     }
 
-    public void displayBackArrow(boolean show, String title) {
+    private void updateBasedOffNavigationState(NavigationState navigationState) {
+        if(navigationState != null) {
+            updateToolbarView(navigationState.isBackArrowShown(), navigationState.getTitle());
+        }
+    }
+
+    @Override
+    public void updateToolbar(boolean show, String title) {
+        Navigator.addNavigationState(new NavigationState(show, title));
+
+        updateToolbarView(show, title);
+    }
+
+    private void updateToolbarView(boolean show, String title) {
         if (title != null) {
             getSupportActionBar().setTitle(title);
         }

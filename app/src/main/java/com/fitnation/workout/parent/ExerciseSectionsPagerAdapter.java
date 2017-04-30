@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.fitnation.R;
-import com.fitnation.workout.exerciseList.ExercisesListFragment;
+import com.fitnation.workout.exercise.list.ExercisesListFragment;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 import com.fitnation.model.ExerciseInstance;
@@ -48,9 +48,15 @@ public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
     }
 
     public void refresh(List<ExerciseInstance> exerciseListTab1, List<ExerciseInstance> exerciseListTab2, List<ExerciseInstance> exerciseListTab3) {
-        mFragmentTab1.displayExercises(exerciseListTab1);
-        mFragmentTab2.displayExercises(exerciseListTab2);
-        mFragmentTab3.displayExercises(exerciseListTab3);
+        if(mFragmentTab1 != null) {
+            mFragmentTab1.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(exerciseListTab1));
+        }
+        if(mFragmentTab2 != null) {
+            mFragmentTab2.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(exerciseListTab2));
+        }
+        if(mExerciseListTab3 != null) {
+            mFragmentTab3.displayExercises(ExerciseInstance.convertExercisesToExerciseViews(exerciseListTab3));
+        }
     }
 
     @Override
@@ -66,13 +72,13 @@ public class ExerciseSectionsPagerAdapter extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
         switch (position) {
             case 0:
-                mFragmentTab1 = ExercisesListFragment.newInstance(mExerciseListTab1, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+                mFragmentTab1 = ExercisesListFragment.newInstance(ExerciseInstance.convertExercisesToExerciseViews(mExerciseListTab1), true, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
                 return mFragmentTab1;
             case 1:
-                mFragmentTab2 = ExercisesListFragment.newInstance(mExerciseListTab2, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+                mFragmentTab2 = ExercisesListFragment.newInstance(ExerciseInstance.convertExercisesToExerciseViews(mExerciseListTab2), true, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
                 return mFragmentTab2;
             case 2:
-                mFragmentTab3 = ExercisesListFragment.newInstance(mExerciseListTab3, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+                mFragmentTab3 = ExercisesListFragment.newInstance(ExerciseInstance.convertExercisesToExerciseViews(mExerciseListTab3), true, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
                 return mFragmentTab3;
             default:
                 return null;

@@ -13,8 +13,9 @@ import android.widget.TextView;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.model.Exercise;
+import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.callbacks.OnSetSelectedCallback;
-import com.fitnation.model.ExerciseInstance;
 import com.fitnation.navigation.NavigationActivity;
 
 import org.parceler.Parcels;
@@ -29,8 +30,9 @@ import butterknife.OnClick;
 public class ViewExerciseFragment extends BaseFragment implements ViewExerciseContract.View {
     private static final String TAG = ViewExerciseFragment.class.getSimpleName();
     private static final String EXERCISE_KEY = "EXERCISE_KEY";
-    private ExerciseInstance mExerciseInstance;
+    private ExerciseView mExerciseInstance;
     private ViewExerciseContract.Presenter mPresenter;
+    private OnSetSelectedCallback mCallback;
 
     @BindView(R.id.exercise_name_edit)
     public TextView mExerciseNameView;
@@ -53,7 +55,7 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
      * @param exerciseInstance - the exercise that is being edited
      * @return - A new instance for the passed in exercise
      */
-    public static ViewExerciseFragment newInstance(ExerciseInstance exerciseInstance) {
+    public static ViewExerciseFragment newInstance(ExerciseView exerciseInstance) {
         ViewExerciseFragment viewExerciseFragment = new ViewExerciseFragment();
         Bundle args = new Bundle();
         args.putParcelable(EXERCISE_KEY, Parcels.wrap(exerciseInstance));
@@ -94,11 +96,11 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
     }
 
     @Override
-    public void bindExerciseInstanceToView(ExerciseInstance exerciseInstance, OnSetSelectedCallback callback) {
-        mExerciseNameView.setText(exerciseInstance.getExercise().getName());
-        mLevelView.setText(exerciseInstance.getExercise().getSkillLevelLevel());
+    public void bindExerciseInstanceToView(ExerciseView exerciseInstance, OnSetSelectedCallback callback) {
+        mExerciseNameView.setText(exerciseInstance.getName());
+        mLevelView.setText(exerciseInstance.getSkillLevelLevel());
         mNotesView.setText(exerciseInstance.getNotes());
-        mAdapter = new SetAdapter(exerciseInstance.getExerciseInstanceSets(), callback);
+        mAdapter = new SetAdapter(exerciseInstance.getExerciseSetView(), callback);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -106,13 +108,12 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
     public void onStart() {
         super.onStart();
         NavigationActivity navigationActivity = (NavigationActivity) getBaseActivity();
-        navigationActivity.displayBackArrow(true, "Edit");
+        navigationActivity.updateToolbar(true, "Edit " + mExerciseInstance.getName());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ((NavigationActivity) getActivity()).displayBackArrow(false, "Build A Workout");
     }
 
     @OnClick(R.id.add_set_button)
@@ -122,7 +123,7 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
 
     @OnClick(R.id.save_button)
     public void onSaveClicked() {
-        mExerciseInstance.setExerciseInstanceSets(mAdapter.getExerciseInstanceSets());
+        mExerciseInstance.setExerciseSetViews(mAdapter.getExerciseInstanceSets());
         mPresenter.onSaveClicked(mExerciseInstance);
     }
 
@@ -139,9 +140,10 @@ public class ViewExerciseFragment extends BaseFragment implements ViewExerciseCo
     @Override
     public void onStop() {
         if(mExerciseInstance != null) {
-            mExerciseInstance.setExerciseInstanceSets(mAdapter.getExerciseInstanceSets());
+            mExerciseInstance.setExerciseSetViews(mAdapter.getExerciseInstanceSets());
             mPresenter.onExit(mExerciseInstance);
         }
+
         super.onStop();
     }
 }

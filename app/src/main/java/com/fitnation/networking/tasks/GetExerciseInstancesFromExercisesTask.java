@@ -1,4 +1,4 @@
-package com.fitnation.workout.parent.tasks;
+package com.fitnation.networking.tasks;
 
 import android.util.ArrayMap;
 import android.util.Log;
@@ -10,8 +10,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.fitnation.workout.callbacks.ExerciseInstanceRequestCallback;
-import com.fitnation.workout.callbacks.GetUnitsTaskCallback;
+import com.fitnation.networking.tasks.callbacks.ExerciseInstanceRequestCallback;
+import com.fitnation.networking.tasks.callbacks.GetUnitsTaskCallback;
 import com.fitnation.model.Exercise;
 import com.fitnation.model.ExerciseInstance;
 import com.fitnation.model.Unit;

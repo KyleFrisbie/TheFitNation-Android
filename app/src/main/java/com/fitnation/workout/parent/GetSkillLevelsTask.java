@@ -11,9 +11,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.fitnation.networking.tasks.NetworkTask;
-import com.fitnation.workout.callbacks.GetSkillLevelsCallback;
 import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.networking.JsonParser;
+import com.fitnation.networking.tasks.callbacks.GetSkillLevelsCallback;
 import com.fitnation.utils.EnvironmentManager;
 
 import java.util.List;

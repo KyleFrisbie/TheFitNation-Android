@@ -9,6 +9,7 @@ import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,7 +21,7 @@ import io.realm.RealmObject;
  * Created by Ryan on 3/21/2017.
  */
 @Parcel(implementations = { ExerciseInstanceRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { ExerciseInstance.class })
-public class ExerciseInstance extends RealmObject implements Cloneable, Comparable {
+public class ExerciseInstance extends RealmObject implements Cloneable, Comparable, ExerciseView {
     public static final Float REPS_DEFAULT = 8f;
     public static final Float EFFORT_DEFAULT = 20f;
     public static final Float REST_TIME_DEFAULT = 30f;
@@ -45,7 +46,6 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
     private RealmList<ExerciseInstanceSet> exerciseInstanceSets;
 
 
-
     public ExerciseInstance() {
 
     }
@@ -59,6 +59,7 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
         exerciseId = exercise.getId();
         exerciseName = exercise.getName();
         exerciseInstanceSets = new RealmList<>();
+        notes = exercise.getNotes();
         exerciseInstanceSets.add(new ExerciseInstanceSet(this, 1, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
         exerciseInstanceSets.add(new ExerciseInstanceSet(this, 2, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
         exerciseInstanceSets.add(new ExerciseInstanceSet(this, 3, REPS_DEFAULT, EFFORT_DEFAULT, REST_TIME_DEFAULT));
@@ -77,12 +78,85 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
         repUnitName = repUnit.getName();
     }
 
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
+
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
 
+    @Override
+    public void setParentExercise(Exercise exercise) {
+        this.exercise = exercise;
+    }
+
+    @Override
+    public List<ExerciseSetView> getExerciseSetView() {
+        List<ExerciseSetView> exerciseSetView = new ArrayList<>();
+        for (ExerciseInstanceSet set : exerciseInstanceSets) {
+            exerciseSetView.add(set);
+        }
+
+        return exerciseSetView;
+    }
+
+    @Override
+    public void setExerciseSetViews(List<ExerciseSetView> sets) {
+        exerciseInstanceSets = new RealmList();
+
+        for (ExerciseSetView setView : sets) {
+            exerciseInstanceSets.add((ExerciseInstanceSet) setView);
+        }
+    }
+
+    @Override
+    public void addExerciseSetView(ExerciseView exercise, int orderNumber) {
+        exerciseInstanceSets.add(new ExerciseInstanceSet((ExerciseInstance)exercise, orderNumber));
+    }
+
+    public static List<ExerciseView> convertExercisesToExerciseViews(List<ExerciseInstance> exerciseInstances) {
+        List<ExerciseView> exerciseViews = null;
+
+        if(exerciseInstances != null) {
+            exerciseViews = new ArrayList<>();
+            for (ExerciseInstance exerciseInstance :
+                    exerciseInstances) {
+                exerciseViews.add(exerciseInstance);
+            }
+        }
+
+        return exerciseViews;
+    }
+
+    @Override
     public boolean isSelected() {
         return selected;
+    }
+
+    @Override
+    public boolean hasExerciseParent() {
+        return exercise != null;
+    }
+
+    @Override
+    public boolean isSelectable() {
+        return true;
+    }
+
+    @Override
+    public String getName() {
+        return exerciseName;
+    }
+
+    @Override
+    public String getSkillLevelLevel() {
+        if(exercise != null) {
+            return exercise.getSkillLevelLevel();
+        }
+        else {
+            return null;
+        }
     }
 
     public RealmList<ExerciseInstanceSet> getExerciseInstanceSets() {
@@ -151,10 +225,15 @@ public class ExerciseInstance extends RealmObject implements Cloneable, Comparab
     }
 
     @Override
+    public Long getParentExerciseId() {
+        return exerciseId;
+    }
+
+    @Override
     public int compareTo(@NonNull Object o) {
         ExerciseInstance exerciseInstance = (ExerciseInstance) o;
         String nameThis = this.exerciseName;
-        String nameOther = exerciseInstance.getExercise().getName();
+        String nameOther = exerciseInstance.getName();
 
         return nameThis.compareTo(nameOther);
     }

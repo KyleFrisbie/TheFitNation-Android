@@ -1,4 +1,4 @@
-package com.fitnation.workout.exerciseList;
+package com.fitnation.workout.exercise.list;
 
 
 import android.os.Bundle;
@@ -9,15 +9,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseFragment;
+import com.fitnation.model.ExerciseSetView;
+import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
-import com.fitnation.model.ExerciseInstance;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 
 import org.parceler.Parcels;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,14 +32,18 @@ import butterknife.ButterKnife;
 public class ExercisesListFragment extends BaseFragment {
     private static final String TAG = ExercisesListFragment.class.getSimpleName();
     private static final String EXERCISE_LIST = "EXERCISE_LIST";
-    private List<ExerciseInstance> mExercises;
+    private static final String DISPLAY_SELECTABLE = "DISPLAY_SELECTABLE";
+    private List<ExerciseView> mExercises;
     @BindView(R.id.exercise_recycler_view)
     public RecyclerView mRecyclerView;
+    @BindView(R.id.first_entry_header)
+    public TextView mFirstLabelHeader;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ExerciseSelectedCallback mExerciseSelectedCallback;
     private OnEditExercisePressedCallback mOnEditExercisePressedCallback;
     private boolean mHasUpdatedData;
+    private boolean mElementsSelectable;
 
 
     public ExercisesListFragment() {
@@ -49,20 +56,21 @@ public class ExercisesListFragment extends BaseFragment {
         Log.i(TAG, "onHiddenChanged()");
         if(mHasUpdatedData) {
             mHasUpdatedData = false;
-            mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+            mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressedCallback, mElementsSelectable);
             mRecyclerView.setAdapter(mAdapter);
         }
     }
 
-    public static ExercisesListFragment newInstance(List<ExerciseInstance> exerciseInstances, ExerciseSelectedCallback callback, OnEditExercisePressedCallback onEditExercisePressedCallback) {
+    public static ExercisesListFragment newInstance(List<ExerciseView> exerciseInstances, boolean elementsSelectable, ExerciseSelectedCallback callback, OnEditExercisePressedCallback onEditExercisePressedCallback) {
         ExercisesListFragment  exercisesListFragment = new ExercisesListFragment();
+        Bundle bundle = new Bundle();
 
         if(exerciseInstances != null && !exerciseInstances.isEmpty()) {
-            Bundle bundle = new Bundle();
-
             bundle.putParcelable(EXERCISE_LIST, Parcels.wrap(exerciseInstances));
-            exercisesListFragment.setArguments(bundle);
         }
+
+        bundle.putBoolean(DISPLAY_SELECTABLE, elementsSelectable);
+        exercisesListFragment.setArguments(bundle);
 
         exercisesListFragment.setExerciseSelectedCallback(callback);
         exercisesListFragment.setOnEditExercisePressed(onEditExercisePressedCallback);
@@ -83,13 +91,22 @@ public class ExercisesListFragment extends BaseFragment {
         Log.i(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-
         if(bundle != null) {
-            mExercises = (List<ExerciseInstance>) bundle.get(EXERCISE_LIST);
+            mExercises = Parcels.unwrap(bundle.getParcelable(EXERCISE_LIST));
+            mElementsSelectable = bundle.getBoolean(DISPLAY_SELECTABLE);
         }
 
         if(savedInstanceState != null) {
             mExercises = Parcels.unwrap(savedInstanceState.getParcelable(EXERCISE_LIST));
+        }
+
+        if(mExercises != null) {
+            Collections.sort(mExercises);
+            for (ExerciseView exerciseView : mExercises) {
+                List<ExerciseSetView> exerciseSetViews = exerciseView.getExerciseSetView();
+                Collections.sort(exerciseSetViews);
+                exerciseView.setExerciseSetViews(exerciseSetViews);
+            }
         }
     }
 
@@ -123,19 +140,25 @@ public class ExercisesListFragment extends BaseFragment {
         mRecyclerView.setFocusable(false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
-        mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+        mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressedCallback, mElementsSelectable);
         mRecyclerView.setAdapter(mAdapter);
+
+        if(mElementsSelectable) {
+            mFirstLabelHeader.setVisibility(View.VISIBLE);
+        } else {
+            mFirstLabelHeader.setVisibility(View.INVISIBLE);
+        }
 
         return v;
     }
 
-    public void displayExercises(final List<ExerciseInstance> exercises) {
+    public void displayExercises(final List<ExerciseView> exercises) {
         mExercises = exercises;
         if(getView() != null) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressedCallback);
+                    mAdapter = new ExerciseAdapter(mExercises, mExerciseSelectedCallback, mOnEditExercisePressedCallback, mElementsSelectable);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             });

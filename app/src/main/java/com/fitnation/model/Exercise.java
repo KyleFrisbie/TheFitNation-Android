@@ -2,8 +2,11 @@ package com.fitnation.model;
 
 import com.google.gson.annotations.Expose;
 
+import org.parceler.Parcel;
+
 import java.util.List;
 
+import io.realm.ExerciseRealmProxy;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -11,6 +14,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * A single Exercise
  */
+@Parcel(implementations = { ExerciseRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { Exercise.class })
 public class Exercise extends RealmObject {
     @PrimaryKey
     @Expose(serialize = false)

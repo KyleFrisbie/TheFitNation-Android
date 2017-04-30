@@ -1,4 +1,4 @@
-package com.fitnation.workout.parent.tasks;
+package com.fitnation.networking.tasks;
 
 import android.util.ArrayMap;
 import android.util.Log;
@@ -10,8 +10,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.fitnation.workout.callbacks.WorkoutTemplateRequestCallback;
-import com.fitnation.model.WorkoutTemplate;
+import com.fitnation.networking.tasks.callbacks.WorkoutInstancePostCallback;
+import com.fitnation.model.WorkoutInstance;
 import com.fitnation.networking.JsonParser;
 import com.fitnation.utils.EnvironmentManager;
 
@@ -22,28 +22,34 @@ import java.util.Map;
  * Created by Ryan on 4/6/2017.
  */
 
-public class PostWorkoutTemplateTask extends NetworkTask{
-    private static final String TAG = PostWorkoutTemplateTask.class.getSimpleName();
+public class PostWorkoutInstanceTask extends NetworkTask {
+    private static String TAG = PostWorkoutInstanceTask.class.getSimpleName();
 
-    public PostWorkoutTemplateTask(String authToken, RequestQueue requestQueue) {
+    public PostWorkoutInstanceTask(String authToken, RequestQueue requestQueue) {
         super(authToken, requestQueue);
     }
-    public void postWorkoutTemplate(final WorkoutTemplate workoutTemplate, final WorkoutTemplateRequestCallback callback) {
-        final String resourceRoute = "workout-templates";
+
+    /**
+     * Posts a WorkoutInstance to the web services
+     * @param workoutInstance - workout instance to be posted
+     * @param callback - callback to be invoked after the response is finished
+     */
+    public void  postWorkoutInstance(final WorkoutInstance workoutInstance, final WorkoutInstancePostCallback callback) {
+        final String resourceRoute = "workout-instances";
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getApiUrl() + resourceRoute;
-        final StringRequest postWorkoutTemplate = new StringRequest(Request.Method.PUT, url,
+        final StringRequest postWorkoutInstance = new StringRequest(Request.Method.PUT, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        WorkoutTemplate updatedTemplate = JsonParser.convertJsonStringToPojo(response, WorkoutTemplate.class);
-                        callback.onSuccess(updatedTemplate);
+                        WorkoutInstance updatedInstance = JsonParser.convertJsonStringToPojo(response, WorkoutInstance.class);
+                        callback.onSuccess(updatedInstance);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e(TAG, error.toString());
-                        callback.onFailure(error.getMessage());
+                        callback.onFailure(String.valueOf(error.networkResponse.statusCode));
                     }
                 }
         ) {
@@ -60,7 +66,7 @@ public class PostWorkoutTemplateTask extends NetworkTask{
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                String json = JsonParser.convertPojoToJsonString(workoutTemplate);
+                String json = JsonParser.convertPojoToJsonString(workoutInstance);
                 byte[] postBody = null;
                 try
                 {
@@ -73,8 +79,8 @@ public class PostWorkoutTemplateTask extends NetworkTask{
             }
         };
 
-        postWorkoutTemplate.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
+        postWorkoutInstance.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1));
 
-        mRequestQueue.add(postWorkoutTemplate);
+        mRequestQueue.add(postWorkoutInstance);
     }
 }

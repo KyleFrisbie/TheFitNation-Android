@@ -1,11 +1,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/defaultBackground">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".workout.exerciseList.ExercisesListFragment"
+        tools:context=".workout.exercise.list.ExercisesListFragment"
         android:background="@color/defaultBackground">
 
         <FrameLayout
@@ -15,7 +16,6 @@
             android:layout_marginBottom="8dp">
 
         <include
-
             layout="@layout/root_content_exercise_title"
             tools:layout_editor_absoluteY="275dp">
         </include>

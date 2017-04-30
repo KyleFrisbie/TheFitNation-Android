@@ -72,7 +72,7 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
         Log.i(TAG, "onStart()");
         super.onStart();
         mPresenter.onViewReady();
-        ((NavigationActivity) getActivity()).displayBackArrow(false, "My Workouts");
+        ((NavigationActivity) getActivity()).updateToolbar(false, "My Workouts");
     }
 
     @Override

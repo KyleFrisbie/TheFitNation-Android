@@ -1,4 +1,4 @@
-package com.fitnation.workout.callbacks;
+package com.fitnation.networking.tasks.callbacks;
 
 import com.fitnation.model.Unit;
 
