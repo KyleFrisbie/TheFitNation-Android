@@ -45,7 +45,11 @@ public class GetSkillLevelsTask extends NetworkTask{
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e(TAG, error.toString());
-                        callback.onFailure(String.valueOf(error.networkResponse.statusCode));
+                        try {
+                            callback.onFailure(String.valueOf(error.networkResponse.statusCode));
+                        } catch (NullPointerException ex) {
+                            Log.d(TAG, ex.toString());
+                        }
                     }
                 }
         ) {

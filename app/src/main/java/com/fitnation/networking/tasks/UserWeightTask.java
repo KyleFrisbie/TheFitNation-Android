@@ -113,7 +113,11 @@ public class UserWeightTask extends NetworkTask{
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("PUT", error.toString());
+                        try {
+                            callback.onFailure(String.valueOf(error.networkResponse.statusCode));
+                        } catch (NullPointerException ex) {
+                            Log.d(TAG, ex.toString());
+                        }
                     }
                 }) {
                 @Override
