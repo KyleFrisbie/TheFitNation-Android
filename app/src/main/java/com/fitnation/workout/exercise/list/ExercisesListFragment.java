@@ -100,6 +100,7 @@ public class ExercisesListFragment extends BaseFragment {
             mExercises = Parcels.unwrap(savedInstanceState.getParcelable(EXERCISE_LIST));
         }
 
+
         if(mExercises != null) {
             Collections.sort(mExercises);
             for (ExerciseView exerciseView : mExercises) {

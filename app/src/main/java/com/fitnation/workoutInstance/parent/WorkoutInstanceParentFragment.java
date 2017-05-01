@@ -92,8 +92,10 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
         mPresenter.onViewReady();
         if(mFragmentType.equals(WORKOUT_INSTANCE_FRAGMENT)) {
             ((NavigationActivity) getActivity()).updateToolbar(false, getString(R.string.workout_regimens));
+            ((NavigationActivity) getActivity()).updateMenuItemSelected(R.id.nav_workout_regimens);
         } else if(mFragmentType.equals(USER_WORKOUT_INSTANCE_FRAGMENT)) {
             ((NavigationActivity) getActivity()).updateToolbar(false, getString(R.string.my_workouts));
+            ((NavigationActivity) getActivity()).updateMenuItemSelected(R.id.nav_my_workouts);
         }
     }
 

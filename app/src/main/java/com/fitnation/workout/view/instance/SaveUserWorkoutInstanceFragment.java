@@ -152,4 +152,15 @@ public class SaveUserWorkoutInstanceFragment extends BaseFragment implements Sav
             }
         });
     }
+
+    @Override
+    public void showSuccess(final AlertDialog alertDialog) {
+        Activity activity = getActivity();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                alertDialog.show();
+            }
+        });
+    }
 }
