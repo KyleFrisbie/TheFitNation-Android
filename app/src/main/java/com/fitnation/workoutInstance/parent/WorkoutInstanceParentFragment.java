@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
-import com.fitnation.base.Navigationable;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.model.WorkoutView;
@@ -94,7 +93,7 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
             ((NavigationActivity) getActivity()).updateToolbar(false, getString(R.string.workout_regimens));
             ((NavigationActivity) getActivity()).updateMenuItemSelected(R.id.nav_workout_regimens);
         } else if(mFragmentType.equals(USER_WORKOUT_INSTANCE_FRAGMENT)) {
-            ((NavigationActivity) getActivity()).updateToolbar(false, getString(R.string.my_workouts));
+            ((NavigationActivity) getActivity()).updateToolbar(false, getString(R.string.workout_history));
             ((NavigationActivity) getActivity()).updateMenuItemSelected(R.id.nav_my_workouts);
         }
     }
