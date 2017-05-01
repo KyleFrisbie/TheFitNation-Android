@@ -119,7 +119,7 @@ public class UserWorkoutInstancesTasks extends NetworkTask {
     }
 
     public void deleteUserWorkoutInstance(final long id, final UserWorkoutInstanceRequestCallback.delete callback) {
-        final String resourceRoute = "workout-instances/" + id;
+        final String resourceRoute = "user-workout-instances/" + id;
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getApiUrl() + resourceRoute;
 
         final StringRequest deleteUserWorkoutInstance = new StringRequest(Request.Method.DELETE, url,
