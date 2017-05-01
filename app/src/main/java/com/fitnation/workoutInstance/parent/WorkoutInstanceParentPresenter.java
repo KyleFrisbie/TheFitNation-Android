@@ -7,11 +7,13 @@ import com.fitnation.R;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.UserWorkoutTemplate;
 import com.fitnation.model.WorkoutInstance;
+import com.fitnation.model.WorkoutView;
 import com.fitnation.navigation.Navigator;
 import com.fitnation.workout.parent.WorkoutTemplateManager;
 import com.fitnation.workoutInstance.callbacks.WorkoutManagerWorkoutsCallback;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Calls classes, preforms business logic and returns data to view for display.
@@ -21,18 +23,29 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
     private static final String TAG = WorkoutInstanceParentPresenter.class.getSimpleName();
     private WorkoutManager mWorkoutManager;
     private WorkoutInstanceParentContract.View mView;
+    private String mWorkoutTypeToReturn;
 
-    public WorkoutInstanceParentPresenter(Context mContext, WorkoutInstanceParentContract.View mView) {
+    public WorkoutInstanceParentPresenter(Context mContext, WorkoutInstanceParentContract.View mView, String workoutType) {
         mWorkoutManager = new WorkoutManager(mContext);
         this.mView = mView;
+        mWorkoutTypeToReturn = workoutType;
     }
 
     @Override
     public void onViewReady() {
         //get the workouts
         mView.showProgress();
-        mWorkoutManager.getAllWorkoutInstances(this);
-        mWorkoutManager.getAllUserWorkoutInstances(this);
+        if (Objects.equals(mWorkoutTypeToReturn, "WORKOUT_INSTANCE")) {
+            Log.i(TAG, "getting template");
+            mWorkoutManager.getWorkoutTemplate();
+            mWorkoutManager.getAllWorkoutInstances(this);
+        } else if (Objects.equals(mWorkoutTypeToReturn, "USER_WORKOUT_INSTANCE")) {
+            Log.i(TAG, "getting template");
+            mWorkoutManager.getUserWorkoutTemplate();
+            mWorkoutManager.getAllUserWorkoutInstances(this);
+        } else {
+            Log.i(TAG, "no workout type set error.");
+        }
     }
 
     @Override
@@ -46,10 +59,17 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
     }
 
     @Override
-    public void onDeletePressed(WorkoutInstance workoutInstance) {
+    public void onDeletePressed(WorkoutView workoutInstance) {
         // TODO: remove the workout instance
         Log.i(TAG, "onDeletePressed()");
-        mWorkoutManager.deleteWorkoutInstance(workoutInstance);
+
+        if (Objects.equals(mWorkoutTypeToReturn, "WORKOUT_INSTANCE")) {
+            mWorkoutManager.deleteWorkoutInstance((WorkoutInstance) workoutInstance);
+        } else if (Objects.equals(mWorkoutTypeToReturn, "USER_WORKOUT_INSTANCE")) {
+            mWorkoutManager.deleteUserWorkoutInstance((UserWorkoutInstance) workoutInstance);
+        } else {
+            Log.i(TAG, "no Workout type set error");
+        }
     }
 
     @Override
@@ -60,9 +80,13 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
     }
 
     @Override
-    public void onDetailsPressed(WorkoutInstance workoutInstance) {
+    public void onDetailsPressed(WorkoutView workoutInstance) {
         Log.i(TAG, "onDetailsPressed()");
-        Navigator.navigateToEditWorkout(mView.getBaseActivity(), workoutInstance, R.id.content_main_container);
+        if(Objects.equals(mWorkoutTypeToReturn, "WORKOUT_INSTANCE")) {
+            Navigator.navigateToEditWorkout(mView.getBaseActivity(), (WorkoutInstance) workoutInstance, R.id.content_main_container);
+        }else {
+            //TODO: link user details stuff.
+        }
     }
 
     @Override

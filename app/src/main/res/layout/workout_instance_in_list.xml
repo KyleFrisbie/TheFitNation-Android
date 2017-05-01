@@ -36,7 +36,7 @@
                 android:id="@+id/date_title_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/last_updated_lable"
+                android:text="@string/created_on_lable"
                 app:layout_constraintBottom_toTopOf="@+id/line_imageView"
                 app:layout_constraintHorizontal_bias=".1"
                 app:layout_constraintLeft_toLeftOf="parent"

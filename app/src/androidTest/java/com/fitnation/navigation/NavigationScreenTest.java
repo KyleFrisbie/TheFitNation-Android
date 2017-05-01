@@ -55,7 +55,6 @@ public class NavigationScreenTest extends InstrumentationTest{
         onView(withId(R.id.nav_view)).check(matches(isDisplayed()));
         onNavStartWorkoutPressed();
         onNavMyWorkoutPressed();
-        onNavTrendsPressed();
         onNavWorkoutRegimensPressed();
         onNavMyProfilePressed();
         onNavLogoutPressed();

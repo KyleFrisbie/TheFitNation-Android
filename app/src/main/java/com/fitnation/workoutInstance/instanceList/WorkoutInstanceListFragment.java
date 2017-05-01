@@ -12,13 +12,12 @@ import android.view.ViewGroup;
 
 import com.fitnation.R;
 import com.fitnation.base.BaseFragment;
-import com.fitnation.model.UserWorkoutInstance;
-import com.fitnation.model.WorkoutInstance;
+import com.fitnation.model.WorkoutView;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDeletePressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutDetailsPressedCallback;
 import com.fitnation.workoutInstance.callbacks.OnWorkoutLaunchPressedCallback;
+import com.fitnation.workoutInstance.parent.WorkoutInstanceParentFragment;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -33,51 +32,54 @@ import butterknife.ButterKnife;
 public class WorkoutInstanceListFragment extends BaseFragment{
     private static final String TAG = WorkoutInstanceListFragment.class.getSimpleName();
     private static final String WORKOUT_LIST = "WORKOUT_LIST";
-    List<WorkoutInstance> mWorkouts;
-    List<UserWorkoutInstance> mUserWorkouts;
     @BindView(R.id.workout_recycler_view)
     public RecyclerView mRecyclerView;
+    List<WorkoutView> mWorkouts;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private OnWorkoutDetailsPressedCallback mOnWorkoutDetailsPressedCallback;
     private OnWorkoutDeletePressedCallback mOnWorkoutDeletePressedCallback;
     private OnWorkoutLaunchPressedCallback mOnWorkoutLaunchPressedCallback;
     private boolean mHasUpdatedData;
+    private String mWorkoutType;
 
     public WorkoutInstanceListFragment() {
         Log.i(TAG, "in constructor");
         //Required empty public constructor
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        Log.i(TAG, "onHiddenChanged()");
-        if(mHasUpdatedData) {
-            mHasUpdatedData = false;
-            mAdapter = new WorkoutInstanceAdapter(mWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
-            mRecyclerView.setAdapter(mAdapter);
-        }
-    }
-
-    public static WorkoutInstanceListFragment newInstance(List<WorkoutInstance> workoutInstances,
+    public static WorkoutInstanceListFragment newInstance(String workoutType, List<WorkoutView> workoutInstances,
                                                           OnWorkoutDeletePressedCallback onWorkoutDeletePressedCallback,
                                                           OnWorkoutLaunchPressedCallback onWorkoutLaunchPressedCallback,
                                                           OnWorkoutDetailsPressedCallback onWorkoutDetailsPressedCallback){
         WorkoutInstanceListFragment workoutInstanceListFragment = new WorkoutInstanceListFragment();
+            Bundle bundle = new Bundle();
 
 //        if(workoutInstances != null && !workoutInstances.isEmpty()) {
-//            Bundle bundle = new Bundle();
 //
 //            bundle.putParcelable(WORKOUT_LIST, Parcels.wrap(workoutInstances));
 //            workoutInstanceListFragment.setArguments(bundle);
 //        }
+
+        bundle.putString(WorkoutInstanceParentFragment.WORKOUT_FRAGMENT_TYPE, workoutType);
+
 
         workoutInstanceListFragment.setOnWorkoutDeletePressed(onWorkoutDeletePressedCallback);
         workoutInstanceListFragment.setOnWorkoutLaunchPressed(onWorkoutLaunchPressedCallback);
         workoutInstanceListFragment.setOnWorkoutDetailsPressed(onWorkoutDetailsPressedCallback);
 
         return workoutInstanceListFragment;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Log.i(TAG, "onHiddenChanged()");
+        if (mHasUpdatedData) {
+            mHasUpdatedData = false;
+            mAdapter = new WorkoutInstanceAdapter(mWorkoutType, mWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
+            mRecyclerView.setAdapter(mAdapter);
+        }
     }
 
     public void setOnWorkoutDeletePressed(OnWorkoutDeletePressedCallback onWorkoutDeletePressed) {
@@ -99,7 +101,8 @@ public class WorkoutInstanceListFragment extends BaseFragment{
         Bundle bundle = getArguments();
 
         if(bundle != null) {
-            mWorkouts = (List<WorkoutInstance>) bundle.get(WORKOUT_LIST);
+            mWorkouts = (List<WorkoutView>) bundle.get(WORKOUT_LIST);
+            mWorkoutType = bundle.getString(WorkoutInstanceParentFragment.WORKOUT_FRAGMENT_TYPE);
         }
 
         if(savedInstanceState != null) {
@@ -143,7 +146,7 @@ public class WorkoutInstanceListFragment extends BaseFragment{
         mRecyclerView.setFocusable(false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setNestedScrollingEnabled(false);
-        mAdapter = new WorkoutInstanceAdapter(mWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
+        mAdapter = new WorkoutInstanceAdapter(mWorkoutType, mWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
         mRecyclerView.setAdapter(mAdapter);
 
         return v;
@@ -168,13 +171,14 @@ public class WorkoutInstanceListFragment extends BaseFragment{
         super.onSaveInstanceState(outState);
     }
 
-    public void displayWorkouts(final List<WorkoutInstance> workouts) {
+    public void displayWorkouts(String workoutType, final List<WorkoutView> workouts) {
         mWorkouts = workouts;
+        mWorkoutType = workoutType;
         if(getView() != null) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mAdapter = new WorkoutInstanceAdapter(mWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
+                    mAdapter = new WorkoutInstanceAdapter(mWorkoutType, mWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             });
@@ -184,20 +188,4 @@ public class WorkoutInstanceListFragment extends BaseFragment{
         }
 
     }
-
-    //      public void displayUserWorkouts(final List<UserWorkoutInstance> userWorkouts) {
-//        mUserWorkouts = userWorkouts;
-//        if(getView() != null) {
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    mAdapter = new WorkoutInstanceAdapter(mUserWorkouts, mOnWorkoutDeletePressedCallback, mOnWorkoutLaunchPressedCallback, mOnWorkoutDetailsPressedCallback);
-//                    mRecyclerView.setAdapter(mAdapter);
-//                }
-//            });
-//
-//        } else {
-//            mHasUpdatedData = true;
-//        }
-//    }
 }

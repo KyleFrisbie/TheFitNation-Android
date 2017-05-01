@@ -7,6 +7,7 @@ import com.fitnation.base.BasePresenter;
 import com.fitnation.base.BaseView;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutInstance;
+import com.fitnation.model.WorkoutView;
 
 import java.util.List;
 
@@ -21,15 +22,17 @@ public interface WorkoutInstanceParentContract {
         void displayWorkouts(List<WorkoutInstance> workouts);
         void displayUserWorkouts(List<UserWorkoutInstance> userWorkouts);
         void displayUpdatedWorkouts(List<WorkoutInstance> workoutList);
+
+        void displayUpdatedUserWorkouts(List<UserWorkoutInstance> userWorkoutsList);
         void showSuccess(AlertDialog alertDialog);
         void showFailure(AlertDialog alertDialog);
 
     }
 
     interface Presenter extends BasePresenter{
-        void onDeletePressed(WorkoutInstance workoutInstance);
+        void onDeletePressed(WorkoutView workoutInstance);
         void onLaunchPressed(WorkoutInstance workoutInstance);
-        void onDetailsPressed(WorkoutInstance workoutInstance);
+        void onDetailsPressed(WorkoutView workoutInstance);
         void onBuildWorkoutPressed();
     }
 }
