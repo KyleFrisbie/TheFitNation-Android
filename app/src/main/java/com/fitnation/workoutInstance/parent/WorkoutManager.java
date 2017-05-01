@@ -111,13 +111,24 @@ public class WorkoutManager extends DataManager {
         }).start();
     }
 
-    public void deleteWorkoutInstance(WorkoutInstance workoutInstance){
+    public void deleteWorkoutInstance(final WorkoutInstance workoutInstance) {
         //TODO build delete logic
         WorkoutInstancesTasks workoutInstancesTasks = new WorkoutInstancesTasks(mAuthToken, mRequestQueue);
         workoutInstancesTasks.deleteWorkoutInstance(workoutInstance.getId(), new WorkoutInstanceRequestCallback.delete() {
             @Override
             public void onDeleteSuccess() {
                 //TODO update instances and delete in realm.
+                deleteData(workoutInstance, new DataResult() {
+                    @Override
+                    public void onError() {
+                        Log.i(TAG, "Failed to delete class form realm");
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        Log.i(TAG, "Delete from realm successful");
+                    }
+                });
             }
 
             @Override
@@ -127,7 +138,7 @@ public class WorkoutManager extends DataManager {
         });
     }
 
-    public void deleteUserWorkoutInstance(UserWorkoutInstance userWorkoutInstance){
+    public void deleteUserWorkoutInstance(final UserWorkoutInstance userWorkoutInstance) {
         //TODO build delete logic
         UserWorkoutInstancesTasks userWorkoutInstancesTasks = new UserWorkoutInstancesTasks(mAuthToken, mRequestQueue);
         userWorkoutInstancesTasks.deleteUserWorkoutInstance(userWorkoutInstance.getId(), new UserWorkoutInstanceRequestCallback.delete() {
@@ -135,6 +146,17 @@ public class WorkoutManager extends DataManager {
             public void onDeleteSuccess() {
                 //TODO update instances and delete realm
                 Log.i(TAG, "UserWorkoutInstance Deleted");
+                deleteData(userWorkoutInstance, new DataResult() {
+                    @Override
+                    public void onError() {
+                        Log.i(TAG, "Failed to delete class form realm");
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        Log.i(TAG, "Delete from realm successful");
+                    }
+                });
             }
 
             @Override
