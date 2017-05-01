@@ -112,6 +112,9 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView, C
 
     @Override
     public String getName() {
+        if(exerciseInstance == null) {
+            return "";
+        }
         return exerciseInstance.getName();
     }
 
