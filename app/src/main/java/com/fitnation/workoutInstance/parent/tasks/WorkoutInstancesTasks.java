@@ -117,7 +117,7 @@ public class WorkoutInstancesTasks extends NetworkTask {
         mRequestQueue.add(updateWorkoutInstance);
     }
 
-    public void deleteWorkoutInstance(final WorkoutInstanceRequestCallback.delete callback, final int id) {
+    public void deleteWorkoutInstance(final long id, final WorkoutInstanceRequestCallback.delete callback) {
         final String resourceRoute = "workout-instances/" + id;
         String url = EnvironmentManager.getInstance().getCurrentEnvironment().getApiUrl() + resourceRoute;
 
