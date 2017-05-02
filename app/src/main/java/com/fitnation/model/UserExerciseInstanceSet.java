@@ -2,14 +2,18 @@ package com.fitnation.model;
 
 import android.support.annotation.NonNull;
 
+import org.parceler.Parcel;
+
 import java.util.Objects;
 
 import io.realm.RealmObject;
+import io.realm.UserExerciseInstanceSetRealmProxy;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * A single set of an Exercise that a User has/will perform
  */
+@Parcel(implementations = {UserExerciseInstanceSetRealmProxy.class }, value = Parcel.Serialization.BEAN, analyze = { UserExerciseInstanceSet.class })
 public class UserExerciseInstanceSet extends RealmObject implements ExerciseSetView {
     @PrimaryKey
     private Long androidId;

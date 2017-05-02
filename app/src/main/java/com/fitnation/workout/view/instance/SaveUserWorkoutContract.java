@@ -17,6 +17,7 @@ public interface SaveUserWorkoutContract {
         void showProgress();
         void stopProgress();
         void showError(AlertDialog alertDialog);
+        void showSuccess(AlertDialog alertDialog);
     }
 
     interface Presenter extends BasePresenter {

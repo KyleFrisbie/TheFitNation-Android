@@ -1,8 +1,12 @@
 package com.fitnation.workout.view.instance;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
+import com.fitnation.R;
+import com.fitnation.navigation.Navigator;
 import com.fitnation.workout.services.UserWorkoutDataManager;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.UserWorkoutTemplate;
@@ -50,7 +54,16 @@ public class SaveUserWorkoutPresenter implements SaveUserWorkoutContract.Present
                     public void onSuccess() {
                         mView.stopProgress();
                         Log.i(TAG, "User Workout saved succesfully");
-                        //TODO take user to saved user workout instances page
+                        AlertDialog alertDialog = WorkoutAlertDialogFactory.getBuildWorkoutSuccess(mView.getBaseActivity(),
+                                mView.getBaseActivity().getString(R.string.created), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                        Navigator.navigateToPastWorkouts(mView.getBaseActivity(), R.id.content_main_container);
+                                    }
+                                });
+
+                        mView.showSuccess(alertDialog);
                     }
 
                     @Override
