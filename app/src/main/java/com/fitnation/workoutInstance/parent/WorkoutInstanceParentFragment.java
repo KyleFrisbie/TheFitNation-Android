@@ -3,6 +3,7 @@ package com.fitnation.workoutInstance.parent;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +13,6 @@ import android.view.ViewGroup;
 import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.BaseFragment;
-import com.fitnation.base.Navigationable;
 import com.fitnation.model.UserWorkoutInstance;
 import com.fitnation.model.WorkoutInstance;
 import com.fitnation.model.WorkoutView;
@@ -24,6 +24,7 @@ import com.fitnation.workoutInstance.instanceList.WorkoutInstanceListFragment;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -39,6 +40,8 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     private WorkoutInstanceParentContract.Presenter mPresenter;
     private WorkoutInstanceListFragment mWorkoutInstanceListFragment;
     private String mFragmentType;
+    @BindView(R.id.build_workout_button)
+    public FloatingActionButton mBuildWorkoutButton;
 
     public WorkoutInstanceParentFragment() {
         //required empty constructor
@@ -68,6 +71,10 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
         View v = inflater.inflate(R.layout.workout_instance_parent_fragment, container, false);
         ButterKnife.bind(this, v);
 
+        if(mFragmentType.equals(USER_WORKOUT_INSTANCE_FRAGMENT)) {
+            mBuildWorkoutButton.setVisibility(View.INVISIBLE);
+        }
+
         return v;
     }
 
@@ -84,8 +91,10 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
         mPresenter.onViewReady();
         if(mFragmentType.equals(WORKOUT_INSTANCE_FRAGMENT)) {
             ((NavigationActivity) getActivity()).updateToolbar(false, getString(R.string.workout_regimens));
+            ((NavigationActivity) getActivity()).updateMenuItemSelected(R.id.nav_workout_regimens);
         } else if(mFragmentType.equals(USER_WORKOUT_INSTANCE_FRAGMENT)) {
-            ((NavigationActivity) getActivity()).updateToolbar(false, getString(R.string.my_workouts));
+            ((NavigationActivity) getActivity()).updateToolbar(false, getString(R.string.workout_history));
+            ((NavigationActivity) getActivity()).updateMenuItemSelected(R.id.nav_my_workouts);
         }
     }
 
@@ -139,7 +148,6 @@ public class WorkoutInstanceParentFragment extends BaseFragment implements Worko
     @Override
     public void displayUpdatedWorkouts(List<WorkoutInstance> workoutList) {
         mWorkoutInstanceListFragment = WorkoutInstanceListFragment.newInstance(WORKOUT_INSTANCE_FRAGMENT, WorkoutInstance.convertWorkoutsToWorkoutViews(workoutList), this, this, this);
-        getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.workout_instance_parent_layout, mWorkoutInstanceListFragment).commit();
         mWorkoutInstanceListFragment.displayWorkouts(WORKOUT_INSTANCE_FRAGMENT, WorkoutInstance.convertWorkoutsToWorkoutViews(workoutList));
         Log.i(TAG, "displayUpdatedWorkouts()");
     }

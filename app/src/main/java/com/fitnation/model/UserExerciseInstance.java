@@ -62,6 +62,10 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView, C
         //Required default constructor
     }
 
+    public Long getExerciseInstanceId() {
+        return exerciseInstanceId;
+    }
+
     public RealmList<UserExerciseInstanceSet> getUserExerciseInstanceSets() {
         if(userExerciseInstanceSets == null) {
             userExerciseInstanceSets = new RealmList<>();
@@ -108,6 +112,9 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView, C
 
     @Override
     public String getName() {
+        if(exerciseInstance == null) {
+            return "";
+        }
         return exerciseInstance.getName();
     }
 
@@ -124,6 +131,10 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView, C
     @Override
     public void setSelected(boolean checked) {
 
+    }
+
+    public void setExerciseInstance(ExerciseInstance exerciseInstance) {
+        this.exerciseInstance = exerciseInstance;
     }
 
     @Override
