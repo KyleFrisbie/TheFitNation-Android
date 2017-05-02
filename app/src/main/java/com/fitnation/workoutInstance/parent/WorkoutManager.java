@@ -111,12 +111,65 @@ public class WorkoutManager extends DataManager {
         }).start();
     }
 
-    public void deleteWorkoutInstance(WorkoutInstance workoutInstance){
+    public void deleteWorkoutInstance(final WorkoutInstance workoutInstance, final DeleteWorkoutCallback deleteWorkoutCallback) {
         //TODO build delete logic
+        WorkoutInstancesTasks workoutInstancesTasks = new WorkoutInstancesTasks(mAuthToken, mRequestQueue);
+        workoutInstancesTasks.deleteWorkoutInstance(workoutInstance.getId(), new WorkoutInstanceRequestCallback.delete() {
+            @Override
+            public void onDeleteSuccess() {
+                //TODO update instances and delete in realm.
+                deleteData(workoutInstance, new DataResult() {
+                    @Override
+                    public void onError() {
+                        Log.i(TAG, "Failed to delete class form realm");
+                        deleteWorkoutCallback.onFailure();
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        Log.i(TAG, "Delete from realm successful");
+                        deleteWorkoutCallback.onSuccess();
+                    }
+                });
+            }
+
+            @Override
+            public void onDeleteFailure(String error) {
+                //TODO return error
+            }
+        });
     }
 
-    public void deleteUserWorkoutInstance(UserWorkoutInstance userWorkoutInstance){
+    public void deleteUserWorkoutInstance(final UserWorkoutInstance userWorkoutInstance, final DeleteWorkoutCallback deleteWorkoutCallback) {
         //TODO build delete logic
+        UserWorkoutInstancesTasks userWorkoutInstancesTasks = new UserWorkoutInstancesTasks(mAuthToken, mRequestQueue);
+        userWorkoutInstancesTasks.deleteUserWorkoutInstance(userWorkoutInstance.getId(), new UserWorkoutInstanceRequestCallback.delete() {
+            @Override
+            public void onDeleteSuccess() {
+                //TODO update instances and delete realm
+                Log.i(TAG, "UserWorkoutInstance Deleted");
+                deleteData(userWorkoutInstance, new DataResult() {
+                    @Override
+                    public void onError() {
+                        Log.i(TAG, "Failed to delete class form realm");
+                        deleteWorkoutCallback.onFailure();
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        Log.i(TAG, "Delete from realm successful");
+                        deleteWorkoutCallback.onSuccess();
+                    }
+                });
+            }
+
+            @Override
+            public void onDeleteFailure(String error) {
+                //TODO return error
+                Log.i(TAG, "WorkoutInstance Deleted");
+            }
+        });
+
     }
 
     public UserWorkoutTemplate getUserWorkoutTemplate() {

@@ -1,12 +1,10 @@
 package com.fitnation.base;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.util.Collection;
 
 import io.realm.Realm;
-
 import io.realm.RealmObject;
 
 /**
@@ -14,6 +12,7 @@ import io.realm.RealmObject;
  */
 public abstract class DataManager {
     private static final String TAG = "DataManager";
+
     /**
      * Constructor
      */
@@ -22,9 +21,10 @@ public abstract class DataManager {
 
     /**
      * Saves/Updates data to the local data store
-     * @param data - data to be saved
+     *
+     * @param data           - data to be saved
      * @param resultCallback - notified upon result of save
-     * @param <T> - generic data type
+     * @param <T>            - generic data type
      */
     public <T extends RealmObject> void saveData(final T data, final DataResult resultCallback) {
         Realm realm = Realm.getDefaultInstance();
@@ -39,20 +39,21 @@ public abstract class DataManager {
             Log.e(TAG, e.getMessage());
             resultCallback.onError();
         } finally {
-            if(realm != null) {
+            if (realm != null) {
                 realm.close();
             }
         }
-        if(!error) {
+        if (!error) {
             resultCallback.onSuccess();
         }
     }
 
     /**
      * Saves/Updates a collection of data to the local data store
-     * @param data  - collection to be saved
+     *
+     * @param data           - collection to be saved
      * @param resultCallback - notified upon result of save
-     * @param <T> - generic data type
+     * @param <T>            - generic data type
      */
     public <T extends RealmObject> void saveData(final Collection<T> data, final DataResult resultCallback) {
 
@@ -65,8 +66,8 @@ public abstract class DataManager {
 
                     realm.beginTransaction();
 
-                    for (T individualData :data) {
-                        if(individualData.isValid()) {
+                    for (T individualData : data) {
+                        if (individualData.isValid()) {
                             realm.copyToRealmOrUpdate(data);
                         } else {
                             Log.wtf(TAG, "Realm save failed. Reason: In-valid object");
@@ -78,7 +79,7 @@ public abstract class DataManager {
                     Log.e(TAG, e.getMessage());
                     resultCallback.onError();
                 } finally {
-                    if(realm != null) {
+                    if (realm != null) {
                         realm.close();
                     }
                 }
@@ -86,5 +87,26 @@ public abstract class DataManager {
             }
         }).start();
 
+    }
+
+    public <T extends RealmObject> void deleteData(final T data, final DataResult resultCallback) {
+        Realm realm = Realm.getDefaultInstance();
+        boolean error = false;
+        try {
+            realm.beginTransaction();
+            realm.delete(data.getClass());
+            realm.commitTransaction();
+        } catch (Exception e) {
+            error = true;
+            Log.e(TAG, e.getMessage());
+            resultCallback.onError();
+        } finally {
+            if (realm != null) {
+                realm.close();
+            }
+        }
+        if (!error) {
+            resultCallback.onSuccess();
+        }
     }
 }
