@@ -1,0 +1,15 @@
+{
+  "id": 1651,
+  "name": "Squat",
+  "imageUri": "http://some.image.io",
+  "notes": "Squats are a bitch",
+  "skillLevelLevel": "Beginner",
+  "muscles": [
+    {
+      "id": 1103,
+      "name": "Sternal Head",
+      "bodyPartName": "Chest"
+    }
+  ],
+  "exerciseFamilyName": "Free Weights"
+}
