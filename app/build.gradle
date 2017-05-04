@@ -25,8 +25,11 @@ android {
         applicationId "com.fitnation"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 1001
+        versionCode 1002
         versionName "1.0"
+
+        ext.betaDistributionReleaseNotesFilePath = "release-notes.md"
+
         buildTypes {
             release {
                 minifyEnabled false
