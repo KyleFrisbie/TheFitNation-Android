@@ -2,6 +2,7 @@ package com.fitnation.model;
 
 import com.google.gson.annotations.Expose;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.parceler.Parcel;
 
 import java.util.List;
@@ -88,7 +89,7 @@ public class Exercise extends RealmObject {
     }
 
     public String getName() {
-        return name;
+        return WordUtils.capitalizeFully(name);
     }
 
     public void setName(String name) {

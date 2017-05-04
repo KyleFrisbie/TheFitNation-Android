@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.fitnation.model.parsel.UserExerciseInstanceSetParcelConverter;
 import com.google.gson.annotations.Expose;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.parceler.Parcel;
 import org.parceler.ParcelPropertyConverter;
 
@@ -116,7 +117,7 @@ public class UserExerciseInstance extends RealmObject implements ExerciseView, C
         if(exerciseInstance == null) {
             return "";
         }
-        return exerciseInstance.getName();
+        return WordUtils.capitalizeFully(exerciseInstance.getName());
     }
 
     @Override

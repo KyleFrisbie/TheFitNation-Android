@@ -42,6 +42,11 @@ public class NavigationActivity extends BaseActivity
         ButterKnife.bind(this);
         setUpActionBar();
         mNavigationView.setNavigationItemSelectedListener(this);
+        Navigator.navigateToWorkouts(this, R.id.content_main_container);
+
+        //update menu
+        updateMenuItemSelected(R.id.nav_workout_regimens);
+        updateBasedOffNavigationState(new NavigationState(false, getString(R.string.workout_regimens)));
     }
 
     private void setUpActionBar() {

@@ -14,6 +14,8 @@ import com.fitnation.model.ExerciseView;
 import com.fitnation.workout.callbacks.ExerciseSelectedCallback;
 import com.fitnation.workout.callbacks.OnEditExercisePressedCallback;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import java.util.List;
 
 import butterknife.BindView;
