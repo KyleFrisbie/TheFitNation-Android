@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="workout_history">Workout History</string>
+
     <!--App-->
     <string name="app_name">Fit Nation</string>
     <string name="fit_nation">Fit Nation</string>
@@ -12,7 +15,6 @@
     <!--Menu-->
     <string name="login_screen">Login Fragment</string>
     <string name="start_workout">Start Workout</string>
-    <string name="workout_history">Workout History</string>
     <string name="trends">Trends</string>
     <string name="workout_regimens">My Workout Regimens</string>
     <string name="my_profile">My Profile</string>

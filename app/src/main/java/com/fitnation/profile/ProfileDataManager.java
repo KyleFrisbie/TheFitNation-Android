@@ -151,6 +151,11 @@ public class ProfileDataManager extends DataManager {
     }
 
     public Long getSkillLevelId(String skillLevel){
+        if (mSkillLevelList==null){
+            Log.d(TAG, "The Skill Level Name-ID list is null.  Can't attain skill level");
+            getSkillLevelList();
+            return null;
+        }
         skillLevel = skillLevel.toLowerCase();
         for(SkillLevel skillId:mSkillLevelList){
             if (skillId.getLevel().toLowerCase().equals(skillLevel))

@@ -59,7 +59,11 @@ public class UserDemographicTask extends NetworkTask{
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        callback.onFailure(error.toString() + " " + error.networkResponse.statusCode);
+                        try {
+                            callback.onFailure(String.valueOf(error.networkResponse.statusCode));
+                        } catch (NullPointerException ex) {
+                            Log.d(TAG, ex.toString());
+                        }
                     }
                 }) {
                     @Override
@@ -103,7 +107,11 @@ public class UserDemographicTask extends NetworkTask{
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("PUT", error.toString());
-                callback.onFailure(error.toString() + " " + error.networkResponse.statusCode);
+                try{
+                    callback.onFailure(error.toString() + " " + error.networkResponse.statusCode);
+                } catch (NullPointerException ex){
+                    Log.d(TAG, "Volley error respsonse is null " + ex.toString());
+                }
             }
         }) {
             @Override

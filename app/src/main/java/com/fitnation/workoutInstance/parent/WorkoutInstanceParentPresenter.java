@@ -46,11 +46,33 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
         if (Objects.equals(mWorkoutTypeToReturn, "WORKOUT_INSTANCE")) {
             Log.i(TAG, "getting template");
             mWorkoutManager.getWorkoutTemplate();
-            mWorkoutManager.getAllWorkoutInstances(this);
+            mWorkoutManager.getAllWorkoutInstances(new WorkoutManagerWorkoutsCallback.instance() {
+                @Override
+                public void onWorkoutInstancesRetrieved(List<WorkoutInstance> workoutList) {
+                    mView.stopProgress();
+                    mView.displayUpdatedWorkouts(workoutList);
+                }
+
+                @Override
+                public void onError() {
+                    Log.i(TAG, "Failed to update WorkoutInstances");
+                }
+            });
         } else if (Objects.equals(mWorkoutTypeToReturn, "USER_WORKOUT_INSTANCE")) {
             Log.i(TAG, "getting template");
             mWorkoutManager.getUserWorkoutTemplate();
-            mWorkoutManager.getAllUserWorkoutInstances(this);
+            mWorkoutManager.getAllUserWorkoutInstances(new WorkoutManagerWorkoutsCallback.userInstance() {
+                @Override
+                public void onUserWorkoutInstancesRetrieved(List<UserWorkoutInstance> userWorkoutList) {
+                    mView.stopProgress();
+                    mView.displayUpdatedUserWorkouts(userWorkoutList);
+                }
+
+                @Override
+                public void onUserError() {
+                    Log.i(TAG, "Failed to update UserWorkoutInstances");
+                }
+            });
         } else {
             Log.i(TAG, "no workout type set error.");
         }
@@ -72,9 +94,31 @@ public class WorkoutInstanceParentPresenter implements WorkoutInstanceParentCont
         Log.i(TAG, "onDeletePressed()");
 
         if (Objects.equals(mWorkoutTypeToReturn, "WORKOUT_INSTANCE")) {
-            mWorkoutManager.deleteWorkoutInstance((WorkoutInstance) workoutInstance);
+            mWorkoutManager.deleteWorkoutInstance((WorkoutInstance) workoutInstance, new DeleteWorkoutCallback() {
+                @Override
+                public void onSuccess() {
+                    mView.getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main_container, WorkoutInstanceParentFragment.newInstance(mView.getBaseActivity(), "WORKOUT_INSTANCE")).commit();
+                }
+
+                @Override
+                public void onFailure() {
+                    Log.e(TAG, "Failed to delete instance");
+                }
+            });
+            mWorkoutManager.getAllWorkoutInstances(this);
         } else if (Objects.equals(mWorkoutTypeToReturn, "USER_WORKOUT_INSTANCE")) {
-            mWorkoutManager.deleteUserWorkoutInstance((UserWorkoutInstance) workoutInstance);
+            mWorkoutManager.deleteUserWorkoutInstance((UserWorkoutInstance) workoutInstance, new DeleteWorkoutCallback() {
+                @Override
+                public void onSuccess() {
+                    mView.getBaseActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_main_container, WorkoutInstanceParentFragment.newInstance(mView.getBaseActivity(), "USER_WORKOUT_INSTANCE")).commit();
+                }
+
+                @Override
+                public void onFailure() {
+                    Log.e(TAG, "Failed to delete instance");
+                }
+            });
+            mWorkoutManager.getAllUserWorkoutInstances(this);
         } else {
             Log.i(TAG, "no Workout type set error");
         }
