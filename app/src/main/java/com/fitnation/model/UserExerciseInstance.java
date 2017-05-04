@@ -2,6 +2,7 @@ package com.fitnation.model;
 
 import android.support.annotation.NonNull;
 
+import com.fitnation.model.parsel.UserExerciseInstanceSetParcelConverter;
 import com.google.gson.annotations.Expose;
 
 import org.parceler.Parcel;

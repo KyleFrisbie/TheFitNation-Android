@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".workout.exercise.list.ExercisesListFragment"
+        tools:context=".workout.create.list.ExercisesListFragment"
         android:background="@color/defaultBackground">
 
         <FrameLayout

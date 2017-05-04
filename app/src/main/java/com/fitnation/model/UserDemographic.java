@@ -35,7 +35,6 @@ public class UserDemographic extends RealmObject implements Cloneable {
     private Boolean isActive;
     private RealmList<Gym> gyms;
     private Long user_weight_id;
-    private WorkoutLog workoutLog;
     private RealmList<WorkoutTemplate> workoutTemplates;
     private String dateOfBirth;
     private String createdOn;

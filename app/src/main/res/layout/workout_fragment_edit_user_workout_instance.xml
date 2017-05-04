@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fitnation.workout.view.instance.EditUserWorkoutFragment"
+    tools:context="com.fitnation.workout.edit.instance.EditUserWorkoutFragment"
     android:background="@color/defaultBackground">
 
     <FrameLayout

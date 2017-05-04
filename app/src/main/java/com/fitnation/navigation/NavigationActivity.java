@@ -16,9 +16,6 @@ import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.base.Navigationable;
 import com.fitnation.login.LoginBaseActivity;
-import com.fitnation.model.enums.ExerciseAction;
-import com.fitnation.profile.ProfileFragment;
-import com.fitnation.workout.parent.ExercisesParentFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

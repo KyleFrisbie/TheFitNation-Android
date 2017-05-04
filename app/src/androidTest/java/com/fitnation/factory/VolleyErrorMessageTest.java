@@ -7,7 +7,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.VolleyError;
-import com.fitnation.Factory.VolleyErrorMessage;
+import com.fitnation.utils.Factory.VolleyErrorMessage;
 import com.fitnation.R;
 import com.fitnation.base.InstrumentationTest;
 import com.fitnation.login.LoginBaseActivity;

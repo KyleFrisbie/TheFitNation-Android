@@ -2,6 +2,7 @@ package com.fitnation.model;
 
 import android.support.annotation.NonNull;
 
+import com.fitnation.model.parsel.UserExerciseInstanceParcelConverter;
 import com.fitnation.utils.DateFormatter;
 import com.fitnation.utils.PrimaryKeyFactory;
 import com.google.gson.annotations.Expose;

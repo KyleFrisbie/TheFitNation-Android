@@ -10,9 +10,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.fitnation.networking.tasks.callbacks.GetSkillLevelsCallback;
 import com.fitnation.model.enums.SkillLevel;
 import com.fitnation.networking.JsonParser;
+import com.fitnation.networking.tasks.callbacks.GetSkillLevelsCallback;
 import com.fitnation.utils.EnvironmentManager;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Created by Ryan Newsom on 4/9/17. *
  */
-public class GetSkillLevelsTask extends NetworkTask{
+public class GetSkillLevelsTask extends NetworkTask {
     private static final String TAG = GetSkillLevelsTask.class.getSimpleName();
 
     public GetSkillLevelsTask(String authToken, RequestQueue requestQueue) {
@@ -50,6 +50,7 @@ public class GetSkillLevelsTask extends NetworkTask{
                         } catch (NullPointerException ex) {
                             Log.d(TAG, ex.toString());
                         }
+
                     }
                 }
         ) {

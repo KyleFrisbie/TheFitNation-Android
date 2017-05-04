@@ -1,6 +1,5 @@
 package com.fitnation.navigation;
 
-import com.fitnation.R;
 import com.fitnation.base.BaseActivity;
 import com.fitnation.model.ExerciseView;
 import com.fitnation.model.UserWorkoutInstance;
@@ -9,17 +8,16 @@ import com.fitnation.model.WorkoutInstance;
 import com.fitnation.model.enums.ExerciseAction;
 import com.fitnation.profile.ProfileFragment;
 import com.fitnation.workout.callbacks.OnExerciseUpdatedCallback;
-import com.fitnation.workout.parent.ExercisesParentFragment;
-import com.fitnation.workout.view.instance.EditUserWorkoutFragment;
-import com.fitnation.workout.view.instance.EditUserWorkoutPresenter;
-import com.fitnation.workout.view.instance.SaveUserWorkoutInstanceFragment;
-import com.fitnation.workout.view.instance.SaveUserWorkoutPresenter;
-import com.fitnation.workout.exercise.ExerciseType;
-import com.fitnation.workout.exercise.ViewExerciseFragment;
-import com.fitnation.workout.exercise.ViewExercisePresenter;
-import com.fitnation.workout.view.template.EditWorkoutFragment;
-import com.fitnation.workout.view.template.EditWorkoutPresenter;
-import com.fitnation.workoutInstance.parent.WorkoutInstanceParentFragment;
+import com.fitnation.workout.create.parent.ExercisesParentFragment;
+import com.fitnation.workout.edit.instance.EditUserWorkoutFragment;
+import com.fitnation.workout.edit.instance.EditUserWorkoutPresenter;
+import com.fitnation.workout.save.SaveUserWorkoutInstanceFragment;
+import com.fitnation.workout.save.SaveUserWorkoutPresenter;
+import com.fitnation.workout.create.ViewExerciseFragment;
+import com.fitnation.workout.create.ViewExercisePresenter;
+import com.fitnation.workout.edit.template.EditWorkoutFragment;
+import com.fitnation.workout.edit.template.EditWorkoutPresenter;
+import com.fitnation.history.parent.WorkoutInstanceParentFragment;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -18,12 +18,11 @@ import com.fitnation.networking.tasks.UserWeightTask;
 import com.fitnation.networking.tasks.callbacks.GetSkillLevelsCallback;
 import com.fitnation.profile.callbacks.PutUserWeightCallback;
 import com.fitnation.profile.callbacks.UserDemographicsCallback;
-import com.fitnation.workout.parent.GetSkillLevelsTask;
+import com.fitnation.networking.tasks.GetSkillLevelsTask;
 
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 

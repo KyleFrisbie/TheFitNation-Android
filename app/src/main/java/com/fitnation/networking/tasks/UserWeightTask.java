@@ -9,26 +9,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.fitnation.Factory.FactoryCallback;
 import com.fitnation.model.UserWeight;
 import com.fitnation.networking.AuthToken;
 import com.fitnation.networking.JsonParser;
-import com.fitnation.networking.UserLogins;
 import com.fitnation.profile.callbacks.GetUserWeightCallback;
 import com.fitnation.profile.callbacks.PutUserWeightCallback;
-import com.fitnation.utils.Environment;
 import com.fitnation.utils.EnvironmentManager;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
